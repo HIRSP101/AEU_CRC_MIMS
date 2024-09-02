@@ -11,9 +11,9 @@
 //     })
 // })
 
-const sidebar = document.getElementById('sidebar');
-const openSidebar = document.getElementById('openSidebar');
-const closeSidebar = document.getElementById('closeSidebar');
+var sidebar = document.getElementById('sidebar');
+var openSidebar = document.getElementById('openSidebar');
+var closeSidebar = document.getElementById('closeSidebar');
 
 openSidebar.addEventListener('click', () => {
     sidebar.classList.remove('-translate-x-full');
