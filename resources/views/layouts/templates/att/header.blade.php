@@ -7,6 +7,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <script src="{{ asset('js/script.js') }}"></script>
   <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Siemreap&display=swap" rel="stylesheet">
   @vite('resources/css/app.css')
 
 @stack("CSS")
