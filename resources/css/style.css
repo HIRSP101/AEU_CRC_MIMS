@@ -1,36 +1,9 @@
-.logo {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    margin-right: 25px;
-    padding: 5px;
-    border-radius: 100%;
-}
-
-.name {
-    font-size: 15px;
-    font-weight: 500;
-    color: #333;
-}
-.title {
-    text-align: center;
-    padding-bottom: 10px;
-}
 /* end list សាខា */
 
 /* table member */
-.container {
-    width: 99%;
-    padding: 1rem;
-    border-radius: 0.3rem;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    margin: 5px;
-}
 .selection {
     display: flex;
     align-items: center;
-    /* margin-bottom: 10px; */
     justify-content: space-between;
 }
 .table-controls {
@@ -57,7 +30,6 @@
     padding: 5px 10px;
     border: 1px solid #ccc;
     background-color: #d8d8d8;
-    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
     border-radius: 0.4rem;
     cursor: pointer;
 }
@@ -72,31 +44,8 @@
     border-radius: 4px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-table,
-th,
-td {
-    border: 1px solid #dddddd;
-}
-tbody tr:nth-child(even) {
-    background-color: #ececec;
-}
 tbody tr:hover {
     background-color: #caced1;
-}
-th,
-td {
-    padding: 12px;
-    text-align: left;
-}
-
-th {
-    background-color: #f2f2f2;
 }
 
 .view-btn {
