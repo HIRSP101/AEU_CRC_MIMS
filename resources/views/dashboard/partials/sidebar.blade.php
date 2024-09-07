@@ -15,7 +15,7 @@
             </a>
 
            <div class="mt-10">
-                <a class="flex items-center px-4 py-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                <a class="flex items-center px-4 py-2 text-gray-800 font-semibold hover:bg-red-400 rounded" href="list_province">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>

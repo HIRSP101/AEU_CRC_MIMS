@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('dashboard.index');
 });
+Route::get('/table_member',function(){
+    return view('Branch_25Province.table_member');
+});
+Route::get('/list_province', function(){
+    return view('Branch_25Province.list_province');
+});
