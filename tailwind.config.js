@@ -7,6 +7,12 @@ export default {
     ],
     theme: {
       extend: {},
+      fontFamily:{
+        siemreap: ['Siemreap', 'sans-serif'],
+        koulen: ["Koulen", "serif"]
+      }
+    
     },
     plugins: [],
+  
   }

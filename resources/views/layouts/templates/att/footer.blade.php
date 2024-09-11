@@ -1,5 +1,5 @@
 </div>
-
+    
 @stack("JS")
 
 </body>
