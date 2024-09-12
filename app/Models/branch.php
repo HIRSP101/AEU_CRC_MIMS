@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class branch extends Model
 {
@@ -17,12 +18,12 @@ class branch extends Model
         return $this->hasMany(branch_member_roster::class, 'foreign_key', 'branch_id');
     }
 
-    public function branch_contact_detail() :BelongsTo {
-        return $this->belongsTo(branch_contact_detail::class, 'foreign_key', 'branch_id');
+    public function branch_contact_detail() :HasOne {
+        return $this->hasOne(branch_contact_detail::class, 'foreign_key', 'branch_id');
     }
 
-    public function branch_leadership_memberroster() :BelongsTo {
-        return $this->belongsTo(branch_leadership_memberroster::class, 'foreign_key', 'branch_id');
+    public function branch_leadership_memberroster() :HasOne {
+        return $this->hasOne(branch_leadership_memberroster::class, 'foreign_key', 'branch_id');
     }
 
 }
