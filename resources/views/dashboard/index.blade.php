@@ -13,10 +13,11 @@
 @endpush
 
 @section('Content')
+    @include('dashboard.partials.user')
     <div class="mx-2 mt-2 bg-gray-200 rounded-md shadow-lg">
         <div class="p-1 flex flex-wrap items-center justify-center">
             @foreach ($branches as $key => $val)
-                @if ($key == 3)
+                @if ($key == 4)
                     <div class="p-1 flex flex-wrap items-center justify-center">
                 @endif
                 @include('dashboard.partials.branch_card')
@@ -37,6 +38,15 @@
             $("#toggleButton").click(function() {
                 $(".collapsibleContent").slideToggle();
                 $(this).toggleClass('flipped');
+            });
+            $('#dropdownToggle').on('click', function() {
+                $('#dropdownMenu').toggleClass('hidden');
+            });
+
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('#dropdownToggle').length && !$(e.target).closest('#dropdownMenu').length) {
+                    $('#dropdownMenu').addClass('hidden');
+                }
             });
         });
     </script>

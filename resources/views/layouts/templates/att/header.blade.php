@@ -26,7 +26,7 @@
 
             <div class="flex items-center pr-4">
 
-                <button class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
+                <button id="dropdownToggle" class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
                     <img class="inline-block size-[38px] rounded-full" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Avatar">
                 </button>
             </div>
