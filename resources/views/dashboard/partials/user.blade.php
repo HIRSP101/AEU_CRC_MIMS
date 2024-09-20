@@ -3,8 +3,9 @@
     <div aria-label="navigation" class="py-2">
         <nav class="grid gap-1">
             @include('dashboard.partials.user.option1')
-            @include('dashboard.partials.user.option2')
+            @if(auth()->user()->hasRole('admin'))
             @include('dashboard.partials.user.option3')
+            @endif
         </nav>
     </div>
     <div class="ml-1" aria-label="footer" class="pt-2">

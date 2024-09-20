@@ -1,3 +1,4 @@
+@if(auth()->user() || auth()->user()->hasRole('admin'))
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
@@ -50,3 +51,8 @@
         </div>
     </form>
 </x-guest-layout>
+@else
+<x-403-forbidden />
+
+
+@endif

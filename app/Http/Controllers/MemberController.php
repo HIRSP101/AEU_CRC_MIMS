@@ -14,12 +14,14 @@ use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $branches = branch::all()->pluck("branch_kh", "branch_id");
         return view('dashboard.partials.create', compact('branches'));
     }
 
-    public function getMemberDetail() {
+    public function getMemberDetail()
+    {
         dd(member_personal_detail::with(relations: ['member_guardian_detail', 'member_registration_detail', 'member_education_background', 'member_current_address', 'member_pob_address'])->latest()->first());
     }
     public function insertMember(Request $request)
@@ -30,17 +32,17 @@ class MemberController extends Controller
         ]);
         $datas = json_decode($request->input(key: 'members'), associative: true);
         $current_mem_id = member_personal_detail::latest()->first()->member_id;
-       // dd($current_mem_id);
-      //  dd($request);
+        // dd($current_mem_id);
+        //  dd($request);
         DB::transaction(function () use ($datas, $request, $current_mem_id) {
             foreach ($datas as $data) {
-                $imageName = $request->hasFile('image') ? 'mem-'.str_replace(' ', '',$data["name_en"].(string)((int)$current_mem_id+1)).'.'.$request->image->extension() : "";
+                $imageName = $request->hasFile('image') ? 'mem-' . str_replace(' ', '', $data["name_en"] . (string)((int)$current_mem_id + 1)) . '.' . $request->image->extension() : "";
                 $request->image->move(public_path('images/members'), $imageName);
                 $member_data = member_personal_detail::create([
                     "name_kh" => $data['name_kh'] ?? null,
                     "name_en" => $data['name_en'] ?? null,
                     "gender" => $data['gender'] ?? null,
-                    "image" => "images/".$imageName ?? null,
+                    "image" => "images/" . $imageName ?? null,
                     "nationality" => $data['nationality'] ?? 'ខ្មែរ',
                     "date_of_birth" => isset($data['date_of_birth']) ? $this->convertDate($data['date_of_birth']) : null,
                     "full_current_address" => $data['full_current_address'] ?? null,
@@ -58,12 +60,13 @@ class MemberController extends Controller
 
         return response()->json(['message' => 'Member record created successfully!']);
     }
-    public function eloquent_relation_delete(Request $request) {
+    public function eloquent_relation_delete(Request $request)
+    {
         $member_id = $request->input("member_id");
-       // dd($member_id);
+        // dd($member_id);
         $memberPersonalDetail = member_personal_detail::findall();
 
-         if (!$memberPersonalDetail) {
+        if (!$memberPersonalDetail) {
             return response()->json([
                 'message' => 'Member Personal Detail not found.'
             ], 404);
@@ -79,7 +82,8 @@ class MemberController extends Controller
         return date('Y-m-d', strtotime(str_replace('/', '-', $date)));
     }
 
-    private function createPobAddress($member_data, $data) {
+    private function createPobAddress($member_data, $data)
+    {
         $member_data->member_pob_address()->create([
             'home_no' => $data['pob_home_no'] ?? null,
             'street_no' => $data['pob_street_no'] ?? null,
@@ -91,7 +95,8 @@ class MemberController extends Controller
         ]);
     }
 
-    private function createGuardianDetail($member_data, $data) {
+    private function createGuardianDetail($member_data, $data)
+    {
         $member_data->member_guardian_detail()->create([
             'father_name' => $data['father_name'] ?? null,
             'father_dob' =>  isset($data['father_dob']) ? $this->convertDate($data['father_dob']) : null,
@@ -138,8 +143,6 @@ class MemberController extends Controller
             'language' => $data['language'] ?? null,
             'computer_skill' => $data['computer_skill'] ?? null,
             'misc_skill' => $data['misc_skill'] ?? null
-         ]);
+        ]);
     }
-
-
 }

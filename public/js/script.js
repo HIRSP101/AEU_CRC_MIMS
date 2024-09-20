@@ -10,6 +10,16 @@
 //         li.classList.add("active")
 //     })
 // })
+$("#dropdown_entry").on("click", function(e) {
+    e.preventDefault();
+    $(".dropdown_entry").toggle('hidden');
+    $("#dropdown_entry > svg").toggleClass('rotate-90');
+})
+$("#dropdown_create").on("click", function(e) {
+    e.preventDefault();
+    $(".dropdown_create").toggle('hidden');
+    $("#dropdown_create > svg").toggleClass('rotate-90');
+})
 
 var sidebar = document.getElementById('sidebar');
 var openSidebar = document.getElementById('openSidebar');

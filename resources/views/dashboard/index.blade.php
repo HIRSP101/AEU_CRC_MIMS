@@ -13,9 +13,17 @@
 @endpush
 
 @section('Content')
-    @include('dashboard.partials.user')
+
+        @include('dashboard.partials.first_sec_dashboard')
+        <div class="">
+            <hr class="h-px my-4 bg-red-600 p-[1px] border dark:bg-red-600">
+        </div>
+        <div class="">
+            <h1 class="font-koulen text-blue-600 text-2xl">សាខា & អនុសាខា</h1>
+        </div>
     <div class="mx-2 mt-2 bg-gray-200 rounded-md shadow-lg">
-        <div class="p-1 flex flex-wrap items-center justify-center">
+
+        <div class="p-1 flex flex-wrap items-center justify-center font-siemreap">
             @foreach ($branches as $key => $val)
                 @if ($key == 4)
                     <div class="p-1 flex flex-wrap items-center justify-center">
@@ -30,24 +38,33 @@
         </div>
     </div>
     </div>
+    <div class="">
+        <hr class="h-px my-4 bg-red-600 p-[1px] border dark:bg-red-600">
+    </div>
+        <div class="flex items-center justify-center font-sans mt-5">
+            <div class="w-full lg:w-5/6">
+                <h1 class="text-center font-siemreap font-black text-2xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
+                <div class="bg-white shadow-md rounded my-6">
+                    <table class="min-w-max w-full table-auto font-siemreap">
+                        <thead>
+                            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                <th class="py-3 pl-5 text-left">សាខា</th>
+                                <th class="py-3 text-center">សរុប</th>
+                                <th class="py-3 text-center">ស្រី</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 text-sm font-light">
+                            @foreach($total_mem_branches as $total_mem_branch)
+                                @include('dashboard.partials.summarized_mem_branch')
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 @endsection
 
 @push('JS')
     <script>
-        $(document).ready(function() {
-            $("#toggleButton").click(function() {
-                $(".collapsibleContent").slideToggle();
-                $(this).toggleClass('flipped');
-            });
-            $('#dropdownToggle').on('click', function() {
-                $('#dropdownMenu').toggleClass('hidden');
-            });
 
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('#dropdownToggle').length && !$(e.target).closest('#dropdownMenu').length) {
-                    $('#dropdownMenu').addClass('hidden');
-                }
-            });
-        });
     </script>
 @endpush

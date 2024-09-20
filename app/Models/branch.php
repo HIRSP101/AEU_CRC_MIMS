@@ -13,17 +13,22 @@ class branch extends Model
     protected $connection = "mysql";
     protected $table = "branch";
     protected $primaryKey = "branch_id";
-
+    protected $timestamp = false;
+    protected $fillable = ["branch_name", "branch_kh", "user_id"];
     public function branch_member_roster() :HasMany {
-        return $this->hasMany(branch_member_roster::class, 'foreign_key', 'branch_id');
+        return $this->hasMany(branch_member_roster::class, 'branch_id', 'branch_id');
     }
 
     public function branch_contact_detail() :HasOne {
-        return $this->hasOne(branch_contact_detail::class, 'foreign_key', 'branch_id');
+        return $this->hasOne(branch_contact_detail::class, 'branch_id', 'branch_id');
     }
 
     public function branch_leadership_memberroster() :HasOne {
-        return $this->hasOne(branch_leadership_memberroster::class, 'foreign_key', 'branch_id');
+        return $this->hasOne(branch_leadership_memberroster::class, 'branch_id', 'branch_id');
+    }
+    public function users(): BelongsTo
+    {
+        return $this->belongsTo(users::class, 'id', 'user_id');
     }
 
 }

@@ -1,5 +1,6 @@
 <a
-          href="/"
+
+        id="accountsetting"
           class="flex items-center leading-6 space-x-3 py-3 px-4 w-full text-lg text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
         >
           <svg

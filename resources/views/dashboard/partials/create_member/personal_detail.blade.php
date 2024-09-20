@@ -1,4 +1,4 @@
-<div class="flex flex-wrap -mx-3 mb-6">
+<div class="flex flex-wrap mx-3 mb-6">
     <div class="flex-1 w-full md:w-1/4 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700  mb-2" for="name_kh">
             <h1>
@@ -39,12 +39,12 @@
             name="nationality" id="nationality" type="text" required>
     </div>
     <div class="w-1/2 md:w-44 bg-gray-200 border border-red-300 rounded focus:outline-none focus:bg-white focus:border-gray-500">
-            <label class=" uppercase text-gray-700" for="image">
+            <label class="uppercase text-gray-700" for="image">
                 រូបភាព
             </label>
             <a id="imagepreview"> </a>
             <input
                 class="appearance-none text-transparent"
-                name="image" type="file" select="image/*" id="image">
+                name="image" type="file" select ="image/*" id="image">
         </div>
 </div>

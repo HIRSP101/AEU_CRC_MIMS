@@ -4,14 +4,14 @@
     <div aria-label="header" class="flex space-x-4 items-center p-4">
       <div aria-label="avatar" class="flex mr-auto items-center space-x-4">
         <img
-          src="https://avatars.githubusercontent.com/u/120011788?s=400&v=4"
+          src="{{auth()->user()->image ?? ""}}"
           class="w-16 h-16 shrink-0 rounded-full"
         />
         <div class="space-y-2 flex flex-col flex-1 truncate">
           <div class="font-medium relative text-xl leading-tight text-gray-900">
             <span class="flex">
               <span class="truncate relative pr-8">
-                   {{ auth()->user()->name }}
+                   {{ auth()->user()->name }} {{auth()->user()->hasRole('admin') ? '(admin)' : ""}}
               </span>
             </span>
           </div>

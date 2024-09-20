@@ -13,7 +13,12 @@
     </ul>
 </div>
 @endif
-<div class="p-5 md:ml-24 md:mr-24">
+<div class="p-5 md:ml-24 md:mr-24 bg-white font-siemreap shadow-xl rounded-lg my-3">
+    <div class="flex flex-col items-center justify-center mb-10">
+        <img class="w-[125px] h-[125px] mb-3" src="{{asset('images/Logo_of_Cambodian_Red_Cross.svg')}}" alt="">
+        <h1 class="mb-1">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
+        <h1>Cambodian Red Cross Youth Individual Information</h1>
+    </div>
     <form class="w-full" method="POST" action="/insertmember" enctype="multipart/form-data">
         @csrf
         @include('dashboard.partials.create_member.personal_detail')

@@ -1,4 +1,4 @@
-<div class=" w-26 md:w-28 px-3 mb-6 md:mb-0">
+<div class="w-26 md:w-28 px-3 mb-6 md:mb-0">
     <label class="block uppercase tracking-wide text-gray-700 mb-2" for="t_shirt">
         ទំហំអាវ
     </label>
@@ -82,3 +82,4 @@
         name="facebook" id="facebook" type="text">
 </div>
 </div>
+
