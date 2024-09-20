@@ -1,0 +1,8 @@
+{
+    "buildCommand": "npm run build",
+    "outputDirectory": "public",
+    "framework": "laravel",
+    "routes": [
+      { "src": "/(.*)", "dest": "/api/index.php" }
+    ]
+  }
