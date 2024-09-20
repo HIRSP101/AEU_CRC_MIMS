@@ -8,17 +8,19 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/fontawesome.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.tailwindcss.min.css"/>
 
-  <script src="{{ asset('js/script.js') }}"></script>
   <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
-  @vite('resources/css/app.css')
-
+  <script src="{{ asset('js/handlemodal.js') }}"></script>
+  @vite(['resources/js/app.js', 'resources/css/app.css', 'resources/css/style.css', 'public/js/script.js'])
 @stack("CSS")
 </head>
 <body>
+    <div id="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
     <div class="flex h-screen">
     @include('dashboard.partials.sidebar')
     <div class="flex flex-col flex-1 overflow-y-auto bg-[#F1F5F9]">
-        <div class="flex items-center justify-between h-16 bg-red-600 border-b border-gray-200 px-4">
+        <div class="flex items-center justify-between h-16 bg-red-600 border-b border-gray-200 px-4 py-1">
             <button id="openSidebar" class="text-gray-500 md:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -30,11 +32,11 @@
             </div>
 
             <div class="flex items-center pr-4">
-
-                <button class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
-                    <img class="inline-block size-[38px] rounded-full" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Avatar">
+                <button id="dropdownToggle" class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
+                    <img class="inline-block size-[38px] rounded-full" src="{{ auth()->user()->image ?? "" }}" alt="Avatar">
                 </button>
             </div>
         </div>
-   
+        @include('dashboard.partials.user')
+        @include('dashboard.partials.user.profile.profile_modal')   
 

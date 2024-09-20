@@ -10,30 +10,55 @@
     <div class="flex flex-col flex-1 overflow-y-auto">
         <nav class="flex-1 px-2 py-4 bg-white">
 
-            <a class="flex justify-center items-center" href="">
-                <img class="w-20" src="{{ asset('../assets/images/Logo_of_Cambodian_Red_Cross.svg') }}">
+            <a class="flex justify-center items-center" href="{{ route('dashboard') }}">
+                <img class="w-20" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}">
             </a>
-
-           <div class="mt-10">
-                <a href="{{ route('provinces')}}" class="flex items-center font-siemreap px-4 py-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+            <div class="mt-10">
+            @if(auth()->user()->hasRole('admin'))
+                <a href="{{route('createbranch')}}" class="flex items-center font-siemreap px-4 py-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                     សាខា & អនុសាខា
                 </a>
+            @endif
                 {{-- <a href="" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                     អ្នកប្រើប្រាស់
                 </a> --}}
-                <a href="{{ route('create-member') }}" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <a href="" id="dropdown_entry" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 transition delay-150 duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                     បញ្ជូលសមាជិក
                 </a>
-                <a href="{{ route('report-page') }}" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                <div class="ml-5 dropdown_entry hidden ">
+                    <a href="{{ route('import') }}" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        + បញ្ជូលជា File
+                    </a>
+                    <a href="{{ route('createmember') }}" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        + បញ្ជូលតាម Form
+                    </a>
+                </div>
+                @if(auth()->user()->hasRole('admin'))
+                <a href="" id="dropdown_create" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                    <svg  xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 transition delay-150 duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    បង្កើត
+                </a>
+                <div class="ml-5 dropdown_create hidden">
+                    <a href="{{ route('userroles') }}" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        + បង្កើត User
+                    </a>
+                    <a href="{{ route('createbranch') }}" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        + បង្កើត សាខា&អនុសាខា
+                    </a>
+                </div>
+                @endif
+                <a href="" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
@@ -43,8 +68,3 @@
         </nav>
     </div>
 </div>
-@push("JS")
-<script src="{{ asset('js/script.js') }}">
-
-</script>
-@endpush

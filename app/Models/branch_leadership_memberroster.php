@@ -10,4 +10,8 @@ class branch_leadership_memberroster extends Model
     protected $connection = "mysql";
     protected $table = "branch_leadership_memberroster";
     protected $primaryKey = "blsmr_id";
+
+    public function branch(): BelongsTo {
+        return $this->belongsTo(branch::class, 'foreign_key', 'branch_id');
+    }
 }

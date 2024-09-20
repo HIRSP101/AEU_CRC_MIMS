@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c491b8531eec05ba41a11d9276a5749",
+    "content-hash": "68e368c374d5458f4024a5e03674e711",
     "packages": [
         {
             "name": "brick/math",
@@ -1049,6 +1049,68 @@
                 }
             ],
             "time": "2023-12-03T19:50:20+00:00"
+        },
+        {
+            "name": "laravel/breeze",
+            "version": "v1.29.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/breeze.git",
+                "reference": "22c53b84b7fff91b01a318d71a10dfc251e92849"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/breeze/zipball/22c53b84b7fff91b01a318d71a10dfc251e92849",
+                "reference": "22c53b84b7fff91b01a318d71a10dfc251e92849",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^10.17",
+                "illuminate/filesystem": "^10.17",
+                "illuminate/support": "^10.17",
+                "illuminate/validation": "^10.17",
+                "php": "^8.1.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.0",
+                "phpstan/phpstan": "^1.10"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Breeze\\BreezeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Breeze\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Minimal Laravel authentication scaffolding with Blade and Tailwind.",
+            "keywords": [
+                "auth",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/breeze/issues",
+                "source": "https://github.com/laravel/breeze"
+            },
+            "time": "2024-03-04T14:35:21+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2385,6 +2447,70 @@
             "time": "2023-02-08T01:06:31+00:00"
         },
         {
+            "name": "onecentlin/laravel-adminer",
+            "version": "7.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/onecentlin/laravel-adminer.git",
+                "reference": "e3f622c9e3960343bdbc8b33807c81504503b440"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/onecentlin/laravel-adminer/zipball/e3f622c9e3960343bdbc8b33807c81504503b440",
+                "reference": "e3f622c9e3960343bdbc8b33807c81504503b440",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "~5.0|~6.0|~7.0|~8.0|~9.0|~10.0|^11.0",
+                "illuminate/routing": "~5.0|~6.0|~7.0|~8.0|~9.0|~10.0|^11.0",
+                "illuminate/support": "~5.0|~6.0|~7.0|~8.0|~9.0|~10.0|^11.0",
+                "php": ">=7.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Onecentlin\\Adminer\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Onecentlin\\Adminer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Winnie Lin",
+                    "email": "onecentlin@gmail.com"
+                }
+            ],
+            "description": "Laravel Adminer Database Manager",
+            "keywords": [
+                "adminer",
+                "database",
+                "laravel10",
+                "laravel11",
+                "laravel5",
+                "laravel6",
+                "laravel7",
+                "laravel8",
+                "laravel9",
+                "management",
+                "mysql",
+                "sqlite"
+            ],
+            "support": {
+                "issues": "https://github.com/onecentlin/laravel-adminer/issues",
+                "source": "https://github.com/onecentlin/laravel-adminer/tree/7.0.0"
+            },
+            "time": "2024-03-02T15:15:25+00:00"
+        },
+        {
             "name": "phpoption/phpoption",
             "version": "1.9.3",
             "source": {
@@ -3174,6 +3300,88 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
+        },
+        {
+            "name": "spatie/laravel-permission",
+            "version": "6.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-permission.git",
+                "reference": "fe973a58b44380d0e8620107259b7bda22f70408"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/fe973a58b44380d0e8620107259b7bda22f70408",
+                "reference": "fe973a58b44380d0e8620107259b7bda22f70408",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/auth": "^8.12|^9.0|^10.0|^11.0",
+                "illuminate/container": "^8.12|^9.0|^10.0|^11.0",
+                "illuminate/contracts": "^8.12|^9.0|^10.0|^11.0",
+                "illuminate/database": "^8.12|^9.0|^10.0|^11.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "laravel/passport": "^11.0|^12.0",
+                "orchestra/testbench": "^6.23|^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^9.4|^10.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "6.x-dev",
+                    "dev-master": "6.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Permission\\PermissionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Spatie\\Permission\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Permission handling for Laravel 8.0 and up",
+            "homepage": "https://github.com/spatie/laravel-permission",
+            "keywords": [
+                "acl",
+                "laravel",
+                "permission",
+                "permissions",
+                "rbac",
+                "roles",
+                "security",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-permission/issues",
+                "source": "https://github.com/spatie/laravel-permission/tree/6.9.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-06-22T23:04:52+00:00"
         },
         {
             "name": "symfony/console",
