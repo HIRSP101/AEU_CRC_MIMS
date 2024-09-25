@@ -25,7 +25,11 @@
             </button>
 
             <div class="flex items-center flex-1 mx-4">
-                <input class="border rounded-md px-6 py-2" type="text" placeholder="Search">
+                @if(auth()->user()->hasRole('admin'))
+                <h1 class="text-white text-lg font-koulen">ទីស្នាក់ការកណ្តាល</h1>
+                @else
+                <h1 class="text-white text-lg font-koulen">សាខាថ្នាក់កណ្តាល: {{auth()->user()->branch[0]->branch_kh}}</h1>
+                @endif
             </div>
 
             <div class="flex items-center pr-4">

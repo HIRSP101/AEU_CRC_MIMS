@@ -6,7 +6,7 @@ $firstEle = $total_mem_branches[0];
     <div class="">
         <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             <div class="p-4">
-                <h1 class="text-blue-700 text-3xl font-koulen">សួស្តី បងប្រុស</h1>
+                <h1 class="text-blue-700 text-3xl font-koulen">សួស្តី {{explode(' ',auth()->user()->name)[1] ?? auth()->user()->name}}</h1>
                 <h3 class="text-blue-700 text-xl font-siemreap mt-3.5">សូមសា្វគមន៍មកកាន់ប្រព័ន្ធគ្រប់គ្រងទិន្នន័យ​
                     សមាជិកយុវជន ក.ក្រ.ក</h3>
             </div>

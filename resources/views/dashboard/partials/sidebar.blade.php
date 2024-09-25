@@ -29,12 +29,12 @@
                     អ្នកប្រើប្រាស់
                 </a> --}}
                 <a href="" id="dropdown_entry" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 transition delay-150 duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 transition delay-100 duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                     បញ្ជូលសមាជិក
                 </a>
-                <div class="ml-5 dropdown_entry hidden ">
+                <div class="ml-5 dropdown_entry hidden">
                     <a href="{{ route('import') }}" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                         + បញ្ជូលជា File
                     </a>
@@ -44,7 +44,7 @@
                 </div>
                 @if(auth()->user()->hasRole('admin'))
                 <a href="" id="dropdown_create" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <svg  xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 transition delay-150 duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 transition delay-100 duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                     បង្កើត
