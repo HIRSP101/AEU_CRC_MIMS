@@ -147,4 +147,10 @@ class MemberController extends Controller
             'misc_skill' => $data['misc_skill'] ?? null
         ]);
     }
+    public function deleteMember(Request $request)
+    {
+        $data = member_personal_detail::whereIn('member_id', $request->arr);
+        $data->delete();
+        // dd($data);
+    }
 }

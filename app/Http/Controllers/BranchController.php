@@ -19,7 +19,7 @@ class BranchController extends Controller
                 DB::raw("COUNT(distinct meb.institute_id) AS total_institutes"),
                 DB::raw("COUNT(meb.member_id) AS total_mem")
             )
-            ->groupBy('branch.branch_id', 'branch.branch_kh')
+            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
             ->orderBy('total_institutes', 'desc')
             ->get();
         return view('branch.index', compact('total_mem_branches'));

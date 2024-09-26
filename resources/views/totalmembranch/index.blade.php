@@ -12,6 +12,7 @@
     <h1 class="text-center font-siemreap my-2 text-xl font-bold"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
     <h2 class="text-center font-siemreap mb-2 text-xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា {{$current_branch}} </h2>
 <div class="w-full overflow-scroll my-3 max-h-[760px]">
+    <button id="delete">delete all</button>
     <table class="min-w-full border-collapse border-2 border-slate-400 ">
         <thead class=" font-siemreap bg-slate-200 border-collapse border-t-2 border-black">
         <tr>
@@ -68,5 +69,36 @@
     $(".hoverablebranch").on("dblclick",function() {
         window.location = "{{ url('/') }}/member/"+$(this).attr('data-id');
     })
+    $(".hoverablebranch").on("click",function() {
+        $(this).toggleClass('bg-slate-300 marked')
+    })
+    $("#delete").on("click", function(e) {
+        e.preventDefault();
+        var arr = [];
+        $(".marked").each(function () {
+            // console.log($(this).attr('data-id'))
+            arr.push($(this).attr('data-id'))
+            
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/delete_member',
+            data: {
+                arr: arr
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                console.log(response.message);
+                location.reload();
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        })
+        console.log(arr)
+    })
+    
 </script>
 @endpush
