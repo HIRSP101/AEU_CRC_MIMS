@@ -55,7 +55,10 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get("/deleteall", "{$appC}\\testdbconnection@deleteall_elo");
     Route::get("/create", "{$appC}\\MemberController@index")->name('createmember');
     Route::post('/createmember', "{$appC}\\MemberController@insertMember");
-    Route::get('/createbranch', "{$appC}\\BranchController@index")->name('createbranch');
+    Route::get('/branch', "{$appC}\\BranchController@index")->name('branch');
+    Route::get('/branch/{id}', "{$appC}\\BranchController@get");
+    Route::get('/member/{id}', "{$appC}\\MemberController@getMemberDetail");
+    Route::post('/createbranch', "{$appC}\\BranchController@index")->name('createbranch');
     Route::get('/uploadint', "{$appC}\\ResourceController@index");
     Route::post('/uploadimage', "{$appC}\\ResourceController@uploadImage");
     Route::get('/getallmembers', "{$appC}\\MemberController@getMemberDetail");

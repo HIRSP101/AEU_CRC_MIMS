@@ -13,7 +13,7 @@ class member_personal_detail extends Model
     protected $table = "member_personal_detail";
     protected $primaryKey = "member_id";
     public $timestamps = true;
-    protected $fillable = ["member_id", "member_code", "name_kh", "name_en", "gender", "nationality", "date_of_birth", "image", "full_current_address", "phone_number", "guardian_phone", "national_id", "shirt_size", "village", "commune", "sangkat", "provience", "city", "khan", "email", "facebook"];
+    protected $fillable = ["member_id", "member_code", "name_kh", "name_en", "gender", "nationality", "date_of_birth", "image", "full_current_address", "phone_number", "guardian_phone", "national_id", "shirt_size", "member_type", "email"];
     protected static function boot()
     {
         parent::boot();

@@ -17,12 +17,13 @@ class MemberController extends Controller
     public function index()
     {
         $branches = branch::all()->pluck("branch_kh", "branch_id");
-        return view('dashboard.partials.create', compact('branches'));
+        return view('member.index', compact('branches'));
     }
 
-    public function getMemberDetail()
+    public function getMemberDetail(Request $request)
     {
-        dd(member_personal_detail::with(relations: ['member_guardian_detail', 'member_registration_detail', 'member_education_background', 'member_current_address', 'member_pob_address'])->latest()->first());
+        $member = member_personal_detail::with(relations: ['member_guardian_detail', 'member_registration_detail', 'member_education_background', 'member_current_address', 'member_pob_address'])->where('member_id', $request->id)->first();
+        return view('member_detail.index', compact('member'));
     }
     public function insertMember(Request $request)
     {
@@ -48,6 +49,7 @@ class MemberController extends Controller
                     "full_current_address" => $data['full_current_address'] ?? null,
                     "phone_number" => $data['phone_number'] ?? null,
                     "shirt_size" => $data['shirt_size'] ?? null,
+                    "member_type" => $data['type'] ?? null,
                 ]);
 
                 $this->createRegistrationDetails($member_data, $data);

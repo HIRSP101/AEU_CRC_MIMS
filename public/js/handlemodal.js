@@ -30,9 +30,11 @@ $(document).ready(function() {
     })
     $("#openSidebar").click(function () {
         $("#sidebar").removeClass('-translate-x-full');
+
     })
     $("#closeSidebar").click(function () {
         $("#sidebar").addClass('-translate-x-full');
+        $("#sidebar").removeClass('relative');
     })
 
 });

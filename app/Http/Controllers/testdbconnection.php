@@ -72,6 +72,7 @@ class testdbconnection extends Controller
                         "phone_number" => $data['phone_number'] ?? null,
                         "national_id" => $data['national_id'] ?? null,
                         "shirt_size" => $data['shirt_size'] ?? null,
+                        "member_type" => $data['type'] ?? null,
                     ]);
 
                     $this->createRegistrationDetails($member_data, $data);
@@ -121,7 +122,7 @@ class testdbconnection extends Controller
     private function createRegistrationDetails($member_data, $data)
     {
         $member_data->member_registration_detail()->create([
-            'registration_date' => isset($data['expiration_date']) ? $this->convertDate($data['expiration_date']) : null,
+            'registration_date' => isset($data['registration_date']) ? $this->convertDate($data['expiration_date']) : null,
             'expiration_date' => isset($data['expiration_date']) ? $this->convertDate($data['expiration_date']) : null,
         ]);
     }

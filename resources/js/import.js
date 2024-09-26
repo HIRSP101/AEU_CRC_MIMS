@@ -44,6 +44,7 @@ $(document).ready(function () {
                                     idCounter++;
                                     console.log("*--->*--->*---->start cutting from here");
                                 }
+                                console.log(value instanceof Date ? value.toLocaleDateString() : "t");
                                 value = value instanceof Date ? value.toLocaleDateString() : value;
                                 return typeof value === 'object' ? (value?.result ?? value?.text ?? value) : value;
                             });

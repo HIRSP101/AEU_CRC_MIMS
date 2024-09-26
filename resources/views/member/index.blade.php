@@ -4,15 +4,6 @@
 
 @section('Content')
 
-@if ($errors->any())
-<div class="text-red-500">
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
 <div class="p-5 md:ml-24 md:mr-24 bg-white font-siemreap shadow-xl rounded-lg my-3">
     <div class="flex flex-col items-center justify-center mb-10">
         <img class="w-[125px] h-[125px] mb-3" src="{{asset('images/Logo_of_Cambodian_Red_Cross.svg')}}" alt="">
@@ -21,15 +12,15 @@
     </div>
     <form class="w-full" method="POST" action="/insertmember" enctype="multipart/form-data">
         @csrf
-        @include('dashboard.partials.create_member.personal_detail')
+        @include('member.partials.personal_detail')
         <hr>
-        @include('dashboard.partials.create_member.pob')
+        @include('member.partials.pob')
         <hr>
-        @include('dashboard.partials.create_member.current_address')
+        @include('member.partials.current_address')
         <hr>
-        @include('dashboard.partials.create_member.personal_training')
+        @include('member.partials.personal_training')
         <hr>
-        @include('dashboard.partials.create_member.guardian')
+        @include('member.partials.guardian')
         <div class="flex justify-end">
             <a class="border-solid m-2 border-2 bg-red-400 p-2 rounded-md hover:bg-red-500 active:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
                id="clear_btn">លុប</a>
