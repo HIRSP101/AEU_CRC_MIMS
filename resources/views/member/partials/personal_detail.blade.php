@@ -1,5 +1,5 @@
-<div class="flex flex-wrap mx-3 mb-6">
-    <div class="flex-1 w-full md:w-1/4 px-3 mb-6 md:mb-0">
+<div class="flex flex-wrap  mb-6">
+    <div class="flex-1 w-full md:w-1/4 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700  mb-2" for="name_kh">
             <h1>
                 ឈ្មោះ
@@ -38,13 +38,12 @@
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             name="nationality" id="nationality" type="text" required>
     </div>
-    <div class="w-1/2 md:w-44 bg-gray-200 border border-red-300 rounded focus:outline-none focus:bg-white focus:border-gray-500">
-            <label class="uppercase text-gray-700" for="image">
-                រូបភាព
-            </label>
-            <a id="imagepreview"> </a>
-            <input
-                class="appearance-none text-transparent"
-                name="image" type="file" select ="image/*" id="image">
-        </div>
+    <div class="w-1/2 md:w-44 ">
+        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="image">
+            រូបភាព
+        </label>
+        <input
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            name="image" type="file" select="image/*" id="image">
+    </div>
 </div>
