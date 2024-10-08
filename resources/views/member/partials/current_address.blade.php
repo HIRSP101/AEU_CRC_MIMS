@@ -8,7 +8,7 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    name="housenumber" id="housenumber" type="text">
+                    name="housenumber" id="housenumber" type="text" value="{{ old('housenumber', $member->house_no ?? '') }}">
             </div>
             <div class="w-1/4 md:w-40 px-3">
                 <label class="block uppercase tracking-wide text-gray-700  mb-2" for="street">
@@ -16,7 +16,7 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    name="street" id="street" type="text">
+                    name="street" id="street" type="text" value="{{ old('street', $member->street ?? '') }}">
             </div>
             <div class="flex-1 w-1/4 md:w-1/4 px-3">
                 <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_village">
@@ -24,7 +24,7 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    name="current_village" id="current_village" type="text">
+                    name="current_village" id="current_village" type="text" value="{{ old('current_village', $member->current_village ?? '') }}">
             </div>
             <div class="flex-1 w-1/4 md:w-1/4 px-3">
                 <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_commune">
@@ -32,7 +32,7 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    name="current_commune" id="current_commune" type="text" required>
+                    name="current_commune" id="current_commune" type="text" value="{{ old('current_commune', $member->current_commune ?? '') }}" required>
             </div>
         </div>
         <div class="flex flex-wrap -mx-3 mb-2 mt-5">

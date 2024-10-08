@@ -7,7 +7,7 @@
         </label>
         <input
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            name="name_kh" id="name_kh" type="text" placeholder="ឈ្មោះជាភាសាខ្មែរ" required>
+            name="name_kh" id="name_kh" type="text" value="{{ old('name_kh', $member->name_kh ?? '') }}" placeholder="ឈ្មោះជាភាសាខ្មែរ" required>
     </div>
     <div class="flex-1 w-full md:w-1/4 px-3">
         <label class="block uppercase tracking-wide text-gray-700  mb-2" for="name_en">
@@ -17,7 +17,7 @@
         </label>
         <input
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            name="name_en" id="name_en" type="text" placeholder="ឈ្មោះជាភាសាអង់គ្លេស" required>
+            name="name_en" id="name_en" type="text" value="{{ old('name_en', $member->name_en ?? '') }}" placeholder="ឈ្មោះជាភាសាអង់គ្លេស" required>
     </div>
     <div class="w-1/3 md:w-28 px-3">
         <label class="block uppercase tracking-wide text-gray-700  mb-2" for="gender">
@@ -36,7 +36,7 @@
         </label>
         <input
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            name="nationality" id="nationality" type="text" required>
+            name="nationality" id="nationality" type="text" value="{{ old('nationality', $member->nationality ?? '') }}" required>
     </div>
     <div class="w-1/2 md:w-44 bg-gray-200 border border-red-300 rounded focus:outline-none focus:bg-white focus:border-gray-500">
             <label class="uppercase text-gray-700" for="image">

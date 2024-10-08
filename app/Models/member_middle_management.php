@@ -12,7 +12,8 @@ class member_middle_management extends Model
     protected $table = "member_middle_management";
     protected $primaryKey = "mim_id";
     public $fillable = ["mim_id", "member_id", "name", "position", "branch_id"];
-    protected $timestamps = false;
+    //protected $timestamps = false;
+    public $timestamps = false;
 
     public function member_personal_detail(): BelongsTo
     {

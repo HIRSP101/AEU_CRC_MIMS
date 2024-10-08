@@ -151,6 +151,31 @@ class MemberController extends Controller
     {
         $data = member_personal_detail::whereIn('member_id', $request->arr);
         $data->delete();
-        // dd($data);
     }
+
+    public function deleteMemberOne(Request $request)
+    {
+        $memberId = $request->input('member_id');
+    
+        $member = member_personal_detail::find($memberId);
+        if ($member) {
+            $member->delete();
+            return response()->json(['message' => 'Member deleted successfully'], 200);
+        } else {
+            return response()->json(['message' => 'Member not found'], 404);
+        }
+    }
+
+    public function edit($id) {
+        $member = member_personal_detail::findOrFail($id);
+        $branches = Branch::all()->pluck('branch_name', 'id');
+        return view('member.index', compact('member', 'branches'));
+    }
+    public function update(Request $request, $id)
+    {
+        $member = member_personal_detail::find($id);
+        $member->update($request->all());
+        return response()->json(['message' => 'Member updated successfully']);
+    }
+    
 }

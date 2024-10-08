@@ -63,5 +63,9 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/uploadimage', "{$appC}\\ResourceController@uploadImage");
     Route::get('/getallmembers', "{$appC}\\MemberController@getMemberDetail");
     Route::post('/delete_member', "{$appC}\\MemberController@deleteMember");
+    Route::post('/delete_member_one', "{$appC}\\MemberController@deleteMemberOne");
+    Route::get('/member/{id}/edit', "{$appC}\\MemberController@edit")->name('editMember');
+    Route::put('/member/{id}', "{$appC}\\MemberController@update")->name('updateMember');
+
 });
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");

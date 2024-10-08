@@ -30,7 +30,12 @@
         {{$mem->phone_number}}
     </td>
     <td class="py-2 flex justify-center gap-1 ">
-        <button class="bg-yellow-400 px-1 py-1 rounded-md">edit</button>
-        <button class="bg-red-500 px-1 py-1 rounded-md">delete</button>
+        
+        <a href="{{ route('editMember', $mem->member_id) }}">
+            <i class="fas fa-edit"></i> Edit
+        </a>
+        <button class="delete_one" data-id="{{$mem->member_id}}">
+            <i class="fas fa-trash"></i> Delete
+        </button>        
     </td>
 </tr>

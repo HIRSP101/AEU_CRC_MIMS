@@ -33,10 +33,14 @@
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     list="proviencelist" id="provience" type="text" required>
-                <datalist id="proviencelist" name="proviencelist">
-                        @foreach($branches as $key=>$val)
-                            <option data-id="{{$key}}" value="{{$val}}">
+                    
+                    {{-- {{ dd($branches) }}  // This will dump and stop the execution to check what's in the $branches --}}
+
+                    <datalist id="proviencelist" name="proviencelist">
+                        @foreach($branches as $key => $val)
+                            <option data-id="{{$key}}" value="{{$val}}"></option>
                         @endforeach
-                </datalist>
+                    </datalist>
+                    
             </div>
         </div>
