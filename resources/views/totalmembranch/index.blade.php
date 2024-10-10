@@ -12,19 +12,20 @@
     <h1 class="text-center font-siemreap my-2 text-xl font-bold"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
     <h2 class="text-center font-siemreap mb-2 text-xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា {{$current_branch}} </h2>
 
-    <div class="tab_head_container">
-        <div class="page_limit">
-          <span>Shows</span>
-          <select id="table_size">
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-          </select>
-          <span>entries</span>
-        </div>
-    </div>
+    
 
     <div class="flex justify-end space-x-2 mb-4 mt-10">
+        <div class="tab_head_container">
+            <div class="page_limit">
+              {{-- <span>Shows</span> --}}
+              <select id="table_size" class="text-gray-700 bg-gray-300 py-2 rounded">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+              </select>
+              <span>entries</span>
+            </div>
+        </div>
         <button id="export_pdf" class="bg-gray-500 text-white px-4 py-2 rounded">Export PDF</button>
         <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
         <a href="{{ route('createmember') }}" class="bg-blue-500 text-white px-4 py-2 rounded">
@@ -78,9 +79,9 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="footer">
+        <div class="flex justify-end mt-8 footer">
             <span>Showing 1 to 10 of 60 entries</span>
-            <div class="index_buttons"></div>
+            <div class="px-7 py-15 bg-transparent cursor-pointer index_buttons"></div>
         </div>
     </div>
 </div>
@@ -106,23 +107,25 @@
             // console.log($(this).attr('data-id'))
             arr.push($(this).attr('data-id'))
         });
-        $.ajax({
-            type: 'POST',
-            url: '/delete_member',
-            data: {
-                arr: arr
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-                console.log(response.message);
-                location.reload();
-            },
-            error: function (error) {
-                console.error(error);
-            }
-        })
+        if (confirm('Are you sure you want to delete these user?')) {
+            $.ajax({
+                type: 'POST',
+                url: '/delete_member',
+                data: {
+                    arr: arr
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    console.log(response.message);
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            })
+        }
         console.log(arr)
     })
     
@@ -179,11 +182,11 @@
     function displayIndexButtons() {
         preLoadCalculations();
         $(".index_buttons button").remove();
-        $(".index_buttons").append('<button onclick="prev();">Previous</button>');
+        $(".index_buttons").append('<button class="bg-gray-300 px-3 rounded" onclick="prev();">Previous</button>');
 
         for (var i = 1; i <= max_index; i++) {
             $(".index_buttons").append(
-            '<button onclick="indexPagination(' +
+            '<button class="ml-2 bg-gray-300 px-3 rounded" onclick="indexPagination(' +
                 i +
                 ')" index="' +
                 i +
@@ -192,7 +195,7 @@
                 "</button>"
             );
         }
-        $(".index_buttons").append('<button onclick="next();">Next</button>');
+        $(".index_buttons").append('<button class="ml-2 bg-gray-300 px-3 rounded" onclick="next();">Next</button>');
         highlightIndexButton();
     }
     function highlightIndexButton() {
@@ -236,12 +239,12 @@
                 "<td class='px-2 py-4 text-sm text-center border-x-2 border-black whitespace-nowrap'>" + user["acadmedic_year"] + "</td>" +
                 "<td class='px-2 py-4 text-sm text-center border-x-2 border-black whitespace-nowrap'>" + user["full_current_address"] + "</td>" +
                 "<td class='px-2 py-4 text-sm text-center border-x-2 border-black whitespace-nowrap'>" + user["phone_number"] + "</td>" +
-                "<td class='py-2 flex justify-center gap-1'>" +
+                "<td class='py-2 flex justify-center gap-5'>" +
                     "<a href='/member/" + user["member_id"] + "/edit'>" +
-                        "<i class='fas fa-edit'></i> Edit" +
+                        "<i class='text-green-400 fas fa-edit'></i>" +
                     "</a>" + 
                     "<button class='delete_one' data-id='" + user["member_id"] + "'>" +
-                        "<i class='fas fa-trash'></i> Delete" +
+                        "<i class='text-red-400 fas fa-trash'></i>" +
                     "</button>" +
                 "</td>" +
             "</tr>";

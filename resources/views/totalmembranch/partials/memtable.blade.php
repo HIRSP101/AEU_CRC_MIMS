@@ -32,10 +32,10 @@
     <td class="py-2 flex justify-center gap-1 ">
         
         <a href="{{ route('editMember', $mem->member_id) }}">
-            <i class="fas fa-edit"></i> Edit
+            <i class="fas fa-edit"></i>
         </a>
         <button class="delete_one" data-id="{{$mem->member_id}}">
-            <i class="fas fa-trash"></i> Delete
+            <i class="fas fa-trash">de</i>
         </button>        
     </td>
 </tr>
