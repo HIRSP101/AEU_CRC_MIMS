@@ -1,6 +1,6 @@
 <div class="flex flex-wrap -mx-3 mt-3 mb-6">
     <div class="w-1/4 md:w-40 px-3">
-        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="home_no">
+        <label class=" font-battambang block uppercase tracking-wide text-gray-700  mb-2" for="home_no">
             ផ្ទះលេខ
         </label>
         <input
@@ -8,7 +8,7 @@
             name="home_no" id="home_no" type="text">
     </div>
     <div class="w-1/4 md:w-40 px-3">
-        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="street_no">
+        <label class=" font-battambang block uppercase tracking-wide text-gray-700  mb-2" for="street_no">
             ផ្លូវ
         </label>
         <input
@@ -16,7 +16,7 @@
             name="street_no" id="street_no" type="text">
     </div>
     <div class="flex-1 w-1/4 md:w-1/4 px-3">
-        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_village">
+        <label class=" font-battambang block uppercase tracking-wide text-gray-700  mb-2" for="current_village">
             ភូមិ
         </label>
         <input
@@ -24,7 +24,7 @@
             name="current_village" id="current_village" type="text">
     </div>
     <div class="flex-1 w-1/4 md:w-1/4 px-3">
-        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_commune_sangkat">
+        <label class=" font-battambang block uppercase tracking-wide text-gray-700  mb-2" for="current_commune_sangkat">
             ឃុំ/សង្កាត់
         </label>
         <input
@@ -34,7 +34,7 @@
 </div>
 <div class="flex flex-wrap -mx-3 mb-2 mt-5">
     <div class="w-1/2 md:w-1/3 px-3">
-        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_district_khan">
+        <label class=" font-battambang block uppercase tracking-wide text-gray-700  mb-2" for="current_district_khan">
             ស្រុក/ខណ្ឌ
         </label>
         <input
@@ -42,7 +42,7 @@
             name="current_district_khan" id="current_district_khan" type="text" required>
     </div>
     <div class="w-1/2 md:w-1/3 px-3">
-        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_provience_city">
+        <label class=" font-battambang block uppercase tracking-wide text-gray-700  mb-2" for="current_provience_city">
             ខេត្ត/រាជធានី
         </label>
         <input

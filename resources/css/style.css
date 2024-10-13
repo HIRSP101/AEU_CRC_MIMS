@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Siemreap&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Koulen&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Moul&display=swap');
 
+
+.details-dropdown[open] .dropdown-icon {
+    transform: rotate(180deg);
+}

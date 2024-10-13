@@ -8,6 +8,6 @@ class ReportController extends Controller
 {
     public function index() 
     {
-        return view ('dashboard.report.report-page');
+        return view('dashboard.report.all-report-list');
     }
 }

@@ -16,19 +16,27 @@ use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 |
 */
 
-// Route::get('/', function () {
-//     return view('dashboard.index')-> name('dashboard');
-// });
+Route::get('/', function () {
+    return view('dashboard.index')-> name('dashboard');
+});
 
-$appC = "App\Http\Controllers";
+$appController = "App\Http\Controllers";
 
 
-Route::get("/", "{$appC}\\MemberController@home")->name('dashboard');
-Route::get('/detail/{id}', "{$appC}\\MemberController@details");
-Route::get("/create", "{$appC}\\MemberController@create")->name('create-member');
-Route::post("/create", "{$appC}\\MemberController@addmember")->name('addmember');
+// Insert Member Route
+Route::controller(MemberController::class)->group(function() {
+    Route::get('/', 'home');
+    Route::get('/detail/{id}', 'details');
+    Route::get('/create', 'create')->name('create-member');
+    Route::post('/add-member', 'addmember')->name('addmember');
+});
 
-Route::get("/provinces","{$appC}\\ProvincesController@index")->name('provinces');
-Route::get("/table_member","{$appC}\\ProvincesController@table_member")->name('table_member');
+//All Reports Route
+Route::controller(ReportController::class)->group(function() {
+    Route::get('/reports', 'index')->name('report-page');
+});
 
-Route::get("/report", "{$appC}\\ReportController@index")->name('report-page');
+Route::get("/provinces","{$appController}\\ProvincesController@index")->name('provinces');
+
+Route::get("/table_member","{$appController}\\ProvincesController@table_member")->name('table_member');
+

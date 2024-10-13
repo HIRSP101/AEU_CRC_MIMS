@@ -1,6 +1,6 @@
 <div class="flex flex-wrap -mx-3 mb-2 mt-3 ">
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <label class="block uppercase tracking-wide text-gray-700 mb-2" for="language">
+        <label class=" font-battambang block uppercase tracking-wide text-gray-700 mb-2" for="language">
             ជំនាញភាសាបរទេស
         </label>
         <input
@@ -8,7 +8,7 @@
             name="language" type="text">
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <label class="block uppercase tracking-wide text-gray-700 mb-2" for="computer_skill">
+        <label class=" font-battambang block uppercase tracking-wide text-gray-700 mb-2" for="computer_skill">
             ជំនាញកុំព្យូទ័រ
         </label>
         <input
@@ -16,7 +16,7 @@
             name="computer_skill" type="text">
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <label class="block uppercase tracking-wide text-gray-700 mb-2" for="misc_skill">
+        <label class=" font-battambang block uppercase tracking-wide text-gray-700 mb-2" for="misc_skill">
             ជំនាញផ្សេងៗ
         </label>
         <input

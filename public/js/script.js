@@ -22,3 +22,10 @@ openSidebar.addEventListener('click', () => {
 closeSidebar.addEventListener('click', () => {
     sidebar.classList.add('-translate-x-full');
 });
+
+document.querySelectorAll('details').forEach(details => {
+    details.addEventListener('toggle', function () {
+        const icon = this.querySelector('.dropdown-icon');
+        icon.style.transform = this.open ? 'rotate(180deg)' : 'rotate(0deg)';
+    });
+});

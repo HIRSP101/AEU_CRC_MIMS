@@ -10,7 +10,8 @@ export default {
       fontFamily:{
         siemreap: ['Siemreap', 'sans-serif'],
         koulen: ["Koulen", "serif"],
-        battambang: ["Battambang", "serif"]
+        battambang: ["Battambang", "serif"],
+        moul: ["Moul", "serif"]
       }
     
     },

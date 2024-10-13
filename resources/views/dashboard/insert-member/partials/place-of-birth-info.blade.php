@@ -1,6 +1,6 @@
 <div class="flex flex-wrap -mx-3 mt-3 mb-6">
     <div class="w-full md:w-1/4 px-3">
-        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="village">
+        <label class=" font-battambang block uppercase tracking-wide text-gray-700  mb-2" for="village">
             ភូមិ
         </label>
         <input
@@ -8,7 +8,7 @@
             name="village" type="text" id="village" required>
     </div>
     <div class="w-full md:w-1/4 px-3">
-        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="commune_sangkat">
+        <label class=" font-battambang block uppercase tracking-wide text-gray-700  mb-2" for="commune_sangkat">
             ឃុំ/សង្កាត់
         </label>
         <input
@@ -16,7 +16,7 @@
             name="commune_sangkat" type="text" id="commune_sangkat" required>
     </div>
     <div class="w-full md:w-1/4 px-3">
-        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="district_khan">
+        <label class=" font-battambang block uppercase tracking-wide text-gray-700  mb-2" for="district_khan">
             ស្រុក/ខណ្ឌ
         </label>
         <input
@@ -24,7 +24,7 @@
             name="district_khan" id="district_khan" type="text" required>
     </div>
     <div class="w-full md:w-1/4 px-3">
-        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="provience_city">
+        <label class=" font-battambang block uppercase tracking-wide text-gray-700  mb-2" for="provience_city">
             ខេត្ត/រាជធានី
         </label>
         <input

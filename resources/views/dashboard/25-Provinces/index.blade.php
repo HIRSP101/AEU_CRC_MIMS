@@ -10,7 +10,7 @@
     <h2 class="text-2lg font-bold text-center siemreap-regular my-2 pb-3">សាខា កាកបាទក្រហមកម្ពុជា 25 រាជធានី-​ខេត្ត</h2>
     <ul>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -18,7 +18,7 @@
               alt="Logo 1"
               class="ml-10 w-16 mr-8 rounded-full object-cover h-16"
               />
-              <span class="text-lg siemreap-regular">ខេត្ត កណ្ដាល</span>
+              <span class="text-lg font-battambang">ខេត្ត កណ្ដាល</span>
             </div>
             <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
 
@@ -30,7 +30,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -50,7 +50,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -90,7 +90,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -110,7 +110,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -130,7 +130,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -150,7 +150,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -170,7 +170,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -190,7 +190,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -210,7 +210,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -230,7 +230,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -250,7 +250,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -270,7 +270,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -290,7 +290,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -310,7 +310,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -330,7 +330,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -350,7 +350,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -370,7 +370,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
@@ -430,7 +430,7 @@
         </a>
       </li>
       <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-        <a href="{{ route('table_member') }}" target="_blank">
+        <a href="{{ route('table_member') }}">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <img
