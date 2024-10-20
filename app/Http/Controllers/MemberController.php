@@ -23,6 +23,7 @@ class MemberController extends Controller
     public function getMemberDetail(Request $request)
     {
         $member = member_personal_detail::with(relations: ['member_guardian_detail', 'member_registration_detail', 'member_education_background', 'member_current_address', 'member_pob_address'])->where('member_id', $request->id)->first();
+        dd($member);
         return view('member_detail.index', compact('member'));
     }
     public function insertMember(Request $request)
@@ -169,12 +170,26 @@ class MemberController extends Controller
     public function edit($id) {
         $member = member_personal_detail::findOrFail($id);
         $branches = Branch::all()->pluck('branch_name', 'id');
+        //dd($member);
         return view('member.index', compact('member', 'branches'));
     }
     public function update(Request $request, $id)
     {
+        $mem_detail = array
+        (
+            "name_en" => $request->name_en,
+            "name_kh" => $request->name_kh,
+            "image" => $request->image,
+            "full_current_address" => $request->full_current_address,
+            "phone_number"=> $request->phone_number,
+            "email" => $request->email,
+            "facebook" => $request->facebook,
+            "shirt_size" => $request->shirt_size,
+            "date_of_birth" => $request->date_of_birth
+        );
         $member = member_personal_detail::find($id);
-        $member->update($request->all());
+        $member->update($mem_detail);
+        //dd($member);
         return response()->json(['message' => 'Member updated successfully']);
     }
     

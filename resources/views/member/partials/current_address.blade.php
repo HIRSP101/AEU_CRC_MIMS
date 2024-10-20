@@ -24,7 +24,7 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    name="current_village" id="current_village" type="text" value="{{ old('current_village', $member->current_village ?? '') }}">
+                    name="current_village" id="current_village" type="text" value="{{ old('current_village', $current_village ?? '')}}">
             </div>
             <div class="flex-1 w-1/4 md:w-1/4 px-3">
                 <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_commune">
@@ -32,7 +32,7 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    name="current_commune" id="current_commune" type="text" value="{{ old('current_commune', $member->current_commune ?? '') }}" required>
+                    name="current_commune" id="current_commune" type="text" value="{{ old('current_commune', $current_commune ?? '') }}" required>
             </div>
         </div>
         <div class="flex flex-wrap -mx-3 mb-2 mt-5">
@@ -42,7 +42,7 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    name="current_district" id="current_district" type="text" required>
+                    name="current_district" id="current_district" type="text" value="{{old('current_district', $current_district ?? '')}}">
             </div>
             <div class="w-1/2 md:w-1/3 px-3">
                 <label class="block uppercase tracking-wide text-gray-700" for="current_province">

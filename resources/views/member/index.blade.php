@@ -3,6 +3,14 @@
 @endpush
 
 @section('Content')
+<?php
+
+$current_village = explode(" ", $member->full_current_address)[0] ?? " ";
+$current_commune = explode(" ", $member->full_current_address)[1] ?? " ";
+$current_district = explode(" ", $member->full_current_address)[2] ?? " ";
+$current_proviencelist = explode(" ", $member->full_current_address)[3] ?? " ";
+// print_r ($current_village);
+?>
 
 <div class="p-5 md:ml-24 md:mr-24 bg-white font-siemreap shadow-xl rounded-lg my-3">
     <div class="flex flex-col items-center justify-center mb-10">
@@ -101,6 +109,7 @@
         "misc_skill" : "",
         "registration_date" : $("input#recruitment_date").val()
     }]
+    console.log(memberObj)
 
     formData.append('_method', method); // Include the method in FormData for PUT
     formData.append('name_kh', $("input#name_kh").val());

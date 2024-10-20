@@ -26,6 +26,23 @@ class BranchController extends Controller
     }
 
     public function get(Request $request) {
+        $total_fem = DB::table('member_personal_detail as mpd')
+        ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+        ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+        ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+        ->join('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
+        ->select(DB::raw("COUNT(meb.member_id) AS total_mem_fem"))
+        ->where("branch.branch_id", $request->id)
+        ->where("mpd.gender", "ស្រី")
+        ->get();
+        $total_total = DB::table('member_personal_detail as mpd')
+        ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+        ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+        ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+        ->join('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
+        ->select(DB::raw("COUNT(meb.member_id) AS total_mem"))
+        ->where("branch.branch_id", $request->id)
+        ->get();
         $total_mem = DB::table('member_personal_detail as mpd')
         ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
         ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
@@ -39,6 +56,7 @@ class BranchController extends Controller
             'mpd.gender',
             'mpd.date_of_birth',
             'meb.institute_id',
+            'branch.branch_name',
             'mpd.member_type',
             'meb.education_level',
             'meb.acadmedic_year',
@@ -53,6 +71,6 @@ class BranchController extends Controller
         ->where('branch.branch_id', $request->id)
         ->get();
 
-        return view('totalmembranch.index', compact('total_mem'));
+        return view('totalmembranch.index', compact('total_mem','total_fem', 'total_total'));
     }
 }
