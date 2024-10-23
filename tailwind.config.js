@@ -11,6 +11,18 @@ export default {
     ],
 
     theme: {
+      extend: {},
+      fontFamily:{
+        siemreap: ['Siemreap', 'sans-serif'],
+        koulen: ["Koulen", "serif"],
+        battambang: ["Battambang", "serif"],
+        moul: ["Moul", "serif"]
+      }
+    
+    },
+    plugins: [],
+  
+  }
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],

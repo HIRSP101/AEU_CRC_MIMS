@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\branch;
 use App\Models\institute;
 use App\Models\member_personal_detail;
