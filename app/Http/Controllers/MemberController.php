@@ -1,127 +1,195 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\branch;
+use App\Models\institute;
+use App\Models\member_personal_detail;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Builder;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\memberCurrentAddressRequest;
-use App\Http\Requests\memberEducationRequest;
-use App\Http\Requests\MemberPersonalDetailRulesRequest;
-use App\Http\Requests\memberGuardianRequest;
-use App\Http\Requests\memberPobAddressRequest;
-use App\Models\institute;
-use App\Models\member_current_address;
-use App\Models\member_education_background;
-use App\Models\member_personal_detail;
-use App\Models\member_pob_address;
-use App\Models\member_registration_detail;
-use App\Models\member_guardian_detail;
-use DB;
 
 class MemberController extends Controller
 {
-    public function home()
+    public function index()
     {
-        $Member_personal_detail = member_personal_detail::all();
-        return view("dashboard.index", ["Member_personal_detail" => $Member_personal_detail]);
+        $branches = branch::all()->pluck("branch_kh", "branch_id");
+        return view('member.index', compact('branches'));
     }
 
-    public function create()
+    public function getMemberDetail(Request $request)
     {
-        return view("dashboard.insert-member.create-member-page", );
+        $member = member_personal_detail::with(relations: ['member_guardian_detail', 'member_registration_detail', 'member_education_background', 'member_current_address', 'member_pob_address'])->where('member_id', $request->id)->first();
+        dd($member);
+        return view('member_detail.index', compact('member'));
     }
+    public function insertMember(Request $request)
+    {
+        $request->validate([
+            'members' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+        $datas = json_decode($request->input(key: 'members'), associative: true);
+        $current_mem_id = member_personal_detail::latest()->first()->member_id;
+        // dd($current_mem_id);
+        //  dd($request);
+        DB::transaction(function () use ($datas, $request, $current_mem_id) {
+            foreach ($datas as $data) {
+                $imageName = $request->hasFile('image') ? 'mem-' . str_replace(' ', '', $data["name_en"] . (string)((int)$current_mem_id + 1)) . '.' . $request->image->extension() : "";
+                $request->image->move(public_path('images/members'), $imageName);
+                $member_data = member_personal_detail::create([
+                    "name_kh" => $data['name_kh'] ?? null,
+                    "name_en" => $data['name_en'] ?? null,
+                    "gender" => $data['gender'] ?? null,
+                    "image" => "images/" . $imageName ?? null,
+                    "nationality" => $data['nationality'] ?? 'ខ្មែរ',
+                    "date_of_birth" => isset($data['date_of_birth']) ? $this->convertDate($data['date_of_birth']) : null,
+                    "full_current_address" => $data['full_current_address'] ?? null,
+                    "phone_number" => $data['phone_number'] ?? null,
+                    "shirt_size" => $data['shirt_size'] ?? null,
+                    "member_type" => $data['type'] ?? null,
+                ]);
 
-    public function addmember(
-        MemberPersonalDetailRulesRequest $request,
-        memberGuardianRequest $request1,
-        memberCurrentAddressRequest $request2,
-        memberPobAddressRequest $request3,
-        memberEducationRequest $request4,
-    ) {
-        $validatedData = $request->validated();
-        $validatedData1 = $request1->validated();
-        $validatedData2 = $request2->validated();
-        $validatedData3 = $request3->validated();
-        $validatedData4 = $request4->validated();
-        if ($request->hasFile('image')) {
-
-            $file = $request->file('image');
-
-            $fileName = time() . '_' . $file->getClientOriginalName();
-
-            $file->move(public_path('images'), $fileName);
-
-            $validatedData["image"] = 'images/' . $fileName;
-        }
-        DB::transaction(
-            function () use ($validatedData, $validatedData1, $validatedData2, $validatedData3, $validatedData4) {
-                // Insert into member_personal table
-                $memberPersonal = member_personal_detail::create($validatedData);
-                //insert into member_guardian_detail table
-                $memberPersonal->member_guardian_detail()->create($validatedData1);
-                //insert into member_current_address table
-                $memberPersonal->member_current_address()->create(
-                    [
-                        "village" => $validatedData2["current_village"],
-                        "district_khan" => $validatedData2["current_district_khan"],
-                        "commune_sangkat" => $validatedData2["current_commune_sangkat"],
-                        "provience_city" => $validatedData2["current_provience_city"],
-                        "home_no" => $validatedData2["home_no"],
-                        "street_no" => $validatedData2["street_no"]
-                    ]
-                );
-                //insert into member_pob_address table
-                $memberPersonal->member_pob_address()->create($validatedData3);
-
-                //insert into member_registration_table
-                $memberPersonal->member_registration_detail()->create(
-                    [
-                        "registration_date" => $validatedData["recruitment_date"]
-                    ]
-                );
-                //insert into institute table
-                $member_edu = institute::create(
-                    [
-                        'name' => $validatedData["name"]
-                    ]
-                );
-                //insert into memeber_education_background
-                $memberPersonal->member_education_background()->create(
-                    [
-                        'institute_id' => $member_edu->institute_id,
-                        "acadmedic_year" => $validatedData4['acadmedic_year'],
-                        "major" => $validatedData4['major'],
-                        "education_level" => $validatedData4['education_level'],
-                        "language" => $validatedData4['language'],
-                        "computer_skill" => $validatedData4['computer_skill'],
-                        "misc_skill" => $validatedData4['misc_skill'],
-                    ]
-                );
+                $this->createRegistrationDetails($member_data, $data);
+                $this->createCurrentAddress($member_data, $data);
+                $this->createPobAddress($member_data, $data);
+                $this->createEducationBackground($member_data, $data);
+                $this->createGuardianDetail($member_data, $data);
             }
-        );
+        });
 
-        return $validatedData;
+        return response()->json(['message' => 'Member record created successfully!']);
     }
-
-    public function details($id)
+    public function eloquent_relation_delete(Request $request)
     {
-        $member = member_personal_detail::findOrFail($id);
-        $member_pob = member_pob_address::where('member_id', $id)->firstOrFail();
-        $member_addr = member_current_address::where('member_id', $id)->firstOrFail();
-        $member_edu = member_education_background::where('member_id', $id)->firstOrFail();
-        $member_regis = member_registration_detail::where('member_id', $id)->firstOrFail();
-        $member_guardian = member_guardian_detail::where('member_id', $id)->firstOrFail();
-        // return response()->json($memberAddress->village, 200);
-        return view(
-            'dashboard.detail',
-            compact(
-                'member',
-                'member_pob',
-                'member_addr',
-                'member_edu',
-                'member_regis',
-                'member_guardian'
-            )
-        );
+        $member_id = $request->input("member_id");
+        // dd($member_id);
+        $memberPersonalDetail = member_personal_detail::findall();
+
+        if (!$memberPersonalDetail) {
+            return response()->json([
+                'message' => 'Member Personal Detail not found.'
+            ], 404);
+        }
+        $memberPersonalDetail->delete();
+
+        return response()->json([
+            'message' => 'Member Personal Detail and related data deleted successfully!'
+        ], 200);
     }
+    private function convertDate($date)
+    {
+        return date('Y-m-d', strtotime(str_replace('/', '-', $date)));
+    }
+
+    private function createPobAddress($member_data, $data)
+    {
+        $member_data->member_pob_address()->create([
+            'home_no' => $data['pob_home_no'] ?? null,
+            'street_no' => $data['pob_street_no'] ?? null,
+            'village' => $data['pob_village'] ?? null,
+            'commune_sangkat' => $data['pob_commune_sangkat'] ?? null,
+            'provience_city' => $data['pob_provience_city'] ?? null,
+            'district_khan' => $data['pob_district_khan'] ?? null,
+            'zipcode' => null,
+        ]);
+    }
+
+    private function createGuardianDetail($member_data, $data)
+    {
+        $member_data->member_guardian_detail()->create([
+            'father_name' => $data['father_name'] ?? null,
+            'father_dob' =>  isset($data['father_dob']) ? $this->convertDate($data['father_dob']) : null,
+            'father_current_address' => $data['father_current_address'] ?? null,
+            'father_occupation' => $data['father_occupation'] ?? null,
+            'mother_name' => $data['mother_name'] ?? null,
+            'mother_dob' =>  isset($data['mother_dob']) ? $this->convertDate($data['mother_dob']) : null,
+            'mother_current_address' => $data['mother_current_address'] ?? null,
+            'mother_occupation' => $data['mother_occupation'] ?? null,
+            'guardian_phone' => $data['guardian_phone'] ?? null
+        ]);
+    }
+
+    private function createRegistrationDetails($member_data, $data)
+    {
+        $member_data->member_registration_detail()->create([
+            'registration_date' => isset($data['registration_date']) ? $this->convertDate($data['registration_date']) : null,
+            'expiration_date' => isset($data['expiration_date']) ? $this->convertDate($data['expiration_date']) : null,
+        ]);
+    }
+
+    private function createCurrentAddress($member_data, $data)
+    {
+        $member_data->member_current_address()->create([
+            'home_no' => $data['home_no'] ?? null,
+            'street_no' => $data['street_no'] ?? null,
+            'village' => $data['village'] ?? null,
+            'commune_sangkat' => $data['commune_sangkat'] ?? null,
+            'provience_city' => $data['provience_city'] ?? null,
+            'district_khan' => $data['district_khan'] ?? null,
+            'zipcode' => null,
+        ]);
+    }
+
+    private function createEducationBackground($member_data, $data)
+    {
+        $member_data->member_education_background()->create([
+            'institute_id' => $data['institute_id'] ?? null,
+            'acadmedic_year' => /*(int)*/ $data['acadmedic_year'] ?? null,
+            'major' => $data['major'] ?? null,
+            'batch' => $data['batch'] ?? null,
+            'shift' => $data['shift'] ?? null,
+            'education_level' => $data['education_level'] ?? null,
+            'language' => $data['language'] ?? null,
+            'computer_skill' => $data['computer_skill'] ?? null,
+            'misc_skill' => $data['misc_skill'] ?? null
+        ]);
+    }
+    public function deleteMember(Request $request)
+    {
+        $data = member_personal_detail::whereIn('member_id', $request->arr);
+        $data->delete();
+    }
+
+    public function deleteMemberOne(Request $request)
+    {
+        $memberId = $request->input('member_id');
+    
+        $member = member_personal_detail::find($memberId);
+        if ($member) {
+            $member->delete();
+            return response()->json(['message' => 'Member deleted successfully'], 200);
+        } else {
+            return response()->json(['message' => 'Member not found'], 404);
+        }
+    }
+
+    public function edit($id) {
+        $member = member_personal_detail::findOrFail($id);
+        $branches = Branch::all()->pluck('branch_name', 'id');
+        //dd($member);
+        return view('member.index', compact('member', 'branches'));
+    }
+    public function update(Request $request, $id)
+    {
+        $mem_detail = array
+        (
+            "name_en" => $request->name_en,
+            "name_kh" => $request->name_kh,
+            "image" => $request->image,
+            "full_current_address" => $request->full_current_address,
+            "phone_number"=> $request->phone_number,
+            "email" => $request->email,
+            "facebook" => $request->facebook,
+            "shirt_size" => $request->shirt_size,
+            "date_of_birth" => $request->date_of_birth
+        );
+        $member = member_personal_detail::find($id);
+        $member->update($mem_detail);
+        //dd($member);
+        return response()->json(['message' => 'Member updated successfully']);
+    }
+    
 }

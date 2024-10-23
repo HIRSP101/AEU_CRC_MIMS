@@ -1,5 +1,4 @@
 </div>
-
 @stack("JS")
 <!-- <script src="{{ asset('js/script.js') }}"></script> -->
 <script>
@@ -14,6 +13,7 @@
         }
     });
 </script>
+
 
 </body>
 
