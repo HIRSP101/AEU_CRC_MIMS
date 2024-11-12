@@ -2,155 +2,93 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\branch;
-use App\Models\institute;
+use App\Models\Branch;
 use App\Models\member_personal_detail;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Builder;
-use Illuminate\Support\Facades\Artisan;
+use App\Http\Requests\MemberRequest;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
+use App\Services\Members\DeleteMemberService;
+use App\Services\Members\CreateMemberService;
+use App\Services\Members\UpdateMemberService;
+use Exception;
 
 class MemberController extends Controller
 {
-    public function index()
+    protected CreateMemberService $createService;
+    protected UpdateMemberService $updateService;
+    protected DeleteMemberService $deleteService;
+
+    public function __construct(CreateMemberService $createService, UpdateMemberService $updateService, DeleteMemberService $deleteService)   
     {
-        $branches = branch::all()->pluck("branch_kh", "branch_id");
+        $this->deleteService = $deleteService;  
+        $this->createService = $createService;
+        $this->updateService = $updateService;
+    }
+    public function index(): View
+    {
+        $branches = Branch::all()->pluck('branch_kh', 'branch_id');
         return view('member.index', compact('branches'));
     }
-
-    public function getMemberDetail(Request $request)
+    public function getMemberDetail(Request $request): View
     {
-        $member = member_personal_detail::with(relations: ['member_guardian_detail', 'member_registration_detail', 'member_education_background', 'member_current_address', 'member_pob_address'])->where('member_id', $request->id)->first();
+        $member = member_personal_detail::with([
+            'member_guardian_detail',
+            'member_registration_detail',
+            'member_education_background',
+            'member_current_address',
+            'member_pob_address'
+        ])->findOrFail($request->id);
+
         return view('member_detail.index', compact('member'));
     }
-    public function insertMember(Request $request)
+    public function insertMember(MemberRequest $request): JsonResponse
     {
-        $request->validate([
-            'members' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
-        $datas = json_decode($request->input(key: 'members'), associative: true);
-        $current_mem_id = member_personal_detail::latest()->first()->member_id;
-        // dd($current_mem_id);
-        //  dd($request);
-        DB::transaction(function () use ($datas, $request, $current_mem_id) {
-            foreach ($datas as $data) {
-                $imageName = $request->hasFile('image') ? 'mem-' . str_replace(' ', '', $data["name_en"] . (string)((int)$current_mem_id + 1)) . '.' . $request->image->extension() : "";
-                $request->image->move(public_path('images/members'), $imageName);
-                $member_data = member_personal_detail::create([
-                    "name_kh" => $data['name_kh'] ?? null,
-                    "name_en" => $data['name_en'] ?? null,
-                    "gender" => $data['gender'] ?? null,
-                    "image" => "images/" . $imageName ?? null,
-                    "nationality" => $data['nationality'] ?? 'ខ្មែរ',
-                    "date_of_birth" => isset($data['date_of_birth']) ? $this->convertDate($data['date_of_birth']) : null,
-                    "full_current_address" => $data['full_current_address'] ?? null,
-                    "phone_number" => $data['phone_number'] ?? null,
-                    "shirt_size" => $data['shirt_size'] ?? null,
-                    "member_type" => $data['type'] ?? null,
-                ]);
+        try {
+            DB::beginTransaction();
 
-                $this->createRegistrationDetails($member_data, $data);
-                $this->createCurrentAddress($member_data, $data);
-                $this->createPobAddress($member_data, $data);
-                $this->createEducationBackground($member_data, $data);
-                $this->createGuardianDetail($member_data, $data);
+            $members = json_decode($request->input('members'), true);
+            //dd($members);
+            $currentMemberId = member_personal_detail::latest()->first()?->member_id ?? 0;
+
+            foreach ($members as $memberData) {
+                $this->createService->createMember($memberData, $request->file('image'), $currentMemberId);
+                $currentMemberId++;
             }
-        });
 
-        return response()->json(['message' => 'Member record created successfully!']);
-    }
-    public function eloquent_relation_delete(Request $request)
-    {
-        $member_id = $request->input("member_id");
-        // dd($member_id);
-        $memberPersonalDetail = member_personal_detail::findall();
-
-        if (!$memberPersonalDetail) {
-            return response()->json([
-                'message' => 'Member Personal Detail not found.'
-            ], 404);
+            DB::commit();
+            return response()->json(['message' => 'Member record(s) created successfully!']);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Failed to create member record(s): ' . $e->getMessage()], 500);
         }
-        $memberPersonalDetail->delete();
-
-        return response()->json([
-            'message' => 'Member Personal Detail and related data deleted successfully!'
-        ], 200);
-    }
-    private function convertDate($date)
-    {
-        return date('Y-m-d', strtotime(str_replace('/', '-', $date)));
     }
 
-    private function createPobAddress($member_data, $data)
+    public function updateMember(int $memberId, MemberRequest $request): JsonResponse
     {
-        $member_data->member_pob_address()->create([
-            'home_no' => $data['pob_home_no'] ?? null,
-            'street_no' => $data['pob_street_no'] ?? null,
-            'village' => $data['pob_village'] ?? null,
-            'commune_sangkat' => $data['pob_commune_sangkat'] ?? null,
-            'provience_city' => $data['pob_provience_city'] ?? null,
-            'district_khan' => $data['pob_district_khan'] ?? null,
-            'zipcode' => null,
-        ]);
-    }
+        try {
+            DB::beginTransaction();
+            
+            $this->updateService->updateMember($memberId, $request->all(), $request->file('image'));
 
-    private function createGuardianDetail($member_data, $data)
-    {
-        $member_data->member_guardian_detail()->create([
-            'father_name' => $data['father_name'] ?? null,
-            'father_dob' =>  isset($data['father_dob']) ? $this->convertDate($data['father_dob']) : null,
-            'father_current_address' => $data['father_current_address'] ?? null,
-            'father_occupation' => $data['father_occupation'] ?? null,
-            'mother_name' => $data['mother_name'] ?? null,
-            'mother_dob' =>  isset($data['mother_dob']) ? $this->convertDate($data['mother_dob']) : null,
-            'mother_current_address' => $data['mother_current_address'] ?? null,
-            'mother_occupation' => $data['mother_occupation'] ?? null,
-            'guardian_phone' => $data['guardian_phone'] ?? null
-        ]);
+            DB::commit();
+            return response()->json(['message' => 'Member updated successfully!']);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Failed to update member: ' . $e->getMessage()], 500);
+        }
     }
-
-    private function createRegistrationDetails($member_data, $data)
+    // multiple delete
+    public function deleteMembers(Request $request): JsonResponse
     {
-        $member_data->member_registration_detail()->create([
-            'registration_date' => isset($data['registration_date']) ? $this->convertDate($data['registration_date']) : null,
-            'expiration_date' => isset($data['expiration_date']) ? $this->convertDate($data['expiration_date']) : null,
-        ]);
+        $this->deleteService->deleteMembers($request->arr);
+        return response()->json(['message' => 'Members deleted successfully']);
     }
-
-    private function createCurrentAddress($member_data, $data)
+    // single delete
+    public function deleteMember(Request $request): JsonResponse
     {
-        $member_data->member_current_address()->create([
-            'home_no' => $data['home_no'] ?? null,
-            'street_no' => $data['street_no'] ?? null,
-            'village' => $data['village'] ?? null,
-            'commune_sangkat' => $data['commune_sangkat'] ?? null,
-            'provience_city' => $data['provience_city'] ?? null,
-            'district_khan' => $data['district_khan'] ?? null,
-            'zipcode' => null,
-        ]);
-    }
-
-    private function createEducationBackground($member_data, $data)
-    {
-        $member_data->member_education_background()->create([
-            'institute_id' => $data['institute_id'] ?? null,
-            'acadmedic_year' => /*(int)*/ $data['acadmedic_year'] ?? null,
-            'major' => $data['major'] ?? null,
-            'batch' => $data['batch'] ?? null,
-            'shift' => $data['shift'] ?? null,
-            'education_level' => $data['education_level'] ?? null,
-            'language' => $data['language'] ?? null,
-            'computer_skill' => $data['computer_skill'] ?? null,
-            'misc_skill' => $data['misc_skill'] ?? null
-        ]);
-    }
-    public function deleteMember(Request $request)
-    {
-        $data = member_personal_detail::whereIn('member_id', $request->arr);
-        $data->delete();
-        // dd($data);
+       $this->deleteService->deleteMember($request->id);
+       return response()->json(['message' => 'Member deleted successfully']);
     }
 }

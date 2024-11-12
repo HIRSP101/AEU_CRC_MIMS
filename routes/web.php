@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 $appC = "App\Http\Controllers";
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
 
@@ -43,10 +43,8 @@ Route::post('/logout', "{$appC}\\LogoutUserController@logout");
 require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () use ($appC) {
-
-    Route::get('/dashboard', "{$appC}\\DashboardController@index")
-        ->middleware(['auth', 'verified'])->name('dashboard');
-    Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");
+    Route::get('/dashboard', "{$appC}\\DashboardController@index")->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/userroles', "{$appC}\\User\UserController@index")->name('userroles');
     Route::get('/initialmodels', "{$appC}\\testdbconnection@initialModelsSetup");
     Route::get('/insertmember', "{$appC}\\testdbconnection@getMemberColumns")->name('import');
     Route::post('/insertmemberfr', "{$appC}\\testdbconnection@insertMember");
@@ -62,6 +60,17 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/uploadint', "{$appC}\\ResourceController@index");
     Route::post('/uploadimage', "{$appC}\\ResourceController@uploadImage");
     Route::get('/getallmembers', "{$appC}\\MemberController@getMemberDetail");
-    Route::post('/delete_member', "{$appC}\\MemberController@deleteMember");
+    Route::post('/deletemember', "{$appC}\\MemberController@deleteMembers");
+    Route::post('/deletememberone', "{$appC}\\MemberController@deleteMember");
+    Route::get('/reports', "{$appC}\\ReportController@index")->name('report');
+    Route::get('/branchesreport', "{$appC}\\ReportController@branches_report")->name('branchesreport');
+    Route::get('/create-branch', "{$appC}\\BranchController@createform")->name('create-branch');
+    Route::post('/create-branch', "{$appC}\\BranchController@store")->name('branch.store');
+    Route::get('/update-branch/{id}', "{$appC}\\BranchController@updateform");
+    Route::post('/update-branch', "{$appC}\\BranchController@update")->name('branch.update');
+    Route::post('/delete-branch', "{$appC}\\BranchController@deleteBranch");
+    Route::post('/delete-branches', "{$appC}\\BranchController@deleteBranches");
+
 });
+
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");

@@ -1,215 +1,174 @@
 import ExcelJS from 'exceljs';
-export default function exportToExcel (current_branch, total_member, total_stu, total_stu_fem) {
-    document.getElementById("export_excel").addEventListener("click", function () {
-        // Create a new instance of a Workbook
-        const workbook = new ExcelJS.Workbook();
-        const worksheet = workbook.addWorksheet(current_branch);
-        var tableData = total_member;
 
-        // Merge cells for the title (if needed)
-        worksheet.mergeCells("A1:M1");
-        worksheet.getCell("A1").value =
-            "ឯកសារយោងសំរាប់ការបញ្ជាក់ព័ត៌មាននៃការសិក្សា និងការងារ";
-        worksheet.getCell("A1").font = {
+// Configuration objects
+const EXCEL_CONFIG = {
+    columnDefinitions: [
+        { name: "ល.រ", width: 5 },
+        { name: "ឈ្មោះ(ខ្មែរ)", width: 25 },
+        { name: "ឈ្មោះ(ឡាតាំង)", width: 30 },
+        { name: "ភេទ", width: 5 },
+        { name: "ថៃ្ង​ ខែ ឆ្នាំកំណើត", width: 25 },
+        { name: "តួនាទី", width: 18 },
+        { name: "គ្រឹះស្ថានសិក្សា", width: 25 },
+        { name: "កម្រិតសិក្សា", width: 15 },
+        { name: "ថ្ងៃចូលសមាជិក", width: 25 },
+        { name: "អាស័យដ្ឋានបច្ចប្បន្ន", width: 45 },
+        { name: "លេខទូរសព្ទ័រផ្ទាលខ្លួន", width: 30 },
+        { name: "លេខទូរសព្ទ័រអាណាព្យាបាល", width: 35 },
+        { name: "ទំហំអាវ", width: 10 },
+    ],
+    fonts: {
+        header: {
             name: "Khmer OS Muol Light",
-            size: 10,
-        };
-        worksheet.getCell("A1").alignment = { horizontal: "center" };
-        worksheet.mergeCells("A2:M2");
-        worksheet.getCell("A2").value = `សាខាកាកបាទក្រហមកម្ពុជា ${current_branch}`;
-        worksheet.getCell("A2").font = {
-            name: "Khmer OS Muol Light",
-            size: 10,
-        };
-        worksheet.getCell("A2").alignment = { horizontal: "center" };
-
-        // Create a table with headers
-        worksheet.addTable({
-            name: "MyTable", // Name of the table
-            ref: "A3", // Starting point for the table (first cell)
-            headerRow: true, // Indicate that the first row is a header row
-            style: {
-                theme: "",
-                showRowStripes: false,
-            },
-            columns: [
-                { name: "ល.រ" },
-                { name: "ឈ្មោះ(ខ្មែរ)" },
-                { name: "ឈ្មោះ(ឡាតាំង)" },
-                { name: "ភេទ" },
-                { name: "ថៃ្ង​ ខែ ឆ្នាំកំណើត" },
-                { name: "តួនាទី" },
-                { name: "គ្រឹះស្ថានសិក្សា" },
-                { name: "កម្រិតសិក្សា" },
-                { name: "ថ្ងៃចូលសមាជិក" },
-                { name: "អាស័យដ្ឋានបច្ចប្បន្ន" },
-                { name: "លេខទូរសព្ទ័រផ្ទាលខ្លួន" },
-                { name: "លេខទូរសព្ទ័រអាណាព្យាបាល" },
-                { name: "ទំហំអាវ" },
-            ],
-            rows: tableData,
-        });
-        // set column center
-        // id
-        worksheet.getColumn(1).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-        };
-        // gender
-        worksheet.getColumn(4).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-        };
-        // DOB
-        worksheet.getColumn(5).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-        };
-        // postions
-        worksheet.getColumn(6).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-        };
-        // school
-        worksheet.getColumn(7).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-        };
-        // grade
-        worksheet.getColumn(8).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-        };
-        // date join member
-        worksheet.getColumn(9).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-        };
-        // address
-        worksheet.getColumn(10).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-        };
-        // phome number
-        worksheet.getColumn(11).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-        };
-        // phone number
-        worksheet.getColumn(12).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-        };
-        // size
-        worksheet.getColumn(13).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-        };
-
-        // Apply header style
-        const headerRow = worksheet.getRow(3);
-        headerRow.eachCell((cell) => {
-            cell.fill = null; // Ensure no background color
-            cell.font = {
-                name: "Khmer OS Muol Light",
-                size: 10,
-            };
-            cell.alignment = { vertical: "middle", horizontal: "center" };
-        });
-
-        // Add border only to table cells (assuming the table starts from row 4)
-        const startRow = 3; // Adjust as necessary
-        for (let i = startRow; i <= worksheet.lastRow.number; i++) {
-            const row = worksheet.getRow(i);
-            row.eachCell({ includeEmpty: true }, function (cell) {
-                cell.border = {
-                    top: { style: "thin" },
-                    left: { style: "thin" },
-                    bottom: { style: "thin" },
-                    right: { style: "thin" },
-                };
-            });
+            size: 10
+        },
+        body: {
+            name: "Khmer OS Battambang",
+            size: 10
         }
-        // customize font in table
-        const rowCount = tableData.length;
-        for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-            const row = worksheet.getRow(rowIndex + 4); // Row number starts from 4 (A4)
-            row.eachCell((cell) => {
-                cell.font = {
-                    name: "Khmer OS Battambang", // Set your desired font
-                    size: 10,
-                };
-            });
-        }
+    }
+};
 
-        // Adjust column widths
-        worksheet.columns = [
-            { width: 5 }, // 'លេខរៀង'
-            { width: 25 }, // 'ឈ្មោះ'
-            { width: 30 }, // 'ឈ្មោះអង់គ្លេស'
-            { width: 5 }, // 'ភេទ'
-            { width: 25 }, // 'កាលបរិច្ឆេទកំណើត'
-            { width: 18 }, // 'តួនាទី'
-            { width: 25 }, // 'គ្រឹះស្ថានសិក្សា'
-            { width: 15 }, // 'កម្រិតសិក្សា'
-            { width: 25 }, // 'ថ្ងៃចូលសមាជិក'
-            { width: 45 }, // 'អាស័យអាស័យដ្ឋានបច្ចុប្បន្ន'
-            { width: 30 }, // 'លេខទូរស័ព្ទផ្ទាលខ្លួន'
-            { width: 35 }, // 'លេខទូរស័ព្ទអាណាព្យាបាល'
-            { width: 10 }, // 'ទំហំអាវ'
-        ];
 
-        // Add title after the table
-        const rowAfterTable = 3 + tableData.length + 1; // Row after the table ends
-        worksheet.mergeCells(`A${rowAfterTable}:I${rowAfterTable}`);
-        worksheet.getCell(`A${rowAfterTable}`).value =
-            `បញ្ចប់បញ្ជីត្រឹមចំនួន ${total_stu} នាក់ (ស្រី ${total_stu_fem} នាក់)`;
-        worksheet.getCell(`A${rowAfterTable}`).font = {
-            name: "Khmer OS Battambang", // Set your desired font
-            size: 10,
-        };
-        worksheet.getCell(`A${rowAfterTable}`).alignment = {
-            vertical: "middle",
-            horizontal: "left",
-        };
+// Helper functions
+export const createWorksheet = (workbook, branchName) => {
+    const worksheet = workbook.addWorksheet(branchName);
+    return worksheet;
+};
 
-        worksheet.mergeCells(`J${rowAfterTable}:M${rowAfterTable}`);
-        worksheet.getCell(`J${rowAfterTable}`).value =
-            "រាជធានីភ្នំពេញ ថ្ងៃទី      ខែ មិថុនា ឆ្នាំ ២០១៥";
-        worksheet.getCell(`J${rowAfterTable}`).font = {
-            name: "Khmer OS Battambang", // Set your desired font
-            size: 10,
-        };
-        worksheet.getCell(`J${rowAfterTable}`).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-        };
-        worksheet.mergeCells(`J${rowAfterTable + 1}:M${rowAfterTable + 1}`);
-        worksheet.getCell(`J${rowAfterTable + 1}`).value = "អ្នកធ្វើតារាង";
-        worksheet.getCell(`J${rowAfterTable + 1}`).font = {
-            name: "Khmer OS Battambang", // Set your desired font
-            size: 10,
-        };
-        worksheet.getCell(`J${rowAfterTable + 1}`).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-        };
+export const addTitle = (worksheet, branchName) => {
+    // Add main title
+    worksheet.mergeCells("A1:M1");
+    const mainTitle = worksheet.getCell("A1");
+    mainTitle.value = "ឯកសារយោងសំរាប់ការបញ្ជាក់ព័ត៌មាននៃការសិក្សា និងការងារ";
+    mainTitle.font = EXCEL_CONFIG.fonts.header;
+    mainTitle.alignment = { horizontal: "center" };
 
-        // Generate Excel and download it
-        workbook.xlsx
-            .writeBuffer()
-            .then(function (buffer) {
-                const blob = new Blob([buffer], {
-                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                });
-                const link = document.createElement("a");
-                link.href = URL.createObjectURL(blob);
-                link.download = "បញ្ជីសាខាកាកបាទក្រហមកម្ពុជា.xlsx";
-                link.click();
-            })
-            .catch(function (error) {
-                console.log("Error creating Excel file:", error);
-            });
+    // Add branch name
+    worksheet.mergeCells("A2:M2");
+    const branchTitle = worksheet.getCell("A2");
+    branchTitle.value = `សាខាកាកបាទក្រហមកម្ពុជា ${branchName}`;
+    branchTitle.font = EXCEL_CONFIG.fonts.header;
+    branchTitle.alignment = { horizontal: "center" };
+};
+
+export const createTable = (worksheet, data) => {
+    worksheet.addTable({
+        name: "MyTable",
+        ref: "A3",
+        headerRow: true,
+        style: {
+            theme: "",
+            showRowStripes: false,
+        },
+        columns: EXCEL_CONFIG.columnDefinitions.map(col => ({ name: col.name })),
+        rows: data
+    });
+};
+
+export const applyStyles = (worksheet, dataLength) => {
+    // Set column widths and alignment
+    worksheet.columns = EXCEL_CONFIG.columnDefinitions.map(col => ({
+        width: col.width,
+        alignment: { vertical: "middle", horizontal: "center" }
+    }));
+
+    // Style header row
+    const headerRow = worksheet.getRow(3);
+    headerRow.eachCell((cell) => {
+        cell.fill = null;
+        cell.font = EXCEL_CONFIG.fonts.header;
+        cell.alignment = { vertical: "middle", horizontal: "center" };
     });
 
+    // Apply borders and body font
+    for (let i = 3; i <= dataLength + 3; i++) {
+        const row = worksheet.getRow(i);
+        row.eachCell({ includeEmpty: true }, (cell) => {
+            cell.border = {
+                top: { style: "thin" },
+                left: { style: "thin" },
+                bottom: { style: "thin" },
+                right: { style: "thin" }
+            };
+            if (i > 3) {
+                cell.font = EXCEL_CONFIG.fonts.body;
+            }
+        });
+    }
+};
+
+export const addFooter = (worksheet, totalStudents, femaleStu, rowNumber) => {
+    // Add total count
+    worksheet.mergeCells(`A${rowNumber}:I${rowNumber}`);
+    const totalCell = worksheet.getCell(`A${rowNumber}`);
+    totalCell.value = `បញ្ចប់បញ្ជីត្រឹមចំនួន ${totalStudents} នាក់ (ស្រី ${femaleStu} នាក់)`;
+    totalCell.font = EXCEL_CONFIG.fonts.body;
+    totalCell.alignment = { vertical: "middle", horizontal: "left" };
+
+    // Add date
+    worksheet.mergeCells(`J${rowNumber}:M${rowNumber}`);
+    const dateCell = worksheet.getCell(`J${rowNumber}`);
+    dateCell.value = "រាជធានីភ្នំពេញ ថ្ងៃទី x  ខែ xx  ឆ្នាំ xxxx";
+    dateCell.font = EXCEL_CONFIG.fonts.body;
+    dateCell.alignment = { vertical: "middle", horizontal: "center" };
+
+    // Add signature line
+    worksheet.mergeCells(`J${rowNumber + 1}:M${rowNumber + 1}`);
+    const signatureCell = worksheet.getCell(`J${rowNumber + 1}`);
+    signatureCell.value = "អ្នកធ្វើតារាង";
+    signatureCell.font = EXCEL_CONFIG.fonts.body;
+    signatureCell.alignment = { vertical: "middle", horizontal: "center" };
+};
+
+export const addDateSignature = (worksheet, rowNumber) => {
+    worksheet.mergeCells(`J${rowNumber}:M${rowNumber}`);
+    const dateCell = worksheet.getCell(`J${rowNumber}`);
+    dateCell.value = "រាជធានីភ្នំពេញ ថ្ងៃទី x  ខែ xx  ឆ្នាំ xxxx";
+    dateCell.font = EXCEL_CONFIG.fonts.body;
+    dateCell.alignment = { vertical: "middle", horizontal: "center" };
+
+    // Add signature line
+    worksheet.mergeCells(`J${rowNumber + 1}:M${rowNumber + 1}`);
+    const signatureCell = worksheet.getCell(`J${rowNumber + 1}`);
+    signatureCell.value = "អ្នកធ្វើតារាង";
+    signatureCell.font = EXCEL_CONFIG.fonts.body;
+    signatureCell.alignment = { vertical: "middle", horizontal: "center" };
+
+}
+
+
+export const downloadExcel = async (workbook) => {
+    try {
+        const buffer = await workbook.xlsx.writeBuffer();
+        const blob = new Blob([buffer], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "បញ្ជីសាខាកាកបាទក្រហមកម្ពុជា.xlsx";
+        link.click();
+    } catch (error) {
+        console.error("Error creating Excel file:", error);
+        throw error;
+    }
+};
+
+// Main export function
+export default function exportToExcel(current_branch, total_member, total_stu, total_stu_fem) {
+    $("#export_excel").on("click", async () => {
+        try {
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = createWorksheet(workbook, current_branch);
+
+            addTitle(worksheet, current_branch);
+            createTable(worksheet, total_member);
+            applyStyles(worksheet, total_member.length);
+            addFooter(worksheet, total_stu, total_stu_fem, total_member.length + 4);
+
+            await downloadExcel(workbook);
+        } catch (error) {
+            console.error("Error in export process:", error);
+        }
+    });
 }

@@ -19,4 +19,8 @@ class users extends Authenticatable
     {
         return $this->hasMany(branch::class, 'user_id', 'id');
     }
+    public function branch_bindding_user(): HasMany
+    {
+        return $this->hasMany(branch_bindding_user::class, 'user_id', 'id');
+    }
 }

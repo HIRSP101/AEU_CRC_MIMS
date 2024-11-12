@@ -1,11 +1,11 @@
-
+@foreach($userb->branch_bindding_user as $branch_user)
 <tr class="border-b border-gray-200 hover:bg-gray-100">
     <td class="py-3 px-6 text-left whitespace-nowrap">
         <div class="flex items-center">
             <div class="mr-2">
-                <img class="w-6 h-6 rounded-full" src="{{asset("{$userb->branch[0]?->image}")}}"/>
+                <img class="w-6 h-6 rounded-full" src="{{asset("{$branch_user->branch->image}")}}"/>
             </div>
-            <span class="font-medium">{{$userb->branch[0]?->branch_name ?? ""}}</span>
+            <span class="font-medium">{{$branch_user->branch->branch_name ?? ""}}</span>
         </div>
     </td>
     <td class="py-3 px-6 text-left">
@@ -37,7 +37,7 @@
     <td class="py-3 px-6 text-center">
         <div class="flex item-center justify-center">
             <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                <a class="elude" data-id="{{$userb?->id}}" b-id="{{$userb->branch[0]?->branch_id}}">
+                <a class="elude" data-id="{{$userb?->id}}" b-id="{{$branch_user->branch->branch_id}}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                 </svg>
@@ -54,3 +54,4 @@
 
     </td>
 </tr>
+@endforeach

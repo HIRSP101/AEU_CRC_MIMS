@@ -113,7 +113,7 @@ $(document).ready(function () {
 
                         activeSheet = $(this).text().trim();
                         constructSheetTable(sheetObj[activeSheet]);
-                        console.log(sheetObj[activeSheet]);
+                       // console.log(sheetObj[activeSheet]);
                     });
 
 
@@ -122,7 +122,10 @@ $(document).ready(function () {
                             delete sheetObj[activeSheet][Object.keys(sheetObj[activeSheet])[0]];
                             if(activeSheet.length > 0) {
                                 showLoading();
-                                insertMember(sheetObj[activeSheet]);
+                                var formData = new FormData();
+                                formData.append('members', JSON.stringify(sheetObj[activeSheet]));
+                                console.log(formData);
+                                insertMember(formData);
                             } else {
                                 console.log("please select a sheet to import!!");
                             }
@@ -152,19 +155,18 @@ $(document).ready(function () {
     function insertMember(member) {
         $.ajax({
             type: 'POST',
-            url: '/insertmemberfr',
-            data: {
-                member: member
-            },
+            url: '/createmember',
+            data: member,
+            contentType: false,
+            processData: false,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
-                hideLoading();
                 console.log(response.message);
+                hideLoading();
             },
             error: function (error) {
-                hideLoading();
                 console.error(error);
             }
         })

@@ -26,9 +26,13 @@ class branch extends Model
     public function branch_leadership_memberroster() :HasOne {
         return $this->hasOne(branch_leadership_memberroster::class, 'branch_id', 'branch_id');
     }
-    public function users(): BelongsTo
-    {
-        return $this->belongsTo(users::class, 'id', 'user_id');
+
+    public function branch_hei() :HasMany {
+        return $this->hasMany(branch_hei::class, 'branch_id', 'branch_id');
+    }
+
+    public function branch_institution() :HasMany {
+        return $this->hasMany(branch_institution::class, 'branch_id', 'branch_id');
     }
 
 }

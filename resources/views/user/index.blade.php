@@ -10,8 +10,8 @@
         $converseObj[$user_b->id] = [
             'name' => $user_b->name,
             'email' => $user_b->email,
-            'branch_id' => $user_b->branch[0]->branch_id,
-            'role' => $user_b->roles[0]->name,
+            'branch_id' => $user_b->branch_bindding_user[0]->branch->branch_id ?? '',
+            'role' => $user_b->roles[0]->name ?? '',
             'permissions' => $user_b->permissions ?? '',
         ];
     }
@@ -50,6 +50,7 @@
 @push('JS')
     <script>
         var converseObj = @json($converseObj);
+        console.log(converseObj);
         $("#image").on('change', function(e) {
             e.preventDefault();
             var file = e.target.files;

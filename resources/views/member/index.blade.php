@@ -48,7 +48,7 @@
     $("#submit_btn").click(function (e) {
         e.preventDefault();
         var formData = new FormData();
-        var memberObj = [{
+        var memberObj = {0: {
         "name_kh" : $("input#name_kh").val(),
         "name_en" : $("input#name_en").val(),
         "gender" : $("select#gender").val(),
@@ -90,9 +90,13 @@
         "computer_skill" : "",
         "misc_skill" : "",
         "registration_date" : $("input#recruitment_date").val()
-    }]
+    }
+    }
+    
+    
+    console.log(memberObj);
     formData.append('members', JSON.stringify(memberObj));
-    formData.append('image', $("#image")[0].files[0]);
+   
         console.log(formData);
         insertMember(formData);
     })

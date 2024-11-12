@@ -1,6 +1,6 @@
 <?php
 $i=1;
-$firstEle = $total_mem_branches[0];
+$firstEle = $total_mem_branches[0] ?? "";
 ?>
 <div class="p-4 bg-white">
     <div class="">

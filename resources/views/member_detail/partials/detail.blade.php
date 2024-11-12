@@ -4,7 +4,7 @@
             ឈ្មោះ
         </h1>
         <h1 class="px-2 font-bold">
-            {{$member->name_kh}}
+            {{$member->name_kh ?? ""}}
         </h1>
     </div>
 
@@ -13,7 +13,7 @@
             អក្សរឡាតាំង
         </h1>
         <h1 class="px-2 font-bold">
-            {{$member->name_en}}
+            {{$member->name_en ?? ""}}
         </h1>
     </div>
 
@@ -22,7 +22,7 @@
             ភេទ
         </h1>
         <h1 class="px-2 font-bold">
-            {{$member->gender}}
+            {{$member->gender ?? ""}}
         </h1>
     </div>
     <div class="flex w-full md:w-1/2  mb-6 md:mb-0">
@@ -30,7 +30,7 @@
             ថ្ងៃទី ខែ ឆ្នាំកំណើត (Date of Birth)
         </h1>
         <h1 class="px-2 font-bold">
-            {{$member->date_of_birth}}
+            {{$member->date_of_birth ?? ""}}
         </h1>
     </div>
     <div class="flex w-full md:w-1/2  mb-6 md:mb-0">
@@ -38,7 +38,7 @@
             ទីកន្លែងកំណើត (Place of Birth)
         </h1>
         <h1 class="px-2">
-            {{$member_pob->village}}
+            {{$member_pob->village ?? ""}}
         </h1>
     </div>
     <div class="flex w-full md:w-1/2  mb-6 md:mb-0">
@@ -48,40 +48,40 @@
     </div>
     <div class="flex w-full md:w-1/3 mb-6 md:mb-0">
         <h1 class="px-2">
-            ផ្ទះលេខ ៖ <span class="font-bold"> {{$member_addr->home_no}}</span>
+            ផ្ទះលេខ ៖ <span class="font-bold"> {{$member_addr->home_no ?? ""}}</span>
         </h1>
     </div>
     <div class="flex w-full md:w-1/3  mb-6 md:mb-0">
         <h1 class="px-2">
-            ផ្លូវ​​​ ៖ <span class="font-bold"> {{$member_addr->street_no}} </span>
+            ផ្លូវ​​​ ៖ <span class="font-bold"> {{$member_addr->street_no ?? ""}} </span>
         </h1>
     </div>
     <div class="flex w-full md:w-1/4  mb-6 md:mb-0">
         <h1 class="px-2">
-            ភូមិ ៖ <span class="font-bold"> {{$member_addr->village}} </span>
+            ភូមិ ៖ <span class="font-bold"> {{$member_addr->village ?? ""}} </span>
         </h1>
 
     </div>
     <div class="flex w-full md:w-1/4  mb-6 md:mb-0">
         <h1 class="px-2">
-            ឃុំ/សង្កាត់ ៖ <span class="font-bold">{{$member_addr->commune_sangkat}}</span>
+            ឃុំ/សង្កាត់ ៖ <span class="font-bold">{{$member_addr->commune_sangkat ?? ""}}</span>
         </h1>
     </div>
     <div class="flex w-full md:w-1/3  mb-6 md:mb-0">
         <h1 class="px-2">
-            ស្រុក/ខណ្ទ ៖ <span class="font-bold">{{$member_addr->district_khan}}</span>
+            ស្រុក/ខណ្ទ ៖ <span class="font-bold">{{$member_addr->district_khan ?? ""}}</span>
         </h1>
     </div>
     <div class="flex w-full md:w-1/3  mb-6 md:mb-0">
         <h1 class="px-2">
-            ខេត្ត/រាជធានី ៖ <span class="font-bold">{{$member_addr->provience_city}}</span>
+            ខេត្ត/រាជធានី ៖ <span class="font-bold">{{$member_addr->provience_city ?? ""}}</span>
         </h1>
 
     </div>
 
     <div class="flex w-full md:w-full  mb-6 md:mb-0">
         <h1 class="px-2">
-            កម្រិតវប្បធម៌ ឬថ្នាក់ទី ឬឆ្នាំទី (Education or Class or Year) ៖ <span class="font-bold">{{$member_edu->acadmedic_year}}</span>
+            កម្រិតវប្បធម៌ ឬថ្នាក់ទី ឬឆ្នាំទី (Education or Class or Year) ៖ <span class="font-bold">{{$member_edu->acadmedic_year ?? ""}}</span>
         </h1>
     </div>
     <div class="flex w-full md:w-full  mb-6 md:mb-0">

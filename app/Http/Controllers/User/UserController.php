@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Models\users;
 use App\Models\branch;
+use App\Models\branch_bindding_user;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -18,13 +19,12 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-
-        $user_branch = users::with(['branch', 'roles', 'permissions'])
-            ->withAggregate('roles', 'id')->orderBy('roles_id', 'asc')->get();
+        $user_branch = users::with(['branch_bindding_user.branch', 'roles', 'permissions'])
+        ->withAggregate('roles', 'id')->orderBy('roles_id', 'asc')->get();
         $branches = branch::all()->pluck('branch_kh', 'branch_id');
         //  dd($user_branch[5]->branch[0]);
         //dd($branches);
-        // dd($user_branch);
+        //dd($user_branch[0]->branch_bindding_user[0]->branch->branch_name);
         return view('user.index', compact('user_branch', 'branches'));
     }
     /**
@@ -64,8 +64,10 @@ class UserController extends Controller
         }
 
         if ($request->filled('branch_id')) {
-            branch::where('user_id', $user->id)->update(["user_id" => null]);
-            branch::where('branch_id', $request->branch_id)->update(['user_id' => $user->id]);
+         //   dd(branch_bindding_user::where('branch_id', $request->branch_id)->get());
+            branch_bindding_user::where('user_id', $user->id)->update(["user_id" => $user->id]);
+            branch_bindding_user::where('user_id', $user->id)->update(['branch_id' => $request->branch_id]);
+
         }
 
         return redirect('/userroles');
@@ -76,12 +78,12 @@ class UserController extends Controller
         $user = users::where('id', $request->id);
         //dd($user);
         if ($user) {
-            $branch = branch::where('user_id', $request->id);
+            $bbu = branch_bindding_user::where('user_id', $request->id);
             //  dd("/public/".str_replace("\\",'/',$user->select('id', 'image')->get()->pluck('image')[0]));
             File::delete(public_path($user->select('id', 'image')->get()->pluck('image')[0]));
             //Storage::disk('public')->delete("images/users/u-22.png");
-            if ($branch) {
-                $branch->update(["user_id" => null]);
+            if ($bbu) {
+                $bbu->delete();
             }
             $user->delete();
             return Redirect::to('/userroles');

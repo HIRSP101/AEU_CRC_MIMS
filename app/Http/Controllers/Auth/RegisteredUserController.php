@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\users;
 use App\Models\branch;
+use App\Models\branch_bindding_user;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -51,10 +52,11 @@ class RegisteredUserController extends Controller
             'image' => "images\users" . $imageName
         ]);
 
-        $branch = branch::find( $request->branch_id, 'branch_id');
-        if($branch) {
-            $branch->update(["user_id" => $user->id]);
-        }
+        $bbu = branch_bindding_user::create([
+            "branch_id" => $request->branch_id,
+            "user_id" => $user->id
+        ]);
+
 
         $user->assignRole($request->roles);
         $user->givePermissionTo($request->permissions);

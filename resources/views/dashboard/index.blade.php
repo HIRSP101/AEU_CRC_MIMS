@@ -13,7 +13,6 @@
 @endpush
 
 @section('Content')
-
         @include('dashboard.partials.first_sec_dashboard')
         <div class="">
             <hr class="h-px my-4 bg-red-600 p-[1px] border dark:bg-red-600">

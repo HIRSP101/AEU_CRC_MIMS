@@ -4,11 +4,11 @@
 
 @section('Content')
 <?php
-    $member_addr = $member->member_current_address;
-    $member_edu = $member->member_education_background;
-    $member_regis = $member->member_registration_detail;
-    $member_guardian = $member->member_guardian_detail;
-    $member_pob = $member->member_pob_address;
+    $member_addr = $member->member_current_address ?? "";
+    $member_edu = $member->member_education_background ?? "";
+    $member_regis = $member->member_registration_detail ?? "";
+    $member_guardian = $member->member_guardian_detail ?? "";
+    $member_pob = $member->member_pob_address ?? "";
 
 ?>
 <div>
