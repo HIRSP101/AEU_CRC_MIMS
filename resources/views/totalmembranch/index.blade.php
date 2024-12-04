@@ -9,7 +9,8 @@
     $current_branch = explode(' ', $total_mem[0]->full_current_address)[3] ?? "";
      $total_mem_detail = array();
         for ($i = 0; $i < count($total_mem); $i++) {
-            $total_mem_detail[$i] = array($total_mem[$i]->member_id
+            $total_mem_detail[$i] = array(
+             $total_mem[$i]->member_id
             ,$total_mem[$i]->name_kh
             ,$total_mem[$i]->name_en
             ,$total_mem[$i]->gender
@@ -21,7 +22,8 @@
             ,$total_mem[$i]->full_current_address
             ,$total_mem[$i]->phone_number
             ,$total_mem[$i]->guardian_phone
-            ,$total_mem[$i]->shirt_size);
+            ,$total_mem[$i]->shirt_size
+            );
         }
 ?>
 <div class="bg-white mt-2 mx-3 shadow-lg">
@@ -114,7 +116,8 @@
     document.addEventListener('DOMContentLoaded', function () {
         var array = @json($total_mem);
         handleTotalmem(array);
-        exportToExcel(@json($current_branch)
+        exportToExcel(
+         @json($current_branch)
         ,@json($total_mem_detail)
         ,@json($total_total)[0]["total_mem"]
         ,@json($total_fem)[0]["total_mem_fem"]);

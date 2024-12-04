@@ -26,7 +26,7 @@ class DashboardController extends Controller
             ->groupBy('branch.branch_id', 'branch.branch_kh')
             ->orderBy('total_mem', 'desc')
             ->get();
-           //s dd($total_mem_branches);
+           // dd($total_mem_branches);
        // dd($branches);
         return view('dashboard.index', compact('branches', 'authName', 'authEmail', 'total_mem_branches'));
     }

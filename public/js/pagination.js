@@ -73,7 +73,7 @@ export default function setuppagination(array, attr_arr, updateroute) {
     function generateTableRow(item, attr_arr) {
         var {origin} = window.location;
         let rowHTML = `<tr class='border-collapse border-y-2 border-x-2 border-black hover:bg-slate-300 hoverablebranch' data-id="${item[attr_arr[0]]}">`;
-    
+        console.log(item);
         attr_arr.forEach(attr => {
             if (attr == "image") {
                 rowHTML += `<td class='px-2 py-4 text-sm text-center border-x-2 border-black whitespace-nowrap'><img src="${origin}/${item[attr]}" class="object-contain w-auto h-[64px] mx-0 my-0 px-0 py-0"></td>`;

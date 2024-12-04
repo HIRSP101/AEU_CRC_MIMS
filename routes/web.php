@@ -70,7 +70,6 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/update-branch', "{$appC}\\BranchController@update")->name('branch.update');
     Route::post('/delete-branch', "{$appC}\\BranchController@deleteBranch");
     Route::post('/delete-branches', "{$appC}\\BranchController@deleteBranches");
-
 });
 
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");

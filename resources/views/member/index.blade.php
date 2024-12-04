@@ -34,6 +34,7 @@
 @endsection
 
 @push('JS')
+@vite(['resources/js/exportToPDF.js'])
 <script>
     $("#image").on('change', function (e) {
         e.preventDefault();

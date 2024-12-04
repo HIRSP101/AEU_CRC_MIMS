@@ -199,7 +199,6 @@
         } from "{{ asset('js/handleBranchform.js') }}";
         document.addEventListener('DOMContentLoaded', function() {
             var array = @json($bhei_col);
-            var array = @json($bhei_col);
 
             array.forEach(item => {
                 item.full_address =
