@@ -9,8 +9,6 @@
 
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('js/handlemodal.js') }}"></script>
-
-    <!-- Correct usage of @vite -->
     @vite(['resources/js/app.js', 'resources/css/app.css', 'resources/css/style.css'])
 
     @stack('CSS')
