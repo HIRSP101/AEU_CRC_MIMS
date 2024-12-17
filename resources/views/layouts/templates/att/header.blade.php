@@ -6,9 +6,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('js/handlemodal.js') }}"></script>
-    @vite(['resources/js/app.js', 'resources/css/app.css', 'resources/css/style.css', 'public/js/script.js'])
+
+    <!-- Correct usage of @vite -->
+    @vite(['resources/js/app.js', 'resources/css/app.css', 'resources/css/style.css'])
+
     @stack('CSS')
 </head>
 
