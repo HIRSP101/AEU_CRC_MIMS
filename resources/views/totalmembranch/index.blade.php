@@ -4,6 +4,10 @@
 @endpush
 
 @section('Content')
+    <?php
+    $current_branch = "";
+    $total_mem_detail = "";
+    ?>
 @if(count($total_mem) > 0)
 <?php
     $current_branch = explode(' ', $total_mem[0]->full_current_address)[3] ?? "";
@@ -33,7 +37,7 @@
         <input type="text" id="tab_filter_text">
         <button id="tab_filter_btn" class="active">search</button>
     </div>
-    
+
     <div class="flex justify-end space-x-2 mb-4 mt-10">
         <div class="tab_head_container">
             <div class="page_limit">
@@ -55,7 +59,7 @@
            <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
        </div>
 <div class="w-full overflow-scroll mx-3 my-3 max-h-[760px]">
-    
+
        <div class="w-full overflow-scroll my-3 max-h-[760px] table">
            <table>
                <thead class=" font-siemreap bg-slate-200 border-collapse border-t-2 border-black">
@@ -115,13 +119,15 @@
     import { handleTotalmem } from "{{ asset('js/handleTotalmem.js') }}";
     document.addEventListener('DOMContentLoaded', function () {
         var array = @json($total_mem);
+        console.log(@json($total_fem));
         handleTotalmem(array);
-        exportToExcel(
-         @json($current_branch)
-        ,@json($total_mem_detail)
-        ,@json($total_total)[0]["total_mem"]
-        ,@json($total_fem)[0]["total_mem_fem"]);
+        if (array.length > 0) {
+            exportToExcel(@json($current_branch) ,@json($total_mem_detail)
+                ,@json($total_total)
+                ,@json($total_fem));
+        }
     });
+    /*@json($total_total)[0]["total_mem"], @json($total_fem)[0]["total_mem_fem"]*/
 </script>
 @endpush
 

@@ -20,9 +20,9 @@ class BranchController extends Controller
     protected UpdateBranchService $updateService;
     protected DeleteBranchService $deleteService;
 
-    public function __construct(CreateBranchService $createService, UpdateBranchService $updateService, DeleteBranchService $deleteService)   
+    public function __construct(CreateBranchService $createService, UpdateBranchService $updateService, DeleteBranchService $deleteService)
     {
-        $this->deleteService = $deleteService;  
+        $this->deleteService = $deleteService;
         $this->createService = $createService;
         $this->updateService = $updateService;
     }
@@ -32,7 +32,7 @@ class BranchController extends Controller
         ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
         ->orderBy('total_institutes', 'desc')
         ->get();
-        
+
         return view('branch.index', compact('total_mem_branches', ));
     }
 
@@ -44,9 +44,10 @@ class BranchController extends Controller
                 'branch.branch_id',
                 'branch.branch_kh',
                 'branch.image',
-                DB::raw("COUNT(distinct meb.institute_id) AS total_institutes"),
+                DB::raw(value: "COUNT(distinct meb.institute_id) AS total_institutes"),
                 DB::raw("COUNT(meb.member_id) AS total_mem")
             );
+
         return $total_mem_branches;
     }
 
@@ -107,6 +108,7 @@ class BranchController extends Controller
                 'mpd.shirt_size'
             ])
             ->get();
+            //dd($total_mem);
 
         return view('totalmembranch.index', compact('total_mem', 'total_fem', 'total_total'));
     }
@@ -150,7 +152,6 @@ class BranchController extends Controller
     // single delete
     public function deleteBranch(Request $request): JsonResponse
     {
-        
        $this->deleteService->deleteBranch($request->arr[0]);
        return response()->json(['message' => 'Member deleted successfully']);
     }

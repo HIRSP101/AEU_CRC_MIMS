@@ -154,10 +154,11 @@ export const downloadExcel = async (workbook) => {
     }
 };
 
-// Main export function
+
 export default function exportToExcel(current_branch, total_member, total_stu, total_stu_fem) {
     $("#export_excel").on("click", async () => {
         try {
+            console.log("Hello World!!!")
             const workbook = new ExcelJS.Workbook();
             const worksheet = createWorksheet(workbook, current_branch);
 
