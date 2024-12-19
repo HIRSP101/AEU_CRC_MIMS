@@ -44,7 +44,6 @@ require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/dashboard', "{$appC}\\DashboardController@index")->middleware(['auth', 'verified'])->name('dashboard');
-    Route::get('/userroles', "{$appC}\\User\UserController@index")->name('userroles');
     Route::get('/initialmodels', "{$appC}\\testdbconnection@initialModelsSetup");
     Route::get('/insertmember', "{$appC}\\testdbconnection@getMemberColumns")->name('import');
     Route::post('/insertmemberfr', "{$appC}\\testdbconnection@insertMember");

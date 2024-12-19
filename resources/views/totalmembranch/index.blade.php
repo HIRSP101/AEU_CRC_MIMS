@@ -109,7 +109,7 @@
        </div>
 </div>
 @else
-    <p> no data available </p>
+    <p class="font-siemreap"> មិនមានទិន្ទន័យគ្រប់គ្រង </p>
 @endif
 @endsection
 

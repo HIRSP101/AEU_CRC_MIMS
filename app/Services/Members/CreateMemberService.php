@@ -2,6 +2,7 @@
 
 namespace App\Services\Members;
 
+use App\Models\branch;
 use App\Models\member_personal_detail;
 use Illuminate\Http\UploadedFile;
 use Carbon\Carbon;
@@ -22,8 +23,8 @@ class CreateMemberService
             "date_of_birth" => isset($data['date_of_birth']) ? $this->convertDate($data['date_of_birth']) : null,
             "full_current_address" => $data['full_current_address'] ?? null,
             "phone_number" => $data['phone_number'] ?? null,
-            "email" => $data['email'] ?? null,          
-            "facebook" => $data['facebook'] ?? null,     
+            "email" => $data['email'] ?? null,
+            "facebook" => $data['facebook'] ?? null,
             "shirt_size" => $data['shirt_size'] ?? null,
             "branch_id" => $data['branch_id'] ?? null,
             "member_type" => $data["type"] ?? null,
@@ -36,10 +37,11 @@ class CreateMemberService
 
     private function createRelatedData(member_personal_detail $member, array $data): void
     {
+        $branch = branch::all()->pluck("branch_id", "branch_kh");
         $this->createRegistrationDetails($member, $data);
         $this->createCurrentAddress($member, $data);
         $this->createPobAddress($member, $data);
-        $this->createEducationBackground($member, $data);
+        $this->createEducationBackground($member, $data, $branch);
         $this->createGuardianDetail($member, $data);
     }
 
@@ -77,7 +79,7 @@ class CreateMemberService
         ]);
     }
 
-    private function createEducationBackground(member_personal_detail $member, array $data): void
+    private function createEducationBackground(member_personal_detail $member, array $data, $branch): void
     {
         $member->member_education_background()->create([
             'institute_id' => $data['institute_id'] ?? null,
@@ -87,7 +89,8 @@ class CreateMemberService
             'shift' => $data['shift'] ?? null,
             'language' => $data['language'] ?? null,
             'computer_skill' => $data['computer_skill'] ?? null,
-            'misc_skill' => $data['misc_skill'] ?? null
+            'misc_skill' => $data['misc_skill'] ?? null,
+            'branch_id' => $branch[$data["provience_city"] ?? null] ?? null,
         ]);
     }
 
@@ -114,7 +117,7 @@ class CreateMemberService
 
         $imageName = 'mem-' . str_replace(' ', '', $data["name_en"] . ($currentMemberId + 1)) . '.' . $image->extension();
         $image->move(public_path('images/members'), $imageName);
-        
+
         return "images/$imageName";
     }
     private function convertDate($date)

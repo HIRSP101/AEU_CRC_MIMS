@@ -6,7 +6,11 @@ $kh_num = ["1" => "១", "2" => "២", "3" => "៣", "4" => "៤", "5" => "៥",
 <div class="p-4 bg-white">
     <div class="">
         <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 ">
+<<<<<<< HEAD
             <div class="p-4 rounded-lg shadow mr-3 mb-3 bg-cover" style="background-image: url('https://img.freepik.com/free-photo/farmland_1112-1234.jpg?t=st=1734403690~exp=1734407290~hmac=c765d483365a2731f5b4779904abcfba065cbfabb21f7a9dced1a3232fd972ce&w=1800')">
+=======
+            <div class="p-4 rounded-lg shadow mr-3 mb-3 bg-cover" >
+>>>>>>> a95dd5e (Re-F)
                 <h1 class="text-blue-900 text-3xl font-koulen">សួស្តី {{explode(' ',auth()->user()->name)[1] ?? auth()->user()->name}}</h1>
                 <h3 class="text-blue-900 text-xl font-siemreap mt-3.5">សូមសា្វគមន៍មកកាន់ប្រព័ន្ធគ្រប់គ្រងទិន្នន័យ​
                     សមាជិកយុវជន ក.ក្រ.ក</h3>
@@ -29,9 +33,17 @@ $kh_num = ["1" => "១", "2" => "២", "3" => "៣", "4" => "៤", "5" => "៥",
                             <tbody>
                                 @foreach($total_mem_branches as $total_mem_branch)
                                 <tr>
+<<<<<<< HEAD
                                     <td class="px-4 text-md">{{$kh_num[$i++] . '.' ?? $i++ . '.'}}</td>
                                     <td class="text-md">{{str_replace("ខេត្ត", "",$total_mem_branch->branch_kh)}}</td>
                                     <td class="px-1 text-md">{{$total_mem_branch->total_mem}} នាក់</td>
+=======
+                                    @if($i <= 5)
+                                    <td class="px-4 text-md">{{$kh_num[$i++] . '.' ?? $i++ . '.'}}</td>
+                                    <td class="text-md">{{str_replace("ខេត្ត", "",$total_mem_branch->branch_kh)}}</td>
+                                    <td class="px-1 text-md">{{$total_mem_branch->total_mem}} នាក់</td>
+                                    @endif
+>>>>>>> a95dd5e (Re-F)
                                 </tr>
                                 @endforeach
                             </tbody>

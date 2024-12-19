@@ -22,10 +22,6 @@
                 <input id="dropzone-file" type="file" class="hidden" />
             </label>
         </div>
-        <button class="bg-red-400 w-auto h-auto mx-3" id="member_submit">submit</button>
-        <input type="file" id="file-input">
-        <button id="upload-btn">Upload</button>
-
     </div>
 @endsection
 
