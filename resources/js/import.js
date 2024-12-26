@@ -1,6 +1,6 @@
 import ExcelJS from 'exceljs';
 import constructSheetTable from './sheetTable';
-import {showLoading, hideLoading} from './loadingscreen';
+import { showLoading, hideLoading } from './loadingscreen';
 var columnNames = [];
 var colValues = {};
 var idCounter = 0;
@@ -8,7 +8,8 @@ var todelIndex = 0;
 var ignoreColIndexes = [];
 var sheetObj = {};
 var activeSheet = "";
-const branch_dict ={"រាជធានីភ្នំពេញ": 1, "ខេត្តសៀមរាប": 2, "ខេត្តបាត់ដំបង": 3,
+const branch_dict = {
+    "រាជធានីភ្នំពេញ": 1, "ខេត្តសៀមរាប": 2, "ខេត្តបាត់ដំបង": 3,
     "ខេត្តព្រះសីហនុ": 4, "ខេត្តកំពង់ចាម": 5, "ខេត្តកំពត": 6,
     "ខេត្តកណ្ដាល": 7, "ខេត្តព្រះវិហារ": 8, "ខេត្តតាកែវ": 9,
     "ខេត្តបន្ទាយមានជ័យ": 10, "ខេត្តពោធិសាត់": 11, "ខេត្តស្វាយរៀង": 12,
@@ -26,12 +27,14 @@ $(document).ready(function () {
         $("#menu").addClass("hidden");
     })
 
+
+
     $('#dropzone-file').on('change', async function () {
 
         const fileInput = $('#dropzone-file')[0];
-       // console.log(fileInput);
+        // console.log(fileInput);
         if (fileInput.files.length > 0) {
-            showLoading();
+           // showLoading();
             const file = fileInput.files[0];
             const reader = new FileReader();
 
@@ -74,18 +77,18 @@ $(document).ready(function () {
                                     }
                                     for (let i = 1; i < columnNames.length; i++) {
                                         if (khDict[columnNames[i]] == "date_of_birth") {  // Convert localized date to std date format for mysql (YYYY/MM/dd)
-                                            if (splitValues[i+1] != "ថ្ងៃខែឆ្នាំកំណើត") {
-                                                if (containsUnicodeNumber(splitValues[i+1])) {
+                                            if (splitValues[i + 1] != "ថ្ងៃខែឆ្នាំកំណើត") {
+                                                if (containsUnicodeNumber(splitValues[i + 1])) {
                                                     colValues[rowNumber] = {
                                                         ...colValues[rowNumber],
-                                                        [khDict[columnNames[i]]] : translatekhdateToen(splitValues[i+1])
+                                                        [khDict[columnNames[i]]]: translatekhdateToen(splitValues[i + 1])
                                                     };
                                                 }
                                             }
-                                        } else  {
+                                        } else {
                                             colValues[rowNumber] = {
                                                 ...colValues[rowNumber],
-                                                [khDict[columnNames[i]]] : splitValues[i + 1] == "-" ? null : splitValues[i + 1]
+                                                [khDict[columnNames[i]]]: splitValues[i + 1] == "-" ? null : splitValues[i + 1]
 
                                             };
                                         }
@@ -118,44 +121,45 @@ $(document).ready(function () {
                                 delete colValues[key];
                                 }
                                 */
-                            }
+                        }
                         sheetObj[worksheet.name] = colValues;
                         console.log(colValues);
-                         //insertMember(colValues);
+                        //insertMember(colValues);
                     });
-                   // console.log(sheetObj);
-                    hideLoading();
+                    // console.log(sheetObj);
+                   // hideLoading();
                     var btnElement = ``;
-                    for(let i = 0; i < Object.keys(sheetObj).length; i++) {
-                       btnElement += constructSheetBtn(Object.keys(sheetObj)[i]);
+                    for (let i = 0; i < Object.keys(sheetObj).length; i++) {
+                        btnElement += constructSheetBtn(Object.keys(sheetObj)[i]);
                     }
                     $("#menu").removeClass("hidden");
                     $("#sheetContainer").html(btnElement);
                     $("div#sheetContainer").on('click', 'button', function (e) {
                         e.preventDefault();
+                        initializeProgressTracking();
                         $("div#sheetContainer").find('button').not(this).removeClass('bg-gray-800').addClass('bg-gray-300');
                         $(this).removeClass('bg-gray-800').addClass('bg-black').addClass('isactive');
                         $(this).attr('disabled', true);
 
                         activeSheet = $(this).text().trim();
                         constructSheetTable(sheetObj[activeSheet]);
-                       // console.log(sheetObj[activeSheet]);
+                        // console.log(sheetObj[activeSheet]);
                     });
 
 
-                        $("#sheetImport").click(function (e) {
-                            e.preventDefault();
-                            delete sheetObj[activeSheet][Object.keys(sheetObj[activeSheet])[0]];
-                            if(activeSheet.length > 0) {
-                                showLoading();
-                                var formData = new FormData();
-                                formData.append('members', JSON.stringify(sheetObj[activeSheet]));
-                                //console.log(formData);
-                                insertMember(formData);
-                            } else {
-                                console.log("please select a sheet to import!!");
-                            }
-                        })
+                    $("#sheetImport").click(function (e) {
+                        e.preventDefault();
+                        delete sheetObj[activeSheet][Object.keys(sheetObj[activeSheet])[0]];
+                        if (activeSheet.length > 0) {
+                          //  showLoading();
+                            var formData = new FormData();
+                            formData.append('members', JSON.stringify(sheetObj[activeSheet]));
+                            //console.log(formData);
+                            insertMember(formData);
+                        } else {
+                            console.log("please select a sheet to import!!");
+                        }
+                    })
 
                 } catch (error) {
                     console.error('Error reading Excel file:', error);
@@ -177,7 +181,7 @@ $(document).ready(function () {
             else return arr[i];
         });
     }
-
+    /*
     function insertMember(member) {
         $.ajax({
             type: 'POST',
@@ -196,6 +200,88 @@ $(document).ready(function () {
                 console.error(error);
             }
         })
+    }
+    */
+
+
+    function updateProgress(percentage, status = null) {
+        $('#progressBar').css('width', `${percentage}%`);
+        $('#progressPercentage').text(`${percentage}%`);
+
+        if (status) {
+            $('#progressStatus').text(status);
+        } else if (percentage === 100) {
+            $('#progressStatus').text('Import completed successfully!');
+        } else {
+            $('#progressStatus').text('Processing...');
+        }
+    }
+
+    function showProgressBar() {
+        $('#progressContainer').removeClass('hidden');
+        updateProgress(0, 'Starting import...');
+    }
+
+    function hideProgressBar() {
+        setTimeout(() => {
+            $('#progressContainer').addClass('hidden');
+            updateProgress(0);
+        }, 2000);
+    }
+
+    // Modify your existing insertMember function
+    function insertMember(member) {
+        showProgressBar();
+       // showLoading();
+
+        $.ajax({
+            type: 'POST',
+            url: '/createmember',
+            data: member,
+            contentType: false,
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                updateProgress(100, 'Import completed successfully!');
+                console.log(response.message);
+                setTimeout(() => {
+                    hideLoading();
+                    hideProgressBar();
+                }, 1000);
+            },
+            error: function (error) {
+                updateProgress(0, 'Error occurred during import');
+                console.error(error);
+                hideLoading();
+                setTimeout(() => {
+                    hideProgressBar();
+                }, 3000);
+            }
+        });
+    }
+
+    function initializeProgressTracking() {
+
+        const progressBarHtml = `
+            <div id="progressContainer" class="hidden mt-4 w-full">
+                <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mb-2">
+                    <div id="progressBar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+                <div class="flex justify-between">
+                    <span id="progressStatus" class="text-sm text-gray-500">Processing...</span>
+                    <span id="progressPercentage" class="text-sm text-gray-500">0%</span>
+                </div>
+            </div>
+        `;
+        $("#sheetContainer").after(progressBarHtml);
+
+        // Initialize Echo listener
+        window.Echo.channel('import-progress')
+            .listen('.import.progress', (e) => {
+                updateProgress(e.progress);
+            });
     }
 
     function constructSheetBtn(btntext = "") {
@@ -246,7 +332,7 @@ $(document).ready(function () {
             }
 
             const result = `${transDateNum}/${month_uni_dict[month_uni_str]}/${transDayNum}`;
-           // console.log(result);
+            // console.log(result);
             return result;
         } catch (error) {
             console.error(`Error: ${error.message}`);

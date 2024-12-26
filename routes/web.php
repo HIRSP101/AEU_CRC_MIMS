@@ -3,6 +3,33 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Events\TestProgress;
+use Illuminate\Support\Facades\Log;
+
+Route::post('/test-progress', function () {
+    try {
+        for ($i = 0; $i <= 100; $i += 1) {
+            broadcast(new TestProgress($i));
+            // or event(new TestProgress($i));
+            
+            // Add some logging
+            Log::info("Progress event broadcasted: $i%");
+            
+            sleep(0.25); // Simulate work
+        }
+        return response()->json(['message' => 'Progress complete']);
+    } catch (\Exception $e) {
+        Log::error("Error broadcasting progress: " . $e->getMessage());
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+});
+
+
+
+Route::get('/welcome', function () {
+    return view('welcome');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +42,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 $appC = "App\Http\Controllers";
+
+
 
 Route::get('/', function () {
     return redirect('/login');
@@ -53,6 +82,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get("/create", "{$appC}\\MemberController@index")->name('createmember');
     Route::post('/createmember', "{$appC}\\MemberController@insertMember");
     Route::get('/branch', "{$appC}\\BranchController@index")->name('branch');
+    Route::get('/branchhei', "{$appC}\\BranchController@branch_hei")->name('branchhei');
     Route::get('/branch/{id}', "{$appC}\\BranchController@get");
     Route::get('/member/{id}', "{$appC}\\MemberController@getMemberDetail");
     Route::post('/createbranch', "{$appC}\\BranchController@index")->name('createbranch');

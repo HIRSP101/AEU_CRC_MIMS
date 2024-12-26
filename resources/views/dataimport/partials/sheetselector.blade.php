@@ -8,6 +8,15 @@
                     class="relative flex flex-wrap flex-row justify-evenly gap-4 items-center font-siemreap">
 
                 </div>
+                <div id="progressContainer" class="hidden mt-4 w-full">
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mb-2">
+                        <div id="progressBar" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between">
+                        <span id="progressStatus" class="text-sm text-gray-500">Processing...</span>
+                        <span id="progressPercentage" class="text-sm text-gray-500">0%</span>
+                    </div>
+                </div>
 
                 <div id="sheetTable">
 
