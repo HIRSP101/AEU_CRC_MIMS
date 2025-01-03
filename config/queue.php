@@ -40,6 +40,7 @@ return [
             'queue' => 'default',
             'retry_after' => 90,
             'after_commit' => false,
+            'chunk_size' => env('QUEUE_CHUNK_SIZE', 100),
         ],
 
         'beanstalkd' => [

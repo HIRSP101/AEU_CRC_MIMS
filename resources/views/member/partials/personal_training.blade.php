@@ -18,7 +18,7 @@
     </label>
     <input
         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 md:mb-8 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        name="language" id="language" type="text">
+        name="language" id="language" type="text"  value="{{$newMemberModel->language}}">
 </div>
 
 <div class="md:flex-1 w-1/2  px-3 mb-6 md:mb-0">
@@ -27,7 +27,7 @@
     </label>
     <input
         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        id="major" type="text">
+        id="major" type="text" name="skill" value="{{$newMemberModel->skill}}">
 </div>
 </div>
 <div class="flex flex-wrap -mx-3 mb-2">
@@ -37,7 +37,7 @@
     </label>
     <input
         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        name="recruitment_date" id="recruitment_date" type="date" required>
+        name="recruitment_date" id="recruitment_date" type="date" required  value="{{$newMemberModel->recruitment_date}}">
 </div>
 <div class="md:flex-1 w-full  px-3 mb-6 md:mb-0">
     <label class="block uppercase tracking-wide text-gray-700 mb-2" for="branch_name">
@@ -45,7 +45,7 @@
     </label>
     <input
         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        name="branch_name" id="branch_name" type="text" required>
+        name="branch_name" id="branch_name" type="text" required  value="{{$newMemberModel->branch_name}}">
 </div>
 <div class="md:flex-1 w-full px-3 mb-6 md:mb-0 " id="this_is_fucked_up">
     <label class="block uppercase tracking-wide text-gray-700 mb-2" for="education_level">
@@ -53,7 +53,7 @@
     </label>
     <input
         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 md:mb-8 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        name="education_level" id="education_level" type="text" required>
+        name="education_level" id="education_level" type="text" required  value="{{$newMemberModel->education_level}}">
 </div>
 </div>
 <div class="flex flex-wrap -mx-3 mb-2 ">
@@ -63,7 +63,7 @@
     </label>
     <input
         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        name="phone_number" id="phone_number" type="tel" required>
+        name="phone_number" id="phone_number" type="tel" required  value="{{$newMemberModel->phone_number}}">
 </div>
 <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
     <label class="block uppercase tracking-wide text-gray-700 mb-2" for="email">
@@ -71,7 +71,7 @@
     </label>
     <input
         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        name="email" id="email" type="text">
+        name="email" id="email" type="text"  value="{{$newMemberModel->email}}">
 </div>
 <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
     <label class="block uppercase tracking-wide text-gray-700 mb-2" for="facebook">
@@ -79,7 +79,7 @@
     </label>
     <input
         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        name="facebook" id="facebook" type="text">
+        name="facebook" id="facebook" type="text" value="{{$newMemberModel->facebook}}">
 </div>
 </div>
 

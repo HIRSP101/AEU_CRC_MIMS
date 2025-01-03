@@ -6,17 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-<<<<<<< HEAD
-
-    <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('js/handlemodal.js') }}"></script>
-    @vite(['resources/js/app.js', 'resources/css/app.css', 'resources/css/style.css'])
-
-=======
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('js/handlemodal.js') }}"></script>
     @vite(['resources/js/app.js', 'resources/css/app.css', 'resources/css/style.css', 'public/js/script.js'])
->>>>>>> a95dd5e (Re-F)
     @stack('CSS')
 </head>
 
@@ -27,7 +19,7 @@
     <div class="flex h-screen">
         @include('dashboard.partials.sidebar')
         <div id="body" class="transition-transform flex flex-col flex-1 overflow-y-auto bg-[#F1F5F9]">
-            <div class="flex items-center justify-between h-16 bg-cover bg-center bg-no-repeat border-b border-gray-200 px-4 py-1"
+            <div class="flex items-center justify-between h-16 bg-cover  bg-no-repeat border-b border-gray-200 px-4 py-1"
                 style="background-image: url('{{ asset('images/FoC.png') }}');">
                 <button id="openSidebar" class="text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"

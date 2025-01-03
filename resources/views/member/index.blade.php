@@ -9,7 +9,35 @@
         <img class="w-[125px] h-[125px] mb-3" src="{{asset('images/Logo_of_Cambodian_Red_Cross.svg')}}" alt="">
         <h1 class="mb-1">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
         <h1>Cambodian Red Cross Youth Individual Information</h1>
+        {{Route::currentRouteName()}}
     </div>
+   @if(Route::currentRouteName() == "member.update")
+
+   @php
+            $newMemberModel = $member 
+   @endphp
+   
+    <form class="w-full" method="POST" action="/update-members" enctype="multipart/form-data">
+        @csrf
+        @include('member.partials.personal_detail')
+        <hr>
+        @include('member.partials.pob')
+        <hr>
+        @include('member.partials.current_address')
+        <hr>
+        @include('member.partials.personal_training')
+        <hr>
+        @include('member.partials.guardian')
+        <div class="flex justify-end">
+            <a class="border-solid m-2 border-2 bg-red-400 p-2 rounded-md hover:bg-red-500 active:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
+               id="clear_btn">លុប</a>
+            <button
+                class="border-solid m-2 border-2 bg-green-500 p-2 rounded-md hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300"
+                type="submit" id="submit_btn">យល់ព្រម
+            </button>
+        </div>
+    </form>
+    @else
     <form class="w-full" method="POST" action="/insertmember" enctype="multipart/form-data">
         @csrf
         @include('member.partials.personal_detail')
@@ -30,6 +58,7 @@
             </button>
         </div>
     </form>
+    @endif
 </div>
 @endsection
 
@@ -50,6 +79,7 @@
         e.preventDefault();
         var formData = new FormData();
         var memberObj = {0: {
+        "member_id": window.location.href.split("/")[4],
         "name_kh" : $("input#name_kh").val(),
         "name_en" : $("input#name_en").val(),
         "gender" : $("select#gender").val(),
@@ -99,12 +129,37 @@
     formData.append('members', JSON.stringify(memberObj));
    
         console.log(formData);
-        insertMember(formData);
+        
+        console.log(window.location.href.split("/")[3]);
+        if (window.location.href.split("/")[3] == "update-member") {
+            updateMember(formData)
+        }
+        else {
+            insertMember(formData)
+        }
     })
     function insertMember(member) {
         $.ajax({
             type: 'POST',
             url: '/createmember',
+            data: member,
+            contentType: false,
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                console.log(response.message);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        })
+    }
+    function updateMember(member) {
+        $.ajax({
+            type: 'POST',
+            url: '/update-members',
             data: member,
             contentType: false,
             processData: false,

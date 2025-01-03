@@ -1,6 +1,6 @@
 export default function setuppagination(array, attr_arr, updateroute) {
     let array_length = array.length;
-    let table_size = 10;
+    let table_size = 50;
     let start_index = 1;
     let end_index = 0;
     let current_index = 1;
@@ -34,15 +34,36 @@ export default function setuppagination(array, attr_arr, updateroute) {
         preLoadCalculations();
         const $indexButtons = $(".index_buttons").empty();
 
-        $indexButtons.append('<button class="bg-gray-300 px-3 rounded" onclick="prev();">Previous</button>');
+        $indexButtons.append(
+            '<button class="bg-gray-300 px-3 rounded" onclick="prev();">Previous</button>'
+        );
 
-        for (let i = 1; i <= max_index; i++) {
+        // Determine the range of page numbers to display
+        const maxVisiblePages = 3; // Number of page numbers to display at a time
+        const startPage = Math.max(
+            1,
+            current_index - Math.floor(maxVisiblePages / 2)
+        );
+        const endPage = Math.min(max_index, startPage + maxVisiblePages - 1);
+
+        for (let i = startPage; i <= endPage; i++) {
             $indexButtons.append(
-                `<button class="ml-2 bg-gray-300 px-3 rounded" onclick="indexPagination(${i})" data-index="${i}">${i}</button>`
+                `<button class="ml-2 bg-gray-300 px-3 rounded ${
+                    i === current_index ? "active" : ""
+                }" 
+                onclick="indexPagination(${i})" data-index="${i}">${i}</button>`
             );
         }
 
-        $indexButtons.append('<button class="ml-2 bg-gray-300 px-3 rounded" onclick="next();">Next</button>');
+        if (endPage < max_index) {
+            $indexButtons.append(
+                '<button class="ml-2 bg-gray-300 px-3 rounded" onclick="next();">&gt;</button>'
+            );
+        }
+
+        $indexButtons.append(
+            '<button class="ml-2 bg-gray-300 px-3 rounded" onclick="next();">Next</button>'
+        );
 
         updateDisplay();
     }
@@ -51,9 +72,13 @@ export default function setuppagination(array, attr_arr, updateroute) {
         start_index = (current_index - 1) * table_size + 1;
         end_index = Math.min(start_index + table_size - 1, array_length);
 
-        $(".footer span").text(`Showing ${start_index} to ${end_index} of ${array_length} entries`);
+        $(".footer span").text(
+            `Showing ${start_index} to ${end_index} of ${array_length} entries`
+        );
         $(".index_buttons button").removeClass("active");
-        $(`.index_buttons button[data-index='${current_index}']`).addClass("active");
+        $(`.index_buttons button[data-index='${current_index}']`).addClass(
+            "active"
+        );
 
         displayTableRows();
     }
@@ -71,27 +96,32 @@ export default function setuppagination(array, attr_arr, updateroute) {
     }
 
     function generateTableRow(item, attr_arr) {
-        var {origin} = window.location;
-        let rowHTML = `<tr class='border-collapse border-y-2 border-x-2 border-black hover:bg-slate-300 hoverablebranch' data-id="${item[attr_arr[0]]}">`;
+        var { origin } = window.location;
+        let rowHTML = `<tr class='border-b border-slate-300 hover:bg-slate-300 hoverablebranch' data-id="${
+            item[attr_arr[0]]
+        }">`;
         console.log(item);
-        attr_arr.forEach(attr => {
+        attr_arr.forEach((attr) => {
             if (attr == "image") {
-                rowHTML += `<td class='px-2 py-4 text-sm text-center border-x-2 border-black whitespace-nowrap'><img src="${origin}/${item[attr]}" class="object-contain w-auto h-[64px] mx-0 my-0 px-0 py-0"></td>`;
+                rowHTML += `<td class='px-2 py-4 text-sm text-center whitespace-nowrap'><img src="${origin}/${item[attr]}" class="object-contain w-auto h-[64px] mx-0 my-0 px-0 py-0"></td>`;
             } else {
-                rowHTML += `<td class='px-2 py-4 text-sm text-center border-x-2 border-black whitespace-nowrap'>${item[attr]}</td>`;    
+                rowHTML += `<td class='px-2 py-4 text-sm text-center whitespace-nowrap'>${item[attr]}</td>`;
             }
         });
-    
+
         rowHTML += `
             <td class='py-2 flex justify-center gap-5 action'>
-                <a class="bg-green-400 px-2 py-2 edit" data-id="${item[attr_arr[0]]}" href='/${updateroute}/${item[attr_arr[0]]}'>edit</a>
-                <button class="bg-green-400 px-2 py-2 del-one" data-id="${item[attr_arr[0]]}">delete</button>
+                <a class="bg-green-400 px-2 py-2 edit" data-id="${
+                    item[attr_arr[0]]
+                }" href='/${updateroute}/${item[attr_arr[0]]}'>edit</a>
+                <button class="bg-green-400 px-2 py-2 del-one" data-id="${
+                    item[attr_arr[0]]
+                }">delete</button>
             </td>
         </tr>`;
-    
+
         return rowHTML;
     }
-    
 
     displayIndexButtons();
 
@@ -102,10 +132,38 @@ export default function setuppagination(array, attr_arr, updateroute) {
         displayIndexButtons();
     });
 
+    // $("#tab_filter_btn").click(function () {
+    //     current_index = 1;
+    //     start_index = 1;
+    //     displayIndexButtons();
+    // });
+
+    const originalArray = [...array];
+
     $("#tab_filter_btn").click(function () {
+        const filterText = $("#tab_filter_text").val().toLowerCase();
+
+        const filteredArray = array.filter((item) => {
+            return attr_arr.some((attr) => {
+                if (item[attr]) {
+                    return item[attr]
+                        .toString()
+                        .toLowerCase()
+                        .includes(filterText);
+                }
+                return false;
+            });
+        });
+        array = filteredArray;
         current_index = 1;
-        start_index = 1;
         displayIndexButtons();
+    });
+    $("#tab_filter_text").on("input", function () {
+        if ($(this).val() === "") {
+            array = [...originalArray]; // Save the original array at the start of the script
+            current_index = 1;
+            displayIndexButtons();
+        }
     });
 
     window.next = next;

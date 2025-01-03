@@ -8,7 +8,7 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    name="housenumber" id="housenumber" type="text">
+                    name="housenumber" id="housenumber" type="text" value="{{$newMemberModel->member_current_address->home_no}}">
             </div>
             <div class="w-1/4 md:w-40 px-3">
                 <label class="block uppercase tracking-wide text-gray-700  mb-2" for="street">
@@ -16,7 +16,7 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    name="street" id="street" type="text">
+                    name="street" id="street" type="text" value="{{$newMemberModel->member_current_address->street}}">
             </div>
             <div class="flex-1 w-1/4 md:w-1/4 px-3">
                 <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_village">
@@ -24,7 +24,7 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    name="current_village" id="current_village" type="text">
+                    name="current_village" id="current_village" type="text" value="{{$newMemberModel->member_current_address->village}}">
             </div>
             <div class="flex-1 w-1/4 md:w-1/4 px-3">
                 <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_commune">
@@ -32,7 +32,7 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    name="current_commune" id="current_commune" type="text" required>
+                    name="current_commune" id="current_commune" type="text" required  value="{{$newMemberModel->member_current_address->commune_sangkat}}">
             </div>
         </div>
         <div class="flex flex-wrap -mx-3 mb-2 mt-5">
@@ -42,7 +42,7 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    name="current_district" id="current_district" type="text" required>
+                    name="current_district" id="current_district" type="text" required  value="{{$newMemberModel->member_current_address->district_khan}}">
             </div>
             <div class="w-1/2 md:w-1/3 px-3">
                 <label class="block uppercase tracking-wide text-gray-700" for="current_province">
@@ -51,13 +51,13 @@
                 list="current_proviencelist"
                 id="current_provience"
                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                 type="text" required>
+                 type="text" required  value="{{$newMemberModel->member_current_address->provience_city}}">
                 </label>
-                <datalist name="current_proviencelist" id="current_proviencelist">
+                {{-- <datalist name="current_proviencelist" id="current_proviencelist">
                     @foreach($branches as $key=>$val)
                         <option data-id={{$key}} value="{{$val}}">
                     @endforeach
-                </datalist>
+                </datalist> --}}
             </div>
         </div>
         <hr>
@@ -68,5 +68,5 @@
                 </label>
                 <input
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    name="dateofbirth" id="dateofbirth" type="date" required>
+                    name="dateofbirth" id="dateofbirth" type="date" required  value="{{$newMemberModel->date_of_birth}}">
             </div>
