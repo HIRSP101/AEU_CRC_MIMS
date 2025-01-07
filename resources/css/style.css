@@ -30,3 +30,15 @@
     0% { transform: translate(-50%, -50%) rotate(0deg); }
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
+
+.today{
+    color: red;
+}
+
+.flatpickr-day.today{
+    border: red 1px solid;
+}
+
+.flatpickr-day.today:hover{
+    background-color: royalblue;
+}

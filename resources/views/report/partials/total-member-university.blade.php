@@ -8,7 +8,7 @@
     $i = 0;
     ?>
     <div class="bg-white mt-2 mx-2 px-2 shadow-lg">
-        <h1 class="text-center font-siemreap text-gray-800 my-2 text-lg font-bold">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា បណ្តាញយុវជន
+        <h1 class="text-center font-siemreap my-2 text-lg font-bold">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា បណ្តាញយុវជន
             ទីប្រឹក្សាយុវជន នឹងយុវជន នៃសាខាកាកបាទក្រហមកម្ពុជា ២៥ រាជធានី ខេត្ត</h1>
         <h2 class="text-center font-siemreap mb-2 text-lg font-bold">បច្ចុប្បន្នភាពឆ្នាំ២០២៤</h2>
         <br>
@@ -53,32 +53,36 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white font-siemreap">
-                    @foreach ($branchesreport as $brreport)
-                        @php
-                            $i++;
-                        @endphp
-                        <tr class="border-collapse border-y-2 border-x-2 border-black">
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
-                                {{ $i }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
-                                {{ $brreport->branch_kh }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
-                                {{ $brreport->total_ms + $brreport->total_hs }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
-                                {{ $brreport->total_ms }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
-                                {{ $brreport->total_hs }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">0</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
-                                {{ $brreport->total_ls }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
-                                {{ $brreport->total_ls_wm }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
-                                {{ $brreport->total_mem }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
-                                {{ $brreport->total_wm }}</td>
-                        </tr>
-                    @endforeach
+                    {{-- @foreach ($branchesreport as $brreport) 
+                    @php
+                     $i++;
+                    @endphp
+                    <tr class="border-collapse border-y-2 border-x-2 border-black">
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$i}}</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->branch_kh}}</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_ms + $brreport->total_hs}}</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_ms}}</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_hs}}</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">0</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_ls}}</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_ls_wm}}</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_mem}}</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_wm}}</td>
+                    </tr>
+                    @endforeach --}}
+
+                    <tr class="border-collapse border-y-2 border-x-2 border-black">
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">pp</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">dd</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">dd</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">00</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">00</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">0</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">xx</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">ee</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">fddfdf</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">dfdf</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -86,18 +90,17 @@
 
     @push('JS')
         @vite(['resources/js/exportToExcel_branch.js'])
-        <script type="module">
-            var data = @json($branchesreport);
-            console.log(data);
-            $("#export_excel").on("click", async () => {
-                exportToExcel_branch(data);
-            });
-        </script>
-
+        {{-- <script type="module">
+   var data = @json($branchesreport);
+   console.log(data);
+   $("#export_excel").on("click", async () => {
+   exportToExcel_branch(data);
+   });
+</script> --}}
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
         <script>
-            flatpickr("#datepicker", {
+          flatpickr("#datepicker", {
                 mode: "range",
                 dateFormat: "d-F-Y",
                 locale: {

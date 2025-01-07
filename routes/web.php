@@ -100,6 +100,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/private/university', "$appC\\ReportController@getPrivateUniversity")->name('private.university');
     Route::get('/public/university', "$appC\\ReportController@getPublicUniversity")->name('public.university');
     Route::get('/total/university', "$appC\\ReportController@getTotalUniversity")->name('total.university');
+    Route::get('/total/member/university', "$appC\\ReportController@getTotalMemberUniversity")->name('total.member.university');
 
     Route::get('/create-branch', "{$appC}\\BranchController@createform")->name('create-branch');
     Route::post('/create-branch', "{$appC}\\BranchController@store")->name('branch.store');

@@ -21,8 +21,8 @@
      </div>
 
      <div class="py-1 px-5">
-        <a href="####" class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">តារាងទិន្នន័យ បច្ចុប្បន្នភាពគ្រឹះស្ថានទីបឹក្សា និងយុវជនសរុប</p>
+        <a href="{{ route('total.member.university') }}" class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">តារាងទិន្នន័យគ្រឹះស្ថានឧត្តមសិក្សា(សមាជិកសរុប)</p>
         </a>
      </div>
 
