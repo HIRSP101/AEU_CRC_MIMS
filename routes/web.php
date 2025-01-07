@@ -74,13 +74,15 @@ require __DIR__ . '/auth.php';
 Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/dashboard', "{$appC}\\DashboardController@index")->middleware(['auth', 'verified'])->name('dashboard');
     Route::get('/initialmodels', "{$appC}\\testdbconnection@initialModelsSetup");
+    //All Members Routes
     Route::get('/insertmember', "{$appC}\\testdbconnection@getMemberColumns")->name('import');
     Route::post('/insertmemberfr', "{$appC}\\testdbconnection@insertMember");
     Route::post('/importdata', "{$appC}\\ImportController@import");
     Route::get('/member', "{$appC}\\testdbconnection@eloquent_relation_delete");
     Route::get("/deleteall", "{$appC}\\testdbconnection@deleteall_elo");
     Route::get("/create", "{$appC}\\MemberController@index")->name('createmember');
-    Route::post('/createmember', "{$appC}\\MemberController@insertMember");
+    Route::post('/createmember', "{$appC}\\MemberController@insertMember")->name('insert.member');
+
     Route::get('/branch', "{$appC}\\BranchController@index")->name('branch');
     Route::get('/branchhei', "{$appC}\\BranchController@branch_hei")->name('branchhei');
     Route::get('/branch/{id}', "{$appC}\\BranchController@get");
@@ -91,8 +93,14 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/getallmembers', "{$appC}\\MemberController@getMemberDetail");
     Route::post('/deletemember', "{$appC}\\MemberController@deleteMembers");
     Route::post('/deletememberone', "{$appC}\\MemberController@deleteMember");
+
+    // All Route Reports
     Route::get('/reports', "{$appC}\\ReportController@index")->name('report');
     Route::get('/branchesreport', "{$appC}\\ReportController@branches_report")->name('branchesreport');
+    Route::get('/private/university', "$appC\\ReportController@getPrivateUniversity")->name('private.university');
+    Route::get('/public/university', "$appC\\ReportController@getPublicUniversity")->name('public.university');
+    Route::get('/total/university', "$appC\\ReportController@getTotalUniversity")->name('total.university');
+
     Route::get('/create-branch', "{$appC}\\BranchController@createform")->name('create-branch');
     Route::post('/create-branch', "{$appC}\\BranchController@store")->name('branch.store');
     Route::get('/update-branch/{id}', "{$appC}\\BranchController@updateform");

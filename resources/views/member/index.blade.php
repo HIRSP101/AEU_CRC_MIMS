@@ -5,19 +5,18 @@
 @section('Content')
 
 <div class="p-5 md:ml-24 md:mr-24 bg-white font-siemreap shadow-xl rounded-lg my-3">
-    <div class="flex flex-col items-center justify-center mb-10">
-        <img class="w-[125px] h-[125px] mb-3" src="{{asset('images/Logo_of_Cambodian_Red_Cross.svg')}}" alt="">
-        <h1 class="mb-1">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
-        <h1>Cambodian Red Cross Youth Individual Information</h1>
-        {{Route::currentRouteName()}}
+    <div class="grid grid-cols-6 ">
+        <div class="col-span-5 flex flex-col items-center justify-center mb-10 ml-24">
+            <img class="w-[125px] h-[125px] mb-3" src="{{asset('images/Logo_of_Cambodian_Red_Cross.svg')}}" alt="">
+            <h1 class="mb-1">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
+            <h1>Cambodian Red Cross Youth Individual Information</h1>
+        </div>
+        <div class="">
+            <img class="image w-28 h-32 bg-red-300" src="" alt="">
+        </div>
     </div>
-   @if(Route::currentRouteName() == "member.update")
-
-   @php
-            $newMemberModel = $member 
-   @endphp
    
-    <form class="w-full" method="POST" action="/update-members" enctype="multipart/form-data">
+    <form class="w-full" method="POST" action="{{ route('insert.member') }}" enctype="multipart/form-data">
         @csrf
         @include('member.partials.personal_detail')
         <hr>
@@ -28,37 +27,16 @@
         @include('member.partials.personal_training')
         <hr>
         @include('member.partials.guardian')
-        <div class="flex justify-end">
-            <a class="border-solid m-2 border-2 bg-red-400 p-2 rounded-md hover:bg-red-500 active:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
+        <div class="flex justify-end gap-3">
+            <a class="border-solid bg-red-400 py-2 font-medium px-4 rounded-md hover:bg-red-500 active:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
                id="clear_btn">លុប</a>
             <button
-                class="border-solid m-2 border-2 bg-green-500 p-2 rounded-md hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300"
+                class="border-solid bg-green-500 px-4 font-medium py-2 rounded-md hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300"
                 type="submit" id="submit_btn">យល់ព្រម
             </button>
         </div>
     </form>
-    @else
-    <form class="w-full" method="POST" action="/insertmember" enctype="multipart/form-data">
-        @csrf
-        @include('member.partials.personal_detail')
-        <hr>
-        @include('member.partials.pob')
-        <hr>
-        @include('member.partials.current_address')
-        <hr>
-        @include('member.partials.personal_training')
-        <hr>
-        @include('member.partials.guardian')
-        <div class="flex justify-end">
-            <a class="border-solid m-2 border-2 bg-red-400 p-2 rounded-md hover:bg-red-500 active:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
-               id="clear_btn">លុប</a>
-            <button
-                class="border-solid m-2 border-2 bg-green-500 p-2 rounded-md hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300"
-                type="submit" id="submit_btn">យល់ព្រម
-            </button>
-        </div>
-    </form>
-    @endif
+
 </div>
 @endsection
 
@@ -79,7 +57,7 @@
         e.preventDefault();
         var formData = new FormData();
         var memberObj = {0: {
-        "member_id": window.location.href.split("/")[4],
+        // "member_id": window.location.href.split("/")[4],
         "name_kh" : $("input#name_kh").val(),
         "name_en" : $("input#name_en").val(),
         "gender" : $("select#gender").val(),
@@ -129,14 +107,8 @@
     formData.append('members', JSON.stringify(memberObj));
    
         console.log(formData);
-        
-        console.log(window.location.href.split("/")[3]);
-        if (window.location.href.split("/")[3] == "update-member") {
-            updateMember(formData)
-        }
-        else {
-            insertMember(formData)
-        }
+        insertMember(formData)
+       
     })
     function insertMember(member) {
         $.ajax({
@@ -156,45 +128,20 @@
             }
         })
     }
-    function updateMember(member) {
-        $.ajax({
-            type: 'POST',
-            url: '/update-members',
-            data: member,
-            contentType: false,
-            processData: false,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-                console.log(response.message);
-            },
-            error: function (error) {
-                console.error(error);
-            }
-        })
-    }
+ 
     function previewImage(files) {
-        $("#imagepreview").html('');
-        $.each(files, function(i, file) {
-            if (file.type.startsWith('image/')) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var imgElement = $('<img />', {
-                        src: e.target.result,
-                        css: {
-                            maxWidth: '150px',
-                            margin: '10px',
-                            border: '2px solid #ddd',
-                            padding: '5px'
-                        }
-                    });
-                    $("#imagepreview").append(imgElement);
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    }
+            $("#imagepreview").html('');
+            $.each(files, function (i, file) {
+                if (file.type.startsWith('image/')) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+
+                        $("img.image").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
 
 </script>
 @endpush

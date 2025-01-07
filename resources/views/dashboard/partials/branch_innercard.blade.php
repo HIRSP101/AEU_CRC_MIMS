@@ -1,7 +1,7 @@
-@if($key > 4)
+{{-- @if($key > 5)
 <div class="collapsibleContent flex-shrink-0 m-2 relative overflow-hidden bg-white rounded-lg  shadow-lg hidden">
     <div class="relative px-10 flex items-center justify-center">
-        <img class="relative w-[320px] h-[280px] rounded-md" src="{{asset("images/branches/b-$key.jpg")}}" alt="">
+        <img class="relative w-[170px] h-[170px] rounded-md" src="{{asset("images/branches/b-$key.jpg")}}" alt="">
     </div>
     <div class="relative text-black text-center bg-slate-100 px-6 pb-2 pt-2">
         <a href='/dashboard/branch/{{$key}}' class="block opacity-100 mb-1">{{$val}}</a>
@@ -10,11 +10,10 @@
 @else
 <div class="flex-shrink-0 m-2 relative overflow-hidden bg-white rounded-lg shadow-lg">
     <div class="relative px-10 flex items-center justify-center">
-        <img class="relative w-[320px] h-[280px] rounded-md" src="{{asset("images/branches/b-$key.jpg")}}" alt="">
+        <img class="relative w-[170px] h-[170px] rounded-md" src="{{asset("images/branches/b-$key.jpg")}}" alt="">
     </div>
     <div class="relative text-black text-center bg-slate-100 px-6 pb-2 pt-2">
         <a href='/dashboard/branch/{{$key}}' class="block opacity-100 mb-1">{{$val}}</a>
     </div>
 </div>
-@endif
-
+@endif --}}

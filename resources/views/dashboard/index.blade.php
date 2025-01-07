@@ -20,28 +20,91 @@
     <div class="ml-5">
         <h1 class="font-koulen text-blue-600 text-2xl">សាខា & អនុសាខា</h1>
     </div>
-    <div class="mt-2 bg-gray-200 rounded-md shadow-lg">
-        <div class="flex flex-wrap justify-around
-         font-siemreap">
-            @foreach ($branches as $key => $val)
+    <div class="mt-2 bg-gray-200 rounded-md shadow-lg p-2">
+        <div class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-siemreap p-2">
+            {{-- @foreach ($branches as $key => $val)
                 @if ($key == 4)
-                    <div class="flex flex-wrap justify-around">
+                    <div class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-2">
                 @endif
                 @include('dashboard.partials.branch_card')
-            @endforeach
+            @endforeach --}}
+            <div>
+                <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
+                    <div class="relative">
+                        <img class="w-full" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Product Image">   
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="text-lg font-medium mb-2">Product Title</h3>
+                       
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg no-scrollbar">
+                    <div class="relative">
+                        <img class="w-full" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Product Image">
+                       
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="text-lg font-medium mb-2">Product Title</h3>
+                      
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
+                    <div class="relative">
+                        <img class="w-full" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Product Image">
+                      
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="text-lg font-medium mb-2">Product Title</h3>
+                        
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
+                    <div class="relative">
+                        <img class="w-full" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Product Image">
+                       
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="text-lg font-medium mb-2">Product Title</h3>
+                       
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
+                    <div class="relative">
+                        <img class="w-full" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Product Image">
+                      
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="text-lg font-medium mb-2">Product Title</h3>
+                    
+                    </div>
+                </div>
+            </div>
+           
+
+             @include('dashboard.partials.branch_card')
+        
         </div>
-    </div>
-    <div class="relative">
-        <div class="flex justify-center p-2">
-            <img id="toggleButton" class="flip-image w-[32px] h-[32px]" src="{{ asset('images/icons/dropdown.svg') }}" />
+        <div class="relative">
+            <div class="flex justify-center p-2">
+                <img id="toggleButton" class="flip-image w-[32px] h-[32px]" src="{{ asset('images/icons/dropdown.svg') }}" />
+            </div>
         </div>
+        </div>
+        <div class="">
+            <hr class="h-px my-4 bg-red-600 p-[1px] border dark:bg-red-600">
+        </div>
+        <div class="flex items-center justify-center font-sans mt-5">
     </div>
-    </div>
-    <div class="">
-        <hr class="h-px my-4 bg-red-600 p-[1px] border dark:bg-red-600">
-    </div>
-    <div class="flex items-center justify-center font-sans mt-5">
-        <div class="w-full ">
+
+        <div class="w-full p-2">
             <h1 class="text-center font-siemreap font-black text-2xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
             <div class="bg-white shadow-md rounded my-6">
                 <table class="min-w-max w-full table-auto font-siemreap">

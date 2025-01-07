@@ -46,14 +46,14 @@ $firstEle_total = $firstEle->total_mem;
                 <div class="p-2 bg-white border-2 rounded-lg shadow sm:w-[50%] md:w-[50%] ">
                     <h2 class="text-blue-700 text-xl font-koulen mt-3.5 text-center">ទីស្នាក់ការដែលមានសមាជិកចុះឈ្មោះថ្មី</h2>
                     <div class="mt-4 flex justify-center">
-                        <table class="table font-siemreap leading-10 font-bold">
+                        <table class="table font-siemreap leading-10 font-semibold">
                             <tbody>
                                 @foreach($total_mem_branches as $total_mem_branch)
                                 <tr>
                                     @if($i <= 5)
-                                    <td class="px-4 text-md">{{translate($i++) . '.'}}</td>
+                                    <td class="px-4 text-base">{{translate($i++) . '.'}}</td>
                                     <td class="text-md">{{str_replace("ខេត្ត", "",$total_mem_branch->branch_kh)}}</td>
-                                    <td class="px-1 text-md">{{translate($total_mem_branch->total_mem)}} នាក់</td>
+                                    <td class="px-1 text-base">{{translate($total_mem_branch->total_mem)}} នាក់</td>
                                     @endif
                                 </tr>
                                 @endforeach
