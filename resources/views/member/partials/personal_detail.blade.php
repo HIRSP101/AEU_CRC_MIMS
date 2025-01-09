@@ -30,6 +30,21 @@
             <option value="ស្រី">ស្រី</option>
         </select>
     </div>
+    <div class="w-1/3 md:w-28 px-3">
+        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="type">
+            ប្រភេទសមាជិក
+        </label>
+        <select name="type" id="type"
+            class="w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ">
+            <option value="">---</option>
+            <option value="ទីប្រឹក្សា">ទីប្រឹក្សា</option>
+            <option value="ប្រធានក្លឹប">ប្រធានក្លឹប</option>
+            <option value="អនុប្រធានក្លឹប">អនុប្រធានក្លឹប</option>
+            <option value="ប្រធាន​/អនុផ្នែក">ប្រធាន​/អនុផ្នែក</option>
+            <option value="ប្រធាន​/អនុប្រធានក្រុម">ប្រធាន​/អនុប្រធានក្រុម</option>
+            <option value="សមាជិក">សមាជិក</option>
+        </select>
+    </div>
     <div class="w-1/2 md:w-32 px-3">
         <label class="block uppercase tracking-wide text-gray-700  mb-2" for="nationality">
             សញ្ជាតិ

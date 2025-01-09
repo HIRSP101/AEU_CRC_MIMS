@@ -9,6 +9,7 @@
 </div>
 @else
 <div class="flex-shrink-0 m-2 relative overflow-hidden bg-white rounded-lg shadow-lg">
+<div class="flex-shrink-0 m-2 relative overflow-hidden bg-white rounded-lg shadow-lg">
     <div class="relative px-10 flex items-center justify-center">
         <img class="relative w-[170px] h-[170px] rounded-md" src="{{asset("images/branches/b-$key.jpg")}}" alt="">
     </div>

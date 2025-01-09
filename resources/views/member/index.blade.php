@@ -5,18 +5,12 @@
 @section('Content')
 
 <div class="p-5 md:ml-24 md:mr-24 bg-white font-siemreap shadow-xl rounded-lg my-3">
-    <div class="grid grid-cols-6 ">
-        <div class="col-span-5 flex flex-col items-center justify-center mb-10 ml-24">
-            <img class="w-[125px] h-[125px] mb-3" src="{{asset('images/Logo_of_Cambodian_Red_Cross.svg')}}" alt="">
-            <h1 class="mb-1">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
-            <h1>Cambodian Red Cross Youth Individual Information</h1>
-        </div>
-        <div class="">
-            <img class="image w-28 h-32 bg-red-300" src="" alt="">
-        </div>
+    <div class="flex flex-col items-center justify-center mb-10">
+        <img class="w-[125px] h-[125px] mb-3" src="{{asset('images/Logo_of_Cambodian_Red_Cross.svg')}}" alt="">
+        <h1 class="mb-1">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
+        <h1>Cambodian Red Cross Youth Individual Information</h1>
     </div>
-   
-    <form class="w-full" method="POST" action="{{ route('insert.member') }}" enctype="multipart/form-data">
+    
         @csrf
         @include('member.partials.personal_detail')
         <hr>
@@ -35,13 +29,11 @@
                 type="submit" id="submit_btn">យល់ព្រម
             </button>
         </div>
-    </form>
-
+    
 </div>
 @endsection
 
 @push('JS')
-@vite(['resources/js/exportToPDF.js'])
 <script>
     $("#image").on('change', function (e) {
         e.preventDefault();
@@ -65,8 +57,8 @@
         "date_of_birth" : $("input#dateofbirth").val(),
         "full_current_address" : `${$("input#housenumber").val()}, ${$("input#street").val()}, ${$("input#current_village").val()}, ${$("input#current_commune").val()}, ${$("input#current_district").val()}, ${$("input#current_provience").val()}`,
         "phone_number" : $("input#phone_number").val(),
-        "email" : $("input#email").val(),
         "facebook" : $("input#facebook").val(),
+        "email" : $("input#memberemail").val(),
         "shirt_size" : $("select#shirt_size").val(),
         "home_no" : $("input#housenumber").val(),
         "pob_village" : $("input#village").val(),
@@ -74,6 +66,9 @@
         "pob_district_khan" : $("input#district").val(),
         "branch_id" : $("#current_proviencelist option").filter(function() {
             return $(this).val() == $("input#current_provience").val();
+        }).data('id') || null,
+        "branchhei_id" : $("#branchname_list option").filter(function() {
+            return $(this).val() == $("input#branch_name").val();
         }).data('id') || null,
         "pob_provience_city" : $("input#provience").val(),
         "village" : $("input#current_village").val(),
@@ -94,7 +89,9 @@
         "mother_occupation" : $("input#mother_occupation").val(),
         "mother_current_address" : $("input#mother_current_address").val(),
         "guardian_phone" : $("input#guardian_number").val(),
-      //  "education_level" : "",
+        "education_level" : $("#education_level").val(),
+        "training_received" : $("#training_received").val(),
+        "type" : $("input#type").val(),
         "language" : $("input#language").val(),
         "computer_skill" : "",
         "misc_skill" : "",
@@ -102,13 +99,13 @@
     }
     }
     
-    
+    formData.append('image', $("#image")[0].files[0]);
     console.log(memberObj);
     formData.append('members', JSON.stringify(memberObj));
    
         console.log(formData);
-        insertMember(formData)
-       
+       // $("#loading-overlay").show();
+        insertMember(formData);
     })
     function insertMember(member) {
         $.ajax({
@@ -122,6 +119,8 @@
             },
             success: function (response) {
                 console.log(response.message);
+             //   $("#loading-overlay").hide();
+                alert(response.message);
             },
             error: function (error) {
                 console.error(error);

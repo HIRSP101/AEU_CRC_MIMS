@@ -9,7 +9,7 @@
             @if(auth()->user()->hasRole('admin'))
                 <a href="{{route('branch')}}" class="flex items-center font-siemreap px-4 py-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                     <img width="23" height="23" src="https://img.icons8.com/external-glyph-zulfa-mahendra/48/external-building-nature-and-ecology-2-glyph-zulfa-mahendra-3.png" alt="external-building-nature-and-ecology-2-glyph-zulfa-mahendra-3"/>
-                    <span class="module-content ml-2    ">
+                    <span class="module-content ml-2">
                         សាខា
                     </span>
                 </a>

@@ -11,7 +11,7 @@ export function handleTotalmem(array, ExcelObj) {
         "education_level",
     ];
 
-    setuppagination(array, attr_arr, "update-member");
+    setuppagination(array, attr_arr, "member");
 
     $(".hoverablebranch").on("click", function (e) {
         if ($(e.target).closest("td").hasClass("action")) {
@@ -19,13 +19,6 @@ export function handleTotalmem(array, ExcelObj) {
         }
 
         $(this).toggleClass("bg-slate-300 marked");
-    });
-
-    $(".hoverablebranch").on("dblclick", function (e) {
-        window.location = "/member" + `/${$(this).attr("data-id")}`;
-        // ajaxtoRoute("GET", "/member/", $(this).attr("data-id"));
-
-        // console.log($(this).attr("data-id"));
     });
 
     $("#delete").on("click", function (e) {

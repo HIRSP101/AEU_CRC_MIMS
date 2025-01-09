@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\ImportProgress;
 use App\Models\Branch;
+use App\Models\branch_hei;
 use App\Models\member_personal_detail;
 use App\Http\Requests\MemberRequest;
 use Illuminate\Http\Request;
@@ -33,7 +34,8 @@ class MemberController extends Controller
     public function index(): View
     {
         $branches = Branch::all()->pluck('branch_kh', 'branch_id');
-        return view('member.index', compact('branches'));
+        $branchhei = branch_hei::all()->pluck('institute_kh', 'bhei_id');
+        return view('member.index', compact('branches', 'branchhei'));
     }
     public function getMemberDetail(Request $request): View
     {
@@ -50,7 +52,30 @@ class MemberController extends Controller
     public function insertMember(MemberRequest $request): JsonResponse
     {
         try {
+            DB::beginTransaction();
+
             $members = json_decode($request->input('members'), true);
+            //dd($members);
+            $currentMemberId = member_personal_detail::latest()->first()?->member_id ?? 0;
+
+            foreach ($members as $memberData) {
+                $this->createService->createMember($memberData, $request->file('image'), $currentMemberId);
+                $currentMemberId++;
+            }
+
+            DB::commit();
+            return response()->json(['message' => 'Member record(s) created successfully!']);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Failed to create member record(s): ' . $e->getMessage()], 500);
+        }
+    }
+    public function importMember(MemberRequest $request): JsonResponse
+    {
+       // dd($request);
+        try {
+            $members = json_decode($request->input('members'), true);
+          //  dd($members);
             $totalMembers = count($members);
 
             if ($totalMembers === 0) {
@@ -132,7 +157,6 @@ class MemberController extends Controller
         $progress = round(($processed / $total) * 100);
         broadcast(new ImportProgress($progress))->toOthers();
 
-        // Allow the server to breathe
         if (connection_status() !== CONNECTION_NORMAL) {
             flush();
             ob_flush();
@@ -166,19 +190,4 @@ class MemberController extends Controller
         $this->deleteService->deleteMember($request->id);
         return response()->json(['message' => 'Member deleted successfully']);
     }
-
-    public function getUpdateMemberDetail(Request $request): View
-    {
-        $member = member_personal_detail::with([
-            'member_guardian_detail',
-            'member_registration_detail',
-            'member_education_background',
-            'member_current_address',
-            'member_pob_address'
-        ])->findOrFail($request->id);
-        // dd($member);
-
-        return view('member.index', compact('member'));
-    }
-
 }

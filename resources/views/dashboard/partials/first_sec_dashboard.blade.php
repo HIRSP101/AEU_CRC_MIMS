@@ -7,8 +7,8 @@ $firstEle_total = $firstEle->total_mem;
 @php
     function translate($num) {
         $kh_num = ["1" => "១", "2" => "២", "3" => "៣", "4" => "៤", "5" => "៥", "6" => "៦", "7" => "៧", "8" => "៨", "9" => "៩", "10" => "១០"]; 
-    return strtr($num, $kh_num);
-}
+        return strtr($num, $kh_num);
+    }
 @endphp
 <div class="p-4 bg-white">
     <div class="">
@@ -46,12 +46,12 @@ $firstEle_total = $firstEle->total_mem;
                 <div class="p-2 bg-white border-2 rounded-lg shadow sm:w-[50%] md:w-[50%] ">
                     <h2 class="text-blue-700 text-xl font-koulen mt-3.5 text-center">ទីស្នាក់ការដែលមានសមាជិកចុះឈ្មោះថ្មី</h2>
                     <div class="mt-4 flex justify-center">
-                        <table class="table font-siemreap leading-10 font-semibold">
+                        <table class="table font-siemreap leading-10 font-bold">
                             <tbody>
                                 @foreach($total_mem_branches as $total_mem_branch)
                                 <tr>
                                     @if($i <= 5)
-                                    <td class="px-4 text-base">{{translate($i++) . '.'}}</td>
+                                    <td class="px-4 text-md">{{$i++ . '.'}}</td>
                                     <td class="text-md">{{str_replace("ខេត្ត", "",$total_mem_branch->branch_kh)}}</td>
                                     <td class="px-1 text-base">{{translate($total_mem_branch->total_mem)}} នាក់</td>
                                     @endif
