@@ -73,7 +73,7 @@ export default function setuppagination(array, attr_arr, updateroute) {
         end_index = Math.min(start_index + table_size - 1, array_length);
 
         $(".footer span").text(
-            `Showing ${start_index} to ${end_index} of ${array_length} entries`
+            `បង្ហាញពី ${start_index} ដល់ ${end_index}​ នាក់ នៃចំនួនសរុប ${array_length} នាក់`
         );
         $(".index_buttons button").removeClass("active");
         $(`.index_buttons button[data-index='${current_index}']`).addClass(
@@ -132,35 +132,23 @@ export default function setuppagination(array, attr_arr, updateroute) {
         displayIndexButtons();
     });
 
-    // $("#tab_filter_btn").click(function () {
-    //     current_index = 1;
-    //     start_index = 1;
-    //     displayIndexButtons();
-    // });
-
     const originalArray = [...array];
 
     $("#tab_filter_btn").click(function () {
         const filterText = $("#tab_filter_text").val().toLowerCase();
 
         const filteredArray = array.filter((item) => {
-            return attr_arr.some((attr) => {
-                if (item[attr]) {
-                    return item[attr]
-                        .toString()
-                        .toLowerCase()
-                        .includes(filterText);
-                }
-                return false;
-            });
+            return item.name_kh?.toLowerCase().includes(filterText);
         });
+
         array = filteredArray;
         current_index = 1;
         displayIndexButtons();
     });
+
     $("#tab_filter_text").on("input", function () {
         if ($(this).val() === "") {
-            array = [...originalArray]; // Save the original array at the start of the script
+            array = [...originalArray];
             current_index = 1;
             displayIndexButtons();
         }
@@ -169,4 +157,30 @@ export default function setuppagination(array, attr_arr, updateroute) {
     window.next = next;
     window.prev = prev;
     window.indexPagination = indexPagination;
+
+    $("#gender_filter").change(function () {
+        if ($(this).val() === "all") {
+            array = [...originalArray];
+        } else {
+            const filterGender = $("#gender_filter").val();
+            array = originalArray.filter((item) => {
+                return item.gender?.includes(filterGender);
+            });
+        }
+        current_index = 1;
+        displayIndexButtons();
+    });
+
+    $("#filter_year").change(function () {
+        if ($(this).val() === "all") {
+            array = [...originalArray];
+        } else {
+            const filterYear = $("#filter_year").val();
+            array = originalArray.filter((item) => {
+                return item.recruitment_date?.includes(filterYear);
+            });
+        }
+        current_index = 1;
+        displayIndexButtons();
+    });
 }

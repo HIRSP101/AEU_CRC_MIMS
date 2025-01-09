@@ -45,13 +45,51 @@
         <div class="flex items-center space-x-2">
             <div class="tab_head_container flex items-center space-x-2">
                 <div class="page_limit flex items-center space-x-2">
+                    <span>បង្ហាញ</span>
                     <select id="table_size" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-20">
                         <option value="50">50</option>
                         <option value="100">100</option>
                         <option value="200">200</option>
                         <option value="300">300</option>
                     </select>
-                    <span>entries</span>
+                    
+                </div>
+                
+                <div class="gender_sort flex items-center space-x-2">
+                    <span>ភេទ</span>
+                    <select id="gender_filter" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-20">
+                        <option value="all">All</option>
+                        <option value="ស្រី">ស្រី</option>
+                        <option value="ប្រុស">ប្រុស</option>
+                    </select>
+                </div>
+                
+                <div class="year_sort flex items-center space-x-2​">
+                    <span>ឆ្នាំ</span>
+                    <select id="filter_year" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-20">
+                        <option value="all">All</option>
+                        <option value="2005">2005</option>
+                        <option value="2006">2006</option>
+                        <option value="2007">2007</option>
+                        <option value="2008">2008</option>
+                        <option value="2009">2009</option>
+                        <option value="2010">2010</option>
+                        <option value="2011">2011</option>
+                        <option value="2012">2012</option>
+                        <option value="2013">2013</option>
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
                 </div>
             </div>
             {{-- <button id="export_pdf" class="bg-gray-500 text-white px-4 py-2 rounded">Export PDF</button> --}}
