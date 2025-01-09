@@ -142,5 +142,5 @@
             });
         }
 
-</script>
+    </script>
 @endpush

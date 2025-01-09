@@ -11,10 +11,10 @@ Route::post('/test-progress', function () {
         for ($i = 0; $i <= 100; $i += 1) {
             broadcast(new TestProgress($i));
             // or event(new TestProgress($i));
-            
+
             // Add some logging
             Log::info("Progress event broadcasted: $i%");
-            
+
             sleep(0.25); // Simulate work
         }
         return response()->json(['message' => 'Progress complete']);
@@ -95,8 +95,8 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/getallmembers', "{$appC}\\MemberController@getMemberDetail");
     Route::post('/deletemember', "{$appC}\\MemberController@deleteMembers");
     Route::post('/deletememberone', "{$appC}\\MemberController@deleteMember");
-
-    // All Route Reports
+    Route::get('/update-member/{id}', "{$appC}\\MemberController@getupdateMember")->name("memberupdate");
+    Route::post('/update-member/{memberId}', "{$appC}\\MemberController@updateMember");
     Route::get('/reports', "{$appC}\\ReportController@index")->name('report');
     Route::get('/branchesreport', "{$appC}\\ReportController@branches_report")->name('branchesreport');
     Route::get('/private/university', "$appC\\ReportController@getPrivateUniversity")->name('private.university');

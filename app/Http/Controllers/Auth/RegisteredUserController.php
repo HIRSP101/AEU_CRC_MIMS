@@ -35,16 +35,16 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.users::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . users::class],
             'password' => ['required'],
-            'roles' => ['nullable','array'],
+            'roles' => ['nullable', 'array'],
             'branch_id' => ['nullable'],
-            'permissions' => ['nullable','array'],
+            'permissions' => ['nullable', 'array'],
             'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
         ]);
 
-        $imageName = $request->hasFile('image') ? '\u-'. users::latest()->first()->id + 1 . '.' . $request->image->extension() : "";
-        $request->image->move(public_path('images/users'), $imageName);
+        $imageName = $request->hasFile('image') ? '\u-' . users::latest()->first()->id + 1 . '.' . $request->image->extension() : "";
+        $request->image->move(public_path('images\users'), $imageName);
         $user = users::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -62,7 +62,7 @@ class RegisteredUserController extends Controller
         $user->givePermissionTo($request->permissions);
         event(new Registered($user));
 
-       // Auth::login($user);
+        // Auth::login($user);
 
         return redirect('/userroles');
     }

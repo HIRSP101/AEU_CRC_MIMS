@@ -27,6 +27,7 @@ class CreateMemberService
             "full_current_address" => $data['full_current_address'] ?? null,
             "phone_number" => $data['phone_number'] ?? null,
             "email" => $data['email'],
+            "email" => $data['email'],
             "facebook" => $data['facebook'] ?? null,
             "shirt_size" => $data['shirt_size'] ?? null,
             "branch_id" => $data['branch_id'] ?? null,
@@ -128,7 +129,7 @@ class CreateMemberService
         $imageName = 'mem-' . str_replace(' ', '', $data["name_en"] . ($currentMemberId + 1)) . '.' . $image->extension();
         $image->move(public_path('images/members'), $imageName);
 
-        return "images/$imageName";
+        return "images/members/$imageName";
     }
     private function convertDate($date)
     {

@@ -102,12 +102,7 @@
     </div>
     
 <div class="w-full overflow-scroll mx-3 my-3 max-h-[760px]">
-
        <div class="w-full overflow-scroll my-3 max-h-[760px] table">
-           <table class="min-w-max w-full table-auto font-siemreap">
-               <thead>
-               <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                   <th class="py-3 pl-5 text-left">
            <table class="min-w-max w-full table-auto font-siemreap">
                <thead>
                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -115,36 +110,31 @@
                        ល.រ
                    </th>
                    <th class="py-3 text-center">
-                   <th class="py-3 text-center">
                        គោត្តមនាម-នាម
                    </th>
-                   <th class="py-3 text-center">
                    <th class="py-3 text-center">
                        ភេទ
                    </th>
                    <th class="py-3 text-center">
-                   <th class="py-3 text-center">
                        ថ្ងៃខែឆ្នាំកំណើត
                    </th>
                    <th class="py-3 text-center">
-                   <th class="py-3 text-center">
                        គ្រឹះស្ថានសិក្សា
                    </th>
-                   <th class="py-3 text-center">
+                   
                    <th class="py-3 text-center">
                        តួនាទី
                    </th>
-                   <th class="py-3 text-center">
+                   
                    <th class="py-3 text-center">
                        កម្រិតសិក្សា
                    </th>
-                   <th class="py-3 text-center">
+                   
                    <th class="py-3 text-center">
                        action
                    </th>
                </tr>
                </thead>
-               <tbody class="text-gray-600 text-sm font-light">
                <tbody class="text-gray-600 text-sm font-light">
                </tbody>
            </table>

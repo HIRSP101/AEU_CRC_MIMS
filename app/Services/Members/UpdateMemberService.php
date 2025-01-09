@@ -6,15 +6,14 @@ use App\Models\member_personal_detail;
 use Illuminate\Http\UploadedFile;
 use Carbon\Carbon;
 
+
 class UpdateMemberService
 {
     public function updateMember(int $memberId, array $data, ?UploadedFile $image): member_personal_detail
     {
         $member = member_personal_detail::findOrFail($memberId);
-
         // Handle image upload if a new image is provided
         $imagePath = $this->handleImageUpload($data, $image, $memberId) ?? $member->image;
-
         // Update member personal details
         $member->update([
             "name_kh" => $data['name_kh'] ?? $member->name_kh,
@@ -29,6 +28,7 @@ class UpdateMemberService
             "facebook" => $data['facebook'] ?? $member->facebook,
             "shirt_size" => $data['shirt_size'] ?? $member->shirt_size,
             "branch_id" => $data['branch_id'] ?? $member->branch_id,
+            "member_type" => $data['member_type'] ?? $member->member_type,
         ]);
 
         // Cascade update related data
@@ -98,6 +98,7 @@ class UpdateMemberService
             'language' => $data['language'] ?? $member->member_education_background->language,
             'computer_skill' => $data['computer_skill'] ?? $member->member_education_background->computer_skill,
             'misc_skill' => $data['misc_skill'] ?? $member->member_education_background->misc_skill,
+            'training_received' => $data['training_received'] ?? $member->member_education_background->training_received,
         ]);
     }
 
@@ -124,7 +125,7 @@ class UpdateMemberService
         $imageName = 'mem-' . str_replace(' ', '', $data["name_en"] . ($currentMemberId + 1)) . '.' . $image->extension();
         $image->move(public_path('images/members'), $imageName);
 
-        return "images/$imageName";
+        return "images/members/$imageName";
     }
     private function convertDate($date)
     {

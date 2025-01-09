@@ -1,4 +1,5 @@
-<tr class="border-collapse border-y-2 border-x-2 border-black hover:bg-slate-300 hoverablebranch" data-id="{{$mem->member_id}}">
+<tr class="border-collapse border-y-2 border-x-2 border-black hover:bg-slate-300 hoverablebranch"
+    data-id="{{$mem->member_id}}">
     <td class="px-2 py-4 text-sm text-center border-x-2 border-black whitespace-nowrap">
         {{$mem->member_id}}
     </td>

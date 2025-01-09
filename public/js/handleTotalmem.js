@@ -11,7 +11,7 @@ export function handleTotalmem(array, ExcelObj) {
         "education_level",
     ];
 
-    setuppagination(array, attr_arr, "member");
+    setuppagination(array, attr_arr, "update-member");
 
     $(".hoverablebranch").on("click", function (e) {
         if ($(e.target).closest("td").hasClass("action")) {

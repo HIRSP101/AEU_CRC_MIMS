@@ -15,6 +15,7 @@ use App\Services\Members\DeleteMemberService;
 use App\Services\Members\CreateMemberService;
 use App\Services\Members\UpdateMemberService;
 use Exception;
+use Log;
 use SebastianBergmann\Diff\Chunk;
 
 class MemberController extends Controller
@@ -62,7 +63,10 @@ class MemberController extends Controller
                 $this->createService->createMember($memberData, $request->file('image'), $currentMemberId);
                 $currentMemberId++;
             }
+<<<<<<< HEAD
 
+=======
+>>>>>>> a0c192de941f1090c0a248176fa7cdcb44d7eb06
             DB::commit();
             return response()->json(['message' => 'Member record(s) created successfully!']);
         } catch (Exception $e) {
@@ -72,10 +76,17 @@ class MemberController extends Controller
     }
     public function importMember(MemberRequest $request): JsonResponse
     {
+<<<<<<< HEAD
        // dd($request);
         try {
             $members = json_decode($request->input('members'), true);
           //  dd($members);
+=======
+        // dd($request);
+        try {
+            $members = json_decode($request->input('members'), true);
+            //  dd($members);
+>>>>>>> a0c192de941f1090c0a248176fa7cdcb44d7eb06
             $totalMembers = count($members);
 
             if ($totalMembers === 0) {
@@ -86,7 +97,7 @@ class MemberController extends Controller
             $processed = 0;
             $errors = [];
 
-      
+
             foreach (array_chunk($members, self::CHUNK_SIZE) as $chunk) {
                 try {
                     DB::beginTransaction();
@@ -97,7 +108,7 @@ class MemberController extends Controller
                             $currentMemberId++;
                             $processed++;
 
-                   
+
                             if ($processed % 10 === 0) {
                                 $this->broadcastProgress($processed, $totalMembers);
                             }
@@ -113,7 +124,7 @@ class MemberController extends Controller
 
                     DB::commit();
 
-          
+
                     if (function_exists('opcache_reset')) {
                         opcache_reset();
                     }
@@ -123,7 +134,7 @@ class MemberController extends Controller
                     throw $e;
                 }
             }
-          
+
             $this->broadcastProgress($processed, $totalMembers);
 
             return response()->json([
@@ -163,21 +174,39 @@ class MemberController extends Controller
         }
     }
 
+    public function getupdateMember(int $memberId)
+    {
+
+        $branches = Branch::all()->pluck('branch_kh', 'branch_id');
+        if ($memberId) {
+            $member = member_personal_detail::with([
+                'member_guardian_detail',
+                'member_registration_detail',
+                'member_education_background',
+                'member_current_address',
+                'member_pob_address'
+            ])->findOrFail(intval($memberId));
+            // dd($member);
+            return view('member.update.update', compact('member', 'branches'));
+        }
+    }
     public function updateMember(int $memberId, MemberRequest $request): JsonResponse
     {
         dd($request);
         try {
             DB::beginTransaction();
-
-            $this->updateService->updateMember($memberId, $request->all(), $request->file('image'));
-
+            $data = $this->updateService->updateMember($memberId, $request->all(), $request->file('image'));
             DB::commit();
-            return response()->json(['message' => 'Member updated successfully!']);
+            return response()->json([
+                'data' => $data,
+                'message' => 'Member updated successfully!'
+            ]);
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'Failed to update member: ' . $e->getMessage()], 500);
         }
     }
+
     // multiple delete
     public function deleteMembers(Request $request): JsonResponse
     {

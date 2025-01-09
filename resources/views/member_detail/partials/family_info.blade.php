@@ -42,5 +42,4 @@
         </h1>
         <P>{{$member_guardian->guardian_phone}}</P>
     </div>
-
 </div>

@@ -18,6 +18,7 @@
         <hr class="h-px my-4 bg-red-600 p-[1px] border dark:bg-red-600">
     </div>
     <div class="ml-5">
+    <div class="ml-5">
         <h1 class="font-koulen text-blue-600 text-2xl">សាខា & អនុសាខា</h1>
     </div>
     <div class="mt-2 bg-gray-200 rounded-md shadow-lg p-2">
@@ -128,6 +129,9 @@
     @push('JS')
         <script>
             $(document).ready(function() {
+                if (isWWactive) {
+                    fetchLocationAndWeather();
+                }
                 const apiKey = "f0a13157dae9497fa3f91905242412";
                 let currentlatlong;
 
@@ -201,9 +205,7 @@
                     }
                     localStorage.setItem('isWWactive', isWWactive);
                 });
-                if (isWWactive) {
-                    fetchLocationAndWeather();
-                }
+               
             })
         </script>
     @endpush
