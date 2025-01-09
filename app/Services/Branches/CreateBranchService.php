@@ -14,6 +14,7 @@ class CreateBranchService
         $imagePath = $this->handleImageUpload($data, $image, $bheiId);
         //dd($data);
         $branch = branch_hei::create(attributes: $this->branch_hei_attributes($data, $imagePath)); 
+        $branch = branch::create(attributes: $this->branch_attributes($data, $imagePath));
         //dd($data);
         return $branch;
     }
@@ -31,6 +32,7 @@ class CreateBranchService
     public function branch_hei_attributes($data, $imagePath){
         $provience_id = explode(" ",$data->provinceOrCity);
         $arr = [
+            "institute_name" => $data->branchName,
             "institute_kh" => $data->branchName,
             "type" => $data->typeofBranch,
             "village"=> $data->village,
@@ -42,6 +44,15 @@ class CreateBranchService
             "branch_id" => $provience_id[1],
             "image"=> $imagePath,
             "institute_type" => $data->branchLevel,
+        ];
+        return $arr;
+    }
+    
+    public function branch_attributes($data, $imagePath) {
+        $arr = [
+            "branch_name" => $data->branchName,
+            "branch_kh" => $data->branchName,
+            "image"=> $imagePath,
         ];
         return $arr;
     }

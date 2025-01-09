@@ -80,9 +80,12 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/member', "{$appC}\\testdbconnection@eloquent_relation_delete");
     Route::get("/deleteall", "{$appC}\\testdbconnection@deleteall_elo");
     Route::get("/create", "{$appC}\\MemberController@index")->name('createmember');
+    Route::post('/importmember', "{$appC}\\MemberController@importMember");
     Route::post('/createmember', "{$appC}\\MemberController@insertMember");
     Route::get('/branch', "{$appC}\\BranchController@index")->name('branch');
     Route::get('/branchhei', "{$appC}\\BranchController@branch_hei")->name('branchhei');
+    Route::get('/branchheiprivate', "{$appC}\\ReportController@branchheiprivate");
+    Route::get('/allbranches', "{$appC}\\ReportController@branches_hei_report");
     Route::get('/branch/{id}', "{$appC}\\BranchController@get");
     Route::get('/member/{id}', "{$appC}\\MemberController@getMemberDetail");
     Route::post('/createbranch', "{$appC}\\BranchController@index")->name('createbranch');

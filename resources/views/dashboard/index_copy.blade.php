@@ -17,22 +17,22 @@
     <div class="">
         <hr class="h-px my-4 bg-red-600 p-[1px] border dark:bg-red-600">
     </div>
-    <div class="ml-5">
+    <div class="">
         <h1 class="font-koulen text-blue-600 text-2xl">សាខា & អនុសាខា</h1>
     </div>
-    <div class="mt-2 bg-gray-200 rounded-md shadow-lg">
-        <div class="flex flex-wrap justify-center
-         font-siemreap">
+    <div class="mx-2 mt-2 bg-gray-200 rounded-md shadow-lg">
+
+        <div class="p-1 flex flex-wrap items-center justify-center font-siemreap">
             @foreach ($branches as $key => $val)
                 @if ($key == 4)
-                    <div class="flex flex-wrap justify-center">
+                    <div class="p-1 flex flex-wrap items-center justify-center">
                 @endif
                 @include('dashboard.partials.branch_card')
             @endforeach
         </div>
     </div>
     <div class="relative">
-        <div class="flex justify-center p-2">
+        <div class="flex justify-end p-2">
             <img id="toggleButton" class="flip-image w-[32px] h-[32px]" src="{{ asset('images/icons/dropdown.svg') }}" />
         </div>
     </div>
@@ -41,7 +41,7 @@
         <hr class="h-px my-4 bg-red-600 p-[1px] border dark:bg-red-600">
     </div>
     <div class="flex items-center justify-center font-sans mt-5">
-        <div class="w-full ">
+        <div class="w-full lg:w-5/6">
             <h1 class="text-center font-siemreap font-black text-2xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
             <div class="bg-white shadow-md rounded my-6">
                 <table class="min-w-max w-full table-auto font-siemreap">
@@ -65,9 +65,6 @@
     @push('JS')
         <script>
             $(document).ready(function() {
-                if (isWWactive) {
-                    fetchLocationAndWeather();
-                }
                 const apiKey = "f0a13157dae9497fa3f91905242412";
                 let currentlatlong;
 
@@ -141,7 +138,9 @@
                     }
                     localStorage.setItem('isWWactive', isWWactive);
                 });
-               
+                if (isWWactive) {
+                    fetchLocationAndWeather();
+                }
             })
         </script>
     @endpush

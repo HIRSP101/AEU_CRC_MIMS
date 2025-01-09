@@ -11,7 +11,7 @@ class member_education_background extends Model
     protected $table = "member_education_background";
     protected $primaryKey = "meb_id";
     public $timestamps = false;
-    protected $fillable = ["meb_id", "member_id", "institute_id", "acadmedic_year", "major", "batch", "shift", "education_level", "language", "branch_id"];
+    protected $fillable = ["meb_id", "member_id", "institute_id", "acadmedic_year", "major", "batch", "shift", "education_level", "language", "branch_id", "branchhei_id", "training_received"];
     public function member_personal_detail() {
         return $this->belongsTo(member_personal_detail::class, 'member_id');
     }

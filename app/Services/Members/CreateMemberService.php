@@ -3,6 +3,7 @@
 namespace App\Services\Members;
 
 use App\Models\branch;
+use App\Models\branch_hei;
 use App\Models\member_personal_detail;
 use Illuminate\Http\UploadedFile;
 use Carbon\Carbon;
@@ -12,36 +13,39 @@ class CreateMemberService
 
     public function createMember(array $data, ?UploadedFile $image, int $currentMemberId): member_personal_detail
     {
+      //  dd($data);
+      
         $imagePath = $this->handleImageUpload($data, $image, $currentMemberId);
-
+       // dd($imagePath);
         $member = member_personal_detail::create([
             "name_kh" => $data['name_kh'] ?? null,
             "name_en" => $data['name_en'] ?? null,
             "gender" => $data['gender'] ?? null,
-            "image" => $imagePath,
+            "image" =>  $imagePath ?? null,
             "nationality" => $data['nationality'] ?? "ខ្មែរ",
             "date_of_birth" => isset($data['date_of_birth']) ? $this->convertDate($data['date_of_birth']) : null,
             "full_current_address" => $data['full_current_address'] ?? null,
             "phone_number" => $data['phone_number'] ?? null,
-            "email" => $data['email'] ?? null,
+            "email" => $data['email'],
             "facebook" => $data['facebook'] ?? null,
             "shirt_size" => $data['shirt_size'] ?? null,
             "branch_id" => $data['branch_id'] ?? null,
             "member_type" => $data["type"] ?? null,
         ]);
-
+      //  dd($data);
         $this->createRelatedData($member, $data);
-
+        
         return $member;
     }
 
     private function createRelatedData(member_personal_detail $member, array $data): void
     {
         $branch = branch::all()->pluck("branch_id", "branch_kh");
+        $branchhei = branch_hei::all()->pluck("bhei_id", "institute_kh");
         $this->createRegistrationDetails($member, $data);
         $this->createCurrentAddress($member, $data);
         $this->createPobAddress($member, $data);
-        $this->createEducationBackground($member, $data, $branch);
+        $this->createEducationBackground($member, $data, $branch, $branchhei);
         $this->createGuardianDetail($member, $data);
     }
 
@@ -53,6 +57,10 @@ class CreateMemberService
         ]);
     }
 
+
+    private function calculateExpirationDate() {
+        
+    }
     private function createCurrentAddress(member_personal_detail $member, array $data): void
     {
         $member->member_current_address()->create([
@@ -79,7 +87,7 @@ class CreateMemberService
         ]);
     }
 
-    private function createEducationBackground(member_personal_detail $member, array $data, $branch): void
+    private function createEducationBackground(member_personal_detail $member, array $data, $branch, $branchhei): void
     {
         $member->member_education_background()->create([
             'institute_id' => $data['institute_id'] ?? null,
@@ -91,6 +99,8 @@ class CreateMemberService
             'computer_skill' => $data['computer_skill'] ?? null,
             'misc_skill' => $data['misc_skill'] ?? null,
             'branch_id' => $branch[$data["provience_city"] ?? null] ?? null,
+            'branchhei_id' => $data["branchhei_id"] ?? null,
+            'training_received' => $data["training_received"] ?? null
         ]);
     }
 

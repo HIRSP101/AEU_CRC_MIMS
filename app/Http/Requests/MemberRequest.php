@@ -55,16 +55,13 @@ class MemberRequest extends FormRequest
             'members.*.guardian_phone' => 'nullable|string',
             
             'members.*.registration_date' => 'required|date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
     public function messages(): array
     {
         return [
             'members.required' => 'Member data is required',
-            'image.image' => 'The file must be an image',
-            'image.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif, svg',
-            'image.max' => 'The image must not be larger than 2MB',
+        
         ];
     }
 }

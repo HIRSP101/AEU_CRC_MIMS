@@ -25,7 +25,7 @@
 
 <script> 
     $("input#branchswitch").change(function(e) {
-        window.location = "{{ url('/') }}/branch"
+        window.location = "{{ url('/') }}/branch";
     })
 </script>
 

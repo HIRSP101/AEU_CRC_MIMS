@@ -31,7 +31,6 @@ class BranchController extends Controller
         $total_mem_branches = $this->totalmem_branches()
         ->where('branch.branch_id','<', '28')
         ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
-        ->orderBy('total_institutes', 'desc')
         ->get();
 
         return view('branch.index', compact('total_mem_branches', ));
@@ -42,7 +41,7 @@ class BranchController extends Controller
         ->where('branch.branch_id' , '>', '28')
         ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
         ->get();
-
+        //dd($total_mem_branchhei);
         return view('branch_hei.index', compact('total_mem_branchhei', ));
     }
 

@@ -5,6 +5,12 @@
 @section('Content')
 <?php 
     $i = 0;
+    $total_mem_bhei = 0;
+    $total_wm_bhei = 0;
+    foreach($branchesreport as $bheirep) {
+        $total_mem_bhei .= $bheirep->total_mem;
+    }
+    dd($total_bhei); 
 ?>
 <div class="bg-white mt-2 mx-2 px-2 shadow-lg">
     <h1 class="text-center font-siemreap my-2 text-lg font-bold">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា បណ្តាញយុវជន ទីប្រឹក្សាយុវជន នឹងយុវជន នៃសាខាកាកបាទក្រហមកម្ពុជា ២៥ រាជធានី ខេត្ត</h1>
@@ -51,10 +57,10 @@
                     <tr class="border-collapse border-y-2 border-x-2 border-black">
                         <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$i}}</td>
                         <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->branch_kh}}</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_ms + $brreport->total_hs}}</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_ms + $brreport->total_hs + $brreport->total_hei }}</td>
                         <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_ms}}</td>
                         <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_hs}}</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">0</td>
+                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_hei}}</td>
                         <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_ls}}</td>
                         <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_ls_wm}}</td>
                         <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_mem}}</td>

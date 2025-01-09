@@ -9,9 +9,9 @@ import exportToExcel from './exportToExcel.js';
 import exportToExcel_branch from './exportToExcel_branch.js';
 
 
-// Make sure Echo is properly initialized before this code
+/*
 document.addEventListener('DOMContentLoaded', () => {
-    // Add a console log to verify the code is running
+
     console.log('DOMContentLoaded event fired');
 
 
@@ -43,6 +43,7 @@ window.Echo.connector.pusher.connection.bind('error', (error) => {
     console.error('Pusher connection error:', error);
 });
 
+*/
 
 window.exportToExcel = exportToExcel;
 window.exportToExcel_branch = exportToExcel_branch;
