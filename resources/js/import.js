@@ -229,14 +229,14 @@ $(document).ready(function () {
         }, 2000);
     }
 
-    // Modify your existing insertMember function
+
     function insertMember(member) {
         showProgressBar();
        // showLoading();
 
         $.ajax({
             type: 'POST',
-            url: '/createmember',
+            url: '/importmember',
             data: member,
             contentType: false,
             processData: false,
@@ -277,9 +277,9 @@ $(document).ready(function () {
         `;
         $("#sheetContainer").after(progressBarHtml);
 
-        // Initialize Echo listener
         window.Echo.channel('import-progress')
-            .listen('.import.progress', (e) => {
+            .listen('import.progress', (e) => {
+                console.log(e.progress);
                 updateProgress(e.progress);
             });
     }

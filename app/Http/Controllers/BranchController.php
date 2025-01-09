@@ -29,24 +29,25 @@ class BranchController extends Controller
     public function index()
     {
         $total_mem_branches = $this->totalmem_branches()
-        ->where('branch.branch_id','<', '28')
-        ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
-        ->orderBy('total_institutes', 'desc')
-        ->get();
+            ->where('branch.branch_id', '<', '28')
+            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
+            ->get();
 
         return view('branch.index', compact('total_mem_branches', ));
     }
 
-    public function branch_hei() {
+    public function branch_hei()
+    {
         $total_mem_branchhei = $this->totalmem_branches()
-        ->where('branch.branch_id' , '>', '28')
-        ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
-        ->get();
-
+            ->where('branch.branch_id', '>', '28')
+            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
+            ->get();
+        //dd($total_mem_branchhei);
         return view('branch_hei.index', compact('total_mem_branchhei', ));
     }
 
-    public function totalmem_branches() {
+    public function totalmem_branches()
+    {
         $total_mem_branches = DB::table('branch as branch')
             ->leftjoin('member_education_background as meb', 'branch.branch_id', '=', 'meb.branch_id')
             ->leftjoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
@@ -61,18 +62,20 @@ class BranchController extends Controller
         return $total_mem_branches;
     }
 
-    public function createform() {
+    public function createform()
+    {
         $total_mem_branches = $this->totalmem_branches()
-        ->where("branch.branch_id" ,'<', 28)
-        ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
-        ->orderBy('total_institutes', 'desc')
-        ->get();
+            ->where("branch.branch_id", '<', 28)
+            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
+            ->orderBy('total_institutes', 'desc')
+            ->get();
         $bhei_col = branch_hei::all();
         return view('branch.partials.createform.create', compact('total_mem_branches', 'bhei_col'));
     }
-    public function updateform(Request $request) {
+    public function updateform(Request $request)
+    {
         $total_branches = branch::where('branch_id', '<', '28')->get();
-        $bhei = branch_hei::find($request->id);
+        $bhei = branch::find($request->id);
         //dd($bhei_col);
         return view('branch.partials.createform.update', compact('total_branches', 'bhei'));
     }
@@ -118,12 +121,13 @@ class BranchController extends Controller
                 'mpd.shirt_size'
             ])
             ->get();
-            //dd($total_mem);
+        //dd($total_mem);
 
         return view('totalmembranch.index', compact('total_mem', 'total_fem', 'total_total'));
     }
-    public function store(BranchRequest $request): RedirectResponse {
-       // dd($request->all());
+    public function store(BranchRequest $request): RedirectResponse
+    {
+        // dd($request->all());
         try {
             DB::beginTransaction();
 
@@ -132,7 +136,7 @@ class BranchController extends Controller
             $bhei_id = branch_hei::latest()->first()?->bhei_id ?? 0;
             $this->createService->createBranch($data_arr, $request->file('image'), $bhei_id);
             DB::commit();
-           return redirect()->route('/create-branch');
+            return redirect()->route('/create-branch');
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->route('dashboard');
@@ -143,7 +147,7 @@ class BranchController extends Controller
         try {
             DB::beginTransaction();
             $bhei_id = $request->bhei_id;
-           // dd($bhei_id);
+            // dd($bhei_id);
             $this->updateService->updateBranch(data: $request, image: $request->file('image'), bheiId: $bhei_id);
 
             DB::commit();
@@ -154,7 +158,7 @@ class BranchController extends Controller
         }
     }
     // multiple delete
-    public function deleteBranches(Request $request): JsonResponse
+    public function deleteBranches(Request $request)
     {
         $this->deleteService->deleteBranches($request->arr);
         return response()->json(['message' => 'Members deleted successfully']);
@@ -162,7 +166,7 @@ class BranchController extends Controller
     // single delete
     public function deleteBranch(Request $request): JsonResponse
     {
-       $this->deleteService->deleteBranch($request->arr[0]);
-       return response()->json(['message' => 'Member deleted successfully']);
+        $this->deleteService->deleteBranch($request->arr[0]);
+        return response()->json(['message' => 'Member deleted successfully']);
     }
 }

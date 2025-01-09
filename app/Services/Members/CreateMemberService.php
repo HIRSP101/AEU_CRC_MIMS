@@ -12,24 +12,26 @@ class CreateMemberService
 
     public function createMember(array $data, ?UploadedFile $image, int $currentMemberId): member_personal_detail
     {
-        $imagePath = $this->handleImageUpload($data, $image, $currentMemberId);
 
+
+        $imagePath = $this->handleImageUpload($data, $image, $currentMemberId);
+        // dd($imagePath);
         $member = member_personal_detail::create([
             "name_kh" => $data['name_kh'] ?? null,
             "name_en" => $data['name_en'] ?? null,
             "gender" => $data['gender'] ?? null,
-            "image" => $imagePath,
+            "image" => $imagePath ?? null,
             "nationality" => $data['nationality'] ?? "ខ្មែរ",
             "date_of_birth" => isset($data['date_of_birth']) ? $this->convertDate($data['date_of_birth']) : null,
             "full_current_address" => $data['full_current_address'] ?? null,
             "phone_number" => $data['phone_number'] ?? null,
-            "email" => $data['email'] ?? null,
+            "email" => $data['email'],
             "facebook" => $data['facebook'] ?? null,
             "shirt_size" => $data['shirt_size'] ?? null,
             "branch_id" => $data['branch_id'] ?? null,
             "member_type" => $data["type"] ?? null,
         ]);
-
+        //  dd($data);
         $this->createRelatedData($member, $data);
 
         return $member;
@@ -118,7 +120,7 @@ class CreateMemberService
         $imageName = 'mem-' . str_replace(' ', '', $data["name_en"] . ($currentMemberId + 1)) . '.' . $image->extension();
         $image->move(public_path('images/members'), $imageName);
 
-        return "images/$imageName";
+        return "images/members/$imageName";
     }
     private function convertDate($date)
     {

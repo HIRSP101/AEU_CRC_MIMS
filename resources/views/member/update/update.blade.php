@@ -12,20 +12,25 @@
             <h1>Cambodian Red Cross Youth Individual Information</h1>
         </div>
         <div class="">
-            <img class="image w-28 h-32 bg-red-300" src="" alt="">
+            @if ($member->image == null)
+                <img class="image w-28 h-32 bg-red-300" src="" alt="">
+            @endif
+            @if ($member->image != null)
+                <img class="image w-28 h-32 bg-red-300" src="{{asset($member->image)}}" alt="">
+            @endif
         </div>
     </div>
-
     @csrf
-    @include('member.partials.personal_detail')
+    <input id="member_id" name="member_id" value="{{$member->member_id}}" hidden>
+    @include('member.update.partials.personal_detail')
     <hr>
-    @include('member.partials.pob')
+    @include('member.update.partials.pob')
     <hr>
-    @include('member.partials.current_address')
+    @include('member.update.partials.current_address')
     <hr>
-    @include('member.partials.personal_training')
+    @include('member.update.partials.personal_training')
     <hr>
-    @include('member.partials.guardian')
+    @include('member.update.partials.guardian')
     <div class="flex justify-end">
         <a class="border-solid m-2 border-2 bg-red-400 p-2 rounded-md hover:bg-red-500 active:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
             id="clear_btn">លុប</a>
@@ -34,7 +39,6 @@
             type="submit" id="submit_btn">យល់ព្រម
         </button>
     </div>
-
 </div>
 @endsection
 
@@ -45,7 +49,6 @@
             var file = e.target.files;
             previewImage(file);
         });
-
         $("#clear_btn").click(function (e) {
             e.preventDefault();
             $("input").val("");
@@ -53,6 +56,8 @@
         $("#submit_btn").click(function (e) {
             e.preventDefault();
             var formData = new FormData();
+            var memberId = $("input#member_id").val();
+
             var memberObj = {
                 0: {
                     "name_kh": $("input#name_kh").val(),
@@ -66,6 +71,7 @@
                     "email": $("input#memberemail").val(),
                     "shirt_size": $("select#shirt_size").val(),
                     "home_no": $("input#housenumber").val(),
+                    "street_no": $("input#street").val(),
                     "pob_village": $("input#village").val(),
                     "pob_commune_sangkat": $("input#commune").val(),
                     "pob_district_khan": $("input#district").val(),
@@ -91,10 +97,13 @@
                     "mother_occupation": $("input#mother_occupation").val(),
                     "mother_current_address": $("input#mother_current_address").val(),
                     "guardian_phone": $("input#guardian_number").val(),
+                    // "member_status": $("input#member_status").val(),
                     //  "education_level" : "",
                     "language": $("input#language").val(),
-                    "computer_skill": "",
-                    "misc_skill": "",
+                    "member_type": $("input#member_type").val(),
+                    "training_received": $("input#training_received").val(),
+                    "computer_skill": $("input#computer_skill").val(),
+                    "misc_skill": $("input#misc_skill").val(),
                     "registration_date": $("input#recruitment_date").val()
                 }
             }
@@ -103,29 +112,33 @@
             console.log(memberObj);
             formData.append('members', JSON.stringify(memberObj));
 
-            console.log(formData);
-            // $("#loading-overlay").show();
-            insertMember(formData);
+            console.log(memberId);
+            console.log(FormData);
+
+            updateMember(memberId, formData);
         })
-        function insertMember(member) {
+        function updateMember(member_id, member) {
+            const membersJSON = member.get('members');
+            const membersObj = JSON.parse(membersJSON);
+
             $.ajax({
                 type: 'POST',
-                url: '/createmember',
+                url: `/update-member/${member_id}`, // Update if necessary, e.g., '/api/updatemember'
                 data: member,
                 contentType: false,
                 processData: false,
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
                 success: function (response) {
                     console.log(response.message);
-                    //   $("#loading-overlay").hide();
+                    console.log(response.data);
                     alert(response.message);
                 },
                 error: function (error) {
                     console.error(error);
                 }
-            })
+            });
         }
         function previewImage(files) {
             $("#imagepreview").html('');
@@ -139,6 +152,5 @@
                 }
             });
         }
-
     </script>
 @endpush

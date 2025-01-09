@@ -13,7 +13,7 @@ class member_personal_detail extends Model
     protected $table = "member_personal_detail";
     protected $primaryKey = "member_id";
     public $timestamps = true;
-    protected $fillable = ["member_id", "member_code", "name_kh", "name_en", "gender", "nationality", "date_of_birth", "image", "full_current_address", "phone_number", "guardian_phone", "national_id", "shirt_size", "member_type", "email"];
+    protected $fillable = ["member_id", "member_code", "name_kh", "name_en", "gender", "nationality", "date_of_birth", "image", "full_current_address", "phone_number", "guardian_phone", "national_id", "shirt_size", "member_type", "email", 'facebook'];
     protected static function boot()
     {
         parent::boot();
@@ -30,28 +30,36 @@ class member_personal_detail extends Model
         });
     }
 
-    public function member_guardian_detail() :HasOne {
+    public function member_guardian_detail(): HasOne
+    {
         return $this->hasOne(member_guardian_detail::class, 'member_id');
     }
-    public function member_engagement_detail() :HasOne {
+    public function member_engagement_detail(): HasOne
+    {
         return $this->hasOne(member_engagement_detail::class, 'member_id');
     }
-    public function member_registration_detail() :HasOne {
+    public function member_registration_detail(): HasOne
+    {
         return $this->hasOne(member_registration_detail::class, 'member_id');
     }
-    public function member_education_background() :HasOne {
+    public function member_education_background(): HasOne
+    {
         return $this->hasOne(member_education_background::class, 'member_id');
     }
-    public function member_pob_address() :HasOne {
+    public function member_pob_address(): HasOne
+    {
         return $this->hasOne(member_pob_address::class, 'member_id');
     }
-    public function member_current_address() :HasOne {
+    public function member_current_address(): HasOne
+    {
         return $this->hasOne(member_current_address::class, 'member_id');
     }
-    public function member_top_management() :HasOne {
+    public function member_top_management(): HasOne
+    {
         return $this->hasOne(member_top_management::class, 'member_id');
     }
-    public function member_middle_management() :HasOne {
+    public function member_middle_management(): HasOne
+    {
         return $this->hasOne(member_middle_management::class, 'member_id');
     }
 }

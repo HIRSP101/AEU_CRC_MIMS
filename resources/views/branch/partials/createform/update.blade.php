@@ -10,7 +10,8 @@
                 <h1>កែប្រែសាខា</h1>
             </div>
             <div class="">
-                <img class="image w-28 h-32 bg-gray-200" src="{{asset("{$bhei->image}")}}" alt="">
+                
+                <img class="image w-28 h-32 bg-gray-200" src="{{asset($bhei->image)}}" alt="">
             </div>
         </div>
         <div class="mt-5">

@@ -33,69 +33,73 @@
 <div class="bg-white mt-2 mx-3 shadow-lg">
     <h1 class="text-center font-siemreap my-2 text-xl font-bold"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
     <h2 class="text-center font-siemreap mb-2 text-xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា {{$current_branch}} </h2>
-
-    <div class="flex justify-between items-center mb-4 mt-14 px-4">
-        <!-- Search Bar -->
-        <div class="tab_filter_container flex items-center space-x-2">
-            <input type="text" id="tab_filter_text" class="border border-gray-300 px-2 py-2 rounded" placeholder="Search...">
-            <button id="tab_filter_btn" class="bg-blue-500 text-white px-4 py-2 rounded">Search</button>
-        </div>
-        
-        <!-- Buttons Group -->
-        <div class="flex items-center space-x-2">
-            <div class="tab_head_container flex items-center space-x-2">
-                <div class="page_limit flex items-center space-x-2">
-                    <select id="table_size" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-20">
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                        <option value="200">200</option>
-                        <option value="300">300</option>
-                    </select>
-                    <span>entries</span>
-                </div>
-            </div>
-            <button id="export_pdf" class="bg-gray-500 text-white px-4 py-2 rounded">Export PDF</button>
-            <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
-            <a href="{{ route('createmember') }}" class="bg-blue-500 text-white px-4 py-2 rounded">
-                <i class="fas fa-edit"></i> New
-            </a>
-            <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
-        </div>
+    <div class="tab_filter_container">
+        <input type="text" id="tab_filter_text">
+        <button id="tab_filter_btn" class="active">search</button>
     </div>
-    
+
+    <div class="flex justify-end space-x-2 mb-4 mt-10">
+        <div class="tab_head_container">
+            <div class="page_limit">
+              {{-- <span>Shows</span> --}}
+              <select id="table_size" class="text-gray-700 bg-gray-300 py-2 rounded">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+
+              </select>
+              <span>entries</span>
+            </div>
+        </div>
+        <button id="export_pdf" class="bg-gray-500 text-white px-4 py-2 rounded">Export PDF</button>
+        <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
+           <a href="{{ route('createmember') }}" class="bg-blue-500 text-white px-4 py-2 rounded">
+               <i class="fas fa-edit"></i> New
+           </a>
+           <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+       </div>
 <div class="w-full overflow-scroll mx-3 my-3 max-h-[760px]">
 
        <div class="w-full overflow-scroll my-3 max-h-[760px] table">
-           <table class="min-w-max w-full table-auto font-siemreap">
-               <thead>
-               <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                   <th class="py-3 pl-5 text-left">
+           <table>
+               <thead class=" font-siemreap bg-slate-200 border-collapse border-t-2 border-black">
+               <tr>
+                   <th class="px-2 py-3 text-pretty border-x-2 border-black uppercase">
                        ល.រ
                    </th>
-                   <th class="py-3 text-center">
+                   <th class="px-2 py-3 text-pretty border-x-2 border-black uppercase">
                        គោត្តមនាម-នាម
                    </th>
-                   <th class="py-3 text-center">
+                   <th class="px-2 py-3 text-pretty border-x-2 border-black uppercase">
                        ភេទ
                    </th>
-                   <th class="py-3 text-center">
+                   <th class="px-2 py-3 text-pretty border-x-2 border-black uppercase">
                        ថ្ងៃខែឆ្នាំកំណើត
                    </th>
-                   <th class="py-3 text-center">
+                   <th class="px-2 py-3 text-pretty border-x-2 border-black uppercase">
                        គ្រឹះស្ថានសិក្សា
                    </th>
-                   <th class="py-3 text-center">
+                   <th class="px-2 py-3 text-pretty border-x-2 border-black uppercase">
                        តួនាទី
                    </th>
-                   <th class="py-3 text-center">
+                   <th class="px-2 py-3 text-pretty border-x-2 border-black uppercase">
                        កម្រិតសិក្សា
                    </th>
-                   <th class="py-3 text-center">
+                   <th class="px-2 py-3 text-pretty border-x-2 border-black uppercase">
+                       ឆ្នាំសិក្សា
+                   </th>
+                   <th class="px-2 py-3 text-pretty border-x-2 border-black uppercase">
+                       អាស័យដ្ធានបច្ចុប្បន្ន
+                   </th>
+                   <th class="px-2 py-3 text-pretty border-x-2 border-black uppercase">
+                       ទូរស័ព្ទផ្ទាល់ខ្លួន
+                   </th>
+                   <th class="px-2 py-3 text-pretty border-x-2 border-black uppercase">
                        action
                    </th>
                </tr>
                </thead>
-               <tbody class="text-gray-600 text-sm font-light">
+               <tbody class="bg-white font-siemreap">
                </tbody>
            </table>
            <div class="flex justify-end mt-8 footer">
@@ -104,7 +108,6 @@
            </div>
        </div>
 </div>
-   
 @else
     <p class="font-siemreap"> មិនមានទិន្ទន័យគ្រប់គ្រង </p>
 @endif

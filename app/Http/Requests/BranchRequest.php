@@ -13,10 +13,10 @@ class BranchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "branchName"=> "nullable|string",
-            "typeofBranch"=> "nullable|string",
+            "branchName" => "nullable|string",
+            "typeofBranch" => "nullable|string",
             "branchLevel" => "nullable|string",
-            "village"=> "nullable|string",
+            "village" => "nullable|string",
             "district" => "nullable|string",
             "communeOrKhan" => "nullable|string",
             "provinceOrCity" => "nullable|string",

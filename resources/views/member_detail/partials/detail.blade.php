@@ -33,15 +33,25 @@
             {{$member->date_of_birth ?? ""}}
         </h1>
     </div>
-    <div class="flex w-full md:w-1/2  mb-6 md:mb-0">
+    <div class="flex flex-wrap w-full md:w-full  mb-6 md:mb-0">
         <h1 class="px-2">
             ទីកន្លែងកំណើត (Place of Birth)
         </h1>
         <h1 class="px-2">
-            {{$member_pob->village ?? ""}}
+            ភូមិ ៖ <span class="font-bold">{{$member_pob->village ?? ""}}</span>
+        </h1>
+        <h1 class="px-2">
+            ឃុំ/សង្កាត់ ៖
+            <span class="font-bold">{{$member_pob->commune_sangkat ?? ""}}</span>
+        </h1>
+        <h1 class="px-2">
+            ស្រុក/ខណ្ទ ៖ <span class="font-bold">{{$member_pob->district_khan ?? ""}}</span>
+        </h1>
+        <h1 class="px-2">
+            រាជធានី/ខេត្ត ៖​ <span class="font-bold">{{$member_pob->provience_city ?? ""}}</span>
         </h1>
     </div>
-    <div class="flex w-full md:w-1/2  mb-6 md:mb-0">
+    <div class="flex  w-full md:w-1/2  mb-6 md:mb-0">
         <h1 class="px-2">
             អសយដ្ធានបច្ចុប្បន្ន (Current Address)
         </h1>
@@ -81,7 +91,8 @@
 
     <div class="flex w-full md:w-full  mb-6 md:mb-0">
         <h1 class="px-2">
-            កម្រិតវប្បធម៌ ឬថ្នាក់ទី ឬឆ្នាំទី (Education or Class or Year) ៖ <span class="font-bold">{{$member_edu->acadmedic_year ?? ""}}</span>
+            កម្រិតវប្បធម៌ ឬថ្នាក់ទី ឬឆ្នាំទី (Education or Class or Year) ៖ <span
+                class="font-bold">{{$member_edu->acadmedic_year ?? ""}}</span>
         </h1>
     </div>
     <div class="flex w-full md:w-full  mb-6 md:mb-0">
@@ -97,7 +108,8 @@
     </div>
     <div class="flex w-full md:w-full  mb-6 md:mb-0">
         <h1 class="px-2">
-            ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនកាកបាទក្រហមកម្ពុជា (RCY Recruitment Date) ៖ <span class="font-bold">{{$member_regis->registration_date}}</span>
+            ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនកាកបាទក្រហមកម្ពុជា (RCY Recruitment Date) ៖ <span
+                class="font-bold">{{$member_regis->registration_date}}</span>
         </h1>
     </div>
     <div class="flex w-full md:w-full  mb-6 md:mb-0">
@@ -108,7 +120,8 @@
     </div>
     <div class="flex w-full md:w-full  mb-6 md:mb-0">
         <h1 class="px-2">
-            ឈ្មោះសាលារៀន ឬសាកលវិទ្យាល័យ (Name of School or University) ៖ <span class="font-bold">{{$member_edu->institute_id}}</span>
+            ឈ្មោះសាលារៀន ឬសាកលវិទ្យាល័យ (Name of School or University) ៖ <span
+                class="font-bold">{{$member_edu->institute_id}}</span>
         </h1>
     </div>
     <div class="flex w-full md:w-full  mb-6 md:mb-0">

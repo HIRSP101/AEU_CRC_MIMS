@@ -1,5 +1,5 @@
 @if($key > 3)
-<div class=" collapsibleContent flex-shrink-0 m-2 relative overflow-hidden bg-white rounded-lg max-w-xs shadow-lg hidden">
+<div class="collapsibleContent flex-shrink-0 m-2 relative overflow-hidden bg-white rounded-lg  shadow-lg hidden">
     <div class="relative px-10 flex items-center justify-center">
         <img class="relative w-[320px] h-[280px] rounded-md" src="{{asset("images/branches/b-$key.jpg")}}" alt="">
     </div>
@@ -8,7 +8,7 @@
     </div>
 </div>
 @else
-<div class="flex-shrink-0 m-2 relative overflow-hidden bg-white rounded-lg max-w-xs shadow-lg">
+<div class="flex-shrink-0 m-2 relative overflow-hidden bg-white rounded-lg shadow-lg">
     <div class="relative px-10 flex items-center justify-center">
         <img class="relative w-[320px] h-[280px] rounded-md" src="{{asset("images/branches/b-$key.jpg")}}" alt="">
     </div>
