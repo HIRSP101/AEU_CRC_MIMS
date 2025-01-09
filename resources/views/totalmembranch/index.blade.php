@@ -57,8 +57,8 @@
                 
                 <div class="gender_sort flex items-center space-x-2">
                     <span>ភេទ</span>
-                    <select id="gender_filter" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-20">
-                        <option value="all">All</option>
+                    <select id="gender_filter" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-28">
+                        <option value="all">ទាំងអស់</option>
                         <option value="ស្រី">ស្រី</option>
                         <option value="ប្រុស">ប្រុស</option>
                     </select>
@@ -66,8 +66,8 @@
                 
                 <div class="year_sort flex items-center space-x-2​">
                     <span>ឆ្នាំ</span>
-                    <select id="filter_year" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-20">
-                        <option value="all">All</option>
+                    <select id="filter_year" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-28">
+                        <option value="all">ទាំងអស់</option>
                         <option value="2005">2005</option>
                         <option value="2006">2006</option>
                         <option value="2007">2007</option>
