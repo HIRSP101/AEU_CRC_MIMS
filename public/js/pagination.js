@@ -161,6 +161,7 @@ export default function setuppagination(array, attr_arr, updateroute) {
     $("#gender_filter").change(function () {
         if ($(this).val() === "all") {
             array = [...originalArray];
+            console.log(array);
         } else {
             const filterGender = $("#gender_filter").val();
             array = originalArray.filter((item) => {

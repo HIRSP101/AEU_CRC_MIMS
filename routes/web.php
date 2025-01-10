@@ -112,6 +112,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/update-member/{id}', "{$appC}\\MemberController@getUpdateMemberDetail")->name('member.update');
     Route::post('/delete-branch', "{$appC}\\BranchController@deleteBranch");
     Route::post('/delete-branches', "{$appC}\\BranchController@deleteBranches");
+    Route::get('/institute', "{$appC}\\BranchController@institute")->name('institute');
 });
 
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");

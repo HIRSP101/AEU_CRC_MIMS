@@ -63,10 +63,6 @@ class MemberController extends Controller
                 $this->createService->createMember($memberData, $request->file('image'), $currentMemberId);
                 $currentMemberId++;
             }
-<<<<<<< HEAD
-
-=======
->>>>>>> a0c192de941f1090c0a248176fa7cdcb44d7eb06
             DB::commit();
             return response()->json(['message' => 'Member record(s) created successfully!']);
         } catch (Exception $e) {
@@ -76,17 +72,10 @@ class MemberController extends Controller
     }
     public function importMember(MemberRequest $request): JsonResponse
     {
-<<<<<<< HEAD
-       // dd($request);
-        try {
-            $members = json_decode($request->input('members'), true);
-          //  dd($members);
-=======
         // dd($request);
         try {
             $members = json_decode($request->input('members'), true);
             //  dd($members);
->>>>>>> a0c192de941f1090c0a248176fa7cdcb44d7eb06
             $totalMembers = count($members);
 
             if ($totalMembers === 0) {
