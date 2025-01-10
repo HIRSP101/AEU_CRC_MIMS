@@ -126,7 +126,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: `/update-member/${member_id}`, // Update if necessary, e.g., '/api/updatemember'
+                url: `/update-member/${member_id}`,
                 data: member,
                 contentType: false,
                 processData: false,
