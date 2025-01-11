@@ -13,11 +13,10 @@ export function handleTotalmem(array, ExcelObj) {
 
     setuppagination(array, attr_arr, "update-member");
 
-    $(".hoverablebranch").on("click", function (e) {
+    $(".table table tbody").on("click", ".hoverablebranch", function (e) {
         if ($(e.target).closest("td").hasClass("action")) {
             return;
         }
-
         $(this).toggleClass("bg-slate-300 marked");
     });
 

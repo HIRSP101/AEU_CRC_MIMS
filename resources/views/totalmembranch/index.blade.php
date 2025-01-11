@@ -31,8 +31,8 @@
         }
 ?>
 <div class="bg-white mt-2 mx-3 shadow-lg">
-    <h1 class="text-center font-siemreap my-2 text-xl font-bold"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
-    <h2 class="text-center font-siemreap mb-2 text-xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា {{$current_branch}} </h2>
+    <h1 class="text-center font-siemreap my-2 font-bold text-2xl"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
+    <h2 class="text-center font-siemreap mb-2 text-2xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា {{$current_branch}} </h2>
 
     <div class="flex justify-between items-center mb-4 mt-14 px-4">
         <!-- Search Bar -->
@@ -42,8 +42,8 @@
         </div>
         
         <!-- Buttons Group -->
-        <div class="flex items-center space-x-2">
-            <div class="tab_head_container flex items-center space-x-2">
+        <div class="flex items-center space-x-3">
+            <div class="tab_head_container flex items-center space-x-4">
                 <div class="page_limit flex items-center space-x-2">
                     <span>បង្ហាញ</span>
                     <select id="table_size" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-20">
@@ -52,7 +52,6 @@
                         <option value="200">200</option>
                         <option value="300">300</option>
                     </select>
-                    
                 </div>
                 
                 <div class="gender_sort flex items-center space-x-2">
@@ -64,15 +63,10 @@
                     </select>
                 </div>
                 
-                <div class="year_sort flex items-center space-x-2​">
+                <div class="year_sort flex items-center space-x-2">
                     <span>ឆ្នាំ</span>
                     <select id="filter_year" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-28">
                         <option value="all">ទាំងអស់</option>
-                        <option value="2005">2005</option>
-                        <option value="2006">2006</option>
-                        <option value="2007">2007</option>
-                        <option value="2008">2008</option>
-                        <option value="2009">2009</option>
                         <option value="2010">2010</option>
                         <option value="2011">2011</option>
                         <option value="2012">2012</option>
@@ -92,11 +86,7 @@
                     </select>
                 </div>
             </div>
-            {{-- <button id="export_pdf" class="bg-gray-500 text-white px-4 py-2 rounded">Export PDF</button> --}}
             <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
-            {{-- <a href="{{ route('createmember') }}" class="bg-blue-500 text-white px-4 py-2 rounded">
-                <i class="fas fa-edit"></i> New
-            </a> --}}
             <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
         </div>
     </div>
