@@ -33,12 +33,6 @@
                     </span>
                 </a>
             @endif
-                {{-- <a href="" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                    អ្នកប្រើប្រាស់
-                </a> --}}
                 <a href=""  id="subModule-add" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                     <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/add-row.png" alt="add-row"/>
                     <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">បញ្ចូលសាមាជិក</span>

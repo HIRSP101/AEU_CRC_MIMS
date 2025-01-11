@@ -18,95 +18,77 @@
         <hr class="h-px my-4 bg-red-600 p-[1px] border dark:bg-red-600">
     </div>
     <div class="ml-5">
-    <div class="ml-5">
-        <h1 class="font-koulen text-blue-600 text-2xl">សាខា & អនុសាខា</h1>
-    </div>
-    <div class="mt-2 bg-gray-200 rounded-md shadow-lg p-2">
-        <div class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-siemreap p-2">
-            {{-- @foreach ($branches as $key => $val)
-                @if ($key == 4)
-                    <div class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-2">
-                @endif
-                @include('dashboard.partials.branch_card')
-            @endforeach --}}
-            <div>
-                <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
-                    <div class="relative">
-                        <img class="w-full" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Product Image">   
-                    </div>
-                    <div class="p-4 bg-white">
-                        <h3 class="text-lg font-medium mb-2">Product Title</h3>
-                       
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg no-scrollbar">
-                    <div class="relative">
-                        <img class="w-full" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Product Image">
-                       
-                    </div>
-                    <div class="p-4 bg-white">
-                        <h3 class="text-lg font-medium mb-2">Product Title</h3>
-                      
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
-                    <div class="relative">
-                        <img class="w-full" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Product Image">
-                      
-                    </div>
-                    <div class="p-4 bg-white">
-                        <h3 class="text-lg font-medium mb-2">Product Title</h3>
-                        
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
-                    <div class="relative">
-                        <img class="w-full" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Product Image">
-                       
-                    </div>
-                    <div class="p-4 bg-white">
-                        <h3 class="text-lg font-medium mb-2">Product Title</h3>
-                       
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
-                    <div class="relative">
-                        <img class="w-full" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Product Image">
-                      
-                    </div>
-                    <div class="p-4 bg-white">
-                        <h3 class="text-lg font-medium mb-2">Product Title</h3>
-                    
-                    </div>
-                </div>
-            </div>
-           
+        <div class="ml-5">
+            <h1 class="font-koulen text-blue-600 text-2xl">សាខា & អនុសាខា</h1>
+        </div>
 
-             @include('dashboard.partials.branch_card')
+        {{-- Card session --}}
+        <div class="mt-2 bg-gray-200 rounded-md shadow-lg p-2">
+            <div class="mt-0">
+                <div class="leading-relaxed">
+                    <!-- Initial Cards (First 5 Cards) -->
+                    <div>
+                        <div id="initial-cards" class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-siemreap p-2">
+                            @foreach ($branches as $key => $val)
+                                @if ($loop->index < 5)
+                                    <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
+                                        <div class="relative bg-white p-2">
+                                            <div class="flex justify-center items-center">
+                                                <img class="w-[200px] h-[180px] rounded-md" src="{{ asset("images/branches/b-$key.jpg") }}" alt="Branch Image">
+                                            </div>
+                                        </div>
+                                        <div class="p-2 bg-[#f1f5f9] font-battambang text-center">
+                                            @if (auth()->user()->hasRole('admin'))
+                                                <a href="/branch/{{ $key }}" class="block opacity-100 mb-1">{{ $val }}</a>
+                                            @else
+                                                <p class="block opacity-100 mb-1">{{ $val }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
         
-        </div>
-        <div class="relative">
-            <div class="flex justify-center p-2">
-                <img id="toggleButton" class="flip-image w-[32px] h-[32px]" src="{{ asset('images/icons/dropdown.svg') }}" />
+                    <!-- Additional Cards (Hidden Initially) -->
+                    <span id="more-cards" class="hidden">
+                        <div class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-siemreap p-2">
+                            @foreach ($branches as $key => $val)
+                                @if ($loop->index >= 5)
+                                    <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
+                                        <div class="relative bg-white p-2">
+                                            <div class="flex justify-center items-center">
+                                                <img class="w-[200px] h-[180px] rounded-md" src="{{ asset("images/branches/b-$key.jpg") }}" alt="Branch Image">
+                                            </div>
+                                        </div>
+                                        <div class="p-2 bg-[#f1f5f9] font-battambang text-center">
+                                            @if (auth()->user()->hasRole('admin'))
+                                                <a href="/branch/{{ $key }}" class="block opacity-100 mb-1">{{ $val }}</a>
+                                            @else
+                                                <p class="block opacity-100 mb-1">{{ $val }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </span>
+                </div>
+        
+                <!-- Toggle Buttons -->
+                <div class="flex justify-center items-center">
+                    <button id="toggle-btn" class="mt-4 text-blue-500 focus:outline-none flex">
+                        <img width="24" height="24" src="https://img.icons8.com/ios-filled/50/down-squared--v1.png" alt="Show More" />
+                    </button>
+                    <button id="hide-btn" class="hidden mt-4 text-blue-500 focus:outline-none">
+                        <img width="24" height="24" src="https://img.icons8.com/ios-glyphs/30/hide.png" alt="Show Less" />
+                    </button>
+                </div>
             </div>
         </div>
-        </div>
-        <div class="">
-            <hr class="h-px my-4 bg-red-600 p-[1px] border dark:bg-red-600">
-        </div>
-        <div class="flex items-center justify-center font-sans mt-5">
-    </div>
 
-        <div class="w-full p-2">
-            <h1 class="text-center font-siemreap font-black text-2xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
+        <div class="w-full p-2 mt-4">
+            <h1 class="text-center text-gray-800 font-battambang font-black text-2xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
             <div class="bg-white shadow-md rounded my-6">
                 <table class="min-w-max w-full table-auto font-siemreap">
                     <thead>
@@ -127,6 +109,19 @@
     @endsection
 
     @push('JS')
+        <script>
+            document.getElementById('toggle-btn').addEventListener('click', function () {
+                document.getElementById('more-cards').classList.remove('hidden');
+                document.getElementById('toggle-btn').classList.add('hidden');
+                document.getElementById('hide-btn').classList.remove('hidden');
+            });
+        
+            document.getElementById('hide-btn').addEventListener('click', function () {
+                document.getElementById('more-cards').classList.add('hidden');
+                document.getElementById('toggle-btn').classList.remove('hidden');
+                document.getElementById('hide-btn').classList.add('hidden');
+            });
+        </script>
         <script>
             $(document).ready(function() {
                 if (isWWactive) {
@@ -205,7 +200,7 @@
                     }
                     localStorage.setItem('isWWactive', isWWactive);
                 });
-               
+
             })
         </script>
     @endpush
