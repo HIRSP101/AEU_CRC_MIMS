@@ -112,6 +112,8 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/delete-branch', "{$appC}\\BranchController@deleteBranch");
     Route::post('/delete-branches', "{$appC}\\BranchController@deleteBranches");
     Route::get('/institute', "{$appC}\\InstituteController@index1")->name('institute');
+    //Route::get('/institute/{id}', "{$appC}\\InstituteController@totalMemberInstituteById");
+    Route::get('/institute/{id}', "{$appC}\\InstituteController@get");
 });
 
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");

@@ -26,10 +26,29 @@ export function handleTotalmem(array, ExcelObj) {
         $(".marked").each(function () {
             arr.push($(this).attr("data-id"));
         });
-        ajaxtoRoute("POST", "/deletemember", arr);
+
+        if (arr.length === 0) {
+            alert("Please select at least one user to delete");
+            return;
+        }
+
+        const confirmDelete = confirm(
+            "Are you sure you want to delete the selected users?"
+        );
+
+        if (confirmDelete) {
+            ajaxtoRoute("POST", "/deletemember", arr);
+        }
     });
-    $(".del-one").click(function (e) {
+
+    $(".table table tbody").on("click", ".del-one", function (e) {
         e.preventDefault();
-        ajaxtoRoute("POST", "/deletemember", [$(this).attr("data-id")]);
+        const userId = $(this).attr("data-id");
+        const confirmDelete = confirm(
+            "Are you sure you want to delete this user?"
+        );
+        if (confirmDelete) {
+            ajaxtoRoute("POST", "/deletemember", [userId]);
+        }
     });
 }

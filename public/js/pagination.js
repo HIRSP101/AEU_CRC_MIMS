@@ -111,7 +111,7 @@ export default function setuppagination(array, attr_arr, updateroute) {
 
         rowHTML += `
             <td class='py-2 flex justify-center gap-5 action'>
-                <a class="bg-green-400 px-2 py-2 text-green-600 edit" data-id="${
+                <a class="bg-green-400 px-2 py-2 text-blue-600 edit" data-id="${
                     item[attr_arr[0]]
                 }" href='/${updateroute}/${item[attr_arr[0]]}'>edit</a>
                 <button class="bg-green-400 px-2 py-2 text-red-500 del-one" data-id="${

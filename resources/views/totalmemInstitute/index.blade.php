@@ -45,8 +45,8 @@
         <div class="flex items-center space-x-3">
             <div class="tab_head_container flex items-center space-x-4">
                 <div class="page_limit flex items-center space-x-2">
-                    <span>បង្ហាញ</span>
-                    <select id="table_size" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-20">
+                    <span class="font-siemreap text-sm">បង្ហាញ</span>
+                    <select id="table_size" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-20 font-siemreap text-sm">
                         <option value="50">50</option>
                         <option value="100">100</option>
                         <option value="200">200</option>
@@ -55,8 +55,8 @@
                 </div>
                 
                 <div class="gender_sort flex items-center space-x-2">
-                    <span>ភេទ</span>
-                    <select id="gender_filter" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-28">
+                    <span class="font-siemreap text-sm">ភេទ</span>
+                    <select id="gender_filter" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-28 font-siemreap text-sm">
                         <option value="all">ទាំងអស់</option>
                         <option value="ស្រី">ស្រី</option>
                         <option value="ប្រុស">ប្រុស</option>
@@ -64,8 +64,8 @@
                 </div>
                 
                 <div class="year_sort flex items-center space-x-2">
-                    <span>ឆ្នាំ</span>
-                    <select id="filter_year" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-28">
+                    <span class="font-siemreap text-sm">ឆ្នាំ</span>
+                    <select id="filter_year" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-28 font-siemreap text-sm">
                         <option value="all">ទាំងអស់</option>
                         <option value="2010">2010</option>
                         <option value="2011">2011</option>
@@ -129,7 +129,7 @@
                </tbody>
            </table>
            <div class="flex justify-end mt-8 footer">
-               <span>Showing 1 to 10 of 60 entries</span>
+               <span class="font-siemreap text-sm">Showing 1 to 10 of 60 entries</span>
                <div class="px-7 py-15 bg-transparent cursor-pointer index_buttons"></div>
            </div>
        </div>

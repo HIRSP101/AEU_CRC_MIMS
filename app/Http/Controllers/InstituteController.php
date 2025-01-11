@@ -15,16 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class InstituteController extends Controller
-{
-    protected CreateBranchService $createService;
-    protected UpdateBranchService $updateService;
-    protected DeleteBranchService $deleteService;
-    public function __construct(CreateBranchService $createService, UpdateBranchService $updateService, DeleteBranchService $deleteService)
-    {
-        $this->deleteService = $deleteService;
-        $this->createService = $createService;
-        $this->updateService = $updateService;
-    }
+{   
     public function index1()
     {
         $total_member_institute = $this->totalMemberInstitute();
@@ -37,68 +28,19 @@ class InstituteController extends Controller
                 ->select('bhei_id', 'institute_kh', 'image')
                 ->get();
     }
-
-    public function index()
-    {
-        $total_mem_branches = $this->totalmem_branches()
-        ->where('branch.branch_id','<', '28')
-        ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
-        ->get();
-
-        return view('branch.index', compact('total_mem_branches', ));
-    }
-
-    public function branch_hei()
-    {
-        $total_mem_branchhei = $this->totalmem_branches()
-        ->where('branch.branch_id' , '>', '28')
-        ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
-        ->get();
-        //dd($total_mem_branchhei);
-        return view('branch_hei.index', compact('total_mem_branchhei', ));
-    }
-
-    public function totalmem_branches()
-    {
-        $total_mem_branches = DB::table('branch as branch')
-            ->leftjoin('member_education_background as meb', 'branch.branch_id', '=', 'meb.branch_id')
-            ->leftjoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
-            ->select(
-                'branch.branch_id',
-                'branch.branch_kh',
-                'branch.image',
-                DB::raw(value: "COUNT(distinct meb.institute_id) AS total_institutes"),
-                DB::raw("COUNT(meb.member_id) AS total_mem")
-            );
-
-        return $total_mem_branches;
-    }
-
-    public function createform()
-    {
-        $total_mem_branches = $this->totalmem_branches()
-            ->where("branch.branch_id", '<', 28)
-            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
-            ->orderBy('total_institutes', 'desc')
-            ->get();
-        $bhei_col = branch_hei::all();
-        return view('branch.partials.createform.create', compact('total_mem_branches', 'bhei_col'));
-    }
-    public function updateform(Request $request)
-    {
-        $total_branches = branch::where('branch_id', '<', '28')->get();
-        $bhei = branch::find($request->id);
-        //dd($bhei_col);
-        return view('branch.partials.createform.update', compact('total_branches', 'bhei'));
-    }
+    
     public function get(Request $request)
     {
+
+        $instituteId = $request->id;
+
         $baseQuery = DB::table('member_personal_detail as mpd')
             ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
             ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
             ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
             ->join('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
-            ->where('branch.branch_id', $request->id);
+            ->join('branch_hei as hei', 'branch.branch_id', '=', 'hei.branch_id')
+            ->where('hei.bhei_id', $instituteId);
 
         $total_fem = (clone $baseQuery)
             ->select(DB::raw('COUNT(meb.member_id) as total_mem_fem'))
@@ -133,52 +75,7 @@ class InstituteController extends Controller
                 'mpd.shirt_size'
             ])
             ->get();
-        //dd($total_mem);
 
-        return view('totalmembranch.index', compact('total_mem', 'total_fem', 'total_total'));
-    }
-    public function store(BranchRequest $request): RedirectResponse
-    {
-        // dd($request->all());
-        try {
-            DB::beginTransaction();
-
-            $data_arr = $request;
-            //dd($data_arr->provinceOrCity);
-            $bhei_id = branch_hei::latest()->first()?->bhei_id ?? 0;
-            $this->createService->createBranch($data_arr, $request->file('image'), $bhei_id);
-            DB::commit();
-            return redirect()->route('/create-branch');
-        } catch (Exception $e) {
-            DB::rollBack();
-            return redirect()->route('dashboard');
-        }
-    }
-    public function update(BranchRequest $request): RedirectResponse
-    {
-        try {
-            DB::beginTransaction();
-            $bhei_id = $request->bhei_id;
-            // dd($bhei_id);
-            $this->updateService->updateBranch(data: $request, image: $request->file('image'), bheiId: $bhei_id);
-
-            DB::commit();
-            return redirect()->route('/create-branch');
-        } catch (Exception $e) {
-            DB::rollBack();
-            return redirect()->route('dashboard');
-        }
-    }
-    // multiple delete
-    public function deleteBranches(Request $request)
-    {
-        $this->deleteService->deleteBranches($request->arr);
-        return response()->json(['message' => 'Members deleted successfully']);
-    }
-    // single delete
-    public function deleteBranch(Request $request): JsonResponse
-    {
-        $this->deleteService->deleteBranch($request->arr[0]);
-        return response()->json(['message' => 'Member deleted successfully']);
+        return view('totalmemInstitute.index', compact('total_mem', 'total_fem', 'total_total'));
     }
 }
