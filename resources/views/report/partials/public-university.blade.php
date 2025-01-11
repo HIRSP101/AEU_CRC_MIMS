@@ -54,7 +54,7 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white font-siemreap">
-                    {{-- @foreach ($branchesreport as $brreport) 
+                    @foreach ($branchesreport as $brreport) 
                     @php
                      $i++;
                     @endphp
@@ -70,20 +70,7 @@
                         <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_mem}}</td>
                         <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_wm}}</td>
                     </tr>
-                    @endforeach --}}
-
-                    <tr class="border-collapse border-y-2 border-x-2 border-black">
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">pp</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">dd</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">dd</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">00</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">00</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">0</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">xx</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">ee</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">fddfdf</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">dfdf</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -91,13 +78,13 @@
 
     @push('JS')
         @vite(['resources/js/exportToExcel_branch.js'])
-        {{-- <script type="module">
+        <script type="module">
    var data = @json($branchesreport);
    console.log(data);
    $("#export_excel").on("click", async () => {
    exportToExcel_branch(data);
    });
-</script> --}}
+</script>
 
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
@@ -106,18 +93,6 @@
                 mode: "range",
                 dateFormat: "d-F-Y",
                 locale: {
-                    // weekdays: {
-                    //     shorthand: ["អា", "ច", "អ", "ពុ", "ព្រ", "សុ", "ស"], // Short weekdays
-                    //     longhand: [
-                    //         "អាទិត្យ",
-                    //         "ច័ន្ទ",
-                    //         "អង្គារ",
-                    //         "ពុធ",
-                    //         "ព្រហស្បតិ៍",
-                    //         "សុក្រ",
-                    //         "សៅរ៍"
-                    //     ]
-                    // },
                     months: {
                         shorthand: [
                             "មក", "កុ", "មី", "មេ", "ឧស", "មិ",

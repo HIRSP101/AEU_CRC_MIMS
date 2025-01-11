@@ -51,7 +51,7 @@
                 <li>
                     <a href="{{ route('private.university') }}">
                         <div class="cursor-pointer block max-w-full p-5 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                            <p class="text-gray-700 font-battambang text-[16px] font-semibold">គ្រឹះស្ថានឧត្តមសិក្សា ឯកសារ</p>
+                            <p class="text-gray-700 font-battambang text-[16px] font-semibold">គ្រឹះស្ថានឧត្តមសិក្សា ឯកជន</p>
                         </div>
                     </a>
                 </li>

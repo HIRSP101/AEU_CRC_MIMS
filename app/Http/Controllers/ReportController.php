@@ -91,6 +91,13 @@ class ReportController extends Controller
      //   dd($branchesreport);
         return view('report.partials.branches_report', compact('branchesreport'));
     }
-    
+
+    public function branchhei_all() {
+        $branchesreport = $this->branchhei()
+        ->groupBy( 'hei.institute_kh', 'hei.bhei_id')
+        ->orderBy('hei.bhei_id','asc')
+        ->get();
+        return view('report.partials.branches_report', compact('branchesreport'));
+    }
 
 } 
