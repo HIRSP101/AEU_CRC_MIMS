@@ -75,8 +75,11 @@
                     "pob_village": $("input#village").val(),
                     "pob_commune_sangkat": $("input#commune").val(),
                     "pob_district_khan": $("input#district").val(),
-                    "branch_id": $("#current_proviencelist option").filter(function () {
+                    "branch_id": $("#proviencelist option").filter(function () {
                         return $(this).val() == $("input#current_provience").val();
+                    }).data('id') || null,
+                    "branchhei_id": $("#branchname_list option").filter(function () {
+                        return $(this).val() == $("input#branch_name").val();
                     }).data('id') || null,
                     "pob_provience_city": $("input#provience").val(),
                     "village": $("input#current_village").val(),
@@ -123,7 +126,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: `/update-member/${member_id}`, // Update if necessary, e.g., '/api/updatemember'
+                url: `/update-member/${member_id}`,
                 data: member,
                 contentType: false,
                 processData: false,

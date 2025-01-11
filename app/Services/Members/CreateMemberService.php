@@ -13,29 +13,28 @@ class CreateMemberService
 
     public function createMember(array $data, ?UploadedFile $image, int $currentMemberId): member_personal_detail
     {
-      //  dd($data);
-      
+        //  dd($data);
+
         $imagePath = $this->handleImageUpload($data, $image, $currentMemberId);
-       // dd($imagePath);
+        // dd($imagePath);
         $member = member_personal_detail::create([
             "name_kh" => $data['name_kh'] ?? null,
             "name_en" => $data['name_en'] ?? null,
             "gender" => $data['gender'] ?? null,
-            "image" =>  $imagePath ?? null,
+            "image" => $imagePath ?? null,
             "nationality" => $data['nationality'] ?? "ខ្មែរ",
             "date_of_birth" => isset($data['date_of_birth']) ? $this->convertDate($data['date_of_birth']) : null,
             "full_current_address" => $data['full_current_address'] ?? null,
             "phone_number" => $data['phone_number'] ?? null,
-            "email" => $data['email'],
             "email" => $data['email'],
             "facebook" => $data['facebook'] ?? null,
             "shirt_size" => $data['shirt_size'] ?? null,
             "branch_id" => $data['branch_id'] ?? null,
             "member_type" => $data["type"] ?? null,
         ]);
-      //  dd($data);
+        //  dd($data);
         $this->createRelatedData($member, $data);
-        
+
         return $member;
     }
 
@@ -59,8 +58,9 @@ class CreateMemberService
     }
 
 
-    private function calculateExpirationDate() {
-        
+    private function calculateExpirationDate()
+    {
+
     }
     private function createCurrentAddress(member_personal_detail $member, array $data): void
     {

@@ -27,17 +27,22 @@
         </label>
         <select name="gender" id="gender"
             class="w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ">
-            @if ($member->gender != null)
+            @if ($member->gender == 'ប្រុស')
+                <option value="{{$member->gender}}">{{$member->gender}}</option>
+                <option value="">---</option>
+                <option value="ស្រី">ស្រី</option>
+            @endif
+            @if ($member->gender == 'ស្រី')
                 <option value="{{$member->gender}}">{{$member->gender}}</option>
                 <option value="">---</option>
                 <option value="ប្រុស">ប្រុស</option>
-                <option value="ស្រី">ស្រី</option>
             @endif
             @if ($member->gender == null)
                 <option value="">---</option>
                 <option value="ប្រុស">ប្រុស</option>
                 <option value="ស្រី">ស្រី</option>
             @endif
+
         </select>
     </div>
     <div class="w-1/2 md:w-32 px-3">

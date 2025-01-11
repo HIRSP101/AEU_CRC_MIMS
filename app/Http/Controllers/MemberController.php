@@ -167,6 +167,7 @@ class MemberController extends Controller
     {
 
         $branches = Branch::all()->pluck('branch_kh', 'branch_id');
+        $branchhei = branch_hei::all()->pluck('institute_kh', 'bhei_id');
         if ($memberId) {
             $member = member_personal_detail::with([
                 'member_guardian_detail',
@@ -176,15 +177,15 @@ class MemberController extends Controller
                 'member_pob_address'
             ])->findOrFail(intval($memberId));
             // dd($member);
-            return view('member.update.update', compact('member', 'branches'));
+            return view('member.update.update', compact('member', 'branches', 'branchhei'));
         }
     }
     public function updateMember(int $memberId, MemberRequest $request): JsonResponse
     {
-        dd($request);
+        $members = json_decode($request->input('members'), true);
         try {
             DB::beginTransaction();
-            $data = $this->updateService->updateMember($memberId, $request->all(), $request->file('image'));
+            $data = $this->updateService->updateMember($memberId, $members, $request->file('image'));
             DB::commit();
             return response()->json([
                 'data' => $data,

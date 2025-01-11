@@ -58,9 +58,13 @@
         </label>
         <input
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            name="branch_name" id="branch_name" type="text" required
+            name="branch_name" id="branch_name" list="branchname_list" type="text" required
             value="{{$member->member_education_background->institute_id}}">
-
+        <datalist name="branchname_list" id="branchname_list">
+            @foreach ($branchhei as $key => $val)
+                <option data-id={{ $key }} value="{{ $val }}">
+            @endforeach
+        </datalist>
     </div>
     <div class="md:flex-1 w-full px-3 mb-6 md:mb-0 " id="this_is_fucked_up">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="education_level">

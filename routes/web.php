@@ -109,10 +109,9 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/update-branch/{id}', "{$appC}\\BranchController@updateform");
     Route::post('/update-branch', "{$appC}\\BranchController@update")->name('branch.update');
     Route::post('/update-members', "{$appC}\\MemberController@updateMember");
-    Route::get('/update-member/{id}', "{$appC}\\MemberController@getUpdateMemberDetail")->name('member.update');
     Route::post('/delete-branch', "{$appC}\\BranchController@deleteBranch");
     Route::post('/delete-branches', "{$appC}\\BranchController@deleteBranches");
-    Route::get('/institute', "{$appC}\\InstituteController@index")->name('institute');
+    Route::get('/institute', "{$appC}\\InstituteController@index1")->name('institute');
 });
 
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");

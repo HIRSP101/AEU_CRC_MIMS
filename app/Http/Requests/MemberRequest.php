@@ -63,7 +63,7 @@ class MemberRequest extends FormRequest
     {
         return [
             'members.required' => 'Member data is required',
-        
+
         ];
     }
 }

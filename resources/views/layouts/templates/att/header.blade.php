@@ -8,7 +8,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('js/handlemodal.js') }}"></script>
-    @vite(['resources/js/app.js', 'resources/css/app.css', 'resources/css/style.css', 'public/js/script.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="{{ asset('build/assets/app.css') }}" rel="stylesheet">
+    <script src="{{ asset('build/assets/app.js') }}"></script>
     @stack('CSS')
 </head>
 

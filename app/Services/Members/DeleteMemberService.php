@@ -9,7 +9,7 @@ use Exception;
 class DeleteMemberService
 {
 
-public function deleteMembers($arr_id): JsonResponse
+    public function deleteMembers($arr_id): JsonResponse
     {
         try {
             member_personal_detail::whereIn('member_id', $arr_id)->delete();
