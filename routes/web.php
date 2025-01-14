@@ -112,8 +112,11 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/delete-branch', "{$appC}\\BranchController@deleteBranch");
     Route::post('/delete-branches', "{$appC}\\BranchController@deleteBranches");
     Route::get('/institute', "{$appC}\\InstituteController@index1")->name('institute');
-    //Route::get('/institute/{id}', "{$appC}\\InstituteController@totalMemberInstituteById");
     Route::get('/institute/{id}', "{$appC}\\InstituteController@get");
+    Route::get('/branch/{id}/village', "{$appC}\\VillageController@index")->name('village');
+    Route::get('/branch/{id}/village/{v_id}', "{$appC}\\VillageController@get");
+    Route::get('/branch/{id}/village/{v_id}/school', "{$appC}\\SchoolController@index1");
+    Route::get('/branch/{id}/village/{v_id}/school/{s_id}', "{$appC}\\SchoolController@get");
 });
 
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");

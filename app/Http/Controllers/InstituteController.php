@@ -40,7 +40,7 @@ class InstituteController extends Controller
             ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
             ->join('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
             ->join('branch_hei as hei', 'branch.branch_id', '=', 'hei.branch_id')
-            ->where('hei.bhei_id', $instituteId);
+            ->where('meb.branchhei_id', $instituteId);
 
         $total_fem = (clone $baseQuery)
             ->select(DB::raw('COUNT(meb.member_id) as total_mem_fem'))

@@ -11,34 +11,47 @@
                 <button id="filter_institute_btn" class="bg-blue-500 text-white px-4 py-2 rounded">Search</button>
             </div>
         <ul>
-            @foreach ($total_member_institute as $mem_tute)
-                @include('institude.partials.list_institude')
+            @foreach ($schools as $school)
+                <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
+                    <a href="{{ url('/branch/' . $branchId . '/village/' . $villageId . '/school/' . $school->bhei_id) }}">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <img
+                                    src="{{ $school->image }}"
+                                    alt="Logo 1"
+                                    class="ml-10 w-16 mr-8 rounded-full object-cover h-16"
+                                />
+                                <span class="text-lg siemreap-regular">{{ $school->institute_kh }}</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
             @endforeach
-        </ul>
+        </ul>        
     </div>
 @endsection
 
 @push('JS')
     <script>
         $("input#ogbranchswitch").change(function(e) {
-        window.location = "{{ url('/') }}/institute"
+        window.location = "{{ url('/') }}/school"
     })
-    const array = @json($total_member_institute);
+    const array = @json($schools);
         let originalArray = [...array];
         
-        function updateInstituteList(data) {
+        function updateSchoolList(data) {
             const ul = $("ul");
             ul.empty();
             data.forEach((item) => {
                 ul.append(`
                     <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                        <a href="/institute/${item.bhei_id}">
+                        <a href="/branch/${item.branch_id}/village/${item.village_id}/school/${item.bhei_id}">
                             <div class="flex justify-between items-center">
                                 <div class="flex items-center">
                                     <img
-                                        src="${item.image}"
-                                        alt="Logo 1"
-                                        class="ml-10 w-16 mr-8 rounded-full object-cover h-16"
+                                    src="${item.image}"
+                                    alt="Logo 1"
+                                    class="ml-10 w-16 mr-8 rounded-full object-cover h-16"
                                     />
                                     <span class="text-lg siemreap-regular">${item.institute_kh}</span>
                                 </div>
@@ -48,20 +61,5 @@
                 `)
             })
         }
-
-        $("#filter_institute_btn").click(function () {
-            const filterText = $("#filter_box").val().toLowerCase();
-
-            const filteredArray = array.filter((item) => item.institute_kh?.toLowerCase().includes(filterText));
-
-            updateInstituteList(filteredArray);
-        });
-
-        $("#filter_box").on("input", function () {
-            if ($(this).val() === "") {
-                updateInstituteList(originalArray);
-            }
-        });
-        updateInstituteList(originalArray);
     </script>
 @endpush

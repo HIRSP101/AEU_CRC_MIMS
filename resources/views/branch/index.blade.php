@@ -5,18 +5,27 @@
 @section('Content')
     <div class="bg-[#fff] p-8 rounded-lg max-w-1000px m-5 shadow-md font-siemreap">
         <h2 class="text-2xl font-bold text-center siemreap-regular my-2 pb-3">សាខា កាកបាទក្រហមកម្ពុជា 25 រាជធានី-​ខេត្ត</h2>
-        <label class="inline-flex items-center me-5 cursor-pointer mb-4 mt-6">
+        
             {{-- search bar --}}
-            <div class="filter_branch flex items-center space-x-2">
+            <div class="filter_branch flex justify-end space-x-2 mt-12 mb-5">
                 <input type="text" id="filter_box" class="border border-gray-300 px-2 py-2 rounded" placeholder="Search...">
                 <button id="filter_branch_btn" class="bg-blue-500 text-white px-4 py-2 rounded">Search</button>
             </div>
-        </label>
-        <ul>
+        
+        {{-- <ul>
             @foreach ($total_mem_branches as $mem_br)
                 @include('branch.partials.listbranch')
             @endforeach
-        </ul>
+        </ul> --}}
+        <ul>
+            @foreach ($total_mem_branches as $branch)
+                <li>
+                    <a href="{{ url('/branch/' . $branch->branch_id . '/village') }}">
+                        {{ $branch->branch_kh }}
+                    </a>
+                </li>
+            @endforeach
+        </ul>        
     </div>
 @endsection
 
@@ -35,7 +44,7 @@
             data.forEach((item) => {
                 ul.append(`
                     <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                   <a href="/branch/${item.branch_id}">
+                   <a href="/branch/${item.branch_id}/village">
                        <div class="flex justify-between items-center">
                            <div class="flex items-center">
                                <img src="${item.image}" alt="Logo" class="ml-10 w-16 mr-8 rounded-full object-cover h-16" />

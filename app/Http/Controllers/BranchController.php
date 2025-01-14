@@ -79,52 +79,61 @@ class BranchController extends Controller
         //dd($bhei_col);
         return view('branch.partials.createform.update', compact('total_branches', 'bhei'));
     }
-    public function get(Request $request)
+    // public function get(Request $request)
+    // {
+    //     $baseQuery = DB::table('member_personal_detail as mpd')
+    //         ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+    //         ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+    //         ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+    //         ->join('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
+    //         ->where('branch.branch_id', $request->id);
+
+    //     $total_fem = (clone $baseQuery)
+    //         ->select(DB::raw('COUNT(meb.member_id) as total_mem_fem'))
+    //         ->where('mpd.gender', 'ស្រី')
+    //         ->first()
+    //         ->total_mem_fem;
+
+    //     $total_total = (clone $baseQuery)
+    //         ->select(DB::raw('COUNT(meb.member_id) as total_mem'))
+    //         ->first()
+    //         ->total_mem;
+
+    //     $total_mem = (clone $baseQuery)
+    //         ->select([
+    //             'mpd.member_id',
+    //             'mpd.member_code',
+    //             'mpd.name_kh',
+    //             'mpd.name_en',
+    //             'mpd.gender',
+    //             'mpd.date_of_birth',
+    //             'meb.institute_id',
+    //             'branch.branch_name',
+    //             'mpd.member_type',
+    //             'meb.education_level',
+    //             'meb.acadmedic_year',
+    //             'mrd.registration_date',
+    //             'mrd.expiration_date',
+    //             'mpd.full_current_address',
+    //             'mpd.phone_number',
+    //             'mgd.guardian_phone',
+    //             'mpd.email',
+    //             'mpd.shirt_size'
+    //         ])
+    //         ->get();
+    //     //dd($total_mem);
+
+    //     return view('totalmembranch.index', compact('total_mem', 'total_fem', 'total_total'));
+    // }
+
+
+    public function get($id)
     {
-        $baseQuery = DB::table('member_personal_detail as mpd')
-            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-            ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
-            ->join('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
-            ->where('branch.branch_id', $request->id);
-
-        $total_fem = (clone $baseQuery)
-            ->select(DB::raw('COUNT(meb.member_id) as total_mem_fem'))
-            ->where('mpd.gender', 'ស្រី')
-            ->first()
-            ->total_mem_fem;
-
-        $total_total = (clone $baseQuery)
-            ->select(DB::raw('COUNT(meb.member_id) as total_mem'))
-            ->first()
-            ->total_mem;
-
-        $total_mem = (clone $baseQuery)
-            ->select([
-                'mpd.member_id',
-                'mpd.member_code',
-                'mpd.name_kh',
-                'mpd.name_en',
-                'mpd.gender',
-                'mpd.date_of_birth',
-                'meb.institute_id',
-                'branch.branch_name',
-                'mpd.member_type',
-                'meb.education_level',
-                'meb.acadmedic_year',
-                'mrd.registration_date',
-                'mrd.expiration_date',
-                'mpd.full_current_address',
-                'mpd.phone_number',
-                'mgd.guardian_phone',
-                'mpd.email',
-                'mpd.shirt_size'
-            ])
-            ->get();
-        //dd($total_mem);
-
-        return view('totalmembranch.index', compact('total_mem', 'total_fem', 'total_total'));
+        $branch = DB::table('branch')->where('branch_id', $id)->first();
+        $villages = DB::table('branch_hei')->where('branch_id', $id)->get();
+        return view('branch.show', compact('branch', 'villages'));
     }
+
     public function store(BranchRequest $request): RedirectResponse
     {
         // dd($request->all());
