@@ -22,11 +22,20 @@ class InstituteController extends Controller
         return view("institude.index", compact("total_member_institute"));
     }
 
+    // public function totalMemberInstitute() 
+    // {
+    //     return DB::table('branch_hei')
+    //             ->select('bhei_id', 'institute_kh', 'image')
+    //             ->get();
+    // }
     public function totalMemberInstitute() 
     {
-        return DB::table('branch_hei')
-                ->select('bhei_id', 'institute_kh', 'image')
-                ->get();
+        return DB::table('branch_hei as bhei')
+            ->leftJoin('member_education_background as meb', 'bhei.bhei_id', '=', 'meb.institute_id')
+            ->leftJoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
+            ->select('bhei.bhei_id', 'bhei.institute_kh', 'bhei.image', DB::raw('COUNT(DISTINCT mpd.member_id) as total_members'))
+            ->groupBy('bhei.bhei_id', 'bhei.institute_kh', 'bhei.image')
+            ->get();
     }
     
     public function get(Request $request)
