@@ -97,6 +97,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/deletememberone', "{$appC}\\MemberController@deleteMember");
     Route::get('/update-member/{id}', "{$appC}\\MemberController@getupdateMember")->name("memberupdate");
     Route::post('/update-member/{memberId}', "{$appC}\\MemberController@updateMember");
+    // all reports routes
     Route::get('/reports', "{$appC}\\ReportController@index")->name('report');
     Route::get('/branchesreport', "{$appC}\\ReportController@branches_report")->name('branchesreport');
     Route::get('/private/university', "$appC\\ReportController@branchheiprivate")->name('private.university');

@@ -16,14 +16,14 @@
         ];
     }
     ?>
-    <div class="overflow-x-auto">
+    <div class="bg-gray-100">
         @include('user.partials.createuser')
         <div class="absolute origin-top-right mt-1 right-5">
             <a id="user_form_btn"><img src="{{ asset('images/icons/add-user.png') }}"
                     class="w-auto h-auto bg-gray-300 py-1 px-1 rounded-full" /></a>
         </div>
         <div class="flex items-center justify-center bg-gray-100 font-sans mt-5 overflow-hidden">
-            <div class="w-full lg:w-5/6">
+            <div class="w-full">
                 <div class="bg-white shadow-md rounded my-6">
                     <table class="min-w-max w-full table-auto">
                         <thead>

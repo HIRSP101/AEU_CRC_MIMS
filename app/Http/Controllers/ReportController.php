@@ -20,7 +20,6 @@ class ReportController extends Controller
         ->groupBy( 'branch.branch_kh', 'branch.branch_id')
         ->orderBy('branch.branch_id','asc')
         ->get();
-        //dd($branchesreport);
         return view('report.partials.branches_report', compact('branchesreport'));
     }
 
@@ -34,8 +33,9 @@ class ReportController extends Controller
         ->groupBy( 'hei.institute_kh', 'hei.bhei_id')
         ->orderBy('hei.bhei_id','asc')
         ->get();
-      //  dd($branchheireport);
-        return view('report.partials.branches_report', compact('branchesreport', 'branchheireport'));
+        // dd($branchheireport);
+        return view('report.partials.total-member-university', compact('branchesreport', 'branchheireport'));
+    
     }
 
     public function branches() {
@@ -78,8 +78,7 @@ class ReportController extends Controller
         ->groupBy( 'hei.institute_kh', 'hei.bhei_id')
         ->orderBy('hei.bhei_id','asc')
         ->get();
-      //  dd($branchesreport);
-        return view('report.partials.branches_report', compact('branchesreport'));
+        return view('report.partials.private-university', compact('branchesreport'));
     }
 
     public function branchheipublic() {
@@ -88,8 +87,7 @@ class ReportController extends Controller
         ->groupBy( 'hei.institute_kh', 'hei.bhei_id')
         ->orderBy('hei.bhei_id','asc')
         ->get();
-     //   dd($branchesreport);
-        return view('report.partials.branches_report', compact('branchesreport'));
+        return view('report.partials.public-university', compact('branchesreport'));
     }
 
     public function branchhei_all() {
@@ -97,7 +95,7 @@ class ReportController extends Controller
         ->groupBy( 'hei.institute_kh', 'hei.bhei_id')
         ->orderBy('hei.bhei_id','asc')
         ->get();
-        return view('report.partials.branches_report', compact('branchesreport'));
+        return view('report.partials.total-university', compact('branchesreport'));
     }
 
 } 

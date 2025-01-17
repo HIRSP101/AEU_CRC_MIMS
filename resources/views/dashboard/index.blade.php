@@ -28,7 +28,7 @@
                 <div class="leading-relaxed">
                     <!-- Initial Cards (First 5 Cards) -->
                     <div>
-                        <div id="initial-cards" class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-siemreap p-2">
+                        <div id="initial-cards" class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-battambang p-2">
                             @foreach ($branches as $key => $val)
                                 @if ($loop->index < 5)
                                     <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
@@ -90,7 +90,7 @@
         <div class="w-full p-2 mt-4">
             <h1 class="text-center text-gray-800 font-battambang font-black text-2xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
             <div class="bg-white shadow-md rounded my-6">
-                <table class="min-w-max w-full table-auto font-siemreap">
+                <table class="min-w-max w-full table-auto font-battambang">
                     <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <th class="py-3 pl-5 text-left">សាខា</th>

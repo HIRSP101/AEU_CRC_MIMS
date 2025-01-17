@@ -7,75 +7,75 @@
     <?php
     $i = 0;
     ?>
-    <div class="bg-white mt-2 mx-2 px-2 shadow-lg">
-        <h1 class="text-center font-siemreap text-gray-800 my-2 text-lg font-bold">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា បណ្តាញយុវជន
-            ទីប្រឹក្សាយុវជន នឹងយុវជន នៃសាខាកាកបាទក្រហមកម្ពុជា ២៥ រាជធានី ខេត្ត</h1>
-        <h2 class="text-center font-siemreap mb-2 text-lg font-bold">បច្ចុប្បន្នភាពឆ្នាំ២០២៤</h2>
-        <br>
-        <button id="export_pdf" class="bg-gray-500 text-white px-4 py-2 rounded">Export PDF</button>
-        <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
-        <div class="flex justify-end items-center">
-            <div class="">
-                <lable class="text-base text-gray-800 font-medium">Filter By Date</lable> <br>
+    <div class="bg-white mt-2 mx-2 px-3 shadow-lg rounded-lg">
+        <h1 class="text-center moul-regular my-2 text-lg text-blue-800 font-bold mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា បណ្តាញយុវជន ទីប្រឹក្សាយុវជន នឹងយុវជន</h1>
+        <h1 class="text-center moul-regular my-2 text-lg text-blue-800 font-bold">នៃសាខាកាកបាទក្រហមកម្ពុជា ២៥ រាជធានី ខេត្ត</h1>
+        <h2 class="text-center moul-regular mb-2 text-lg font-bold text-blue-800">បច្ចុប្បន្នភាពឆ្នាំ២០២៤</h2>
+        <div class="flex justify-between items-center mt-5">
+            <div>
+                <button id="export_pdf" class="bg-gray-500 text-white mt-2 px-4 py-2 rounded">Export PDF</button>
+                <button id="export_excel" class="bg-[#1ba466] text-white px-4 py-2 rounded">Export Excel</button>
+            </div>
+            <div class="flex justify-end items-center">
                 <input id="datepicker" class="border-2 border-gray-400 rounded-md px-3 py-2 w-64" type="text"
-                    placeholder="Select a date">
+                    placeholder="Filter by date">
             </div>
         </div>
         <div class="w-full overflow-scroll my-3 max-h-[760px] table">
             <table class="w-full">
-                <thead class=" font-siemreap bg-slate-200 border-collapse border-t-2 border-black">
+                <thead class=" font-battambang bg-gray-100 border-collapse border border-gray-700">
                     <tr>
-                        <th rowspan="2" class="px-2 py-1 text-pretty border-x-2 border-black uppercase">
+                        <th rowspan="2" class="p-2 border border-gray-700 uppercase">
                             ល.រ
                         </th>
-                        <th rowspan=2 class="px-2 py-1 text-pretty border-x-2 border-black uppercase">
+                        <th rowspan=2 class="p-2 border border-gray-700 uppercase">
                             សាខា កក្រក
                         </th>
-                        <th colspan=4 class="px-2 py-1 text-pretty border-x-2 border-black uppercase">
+                        <th colspan=4 class="p-2 border border-gray-700 uppercase">
                             បណ្តាញយុវជនគ្រឹះស្ថានសិក្សា ២០២៤
                         </th>
-                        <th colspan=2 class="px-2 py-1 text-pretty border-x-2 border-black uppercase">
+                        <th colspan=2 class="p-2 border border-gray-700 uppercase">
                             ទីប្រឹក្សា ២០២៤
                         </th>
-                        <th colspan=2 class="px-2 py-1 text-pretty border-x-2 border-black uppercase">
+                        <th colspan=2 class="p-2 border border-gray-700 uppercase">
                             យុវជន ២០២៤
                         </th>
                     </tr>
                     <tr>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">សរុប</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">អនុ.វិ</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">វិទ្យាល័យ</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">ខត្តមសិក្សា</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">សរុប</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">ស្រី</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">សរុប</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">ស្រី</th>
+                        <th class="p-2 border border-gray-700 uppercase">សរុប</th>
+                        <th class="p-2 border border-gray-700 uppercase">អនុ.វិ</th>
+                        <th class="p-2 border border-gray-700 uppercase">វិទ្យាល័យ</th>
+                        <th class="p-2 border border-gray-700 uppercase">ខត្តមសិក្សា</th>
+                        <th class="p-2 border border-gray-700 uppercase">សរុប</th>
+                        <th class="p-2 border border-gray-700 uppercase">ស្រី</th>
+                        <th class="p-2 border border-gray-700 uppercase">សរុប</th>
+                        <th class="p-2 border border-gray-700 uppercase">ស្រី</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white font-siemreap">
+                <tbody class="bg-white font-battambang">
                     @foreach ($branchesreport as $brreport)
                         @php
                             $i++;
                         @endphp
-                        <tr class="border-collapse border-y-2 border-x-2 border-black">
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
+                        <tr class="border-collapse border border-gray-700">
+                            <td class="p-2 text-sm text-center border border-gray-700 whitespace-nowrap">
                                 {{ $i }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
+                            <td class="p-2 text-sm text-center border border-gray-700 whitespace-nowrap">
                                 {{ $brreport->branch_kh }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
+                            <td class="p-2 text-sm text-center border border-gray-700 whitespace-nowrap">
                                 {{ $brreport->total_ms + $brreport->total_hs }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
+                            <td class="p-2 text-sm text-center border border-gray-700 whitespace-nowrap">
                                 {{ $brreport->total_ms }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
+                            <td class="p-2 text-sm text-center border border-gray-700 whitespace-nowrap">
                                 {{ $brreport->total_hs }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">0</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
+                            <td class="p-2 text-sm text-center border border-gray-700 whitespace-nowrap">0</td>
+                            <td class="p-2 text-sm text-center border border-gray-700 whitespace-nowrap">
                                 {{ $brreport->total_ls }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
+                            <td class="p-2 text-sm text-center border border-gray-700 whitespace-nowrap">
                                 {{ $brreport->total_ls_wm }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
+                            <td class="p-2 text-sm text-center border border-gray-700 whitespace-nowrap">
                                 {{ $brreport->total_mem }}</td>
-                            <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">
+                            <td class="p-2 text-sm text-center border border-gray-700 whitespace-nowrap">
                                 {{ $brreport->total_wm }}</td>
                         </tr>
                     @endforeach
@@ -101,18 +101,6 @@
                 mode: "range",
                 dateFormat: "d-F-Y",
                 locale: {
-                    // weekdays: {
-                    //     shorthand: ["អា", "ច", "អ", "ពុ", "ព្រ", "សុ", "ស"], // Short weekdays
-                    //     longhand: [
-                    //         "អាទិត្យ",
-                    //         "ច័ន្ទ",
-                    //         "អង្គារ",
-                    //         "ពុធ",
-                    //         "ព្រហស្បតិ៍",
-                    //         "សុក្រ",
-                    //         "សៅរ៍"
-                    //     ]
-                    // },
                     months: {
                         shorthand: [
                             "មក", "កុ", "មី", "មេ", "ឧស", "មិ",

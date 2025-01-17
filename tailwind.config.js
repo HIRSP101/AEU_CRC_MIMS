@@ -16,7 +16,8 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
                 siemreap: ['Siemreap', 'sans-serif'],
                 koulen: ["Koulen", "serif"],
-                battambang: ["Battambang", "serif"]
+                battambang: ["Battambang", "serif"],
+                muol: ["Muol", "serif"],
             },
         },
     },
