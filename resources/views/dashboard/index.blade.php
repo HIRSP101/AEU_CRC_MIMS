@@ -85,7 +85,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> 
 
         <div class="w-full p-2 mt-4">
             <h1 class="text-center text-gray-800 font-battambang font-black text-2xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
