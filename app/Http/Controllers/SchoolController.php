@@ -7,16 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class SchoolController extends Controller
 {
-    // public function index1($branchId, $villageId)
-    // {
-    //     $schools = DB::table('branch_hei')
-    //         ->where('branch_id', $branchId)
-    //         ->where('village', $villageId)
-    //         ->select('bhei_id', 'institute_kh', 'image')
-    //         ->get();
-           
-    //     return view('school.index', compact('schools', 'branchId', 'villageId'));
-    // }
     public function index1($branchId, $villageId)
     {
         $village = DB::table('branch_hei')
@@ -42,22 +32,31 @@ class SchoolController extends Controller
     return view('school.index', compact('schools', 'branchId', 'villageId', 'village'));
     }
     
-    public function get($branchId, $villageId, $schoolId)
+    public function get($branchId, $villageId, $schoolId, Request $request)
     {
-        $data = DB::table('member_personal_detail as mpd')
-            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-            ->join('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
-            ->where('hei.branch_id', $branchId)
-            ->where('hei.village', $villageId)
-            ->where('hei.bhei_id', $schoolId)
-            ->select('mpd.*', 'meb.*')
-            ->get();
-        return view('totalmemSchool.index', [
-            'data' => $data,
-            'branchId' => $branchId,
-            'villageId' => $villageId,
-            'schoolId' => $schoolId
-        ]);
-        
+    $startDate = $request->query('start_date');
+    $endDate = $request->query('end_date');
+
+    $query = DB::table('member_personal_detail as mpd')
+        ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+        ->join('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+        ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+        ->where('hei.branch_id', $branchId)
+        ->where('hei.village', $villageId)
+        ->where('hei.bhei_id', $schoolId)
+        ->select('mpd.*', 'meb.*', 'mrd.registration_date');
+
+    if ($startDate && $endDate) {
+        $query->whereBetween('mrd.registration_date', [$startDate, $endDate]);
+    }
+
+    $data = $query->get();
+
+    return view('totalmemSchool.index', [
+        'data' => $data,
+        'branchId' => $branchId,
+        'villageId' => $villageId,
+        'schoolId' => $schoolId
+    ]);
     }
 }    

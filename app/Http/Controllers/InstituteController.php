@@ -21,13 +21,6 @@ class InstituteController extends Controller
         $total_member_institute = $this->totalMemberInstitute();
         return view("institude.index", compact("total_member_institute"));
     }
-
-    // public function totalMemberInstitute() 
-    // {
-    //     return DB::table('branch_hei')
-    //             ->select('bhei_id', 'institute_kh', 'image')
-    //             ->get();
-    // }
     public function totalMemberInstitute() 
     {
         return DB::table('branch_hei as bhei')
@@ -83,6 +76,7 @@ class InstituteController extends Controller
                 'mpd.email',
                 'mpd.shirt_size'
             ])
+            ->distinct()
             ->get();
 
         return view('totalmemInstitute.index', compact('total_mem', 'total_fem', 'total_total'));

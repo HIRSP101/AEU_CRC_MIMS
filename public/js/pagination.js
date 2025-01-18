@@ -38,8 +38,7 @@ export default function setuppagination(array, attr_arr, updateroute) {
             '<button class="bg-gray-300 px-3 rounded" onclick="prev();">Previous</button>'
         );
 
-        // Determine the range of page numbers to display
-        const maxVisiblePages = 3; // Number of page numbers to display at a time
+        const maxVisiblePages = 3;
         const startPage = Math.max(
             1,
             current_index - Math.floor(maxVisiblePages / 2)
@@ -172,16 +171,16 @@ export default function setuppagination(array, attr_arr, updateroute) {
         displayIndexButtons();
     });
 
-    $("#filter_year").change(function () {
-        if ($(this).val() === "all") {
-            array = [...originalArray];
-        } else {
-            const filterYear = $("#filter_year").val();
-            array = originalArray.filter((item) => {
-                return item.recruitment_date?.includes(filterYear);
-            });
-        }
-        current_index = 1;
-        displayIndexButtons();
-    });
+    // $("#filter_year").change(function () {
+    //     if ($(this).val() === "all") {
+    //         array = [...originalArray];
+    //     } else {
+    //         const filterYear = $("#filter_year").val();
+    //         array = originalArray.filter((item) => {
+    //             return item.recruitment_date?.includes(filterYear);
+    //         });
+    //     }
+    //     current_index = 1;
+    //     displayIndexButtons();
+    // });
 }

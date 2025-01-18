@@ -1,6 +1,6 @@
 @extends('layouts.templates.att.master')
 @push('CSS')
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endpush
 
 @section('Content')
@@ -21,10 +21,10 @@
                 $item->member_type,
                 $item->institute_id,
                 $item->education_level,
-                // $item->registration_date,
+                $item->registration_date,
                 $item->full_current_address,
                 $item->phone_number,
-                // $item->guardian_phone,
+                //$item->guardian_phone,
                 $item->shirt_size,
         ];
     }
@@ -63,27 +63,10 @@
                     </select>
                 </div>
                 
-                <div class="year_sort flex items-center space-x-2">
+                <div class="filter_date flex items-center space-x-2">
                     <span class="font-siemreap text-sm">ឆ្នាំ</span>
-                    <select id="filter_year" class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-28 font-siemreap text-sm">
-                        <option value="all">ទាំងអស់</option>
-                        <option value="2010">2010</option>
-                        <option value="2011">2011</option>
-                        <option value="2012">2012</option>
-                        <option value="2013">2013</option>
-                        <option value="2014">2014</option>
-                        <option value="2015">2015</option>
-                        <option value="2016">2016</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                    </select>
+                    <input id="datepicker" class="border-2 border-gray-400 rounded-md px-3 py-2 w-54" type="text"
+                        placeholder="Select a date">
                 </div>
             </div>
             <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
@@ -93,7 +76,7 @@
     
 <div class="w-full overflow-scroll mx-3 my-3 max-h-[760px]">
        <div class="w-full overflow-scroll my-3 max-h-[760px] table">
-           <table class="min-w-max w-full table-auto font-siemreap">
+           <table class="min-w-max w-full table-auto font-siemreap" id="dataTable">
                <thead>
                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                    <th class="py-3 pl-5 text-left">
@@ -119,6 +102,10 @@
                    <th class="py-3 text-center">
                        កម្រិតសិក្សា
                    </th>
+
+                   <th class="py-3 text-center">
+                        Registration Date
+                    </th>
                    
                    <th class="py-3 text-center">
                        action
@@ -145,6 +132,10 @@
 @vite(['resources/js/exportToExcel.js'])
 <script type="module">
     import { handleTotalmem } from "{{ asset('js/handleTotalmem.js') }}";
+    window.branchId = "{{ $branchId }}";
+    window.villageId = "{{ $villageId }}";
+    window.schoolId = "{{ $schoolId }}";
+
     document.addEventListener('DOMContentLoaded', function () {
         var array = @json($data);
         console.log(@json($data));
@@ -156,4 +147,18 @@
         }
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script type="module">
+        import { filterByDate } from "{{ asset('js/handleTotalmem.js') }}";
+        window.branchId = "{{ $branchId }}";
+        window.villageId = "{{ $villageId }}";
+        window.schoolId = "{{ $schoolId }}";
+        flatpickr("#datepicker", {
+            mode: "range",
+            dateFormat: "Y-m-d",
+            onChange: function(selectedDates, dateStr, instance) {
+                filterByDate(dateStr);
+            }
+        });
+    </script>
 @endpush
