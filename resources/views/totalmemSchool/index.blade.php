@@ -65,7 +65,7 @@
                 
                 <div class="filter_date flex items-center space-x-2">
                     <span class="font-siemreap text-sm">ឆ្នាំ</span>
-                    <input id="datepicker" class="border-2 border-gray-400 rounded-md px-3 py-2 w-54" type="text"
+                    <input id="dateRange" class="border-2 border-gray-400 rounded-md px-3 py-2 w-54" type="text"
                         placeholder="Select a date">
                 </div>
             </div>
@@ -104,7 +104,7 @@
                    </th>
 
                    <th class="py-3 text-center">
-                        Registration Date
+                        ថ្ងៃចុះឈ្មោះ
                     </th>
                    
                    <th class="py-3 text-center">
@@ -132,9 +132,6 @@
 @vite(['resources/js/exportToExcel.js'])
 <script type="module">
     import { handleTotalmem } from "{{ asset('js/handleTotalmem.js') }}";
-    window.branchId = "{{ $branchId }}";
-    window.villageId = "{{ $villageId }}";
-    window.schoolId = "{{ $schoolId }}";
 
     document.addEventListener('DOMContentLoaded', function () {
         var array = @json($data);
@@ -148,17 +145,4 @@
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script type="module">
-        import { filterByDate } from "{{ asset('js/handleTotalmem.js') }}";
-        window.branchId = "{{ $branchId }}";
-        window.villageId = "{{ $villageId }}";
-        window.schoolId = "{{ $schoolId }}";
-        flatpickr("#datepicker", {
-            mode: "range",
-            dateFormat: "Y-m-d",
-            onChange: function(selectedDates, dateStr, instance) {
-                filterByDate(dateStr);
-            }
-        });
-    </script>
 @endpush

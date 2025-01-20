@@ -60,34 +60,26 @@ export function handleTotalmem(array, ExcelObj) {
             ajaxtoRoute("POST", "/deletemember", [userId]);
         }
     });
-}
 
-export function filterByDate(dateStr) {
-    const [startDate, endDate] = dateStr.split(" to ");
+    // Date filtering range
+    $("#dateRange").flatpickr({
+        mode: "range",
+        dateFormat: "Y-m-d",
+        onClose: function (selectedDates) {
+            if (selectedDates.length === 2) {
+                const startDate = selectedDates[0];
+                const endDate = selectedDates[1];
 
-    $.ajax({
-        url: `/branch/${branchId}/village/${villageId}/school/${schoolId}`,
-        method: "GET",
-        data: {
-            start_date: startDate,
-            end_date: endDate,
-        },
-        success: function (response) {
-            const filteredData = response.data;
-            const attr_arr = [
-                "member_id",
-                "name_kh",
-                "gender",
-                "date_of_birth",
-                "institute_id",
-                "member_type",
-                "education_level",
-                "registration_date",
-            ];
-            setuppagination(filteredData, attr_arr, "update-member");
-        },
-        error: function (err) {
-            console.error("Error fetching filtered data:", err);
+                const filteredArray = array.filter((item) => {
+                    if (!item.registration_date) {
+                        return false;
+                    }
+                    const regDate = new Date(item.registration_date);
+                    return regDate >= startDate && regDate <= endDate;
+                });
+
+                setuppagination(filteredArray, attr_arr, "update-member");
+            }
         },
     });
 }

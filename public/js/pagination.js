@@ -1,6 +1,7 @@
 export default function setuppagination(array, attr_arr, updateroute) {
     let array_length = array.length;
-    let table_size = 50;
+    // let table_size = 50;
+    let table_size = parseInt($("#table_size").val()) || 50;
     let start_index = 1;
     let end_index = 0;
     let current_index = 1;
@@ -170,17 +171,4 @@ export default function setuppagination(array, attr_arr, updateroute) {
         current_index = 1;
         displayIndexButtons();
     });
-
-    // $("#filter_year").change(function () {
-    //     if ($(this).val() === "all") {
-    //         array = [...originalArray];
-    //     } else {
-    //         const filterYear = $("#filter_year").val();
-    //         array = originalArray.filter((item) => {
-    //             return item.recruitment_date?.includes(filterYear);
-    //         });
-    //     }
-    //     current_index = 1;
-    //     displayIndexButtons();
-    // });
 }
