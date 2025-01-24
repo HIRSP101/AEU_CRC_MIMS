@@ -13,10 +13,8 @@
                     <h1 class="text-[18px]">Cambodian Red Cross Youth Individual Information</h1>
                 </div>
                 <div class="">
-
                     <img class="image w-28 h-32 bg-red-300 border rounded-sm" src="{{ asset('images/members/default-profile.jpg') }}"
                         alt="img">
-
                 </div>
             </div>
 

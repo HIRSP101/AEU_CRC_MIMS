@@ -23,107 +23,6 @@
         </div>
      
         <div class="w-full my-3 table">
-            {{-- <div class="w-full mb-5">
-                <table class="table-auto border-collapse border border-gray-700 w-full text-center text-sm">
-                  <!-- Table Header -->
-                  <thead>
-                    <tr class="bg-gray-100">
-                      <th rowspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">ល.រ</th>
-                      <th rowspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">ក្រុង/ស្រុក</th>
-                      <th rowspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">ចំនួនគ្រឹះស្ថានសិក្សា</th>
-                      <th rowspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">ឈ្មោះគ្រឹះស្ថានសិក្សា</th>
-                      <th colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">មានបណ្ដាញ</th>
-                      <th colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">យុវជន</th>
-                      <th colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">ពិការភាព</th>
-                      <th colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">ទីប្រឹក្សា</th>
-                      <th colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">ពិការភាព</th>
-                      <th rowspan="2" colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">ចំនួនយុវជនទទួលវគ្គ បណ្ដុះបណ្ដាល មូលដ្ឋាន</th>
-                      <th rowspan="2" colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">ចំនួនយុវជនបានទទួល ឯកសណ្ឋាន</th>
-                    </tr>
-                    <tr class="bg-gray-100">
-                      <th colspan="2" class="border border-gray-700 font-semibold p-2 font-battambang">យុវជន កក្រក</th>                    
-                      <th class="border border-gray-700 p-2 font-semibold font-battambang">សរុប</th>
-                      <th class="border border-gray-700 p-2 font-semibold font-battambang">ស្រី</th>
-                      <th class="border border-gray-700 p-2 font-semibold font-battambang">សរុប</th>
-                      <th class="border border-gray-700 p-2 font-semibold font-battambang">ស្រី</th>
-                      <th class="border border-gray-700 p-2 font-semibold font-battambang">សរុប</th>
-                      <th class="border border-gray-700 p-2 font-semibold font-battambang">ស្រី</th>
-                      <th class="border border-gray-700 p-2 font-semibold font-battambang">សរុប</th>
-                      <th class="border border-gray-700 p-2 font-semibold font-battambang">ស្រី</th> 
-                    </tr>
-                    <tr>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">មាន</th>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">អត់</th>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">ស្រីសរុប</th>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">ប្រុស</th>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">ស្រីសរុប</th>
-                        <th class="border border-gray-700 font-semibold font-battambang p-2">ប្រុស</th>
-                    </tr>
-                  </thead>
-            
-                  <!-- Table Body -->
-                  <tbody>
-                    @foreach ($branchesreport as $brreport) 
-                        @php
-                      
-                        $i++;
-                        @endphp
-                       
-                    <tr>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">{{$i}}</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">{{$brreport->branch_kh}}</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">{{$brreport->total_ms + $brreport->total_hs}}</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">{{$brreport->branch_kh}}</td>         
-                        <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">{{$brreport->total_mem}}</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">{{$brreport->total_wm}}</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">{{$brreport->total_ls}}</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">{{$brreport->total_ls_wm}}</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                        <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                    </tr>
-
-                     @endforeach
-                         <!-- Summary Row -->
-                         <tr class="bg-gray-100">
-                            <td colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">សរុប</td>
-                            <td class="border border-gray-700 font-battambang p-2 font-semibold">16</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                        </tr>
-
-                  </tbody>
-                </table>
-                <p class="font-battambang font-medium text-center mt-2">រៀបចំដោយ៖ ការិយាល័យអភិវឌ្ឍន៍ នៃនាយកដ្ឋានធនធានមនុស្ស កក្រក</p>
-            </div> --}}
 
             <div class="w-full mb-5">
                 <table class="table-auto border-collapse border border-gray-700 w-full text-center text-sm">
@@ -161,7 +60,6 @@
                             <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                        
                             <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
@@ -173,55 +71,43 @@
                     </thead>
             
                     <!-- Table Body -->
-                    <tbody>
+                    {{-- <tbody>
                         @php
-                            $currentBranch = null;
-                            $rowSpan = 1;
                             $i = 1;
                             $serialNumber = 1;
                             $totalInstitude = 0;
                         @endphp
             
-                        @foreach ($branchesreport as $brreport)
-                            @if ($brreport->branch_kh != $currentBranch)
-
-                                {{-- @if($condition)
-                                    
-                                @endif --}}
-
-                                <!-- Update rowSpan for new city -->
-                                @if ($currentBranch !== null)
-                                    @php $rowSpan = 1; @endphp
-                                @endif
+                        @foreach ($groupedReports as $branch_kh => $reports)
+                            @php
+                                $rowSpan = count($reports);
+                            @endphp
             
-                                @php
-                                    $currentBranch = $brreport->branch_kh;
-                                @endphp
-                            @endif
+                            @foreach ($reports as $index => $brreport)
+                                <tr>
+                                    @if ($index === 0)
+                                        <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{ $i++ }}</td>
+                                        <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{ $branch_kh }}</td>
+                                        <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{ $rowSpan }}</td>
+                                    @endif
             
-                            <tr>
-                                <td class="border border-gray-700 font-normal font-battambang p-2" @if($rowSpan > 1) rowspan="{{ $rowSpan }}" @endif >{{$i++}}</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2" @if ($rowSpan > 1) rowspan="{{$rowSpan}}" @endif>
-                                    {{$brreport->branch_kh}}
-                                </td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">{{$brreport->total_ms + $brreport->total_hs}}</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">{{$brreport->branch_kh}}</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">{{$brreport->total_mem}}</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">{{$brreport->total_wm}}</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">{{$brreport->total_ls}}</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">{{$brreport->total_ls_wm}}</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                                <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            </tr>
-            
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->institute_kh ?? '-' }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->total_mem ?? '-' }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->total_wm ?? '-' }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->total_ls ?? '-' }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->total_ls_wm ?? '-' }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                                      <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                                </tr>
+                            @endforeach
                         @endforeach
             
                         <!-- Summary Row -->
@@ -244,71 +130,145 @@
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                         </tr>
-            
+                    </tbody> --}}
+                    <tbody>
+                        @php
+                            $i = 1;
+                            $serialNumber = 1;
+                            $totalInstitude = 0;
+                        @endphp
+                    
+                        @foreach ($groupedReports as $branch_kh => $reports)
+                            @php
+                                $rowSpan = count($reports);
+                            @endphp
+                    
+                            @foreach ($reports as $index => $brreport)
+                                <tr>
+                                    @if ($index === 0)
+                                        <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{ $i++ }}</td>
+                                        <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{ $branch_kh }}</td>
+                                        <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{ $rowSpan }}</td>
+                                    @endif
+                    
+                                    {{-- Display institute_kh under "Phnom Penh" column if branch_id = 1 --}}
+                                    @if ($brreport->branch_id == 1)
+                                        <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->institute_kh ?? '-' }}</td>
+                                    @else
+                                        <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    @endif
+                    
+                                    {{-- Other columns --}}
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->total_mem ?? '-' }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->total_wm ?? '-' }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->total_ls ?? '-' }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->total_ls_wm ?? '-' }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                                </tr>
+                            @endforeach
+                        @endforeach
+                    
+                        <!-- Summary Row -->
+                        <tr class="bg-gray-100">
+                            <td colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">សរុប</td>
+                            <td class="border border-gray-700 font-battambang p-2 font-semibold">16</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                        </tr>
                     </tbody>
                 </table>
                 <p class="font-battambang font-medium text-center mt-2">រៀបចំដោយ៖ ការិយាល័យអភិវឌ្ឍន៍ នៃនាយកដ្ឋានធនធានមនុស្ស កក្រក</p>
             </div>
+            {{-- <tbody>
+                @php
+                    $i = 1;
+                    $currentBranch = null;
+                    $rowSpan = 1;
+                @endphp
             
-
-
-            {{-- <table class="w-full">
-                <thead class=" font-siemreap bg-slate-200 border-collapse border-t-2 border-black">
-                    <tr>
-                        <th rowspan="2" class="px-2 py-1 text-pretty border-x-2 border-black uppercase">
-                            ល.រ
-                        </th>
-                        <th rowspan=2 class="px-2 py-1 text-pretty border-x-2 border-black uppercase">
-                            ក្រុង/ស្រុក
-                        </th>
-                        <th colspan=4 class="px-2 py-1 text-pretty border-x-2 border-black uppercase">
-                            បណ្តាញយុវជនគ្រឹះស្ថានសិក្សា ២០២៤
-                        </th>
-                        <th colspan=2 class="px-2 py-1 text-pretty border-x-2 border-black uppercase">
-                            ទីប្រឹក្សា ២០២៤
-                        </th>
-                        <th colspan=2 class="px-2 py-1 text-pretty border-x-2 border-black uppercase">
-                            យុវជន ២០២៤
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">សរុប</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">អនុ.វិ</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">វិទ្យាល័យ</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">ខត្តមសិក្សា</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">សរុប</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">ស្រី</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">សរុប</th>
-                        <th class="px-2 py-1 text-pretty border-x-2 border-y-2 border-black uppercase">ស្រី</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white font-siemreap">
-                    @foreach ($branchesreport as $brreport) 
+                @foreach ($branchesReport as $branch)
                     @php
-                     $i++;
+                        // Find institutes associated with this branch using branch_id
+                        $institutes = $branchHeiReport->where('branch_id', $branch->branch_id);
+                        $rowSpan = $institutes->count();
                     @endphp
-                    <tr class="border-collapse border-y-2 border-x-2 border-black">
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$i}}</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->branch_kh}}</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_ms + $brreport->total_hs}}</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_ms}}</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_hs}}</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">0</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_ls}}</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_ls_wm}}</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_mem}}</td>
-                        <td class="px-2 py-1 text-sm text-center border-x-2 border-black whitespace-nowrap">{{$brreport->total_wm}}</td>
-                    </tr>
+            
+                    @foreach ($institutes as $index => $institute)
+                        <tr>
+                            @if ($index === 0)
+                                <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{ $i++ }}</td>
+                                <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{ $branch->branch_kh }}</td>
+                                <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{ $rowSpan }}</td>
+                            @endif
+            
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $institute->institute_kh ?? '-' }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $branch->total_mem ?? '-' }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $branch->total_wm ?? '-' }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $branch->total_ls ?? '-' }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $branch->total_ls_wm ?? '-' }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                        </tr>
                     @endforeach
-                </tbody>
-            </table> --}}
+                @endforeach
+            
+                <!-- Summary Row -->
+                <tr class="bg-gray-100">
+                    <td colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">សរុប</td>
+                    <td class="border border-gray-700 font-battambang p-2 font-semibold">16</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                </tr>
+            </tbody> --}}
+            
         </div>
     @endsection
 
     @push('JS')
-        @vite(['resources/js/exportToExcel_branch.js'])
         <script type="module">
-        var data = @json($branchesreport);
+        var data = @json($reports);
         console.log(data);
         $("#export_excel").on("click", async () => {
         exportToExcel_branch(data);

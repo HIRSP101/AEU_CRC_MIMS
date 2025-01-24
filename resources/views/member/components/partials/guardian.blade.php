@@ -8,7 +8,7 @@
             ឈ្មោះឪពុក
         </label>
         <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="father_name" type="text" id="father_name" required>
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -16,7 +16,7 @@
             ថ្ងៃ ខែ ឆ្នាំកំណើត
         </label>
         <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             id="father_dob" name="father_dob" type="date" required>
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -24,7 +24,7 @@
             មុខរបរ
         </label>
         <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="father_occupation" id="father_occupation" type="text" required>
     </div>
     <div class="w-full md:w-full px-3 mb-6 md:mb-0">
@@ -32,7 +32,7 @@
             អាសយដ្ធាន
         </label>
         <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="father_current_address" id="father_current_address" type="text" required>
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -40,7 +40,7 @@
             ឈ្មោះម្តាយ
         </label>
         <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="mother_name" id="mother_name" type="text" required>
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -48,7 +48,7 @@
             ថ្ងៃ ខែ ឆ្នាំកំណើត
         </label>
         <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="mother_dob" type="date" id="mother_dob" required>
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -56,15 +56,14 @@
             មុខរបរ
         </label>
         <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            name="mother_occupation" type="text" id="mother_occupation" required>
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white">
     </div>
     <div class="w-full md:w-full px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="mother_current_address">
             អាសយដ្ធាន
         </label>
         <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="mother_current_address" type="text" id="mother_current_address" required>
     </div>
     <div class="w-full md:w-full px-3 mb-6 md:mb-0">
@@ -72,7 +71,7 @@
             លេខទូរសព្ទអាណាព្យាបាល
         </label>
         <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="guardian_number" id="guardian_number" type="tel" required>
     </div>
 </div>

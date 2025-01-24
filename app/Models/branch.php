@@ -15,6 +15,7 @@ class branch extends Model
     protected $primaryKey = "branch_id";
     protected $timestamp = false;
     protected $fillable = ["branch_name", "branch_kh", "user_id"];
+    
     public function branch_member_roster() :HasMany {
         return $this->hasMany(branch_member_roster::class, 'branch_id', 'branch_id');
     }

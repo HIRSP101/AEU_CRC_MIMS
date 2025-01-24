@@ -13,6 +13,7 @@ class ReportController extends Controller
     {
         return view('report.index');
     }
+
     public function branches_report() {
         $branchesreport = $this->branches()
         ->where('branch.branch_id', '!=', '28')
@@ -23,21 +24,28 @@ class ReportController extends Controller
         return view('report.partials.branches_report', compact('branchesreport'));
     }
 
-    public function branches_hei_report() {
-        $branchesreport = $this->branches()
-        ->where('branch.branch_id', '!=', '28')
-        ->groupBy( 'branch.branch_kh', 'branch.branch_id')
-        ->orderBy('branch.branch_id','asc')
-        ->get();
-        $branchheireport = $this->branchhei()
-        ->groupBy( 'hei.institute_kh', 'hei.bhei_id')
-        ->orderBy('hei.bhei_id','asc')
-        ->get();
-        // dd($branchheireport);
-        return view('report.partials.total-member-university', compact('branchesreport', 'branchheireport'));
-    
+    public function branchesHeiReport() {
+
+        $branchesReport = $this->branches()
+            ->where('branch.branch_id', '!=', '28')
+            ->select('branch.branch_kh', 'branch.branch_id') // Remove province
+            ->groupBy('branch.branch_kh', 'branch.branch_id')
+            ->orderBy('branch.branch_id', 'asc')
+            ->get();
+
+        $branchHeiReport = $this->branchhei()
+            ->select('hei.institute_kh', 'hei.bhei_id', 'hei.branch_id') // Include branch_id
+            ->groupBy('hei.institute_kh', 'hei.bhei_id', 'hei.branch_id')
+            ->orderBy('hei.bhei_id', 'asc')
+            ->get();
+
+        $branchesReports = $branchesReport->merge($branchHeiReport);
+        $groupedReports = $branchesReports->groupBy('branch_kh');
+
+        return view('report.partials.total-member-university', compact('groupedReports'));
     }
 
+    
     public function branches() {
         $branches = DB::table('member_education_background as meb')
         ->rightjoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
