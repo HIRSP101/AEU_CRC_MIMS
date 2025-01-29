@@ -117,6 +117,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branch/{id}/village/{v_id}', "{$appC}\\VillageController@get");
     Route::get('/branch/{id}/village/{v_id}/school', "{$appC}\\SchoolController@index1");
     Route::get('/branch/{id}/village/{v_id}/school/{s_id}', "{$appC}\\SchoolController@get");
+    Route::post('/create-village', "{$appC}\\VillageController@store")->name('village.store');
 });
 
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");

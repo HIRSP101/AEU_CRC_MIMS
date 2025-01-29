@@ -5,6 +5,9 @@
 @section('Content')
     <div class="bg-[#fff] p-8 rounded-lg max-w-1000px m-5 shadow-md font-siemreap">
         <h2 class="text-2xl font-bold text-center siemreap-regular my-2 pb-3 mb-10">ស្រុក/ភូមិ នៃខេត្ត/ក្រុង {{ $branch->branch_kh }}</h2>
+        <div class="filter_institute flex justify-end space-x-2 mt-12 mb-5">
+            <button id="create_village_btn" class="bg-blue-500 text-white px-4 py-2 rounded">New Village</button>
+        </div>
         <ul>
             @foreach ($villages as $village)
             @php
