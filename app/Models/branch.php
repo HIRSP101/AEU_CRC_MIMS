@@ -35,4 +35,9 @@ class branch extends Model
         return $this->hasMany(branch_institution::class, 'branch_id', 'branch_id');
     }
 
+    // Village
+    public function village() :HasMany {
+        return $this->hasMany(village::class, 'branch_id', 'branch_id');
+    }
+
 }

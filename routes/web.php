@@ -113,11 +113,14 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/delete-branches', "{$appC}\\BranchController@deleteBranches");
     Route::get('/institute', "{$appC}\\InstituteController@index1")->name('institute');
     Route::get('/institute/{id}', "{$appC}\\InstituteController@get");
+    // Create village
+    Route::get('/branch/{id}/village/create', "{$appC}\\VillageController@create")->name('village.create');
+    Route::post('/branch/{id}/village/store', "{$appC}\\VillageController@store")->name('village.store');
+    
     Route::get('/branch/{id}/village', "{$appC}\\VillageController@index")->name('village');
     Route::get('/branch/{id}/village/{v_id}', "{$appC}\\VillageController@get");
     Route::get('/branch/{id}/village/{v_id}/school', "{$appC}\\SchoolController@index1");
     Route::get('/branch/{id}/village/{v_id}/school/{s_id}', "{$appC}\\SchoolController@get");
-    Route::post('/create-village', "{$appC}\\VillageController@store")->name('village.store');
 });
 
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");
