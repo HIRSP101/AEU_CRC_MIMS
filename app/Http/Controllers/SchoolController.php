@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SchoolRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\branch;
+use App\Models\village;
+use App\Services\Schools\CreateSchoolService;
 
 class SchoolController extends Controller
 {
@@ -58,5 +62,24 @@ class SchoolController extends Controller
         'villageId' => $villageId,
         'schoolId' => $schoolId
     ]);
+    }
+
+    public function create($branchId, $villageId)
+    {
+        $branch = DB::table('branch')->where('branch_id', $branchId)->first();
+        $village = DB::table('village')->where('village_id', $villageId)->first();
+        
+        return view('school.create-school', compact('branch', 'village'));
+    }
+    public function store(SchoolRequest $request, CreateSchoolService $service)
+    {
+        $data = $request->validated();
+        $data['branch_id'] = $request->route('id');
+        $data['village_id'] = $request->route('v_id');
+       
+        $school = $service->createSchool($data);
+
+        return redirect()->route('school', ['id' => $school->branch_id, 'v_id' => $school->village_id])
+                        ->with('success', 'School created successfully');
     }
 }    

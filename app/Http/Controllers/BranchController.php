@@ -51,13 +51,16 @@ class BranchController extends Controller
         $total_mem_branches = DB::table('branch as branch')
             ->leftjoin('member_education_background as meb', 'branch.branch_id', '=', 'meb.branch_id')
             ->leftjoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
+            ->leftJoin('village', 'branch.branch_id', '=', 'village.branch_id')
             ->select(
                 'branch.branch_id',
                 'branch.branch_kh',
                 'branch.image',
                 DB::raw(value: "COUNT(distinct meb.institute_id) AS total_institutes"),
-                DB::raw("COUNT(meb.member_id) AS total_mem")
-            );
+                DB::raw("COUNT(meb.member_id) AS total_mem"),
+                DB::raw("COUNT(DISTINCT village.village_id) AS total_villages")
+            )
+            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image');
 
         return $total_mem_branches;
     }

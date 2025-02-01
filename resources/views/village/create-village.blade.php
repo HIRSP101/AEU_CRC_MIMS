@@ -12,7 +12,6 @@
             <div class=" text-2xl col-span-6 flex flex-col items-center justify-center mb-10 ml-24">
                 <h1>បង្កើតស្រុក ភូមិ</h1>
             </div>
-            
         </div>
         <div class="mt-5">
             <form action="{{ route('village.store', ['id' => $branch->branch_id]) }}" method="POST">
@@ -40,20 +39,5 @@
 @endsection
 
 @push('JS')
-    {{-- <script type="module">
-        import {
-            handleBranchform
-        } from "{{ asset('js/handleBranchform.js') }}";
-        document.addEventListener('DOMContentLoaded', function() {
-            var array = @json($bhei_col);
-
-            array.forEach(item => {
-                item.full_address =
-                    `${item.village} ${item.commune_sangkat} ${item.district_khan} ${item.provience_city}`;
-            });
-
-            console.log(array);
-            handleBranchform(array);
-        });
-    </script> --}}
+    
 @endpush
