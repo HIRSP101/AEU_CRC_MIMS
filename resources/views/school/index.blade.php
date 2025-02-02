@@ -14,15 +14,10 @@
         <ul>
             @foreach ($schools as $school)
                 <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                    <a href="{{ url('/branch/' . $branchId . '/village/' . $villageId . '/school/' . $school->bhei_id) }}">
+                    <a href="{{ url('/branch/' . $branchId . '/village/' . $villageId . '/school/' . $school->school_id) }}">
                         <div class="flex justify-between items-center">
                             <div class="flex items-center">
-                                <img
-                                    src="{{ asset( $school->image) }}"
-                                    alt="Logo 1"
-                                    class="ml-10 w-16 mr-8 rounded-full object-cover h-16"
-                                />
-                                <span class="text-lg siemreap-regular">{{ $school->institute_kh }}</span>
+                                <span class="text-lg siemreap-regular">{{ $school->school_name }}</span>
                             </div>
                             <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
                                 <span class="text-xs siemreap-regular">

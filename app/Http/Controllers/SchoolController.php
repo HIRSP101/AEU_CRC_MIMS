@@ -13,27 +13,23 @@ class SchoolController extends Controller
 {
     public function index1($branchId, $villageId)
     {
-        $village = DB::table('branch_hei')
-            ->where('branch_id', $branchId)
-            ->where('village', $villageId)
-            ->select('village')
+        $village = DB::table('village')
+            ->where('village_id', $villageId)
+            ->select('village_name')
             ->first();
 
-        $schools = DB::table('branch_hei as bhei')
-            ->leftJoin('member_education_background as meb', 'bhei.bhei_id', '=', 'meb.institute_id')
-            ->leftJoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
-            ->where('bhei.branch_id', $branchId)
-            ->where('bhei.village', $villageId)
+        $schools = DB::table('school')
+            ->where('branch_id', $branchId)
+            ->where('village_id', $villageId)
             ->select(
-            'bhei.bhei_id',
-                'bhei.institute_kh',
-                'bhei.image',
-                DB::raw('COUNT(DISTINCT mpd.member_id) as total_mem')
+        'school_id',
+                'school_name',
+                'type',
+                'district'
             )
-            ->groupBy('bhei.bhei_id', 'bhei.institute_kh', 'bhei.image')
             ->get();
 
-    return view('school.index', compact('schools', 'branchId', 'villageId', 'village'));
+        return view('school.index', compact('schools', 'branchId', 'villageId', 'village'));
     }
     
     public function get($branchId, $villageId, $schoolId, Request $request)
@@ -68,8 +64,10 @@ class SchoolController extends Controller
     {
         $branch = DB::table('branch')->where('branch_id', $branchId)->first();
         $village = DB::table('village')->where('village_id', $villageId)->first();
+        $branches = DB::table('branch')->get();
+        $villages = DB::table('village')->where('branch_id', $branchId)->get();
         
-        return view('school.create-school', compact('branch', 'village'));
+        return view('school.create-school', compact('branch', 'village', 'branches', 'villages'));
     }
     public function store(SchoolRequest $request, CreateSchoolService $service)
     {

@@ -116,14 +116,16 @@ Route::middleware('auth')->group(function () use ($appC) {
     // Create village
     Route::get('/branch/{id}/village/create', "{$appC}\\VillageController@create")->name('village.create');
     Route::post('/branch/{id}/village/store', "{$appC}\\VillageController@store")->name('village.store');
+    Route::get('/getVillages/{branchId}', "{$appC}\\VillageController@getVillages");
     // Create school
     Route::get('/branch/{id}/village/{v_id}/school/create', "{$appC}\\SchoolController@create")->name('school.create');
     Route::post('/branch/{id}/village/{v_id}/school/store', "{$appC}\\SchoolController@store")->name('school.store');
 
     Route::get('/branch/{id}/village', "{$appC}\\VillageController@index")->name('village');
     Route::get('/branch/{id}/village/{v_id}', "{$appC}\\VillageController@get");
-    Route::get('/branch/{id}/village/{v_id}/school', "{$appC}\\SchoolController@index1");
+    Route::get('/branch/{id}/village/{v_id}/school', "{$appC}\\SchoolController@index1")->name('school');
     Route::get('/branch/{id}/village/{v_id}/school/{s_id}', "{$appC}\\SchoolController@get");
+
 });
 
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");

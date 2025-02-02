@@ -27,7 +27,7 @@
                                     ស.ម <strong>{{ $totals->total_mem ?? 0 }} នាក់</strong>
                                 </span>
                                 <span class="text-xs siemreap-regular">
-                                    {{ $totals->total_institutes ?? 0 }} អនុសាខា
+                                    {{ $village->total_schools ?? 0 }} អនុសាខា
                                 </span>
                             </div>
                         </div>

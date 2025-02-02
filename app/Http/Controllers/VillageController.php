@@ -19,8 +19,14 @@ class VillageController extends Controller
             ->first();
 
         $villages = DB::table('village')
-            ->where('branch_id', $branchId)
-            ->select('village_id', 'village_name')
+            ->leftJoin('school', 'village.village_id', '=', 'school.village_id')
+            ->where('village.branch_id', $branchId)
+            ->select(
+        'village.village_id', 
+                    'village.village_name',
+                    DB::raw('COUNT(school.school_id) as total_schools')
+            )
+            ->groupBy('village.village_id', 'village.village_name')
             ->get();
 
         return view('village.index', compact('villages', 'branchId', 'branch'));
@@ -45,11 +51,17 @@ class VillageController extends Controller
     public function store(VillageRequest $request, CreateVillageService $service)
     {
         $data = $request->validated();
-        $data['branch_id'] = $request->route('id'); // Get branch ID from URL
+        $data['branch_id'] = $request->route('id');
     
         $village = $service->createVillage($data);
     
         return redirect()->route('village', ['id' => $village->branch_id])
                      ->with('success', 'Village created successfully');
+    }
+
+    public function getVillages($branchId)
+    {
+        $villages = DB::table('village')->where('branch_id', $branchId)->get();
+        return response()->json($villages);
     }
 }

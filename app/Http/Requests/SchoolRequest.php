@@ -16,8 +16,8 @@ class SchoolRequest extends FormRequest
             "type" => "required|string",
             "district" => "required|string",
             "registration_date" => "nullable|date",
-            "branch_id" => "required",
-            "village_id" => "required"
+            "branch_id" => "required|exists:branch,branch_id",
+            "village_id" => "required|exists:village,village_id"
         ];
     }
 }
