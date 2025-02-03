@@ -34,17 +34,42 @@ class SchoolController extends Controller
     
     public function get($branchId, $villageId, $schoolId, Request $request)
     {
-    $startDate = $request->query('start_date');
-    $endDate = $request->query('end_date');
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
 
     $query = DB::table('member_personal_detail as mpd')
         ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-        ->join('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
         ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-        ->where('hei.branch_id', $branchId)
-        ->where('hei.village', $villageId)
-        ->where('hei.bhei_id', $schoolId)
+        ->join('branch as b', 'meb.branch_id', '=', 'b.branch_id')
+        ->join('school as s', 's.branch_id', '=', 'b.branch_id')
+        ->join('village as v', 'v.village_id', '=', 's.village_id')
+        ->where('b.branch_id', $branchId)
+        ->where('v.village_id', $villageId)
+        ->where('s.school_id', $schoolId)
         ->select('mpd.*', 'meb.*', 'mrd.registration_date');
+
+    $total_mem = (clone $query)
+        ->select([
+            'mpd.member_id',
+            'mpd.member_code',
+            'mpd.name_kh',
+            'mpd.name_en',
+            'mpd.gender',
+            'mpd.date_of_birth',
+            'meb.institute_id',
+            'b.branch_name',
+            'mpd.member_type',
+            'meb.education_level',
+            'meb.acadmedic_year',
+            'mrd.registration_date',
+            'mrd.expiration_date',
+            'mpd.full_current_address',
+            'mpd.phone_number',
+            'mpd.email',
+            'mpd.shirt_size'
+        ])
+        ->distinct()
+        ->get();    
 
     if ($startDate && $endDate) {
         $query->whereBetween('mrd.registration_date', [$startDate, $endDate]);
