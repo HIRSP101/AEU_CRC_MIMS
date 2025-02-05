@@ -56,7 +56,6 @@ class SchoolController extends Controller
             'mpd.name_en',
             'mpd.gender',
             'mpd.date_of_birth',
-            'meb.institute_id',
             'b.branch_name',
             'mpd.member_type',
             'meb.education_level',

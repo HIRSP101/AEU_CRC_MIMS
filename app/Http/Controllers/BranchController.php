@@ -56,7 +56,7 @@ class BranchController extends Controller
                 'branch.branch_id',
                 'branch.branch_kh',
                 'branch.image',
-                DB::raw(value: "COUNT(distinct meb.institute_id) AS total_institutes"),
+                //DB::raw(value: "COUNT(distinct meb.institute_id) AS total_institutes"),
                 DB::raw("COUNT(meb.member_id) AS total_mem"),
                 DB::raw("COUNT(DISTINCT village.village_id) AS total_villages")
             )

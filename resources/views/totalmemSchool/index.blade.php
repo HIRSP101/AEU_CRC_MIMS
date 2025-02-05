@@ -19,7 +19,6 @@
                 $item->gender,
                 $item->date_of_birth,
                 $item->member_type,
-                $item->institute_id,
                 $item->education_level,
                 $item->registration_date,
                 $item->full_current_address,
