@@ -97,12 +97,13 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/deletememberone', "{$appC}\\MemberController@deleteMember");
     Route::get('/update-member/{id}', "{$appC}\\MemberController@getupdateMember")->name("memberupdate");
     Route::post('/update-member/{memberId}', "{$appC}\\MemberController@updateMember");
+    // all reports routes
     Route::get('/reports', "{$appC}\\ReportController@index")->name('report');
     Route::get('/branchesreport', "{$appC}\\ReportController@branches_report")->name('branchesreport');
     Route::get('/private/university', "$appC\\ReportController@branchheiprivate")->name('private.university');
     Route::get('/public/university', "$appC\\ReportController@branchheipublic")->name('public.university');
     Route::get('/total/university', "$appC\\ReportController@branchhei_all")->name('total.university');
-    Route::get('/total/member/university', "$appC\\ReportController@branches_hei_report")->name('total.member.university');
+    Route::get('/total/member/university', "$appC\\ReportController@branchesHeiReport")->name('total.member.university');
 
     Route::get('/create-branch', "{$appC}\\BranchController@createform")->name('create-branch');
     Route::post('/create-branch', "{$appC}\\BranchController@store")->name('branch.store');

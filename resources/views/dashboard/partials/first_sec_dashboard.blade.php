@@ -18,20 +18,8 @@ $firstEle_total = $firstEle->total_mem;
                 <h3 class="text-blue-900 text-xl font-siemreap mt-3.5">សូមសា្វគមន៍មកកាន់ប្រព័ន្ធគ្រប់គ្រងទិន្នន័យ​
                     សមាជិកយុវជន ក.ក្រ.ក</h3>
                     <div class="grid justify-items-end my-3 opacity-5 hover:opacity-100">
-                    <label class="inline-flex items-center me-5 cursor-pointer start-0">
-                        <span class="mx-3 text-sm font-medium text-gray-900 dark:text-gray-300 font-siemreap" >បិទ</span>
-                        <input type="checkbox" id="chkbxww" value="" class="sr-only peer" >
-                        <div
-                            class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600">
-                        </div>
-                        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300 font-siemreap">បើក</span>
-                    </label>
                 </div>
-                <div class="flex flex-col sm:flex-col md:flex-row lg:justify-between gap-5">
-                    <div class="md:w-full lg:w-full">
-                        @include('dashboard.partials.weatherwidget')
-                    </div>
-                </div>
+                
             </div>
             <div class="flex flex-col sm:flex-row md:flex-row lg:justify-between gap-5">
                 <div class="sm:p-12 md:p-4 lg:p-20 p-2 bg-white border-2 rounded-lg shadow sm:w-[50%] md:w-[50%]">
@@ -62,7 +50,7 @@ $firstEle_total = $firstEle->total_mem;
                     </div>
                     <span class="flex justify-end mt-2 p-3">
                         <a href="#"
-                            class="bg-red-600 px-4 py-2 rounded text-white font-siemreap hover:bg-red-500 text-sm">មើលបន្ថែម</a>
+                            class="bg-blue-600 px-4 py-2 rounded-md text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
                     </span>
                 </div>
             </div>

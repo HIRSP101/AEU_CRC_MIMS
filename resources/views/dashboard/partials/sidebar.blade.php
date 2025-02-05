@@ -13,21 +13,21 @@
                         សាខា
                     </span>
                 </a>
-                <a href="{{route('institute')}}" class="flex items-center font-siemreap px-4 py-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                <a href="{{route('institute')}}" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                     <img width="23" height="23" src="https://img.icons8.com/external-gradak-royyan-wijaya/24/external-building-gradak-medical-solidarity-gradak-royyan-wijaya.png" alt="external-building-gradak-medical-solidarity-gradak-royyan-wijaya"/>
                     <span class="module-content ml-2">
                         គ្រឹះស្ថានឧត្តមសិក្សា
                     </span>
                 </a>
-                <a href="" class="flex items-center font-siemreap px-4 py-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <img width="23" height="23" src="https://img.icons8.com/external-gradak-royyan-wijaya/24/external-building-gradak-medical-solidarity-gradak-royyan-wijaya.png" alt="external-building-gradak-medical-solidarity-gradak-royyan-wijaya"/>
+                <a href="" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                    <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/documents-folder--v1.png" alt="documents-folder--v1"/>
                     <span class="module-content ml-2">
                         ឯកសារដ្ឋបាល
                     </span>
                 </a>
             @endif
                 <a href=""  id="subModule-add" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/add-row.png" alt="add-row"/>
+                    <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png" alt="add-user-group-man-man--v2"/>
                     <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">បញ្ចូលសាមាជិក</span>
                 </a>
                 <div id="dropdown-add" class="ml-5 dropdown_entry hidden">
@@ -43,7 +43,7 @@
                 @if(auth()->user()->hasRole('admin'))
                 <a href="" id="dropdown_create" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                     <img width="23" height="23" src="https://img.icons8.com/stamp/32/create-new.png" alt="create-new"/>
-                    <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">បង្កើត</span>
+                    <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">បង្កើតអ្នកប្រើប្រាស់</span>
                 </a>
                 <div class="ml-5 dropdown_create hidden">
                     <a href="{{ route('userroles') }}" class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
@@ -68,11 +68,13 @@
 </div>
 @push("JS")
     <script>
-        $("#subModule-add").click(() => {
-            $("#dropdown-add").toggle(500);
+        $("#subModule-add").click((e) => {
+            e.preventDefault();
+            $("#dropdown-add").toggleClass('hidden',500);
         });
-        $("#subModule-create").click(() => {
-            $("#dropdown-create").toggle(500);
+        $("#subModule-create").click((e) => {
+            e.preventDefault();
+            $("#dropdown-create").toggleClass('hidden',500);
         });
     </script>   
 
