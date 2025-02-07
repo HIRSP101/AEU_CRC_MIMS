@@ -18,6 +18,7 @@
                 $item->name_en,
                 $item->gender,
                 $item->date_of_birth,
+                $item->school_name,
                 $item->member_type,
                 $item->education_level,
                 $item->registration_date,

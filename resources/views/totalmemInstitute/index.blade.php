@@ -20,7 +20,7 @@
             ,$total_mem[$i]->gender
             ,$total_mem[$i]->date_of_birth
             ,$total_mem[$i]->member_type
-            ,$total_mem[$i]->institute_id
+            // ,$total_mem[$i]->institute_id
             ,$total_mem[$i]->education_level
             ,$total_mem[$i]->registration_date
             ,$total_mem[$i]->full_current_address

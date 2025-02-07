@@ -18,16 +18,37 @@ class SchoolController extends Controller
             ->select('village_name')
             ->first();
 
-        $schools = DB::table('school')
-            ->where('branch_id', $branchId)
-            ->where('village_id', $villageId)
-            ->select(
-        'school_id',
-                'school_name',
-                'type',
-                'district'
-            )
-            ->get();
+        // $schools = DB::table('school as s')
+        //     ->join('member_education_background as meb', 's.school_id', '=', 'meb.school_id')
+        //     ->join('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+        //     ->where('s.branch_id', $branchId)
+        //     ->where('s.village_id', $villageId)
+        //     ->select(
+        // 's.school_id',
+        //         's.school_name',
+        //         's.type',
+        //         's.district',
+        //         DB::raw('COUNT(DISTINCT mpd.member_id) as total_mem')
+        //     )
+        //     ->groupBy('s.school_id', 's.school_name', 's.type', 's.district')
+        //     ->get();
+        $schools = DB::table('member_personal_detail as mpd')
+        ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+        ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+        ->join('branch as b', 'meb.branch_id', '=', 'b.branch_id')
+        ->join('school as s', 'meb.school_id', '=', 's.school_id')
+        ->join('village as v', 'v.village_id', '=', 's.village_id')
+        ->where('meb.branch_id', $branchId)
+        ->where('s.village_id', $villageId)
+        ->select(
+            's.school_id',
+            's.school_name',
+            's.type',
+            's.district',
+            DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
+        )
+        ->groupBy('s.school_id', 's.school_name', 's.type', 's.district')
+        ->get();
 
         return view('school.index', compact('schools', 'branchId', 'villageId', 'village'));
     }
@@ -41,14 +62,11 @@ class SchoolController extends Controller
         ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
         ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
         ->join('branch as b', 'meb.branch_id', '=', 'b.branch_id')
-        ->join('school as s', 's.branch_id', '=', 'b.branch_id')
+        ->join('school as s', 'meb.school_id', '=', 's.school_id')
         ->join('village as v', 'v.village_id', '=', 's.village_id')
-        ->where('b.branch_id', $branchId)
-        ->where('v.village_id', $villageId)
-        ->where('s.school_id', $schoolId)
-        ->select('mpd.*', 'meb.*', 'mrd.registration_date');
-
-    $total_mem = (clone $query)
+        ->where('meb.branch_id', $branchId)
+        ->where('s.village_id', $villageId)
+        ->where('meb.school_id', $schoolId)
         ->select([
             'mpd.member_id',
             'mpd.member_code',
@@ -58,6 +76,27 @@ class SchoolController extends Controller
             'mpd.date_of_birth',
             'b.branch_name',
             'mpd.member_type',
+            's.school_name',
+            'meb.education_level',
+            'meb.acadmedic_year',
+            'mrd.registration_date',
+            'mrd.expiration_date',
+            'mpd.full_current_address',
+            'mpd.phone_number',
+            'mpd.email',
+            'mpd.shirt_size',
+            DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
+        ])
+        ->groupBy([
+            'mpd.member_id',
+            'mpd.member_code',
+            'mpd.name_kh',
+            'mpd.name_en',
+            'mpd.gender',
+            'meb.school_id',
+            's.school_name',
+            'mpd.date_of_birth',
+            'mpd.member_type',
             'meb.education_level',
             'meb.acadmedic_year',
             'mrd.registration_date',
@@ -66,9 +105,9 @@ class SchoolController extends Controller
             'mpd.phone_number',
             'mpd.email',
             'mpd.shirt_size'
-        ])
-        ->distinct()
-        ->get();    
+        ]);
+        
+    $total_mem = $query->get();    
 
     if ($startDate && $endDate) {
         $query->whereBetween('mrd.registration_date', [$startDate, $endDate]);
