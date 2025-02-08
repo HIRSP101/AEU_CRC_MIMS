@@ -112,6 +112,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/update-members', "{$appC}\\MemberController@updateMember");
     Route::post('/delete-branch', "{$appC}\\BranchController@deleteBranch");
     Route::post('/delete-branches', "{$appC}\\BranchController@deleteBranches");
+
     Route::get('/institute', "{$appC}\\InstituteController@index1")->name('institute');
     Route::get('/institute/{id}', "{$appC}\\InstituteController@get");
     // Create village
@@ -127,6 +128,8 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branch/{id}/village/{v_id}/school', "{$appC}\\SchoolController@index1")->name('school');
     Route::get('/branch/{id}/village/{v_id}/school/{s_id}', "{$appC}\\SchoolController@get");
 
+    Route::get('/document', "{$appC}\\DocumentController@index")->name('document');
+    Route::get('/document/{id}', "{$appC}\\DocumentController@get");
 });
 
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");

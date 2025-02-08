@@ -19,7 +19,7 @@
                         គ្រឹះស្ថានឧត្តមសិក្សា
                     </span>
                 </a>
-                <a href="" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                <a href="{{route('document')}}" class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                     <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/documents-folder--v1.png" alt="documents-folder--v1"/>
                     <span class="module-content ml-2">
                         ឯកសារដ្ឋបាល
