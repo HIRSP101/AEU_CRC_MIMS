@@ -40,6 +40,10 @@
             <div class="font-siemreap">
                 @include('member_detail.partials.family_info')
             </div>
+            <h2 class="text-xl">4-កិច្ចសន្យា (Contract)</h2>
+            <div class="font-siemreap mb-8 mt-4">
+                <h3>ខ្ញុំបាទ/នាងខ្ញុំ សូមបញ្ញាក់ថា រាល់ព័ត៌មានដែលបានរៀបរាប់ជូនខាងលើ ពិតជាត្រឹមត្រូវពិតប្រាកដមែន ហើយយល់ព្រមចូលជាសមាជិកយុវជនកាកបាទក្រហម ចាប់ពីថ្ងៃចុះហត្ថលេខានេះតទៅ</h3>
+            </div>
             <!--
         <button class="px-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800">Export to PDF (EMT)</button>
         -->

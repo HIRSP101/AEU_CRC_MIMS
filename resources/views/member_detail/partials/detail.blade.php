@@ -114,6 +114,24 @@
     </div>
     <div class="flex w-full md:w-full  mb-6 md:mb-0">
         <h3 class="px-2">
+            ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនជាតិកាយរឹទ្ធិកម្ពុជា (Scout Youth Recruitment Date) ៖ <span
+                class="font-bold">{{$member_regis->registration_date}}</span>
+        </h3>
+    </div>
+    <div class="flex w-full md:w-full  mb-6 md:mb-0">
+        <h3 class="px-2">
+            ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជន ស.ស.យ​.ក (UYFC Recruitment Date) ៖ <span
+                class="font-bold">{{$member_regis->registration_date}}</span>
+        </h3>
+    </div>
+    <div class="flex w-full md:w-full  mb-6 md:mb-0">
+        <h3 class="px-2">
+            ថ្ងៃ ខែ ឆ្នាំ ចូលជាអង្គការចាត់តាំងយុវជនផ្សេងៗ (Other NGos Recruitment Date) ៖ <span
+                class="font-bold">{{$member_regis->registration_date}}</span>
+        </h3>
+    </div>
+    <div class="flex w-full md:w-full  mb-6 md:mb-0">
+        <h3 class="px-2">
             វគ្គបណ្ដុះបណ្ដាលទទួលបាន ៖
         </h3>
         <P>{{$member_edu->misc_skill}}</P>
