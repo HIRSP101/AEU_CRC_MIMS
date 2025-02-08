@@ -27,7 +27,7 @@ class VillageController extends Controller
                     DB::raw('COUNT(school.school_id) as total_schools')
             )
             ->groupBy('village.village_id', 'village.village_name')
-            ->get();
+            ->get();   
 
         return view('village.index', compact('villages', 'branchId', 'branch'));
     }

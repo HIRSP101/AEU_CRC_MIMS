@@ -19,36 +19,39 @@ class SchoolController extends Controller
             ->first();
 
         // $schools = DB::table('school as s')
-        //     ->join('member_education_background as meb', 's.school_id', '=', 'meb.school_id')
-        //     ->join('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
-        //     ->where('s.branch_id', $branchId)
-        //     ->where('s.village_id', $villageId)
-        //     ->select(
-        // 's.school_id',
-        //         's.school_name',
-        //         's.type',
-        //         's.district',
-        //         DB::raw('COUNT(DISTINCT mpd.member_id) as total_mem')
-        //     )
-        //     ->groupBy('s.school_id', 's.school_name', 's.type', 's.district')
-        //     ->get();
-        $schools = DB::table('member_personal_detail as mpd')
-        ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-        ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-        ->join('branch as b', 'meb.branch_id', '=', 'b.branch_id')
-        ->join('school as s', 'meb.school_id', '=', 's.school_id')
-        ->join('village as v', 'v.village_id', '=', 's.village_id')
-        ->where('meb.branch_id', $branchId)
-        ->where('s.village_id', $villageId)
-        ->select(
-            's.school_id',
-            's.school_name',
-            's.type',
-            's.district',
-            DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
-        )
-        ->groupBy('s.school_id', 's.school_name', 's.type', 's.district')
-        ->get();
+        // ->join('village as v', 'v.village_id', '=', 's.village_id')
+        // ->leftJoin('branch as b', 'b.branch_id', '=', 's.branch_id')
+        // ->leftJoin('member_education_background as meb', 'b.branch_id', '=', 'meb.branch_id')
+        // ->leftJoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
+        // ->where('s.branch_id', $branchId)
+        // ->where('s.village_id', $villageId)
+        // ->select(
+        //     's.school_id',
+        //     's.school_name',
+        //     's.type',
+        //     's.district',
+        //     DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
+        // )
+        // ->groupBy('s.school_id', 's.school_name', 's.type', 's.district')
+        // ->get();
+
+        $schools = DB::table('school as s')
+            ->join('village as v', 'v.village_id', '=', 's.village_id') // Ensure village is linked
+            ->leftJoin('member_education_background as meb', function ($join) use ($branchId) {
+                $join->on('s.school_id', '=', 'meb.school_id')
+                    ->where('meb.branch_id', '=', $branchId);
+            }) // Ensure member_education_background is linked but also filter by branch
+            ->where('s.branch_id', $branchId)
+            ->where('s.village_id', $villageId)
+            ->select(
+        's.school_id',
+                's.school_name',
+                's.type',
+                's.district',
+                DB::raw('IFNULL(COUNT(DISTINCT meb.member_id), 0) as total_mem') // Ensure NULL values become 0
+            )
+            ->groupBy('s.school_id', 's.school_name', 's.type', 's.district')
+            ->get();
 
         return view('school.index', compact('schools', 'branchId', 'villageId', 'village'));
     }
@@ -85,7 +88,7 @@ class SchoolController extends Controller
             'mpd.phone_number',
             'mpd.email',
             'mpd.shirt_size',
-            DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
+            // DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
         ])
         ->groupBy([
             'mpd.member_id',
