@@ -53,6 +53,8 @@ export const addTitle = (worksheet, branchName) => {
 };
 
 export const createTable = (worksheet, data) => {
+
+    
     worksheet.addTable({
         name: "MyTable",
         ref: "A3",
@@ -158,12 +160,14 @@ export const downloadExcel = async (workbook) => {
 export default function exportToExcel(current_branch, total_member, total_stu, total_stu_fem) {
     $("#export_excel").on("click", async () => {
         try {
-            console.log("Hello World!!!")
+            console.log("Hello World!!!");
+            const total_memberFormat = total_member.map(arr => arr.slice(0, 13));
+            console.log(total_member.map(arr => arr.slice(0, 13)));
             const workbook = new ExcelJS.Workbook();
             const worksheet = createWorksheet(workbook, current_branch);
 
             addTitle(worksheet, current_branch);
-            createTable(worksheet, total_member);
+            createTable(worksheet, total_memberFormat);
             applyStyles(worksheet, total_member.length);
             addFooter(worksheet, total_stu, total_stu_fem, total_member.length + 4);
 
