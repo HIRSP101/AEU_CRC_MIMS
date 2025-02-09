@@ -1,7 +1,10 @@
 @extends('layouts.templates.att.master')
 
 @section('Content')
-    <div class="flex justify-evenly">
+<div class="text-center mt-7">
+    <h1 class="text-2xl font-siemreap font-bold">ប័ណ្ណសម្គាល់ខ្លួនយុវជន</h1>
+</div>
+    <div class="flex justify-evenly mt-12">
         <div class="relative w-[600px] h-[450px] bg-cover bg-center" style="background-image: url('{{ asset('images/users/card1.jpg') }}');">
             <p class="card-id absolute top-[310px] left-[380px] text-black text-sm font-bold">{{$memberCard->member_id}}</p>
         </div>
