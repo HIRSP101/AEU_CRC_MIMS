@@ -11,9 +11,14 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="{{ asset('build/assets/app.css') }}" rel="stylesheet">
     <script src="{{ asset('build/assets/app.js') }}"></script>
+    <script src="{{ asset('js/exportToPdf.js') }}"></script>
+
+    <script src="{{asset("js/vfs_fonts.min.js")}}"></script>
+    <script src="{{asset("js/pdfmake.min.js")}}"></script>
+    <script src="{{ asset('js/jszip.min.js') }}"></script>
+    <script src="{{ asset('js/FileSaver.min.js') }}"></script>
     @stack('CSS')
 </head>
-
 <body>
     <div id="loading-overlay">
         <div class="loading-spinner"></div>
@@ -30,7 +35,6 @@
                             d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
-
                 <div class="flex items-center flex-1 mx-4">
                     @if (auth()->user()->hasRole('admin'))
                         <h1 class="text-white text-lg font-koulen">ទីស្នាក់ការកណ្តាល</h1>

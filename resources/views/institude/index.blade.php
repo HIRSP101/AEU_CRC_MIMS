@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
                                     <span class="text-xs siemreap-regular">
-                                        ស.ម <strong>${item.$total_members ?? 0} នាក់</strong>
+                                        ស.ម <strong>${item.total_members ?? 0} នាក់</strong>
                                     </span>
                                 </div>
                             </div>

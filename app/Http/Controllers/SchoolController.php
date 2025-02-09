@@ -16,7 +16,7 @@ class SchoolController extends Controller
             ->first();
 
         $schools = DB::table('branch_hei as bhei')
-            ->leftJoin('member_education_background as meb', 'bhei.bhei_id', '=', 'meb.institute_id')
+            ->leftJoin('member_education_background as meb', 'bhei.bhei_id', '=', 'meb.branchhei_id')
             ->leftJoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
             ->where('bhei.branch_id', $branchId)
             ->where('bhei.village', $villageId)

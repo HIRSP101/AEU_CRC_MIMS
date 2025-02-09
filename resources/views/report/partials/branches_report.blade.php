@@ -85,7 +85,6 @@
     @endsection
 
     @push('JS')
-        @vite(['resources/js/exportToExcel_branch.js'])
         <script type="module">
             var data = @json($branchesreport);
             console.log(data);

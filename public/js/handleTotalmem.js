@@ -6,7 +6,7 @@ export function handleTotalmem(array, ExcelObj) {
         "name_kh",
         "gender",
         "date_of_birth",
-        "institute_id",
+        "institute_kh",
         "member_type",
         "education_level",
         "registration_date",

@@ -24,7 +24,7 @@ class VillageController extends Controller
 
         // total school and people
         $total_mem_school = DB::table('branch_hei as bhei')
-            ->leftJoin('member_education_background as meb', 'bhei.bhei_id', '=', 'meb.institute_id')
+            ->leftJoin('member_education_background as meb', 'bhei.bhei_id', '=', 'meb.branchhei_id')
             ->leftJoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
             ->select(
         'bhei.village',
