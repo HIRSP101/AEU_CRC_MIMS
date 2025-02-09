@@ -88,7 +88,16 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branchheiprivate', "{$appC}\\ReportController@branchheiprivate");
     Route::get('/allbranches', "{$appC}\\ReportController@branches_hei_report");
     Route::get('/branch/{id}', "{$appC}\\BranchController@get");
-    Route::get('/member/{id}', "{$appC}\\MemberController@getMemberDetail");
+
+    // option page
+    Route::get('/member/option/{id}', "{$appC}\\MemberController@getMemberOption")->name('member.option');
+    // get user detail form
+    Route::get('/member/{id}', "{$appC}\\MemberController@getMemberDetail")->name('member.detail');
+    // get request form
+    Route::get('/member/request/{id}', "{$appC}\\MemberController@getRequestForm")->name('member.request');
+    // Card
+    Route::get('/member/card/{id}', "{$appC}\\MemberController@getMemberCard")->name('member.card');
+
     Route::post('/createbranch', "{$appC}\\BranchController@index")->name('createbranch');
     Route::get('/uploadint', "{$appC}\\ResourceController@index");
     Route::post('/uploadimage', "{$appC}\\ResourceController@uploadImage");

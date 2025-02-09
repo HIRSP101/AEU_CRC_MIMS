@@ -38,7 +38,7 @@ class MemberController extends Controller
         $branchhei = branch_hei::all()->pluck('institute_kh', 'bhei_id');
         return view('member.index', compact('branches', 'branchhei'));
     }
-    public function getMemberDetail(Request $request): View
+    public function getMemberDetail($id): View
     {
         $member = member_personal_detail::with([
             'member_guardian_detail',
@@ -46,10 +46,33 @@ class MemberController extends Controller
             'member_education_background',
             'member_current_address',
             'member_pob_address'
-        ])->findOrFail($request->id);
+        ])->findOrFail($id);
 
         return view('member_detail.index', compact('member'));
     }
+
+    public function getMemberOption($id)
+    {
+        return view('memberOption.index', compact('id'));
+    }
+
+    public function getRequestForm($id)
+    {
+        return view('memberOption.partials.request-form', compact('id'));
+    }
+
+    public function getMemberCard($id)
+    {
+        $memberCard = member_personal_detail::with([
+            'member_guardian_detail',
+            'member_registration_detail',
+            'member_education_background',
+            'member_current_address',
+            'member_pob_address',
+        ])->findOrFail($id);
+        return view('memberOption.partials.card', compact('memberCard'));
+    }
+
     public function insertMember(MemberRequest $request): JsonResponse
     {
         try {

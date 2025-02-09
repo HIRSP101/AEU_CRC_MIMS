@@ -21,11 +21,17 @@ export function handleTotalmem(array, ExcelObj) {
         $(this).toggleClass("bg-slate-300 marked");
     });
 
+    // $(".table table tbody").on("dblclick", ".hoverablebranch", function (e) {
+    //     e.preventDefault();
+    //     const userId = $(this).attr("data-id");
+    //     console.log(userId);
+    //     window.location.href = `/member/${userId}`;
+    // });
     $(".table table tbody").on("dblclick", ".hoverablebranch", function (e) {
         e.preventDefault();
         const userId = $(this).attr("data-id");
         console.log(userId);
-        window.location.href = `/member/${userId}`;
+        window.location.href = `/member/option/${userId}`;
     });
 
     $("#delete").on("click", function (e) {
