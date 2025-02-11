@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\DB;
 use App\Services\Members\DeleteMemberService;
 use App\Services\Members\CreateMemberService;
 use App\Services\Members\UpdateMemberService;
+
 use Exception;
 use Log;
 use SebastianBergmann\Diff\Chunk;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class MemberController extends Controller
 {
@@ -54,23 +56,46 @@ class MemberController extends Controller
     public function getMemberOption($id)
     {
         return view('memberOption.index', compact('id'));
+        //return view('member_detail.index', compact('id'));
     }
 
     public function getRequestForm($id)
     {
-        return view('memberOption.partials.request-form', compact('id'));
-    }
-
-    public function getMemberCard($id)
-    {
-        $memberCard = member_personal_detail::with([
+        $member = member_personal_detail::with([
             'member_guardian_detail',
             'member_registration_detail',
             'member_education_background',
             'member_current_address',
             'member_pob_address',
         ])->findOrFail($id);
-        return view('memberOption.partials.card', compact('memberCard'));
+        return view('member_detail.option.request-form', compact('member'));
+    }
+
+    public function getMemberCard($id)
+    {
+        $member = member_personal_detail::with([
+            'member_guardian_detail',
+            'member_registration_detail',
+            'member_education_background',
+            'member_current_address',
+            'member_pob_address',
+        ])->findOrFail($id);
+        return view('member_detail.option.card', compact('member'));
+    }
+
+    public function memberDetailPdf($id)
+    {
+        $member = member_personal_detail::with([
+            'member_guardian_detail',
+            'member_registration_detail',
+            'member_education_background',
+            'member_current_address',
+            'member_pob_address',
+        ])->findOrFail($id);
+        $pdfContent = PDF::loadView('pdf-preview.single-member.detail', ['member' => $member]); 
+        // $pdfContent->setPaper('A4','landscape');
+        return $pdfContent->stream('example.pdf');
+        // return view('pdf-preview.single-member.detail', compact('member'));
     }
 
     public function insertMember(MemberRequest $request): JsonResponse
