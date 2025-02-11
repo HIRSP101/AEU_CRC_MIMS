@@ -54,11 +54,21 @@ class MemberController extends Controller
     public function getMemberOption($id)
     {
         return view('memberOption.index', compact('id'));
+        //return view('member_detail.index', compact('id'));
     }
 
     public function getRequestForm($id)
     {
-        return view('memberOption.partials.request-form', compact('id'));
+        // return view('memberOption.partials.request-form', compact('id'));
+
+        $memberForm = member_personal_detail::with([
+            'member_guardian_detail',
+            'member_registration_detail',
+            'member_education_background',
+            'member_current_address',
+            'member_pob_address',
+        ])->findOrFail($id);
+        return view('memberOption.partials.request-form', compact('memberForm'));
     }
 
     public function getMemberCard($id)
