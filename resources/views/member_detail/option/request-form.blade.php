@@ -3,6 +3,7 @@
 @endpush
 
 @section('Content')
+@include('components.member_navigation', ['id' => $member->id])
     <div class="mx-[25%] bg-white px-8 py-8 mt-5 mb-5">
         <div class="head mt-2">
             <h3 class="font-battambang font-bold text-xl">សាខាកាកបាទក្រហមកម្ពុជា</h3>
@@ -26,14 +27,14 @@
         </div>
         <div class="content1 mt-5 font-battambang mx-">
             <p class="ml-9">
-                លោក/កញ្ញា <span class="font-bold">{{$memberForm->name_kh ?? '........'}}</span> ភេទ <span class="font-bold">{{$memberForm->gender ?? '......'}}</span>  ជនជាតិខ្មែរ សញ្ជាតិខ្មែរ ថ្ងៃខែឆ្នាំកំណើត {{$memberForm->date_of_birth ?? '............'}} 
+                លោក/កញ្ញា <span class="font-bold">{{$member->name_kh ?? '........'}}</span> ភេទ <span class="font-bold">{{$member->gender ?? '......'}}</span>  ជនជាតិខ្មែរ សញ្ជាតិខ្មែរ ថ្ងៃខែឆ្នាំកំណើត {{$member->date_of_birth ?? '............'}} 
             </p>
             <p class="mt-2">
-                មានអាសយដ្ឋាននៅផ្ទះលេខ <span class="font-bold">{{$memberForm->home_no ?? '......'}}</span>  ផ្លូវ <span class="font-bold">{{$memberForm->street_no ?? '......'}}</span>
-                {{$memberForm->full_current_address}} ។
+                មានអាសយដ្ឋាននៅផ្ទះលេខ <span class="font-bold">{{$member->home_no ?? '......'}}</span>  ផ្លូវ <span class="font-bold">{{$member->street_no ?? '......'}}</span>
+                {{$member->full_current_address}} ។
             </p>
             <p class="mt-2">
-                 បានចូលស្ម័គ្រចិត្តជាយុវជនកាកបាទក្រហមកម្ពុជា វិទ្យាល័យ {{$memberForm->institute_kh ?? '.........................'}}  រាជធានី/ខេត្ត {{$memberForm->provience_city ?? '..............' }}
+                 បានចូលស្ម័គ្រចិត្តជាយុវជនកាកបាទក្រហមកម្ពុជា វិទ្យាល័យ {{$member->institute_kh ?? '.........................'}}  រាជធានី/ខេត្ត {{$member->provience_city ?? '..............' }}
             </p>
             <p class="mt-2">
                  ចាប់តាំងពីថ្ងៃទី........ខែ.............ឆ្នាំ............... ដល់ថ្ងៃទី........ខែ.............ឆ្នាំ..................... ពិតប្រាកដមែន។

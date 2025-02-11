@@ -11,25 +11,9 @@
     $member_pob = $member->member_pob_address ?? '';
     
     ?>
-    {{-- <div class="flex justify-center mt-12 gap-3">
-        <a href="{{ url('member/')}}">
-            <div class="user-detail bg-green-500 text-white hover:bg-green-400 w-[250px] h-[50px] text-center pt-3 rounded-xl">
-                <p>សាលាបត្រព័ត៌មានផ្ទាល់ខ្លួន</p>
-            </div>
-        </a>
-        <a href="{{ url('member')}}">
-            <div class="request-form bg-orange-400 text-white hover:bg-orange-300 w-[250px] h-[50px] text-center pt-3 rounded-xl">
-                <p>សំណើរសុំផ្ទេរជីវភាព</p>
-            </div>
-        </a>
-        <a href="{{ url('member.card')}}">
-            <div class="card bg-blue-400 text-white hover:bg-blue-300 w-[250px] h-[50px] text-center pt-3 rounded-xl">
-                <p>ប័ណ្ណសម្គាល់ខ្លួនយុវជន</p>
-            </div>
-        </a>
-    </div> --}}
-    <div>
-        <div class="ml-10 p-4" id="source-html">
+    @include('components.member_navigation', ['id' => $member->id])
+    <div class="bg-white mx-4 ">
+        <div class="ml-20 p-4 hidden" id="source-html">
             <div class="flex justify-center">
                 <div>
                     <div class="flex justify-center">
@@ -61,14 +45,20 @@
             <div class="font-siemreap mb-8 mt-4">
                 <h3>ខ្ញុំបាទ/នាងខ្ញុំ សូមបញ្ញាក់ថា រាល់ព័ត៌មានដែលបានរៀបរាប់ជូនខាងលើ ពិតជាត្រឹមត្រូវពិតប្រាកដមែន ហើយយល់ព្រមចូលជាសមាជិកយុវជនកាកបាទក្រហម ចាប់ពីថ្ងៃចុះហត្ថលេខានេះតទៅ</h3>
             </div>
-            <!--
-        <button class="px-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800">Export to PDF (EMT)</button>
-        -->
-            <button id="clear_btn" class="px-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800">លុប</button>
-            <button class="px-2 py-2 bg-green-500 text-white rounded-lg hover:bg-green-800">យល់ព្រម</button>
-            <button class="word-btn px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-800" id="word-btn" onclick="exportHTML();">Export word</button>
+                <!--
+            <button class="px-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800">Export to PDF (EMT)</button>
+            -->
         </div>
+        
+            
+    </div>
+    <div class="mr-4 mt-4 mb-4 text-end">
+        <button id="clear_btn" class="px-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800">លុប</button>
+        <button class="px-2 py-2 bg-green-500 text-white rounded-lg hover:bg-green-800">យល់ព្រម</button>
+        <button class="word-btn px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-800" id="word-btn" onclick="exportHTML();">Export word</button>
+    </div>
     @endsection
+
 
     @push('JS')
         <script type="module">
@@ -99,6 +89,19 @@
             }
         </script>
         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                $("#source-html").show();
+                $("#form-detail").on('click', () => {
+                    $("#source-html").toggle(200);
+                })
+                $("#request-form").on('click', () => {
+                    $("#source-html").show();
+                })
+                $("#card").on('click', () => {
+                    $("#source-html").show();
+                })
+            })
+
             function exportHTML() {
                 var header = 
                     `<html xmlns:o='urn:schemas-microsoft-com:office:office'

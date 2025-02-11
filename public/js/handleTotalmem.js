@@ -31,7 +31,7 @@ export function handleTotalmem(array, ExcelObj) {
         e.preventDefault();
         const userId = $(this).attr("data-id");
         console.log(userId);
-        window.location.href = `/member/option/${userId}`;
+        window.location.href = `/member/${userId}`;
     });
 
     $("#delete").on("click", function (e) {

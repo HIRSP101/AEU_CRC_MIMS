@@ -59,28 +59,26 @@ class MemberController extends Controller
 
     public function getRequestForm($id)
     {
-        // return view('memberOption.partials.request-form', compact('id'));
-
-        $memberForm = member_personal_detail::with([
+        $member = member_personal_detail::with([
             'member_guardian_detail',
             'member_registration_detail',
             'member_education_background',
             'member_current_address',
             'member_pob_address',
         ])->findOrFail($id);
-        return view('memberOption.partials.request-form', compact('memberForm'));
+        return view('member_detail.option.request-form', compact('member'));
     }
 
     public function getMemberCard($id)
     {
-        $memberCard = member_personal_detail::with([
+        $member = member_personal_detail::with([
             'member_guardian_detail',
             'member_registration_detail',
             'member_education_background',
             'member_current_address',
             'member_pob_address',
         ])->findOrFail($id);
-        return view('memberOption.partials.card', compact('memberCard'));
+        return view('member_detail.option.card', compact('member'));
     }
 
     public function insertMember(MemberRequest $request): JsonResponse
