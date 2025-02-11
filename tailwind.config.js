@@ -18,6 +18,7 @@ export default {
                 koulen: ["Koulen", "serif"],
                 battambang: ["Battambang", "serif"],
                 muol: ["Muol", "serif"],
+                khmer: ['Khmer OS Muol Light', 'Arial', 'sans-serif'],
             },
         },
     },
