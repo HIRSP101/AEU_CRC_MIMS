@@ -30,7 +30,7 @@ class BranchController extends Controller
     {
         $total_mem_branches = $this->totalmem_branches()
         ->where('branch.branch_id','<', '28')
-        ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
+        ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image')
         ->get();
 
         return view('branch.index', compact('total_mem_branches', ));
@@ -40,7 +40,7 @@ class BranchController extends Controller
     {
         $total_mem_branchhei = $this->totalmem_branches()
         ->where('branch.branch_id' , '>', '28')
-        ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
+        ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image')
         ->get();
         //dd($total_mem_branchhei);
         return view('branch_hei.index', compact('total_mem_branchhei', ));
@@ -60,7 +60,7 @@ class BranchController extends Controller
                 DB::raw("COUNT(meb.member_id) AS total_mem"),
                 DB::raw("COUNT(DISTINCT village.village_id) AS total_villages")
             )
-            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image');
+            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image');
 
         return $total_mem_branches;
     }
@@ -69,7 +69,7 @@ class BranchController extends Controller
     {
         $total_mem_branches = $this->totalmem_branches()
             ->where("branch.branch_id", '<', 28)
-            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
+            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image')
             ->orderBy('total_institutes', 'desc')
             ->get();
         $bhei_col = branch_hei::all();
