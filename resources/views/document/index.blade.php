@@ -13,7 +13,7 @@
         <ul>
             @foreach ($document as $docs)
                 {{-- <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                    
+                    <a href="{{ url('/document/' . $docs->branch_id . '/' . $docs->village_id . '/' . $docs->school_id) }}">
                         <div class="flex justify-between items-center">
                             <div class="flex items-center">
                                 <span class="text-lg siemreap-regular">{{ $docs->school_name }}</span>
@@ -24,7 +24,7 @@
                                 </span>
                             </div>
                         </div>
-                    
+                    </a>
                 </li> --}}
             @endforeach
         </ul>
@@ -34,7 +34,7 @@
 @push('JS')
     <script>
         $("input#ogbranchswitch").change(function(e) {
-        window.location = "{{ url('/') }}/institute"
+        window.location = "{{ url('/') }}/document"
     })
     const array = @json($document);
         let originalArray = [...array];

@@ -25,7 +25,7 @@
             ,$total_mem[$i]->registration_date
             ,$total_mem[$i]->full_current_address
             ,$total_mem[$i]->phone_number
-            ,$total_mem[$i]->guardian_phone
+            //,$total_mem[$i]->guardian_phone
             ,$total_mem[$i]->shirt_size
             );
         }
@@ -134,15 +134,13 @@
     import { handleTotalmem } from "{{ asset('js/handleTotalmem.js') }}";
     document.addEventListener('DOMContentLoaded', function () {
         var array = @json($total_mem);
-        console.log(@json($total_fem));
+        
         handleTotalmem(array);
         if (array.length > 0) {
             exportToExcel(@json($current_branch) ,@json($total_mem_detail)
-                ,@json($total_total)
-                ,@json($total_fem));
+                ,@json($total_mem))
         }
     });
-    /*@json($total_total)[0]["total_mem"], @json($total_fem)[0]["total_mem_fem"]*/
 </script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 @endpush

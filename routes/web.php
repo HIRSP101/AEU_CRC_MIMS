@@ -140,6 +140,7 @@ Route::middleware('auth')->group(function () use ($appC) {
 
     Route::get('/document', "{$appC}\\DocumentController@index")->name('document');
     Route::get('/document/{id}', "{$appC}\\DocumentController@get");
+    // Route::get('/document/{id}/{v_id}/{s_id}', "{$appC}\\DocumentController@get");
 
     Route::get('/detail/{id}', "{$appC}\\MemberController@memberDetailPdf");
 });
