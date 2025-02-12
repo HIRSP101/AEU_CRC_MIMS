@@ -50,7 +50,8 @@
             -->
         </div>
         
-            
+        @include('member_detail.option.request-form')
+        @include('member_detail.option.card') 
     </div>
     <div class="mr-4 mt-4 mb-4 text-end">
         <button id="clear_btn" class="px-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800">លុប</button>
@@ -58,9 +59,34 @@
         <button class="word-btn px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-800" id="word-btn" onclick="exportHTML();">Export word</button>
     </div>
     @endsection
-
-
+    
     @push('JS')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                $("#source-html").removeClass('hidden');
+                $("#request-form").addClass('hidden');      
+                $("#card").addClass('hidden');
+                
+                $("#form-detail-btn").on('click', () => {
+                    $("#source-html").removeClass('hidden');
+                    $("#request-form").addClass('hidden');      
+                    $("#card").addClass('hidden');
+                   
+                })
+                $("#request-form-btn").on('click', () => {
+                    $("#request-form").removeClass('hidden');
+                    $("#source-html").addClass('hidden');
+                    $("#card").addClass('hidden');
+                    
+                })  
+                $("#card-btn").on('click', () => {
+                    $("#card").removeClass('hidden');
+                    $("#request-form").addClass('hidden');
+                    $("#source-html").addClass('hidden');
+                    
+                })
+            })
+        </script>
         <script type="module">
             import {
                 insertorupdareopt
@@ -89,19 +115,6 @@
             }
         </script>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                $("#source-html").show();
-                $("#form-detail").on('click', () => {
-                    $("#source-html").toggle(200);
-                })
-                $("#request-form").on('click', () => {
-                    $("#source-html").show();
-                })
-                $("#card").on('click', () => {
-                    $("#source-html").show();
-                })
-            })
-
             function exportHTML() {
                 var header = 
                     `<html xmlns:o='urn:schemas-microsoft-com:office:office'

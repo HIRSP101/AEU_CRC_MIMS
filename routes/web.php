@@ -90,7 +90,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branch/{id}', "{$appC}\\BranchController@get");
 
     // option page
-    Route::get('/member/option/{id}', "{$appC}\\MemberController@getMemberOption")->name('member.option');
+    //Route::get('/member/option/{id}', "{$appC}\\MemberController@getMemberOption")->name('member.option');
     // get user detail form
     Route::get('/member/{id}', "{$appC}\\MemberController@getMemberDetail")->name('member.detail');
     // get request form
