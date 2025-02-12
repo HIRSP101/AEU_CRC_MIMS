@@ -1,7 +1,7 @@
 @extends('layouts.templates.att.master')
 
 @section('Content')
-@include('components.member_navigation', ['id' => $member->id])
+@include('components.member_navigation', ['id' => $member->member_id])
 <div class="text-center mt-7">
     <h1 class="text-2xl font-siemreap font-bold">ប័ណ្ណសម្គាល់ខ្លួនយុវជន</h1>
 </div>

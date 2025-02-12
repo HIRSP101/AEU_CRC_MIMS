@@ -94,9 +94,9 @@ Route::middleware('auth')->group(function () use ($appC) {
     // get user detail form
     Route::get('/member/{id}', "{$appC}\\MemberController@getMemberDetail")->name('member.detail');
     // get request form
-    Route::get('/member/request/{id}', "{$appC}\\MemberController@getRequestForm")->name('member.request');
+    Route::get('/member/{r_id}/request', "{$appC}\\MemberController@getRequestForm")->name('member.request');
     // Card
-    Route::get('/member/card/{id}', "{$appC}\\MemberController@getMemberCard")->name('member.card');
+    Route::get('/member/{c_id}/card', "{$appC}\\MemberController@getMemberCard")->name('member.card');
 
     Route::post('/createbranch', "{$appC}\\BranchController@index")->name('createbranch');
     Route::get('/uploadint', "{$appC}\\ResourceController@index");

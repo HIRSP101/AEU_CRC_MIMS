@@ -3,7 +3,7 @@
 @endpush
 
 @section('Content')
-@include('components.member_navigation', ['id' => $member->id])
+@include('components.member_navigation', ['id' => $member->member_id])
     <div class="mx-[25%] bg-white px-8 py-8 mt-5 mb-5">
         <div class="head mt-2">
             <h3 class="font-battambang font-bold text-xl">សាខាកាកបាទក្រហមកម្ពុជា</h3>
@@ -19,13 +19,13 @@
                 វិញ្ញាបនបត្ររដ្ឋបាល
             </h3>
             <h3 class="text-center text-xl font-bold font-battambang mt-2">
-                សាខាកាកបាទក្រហមកម្ពុជា រាជធានី ខេត្ត.................................
+                សាខាកាកបាទក្រហមកម្ពុជា រាជធានី ខេត្ត{{$member->branch_kh ?? '.................................'}}
             </h3>   
             <h3 class="text-center text-xl font-bold font-battambang mt-2 underline">
                សូមបញ្ជាក់ថា
             </h3>
         </div>
-        <div class="content1 mt-5 font-battambang mx-">
+        <div class="content1 mt-5 font-battambang mx-auto">
             <p class="ml-9">
                 លោក/កញ្ញា <span class="font-bold">{{$member->name_kh ?? '........'}}</span> ភេទ <span class="font-bold">{{$member->gender ?? '......'}}</span>  ជនជាតិខ្មែរ សញ្ជាតិខ្មែរ ថ្ងៃខែឆ្នាំកំណើត {{$member->date_of_birth ?? '............'}} 
             </p>
@@ -34,10 +34,10 @@
                 {{$member->full_current_address}} ។
             </p>
             <p class="mt-2">
-                 បានចូលស្ម័គ្រចិត្តជាយុវជនកាកបាទក្រហមកម្ពុជា វិទ្យាល័យ {{$member->institute_kh ?? '.........................'}}  រាជធានី/ខេត្ត {{$member->provience_city ?? '..............' }}
+                 បានចូលស្ម័គ្រចិត្តជាយុវជនកាកបាទក្រហមកម្ពុជា វិទ្យាល័យ <span class="font-bold">{{$member->school_name ?? '.........................'}}</span>  រាជធានី/ខេត្ត <span class="font-bold">{{$member->branch_kh ?? '..............' }}</span>
             </p>
             <p class="mt-2">
-                 ចាប់តាំងពីថ្ងៃទី........ខែ.............ឆ្នាំ............... ដល់ថ្ងៃទី........ខែ.............ឆ្នាំ..................... ពិតប្រាកដមែន។
+                 ចាប់តាំងពីថ្ងៃទី {{$member->registration_date ?? '........ខែ.............ឆ្នាំ.....................'}} ដល់ថ្ងៃទី........ខែ.............ឆ្នាំ..................... ពិតប្រាកដមែន។
             </p>
             <p class="mt-2">
                  នៅក្នុងរយៈពេលស្ម័គ្រចិត្តបម្រើការងារនេះ សាមីខ្លួនបានលះបង់ពេលវេលាចំពោះកម្លាំងកាយ ប្រាជ្ញា ស្មារតី
