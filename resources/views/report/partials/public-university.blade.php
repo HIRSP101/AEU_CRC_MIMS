@@ -137,7 +137,6 @@
    exportToExcel_branch(data);
    });
 </script>
-
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
         <script>

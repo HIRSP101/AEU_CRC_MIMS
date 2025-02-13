@@ -17,7 +17,7 @@
                 <button id="export_excel" class="bg-[#31bf7d] text-white px-4 py-2 rounded">Export Excel</button>
             </div>
             <div class="flex justify-end items-center">
-                <input id="datepicker" class="border-2 border-gray-400 rounded-md px-3 py-2 w-64" type="text"
+                <input id="datepicker" class="border-2 border-gray-400 rounded-xl px-3 py-2 w-64" type="text"
                     placeholder="Filter by date">
             </div>
         </div>

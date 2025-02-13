@@ -32,8 +32,7 @@ class BranchController extends Controller
         ->where('branch.branch_id','<', '28')
         ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image')
         ->get();
-
-        return view('branch.index', compact('total_mem_branches', ));
+        return view('branch.index', compact('total_mem_branches'));
     }
 
     public function branch_hei()
@@ -42,7 +41,7 @@ class BranchController extends Controller
         ->where('branch.branch_id' , '>', '28')
         ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image')
         ->get();
-        //dd($total_mem_branchhei);
+        // dd($total_mem_branchhei);
         return view('branch_hei.index', compact('total_mem_branchhei', ));
     }
 
@@ -55,7 +54,7 @@ class BranchController extends Controller
             ->select(
                 'branch.branch_id',
                 'branch.branch_kh',
-                'branch.image',
+                'branch.branch_image',
                 //DB::raw(value: "COUNT(distinct meb.institute_id) AS total_institutes"),
                 DB::raw("COUNT(meb.member_id) AS total_mem"),
                 DB::raw("COUNT(DISTINCT village.village_id) AS total_villages")

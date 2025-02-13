@@ -9,53 +9,59 @@
     $member_regis = $member->member_registration_detail ?? '';
     $member_guardian = $member->member_guardian_detail ?? '';
     $member_pob = $member->member_pob_address ?? '';
-    
     ?>
+
     @include('components.member_navigation', ['id' => $member->id])
-    <div class="bg-white mx-4 ">
-        <div class="ml-20 p-4 hidden" id="source-html">
-            <div class="flex justify-center">
-                <div>
-                    <div class="flex justify-center">
-                        <img class="logo w-32" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}">
-                    </div>
-                    <div class="text-center">
-                        <h1 class="text-2xl">សលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
-                        <p class="title text-lg">Cambodian Red Cross Youth Individual Information</p>
+
+    {{-- button --}}
+    <div class="mr-4 mt-4 mb-4 text-end">
+        <button id="clear_btn" class="bg-red-500 text-white hover:bg-red-400 font-battambang focus:ring-2 focus:outline-none rounded-xl px-4 py-2 text-center inline-flex items-center justify-between mr-2 mb-2">លុប</button>
+        <button class="focus:ring-2 bg-green-500 text-white hover:bg-green-400 font-battambang focus:outline-none rounded-xl px-4 py-2 text-center inline-flex items-center justify-between mr-2 mb-2">យល់ព្រម</button>
+        <button class="word-btn text-white text-[17px] bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-2 focus:outline-none rounded-xl px-4 py-2 text-center inline-flex items-center justify-between mr-2 mb-2" id="word-btn" onclick="exportHTML();">Export word</button>
+    </div>
+
+    <div class="w-[210mm] h-[330mm] bg-white shadow-lg mx-auto">
+        <div class="px-12 hidden" id="source-html">
+            <div class="grid grid-cols-6 ">
+                <div class="col-span-5 flex flex-col items-center justify-center mb-5 ml-24 mt-6">
+                    <img class="w-[120px] h-[120px] mb-1" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}"
+                        alt="">
+                    <h1 class="text-[15px] font-khmer text-blue-600">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
+                    <h1 class="text-[15px]">Cambodian Red Cross Youth Individual Information</h1>
+                    <p class="text-xs">── ✦ 𝒯𝒜𝒞𝒯𝐼𝐸𝒩𝒢 ✦ ──</p>
+                </div>
+                
+                <div class="flex justify-end mt-8">
+                    <div class="w-28 h-36 border border-black text-center p-2">
+                        <p class="text-[12px] font-battambang">ភ្ជាប់មកនូវ</p>
+                        <p class="text-[12px] font-battambang">រូបថត</p>
+                        <p class="text-[12px] mt-2">4x6</p>
+                        <p class="text-[12px]">3x4</p>
                     </div>
                 </div>
-                <div class="ml-10 mb-10">
-                    <img class="profile-image w-32 h-36 bg-red-300 rounded-md "
-                        src="{{ asset($member->image ?? 'public/images/placeholder.png') }} ">
-                </div>
-            </div>
-            <h2 class="text-xl">1-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន (Personal Detail)</h2>
-            <div class="font-siemreap my-3 ">
+            </div>           
+
+            <h2 class="text-[15px] font-khmer text-blue-600">1-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន (Personal Detail)</h2>
+            <div class="font-battambang my-3 text-[15px]">
                 @include('member_detail.partials.detail')
             </div>
-            <h2 class="text-xl">2-វគ្គបណ្ដុះបណ្ដាលដែលទទួលបានកន្លងមក (Training Skill)</h2>
-            <div class="font-siemreap">
+            <h2 class="text-[15px] font-khmer text-blue-600">2-វគ្គបណ្ដុះបណ្ដាលដែលទទួលបានកន្លងមក (Training Skill)</h2>
+            <div class="font-battambang text-[15px]">
                 @include('member_detail.partials.training_skill')
             </div>
-            <h2 class="text-xl">3-ព័ត៌មានគ្រួសារ (Family Information)</h2>
-            <div class="font-siemreap">
+            <h2 class="text-[15px] font-khmer text-blue-600">3-ព័ត៌មានគ្រួសារ (Family Information)</h2>
+            <div class="font-battambang text-[15px]">
                 @include('member_detail.partials.family_info')
             </div>
-            <h2 class="text-xl">4-កិច្ចសន្យា (Contract)</h2>
-            <div class="font-siemreap mb-8 mt-4">
-                <h3>ខ្ញុំបាទ/នាងខ្ញុំ សូមបញ្ញាក់ថា រាល់ព័ត៌មានដែលបានរៀបរាប់ជូនខាងលើ ពិតជាត្រឹមត្រូវពិតប្រាកដមែន ហើយយល់ព្រមចូលជាសមាជិកយុវជនកាកបាទក្រហម ចាប់ពីថ្ងៃចុះហត្ថលេខានេះតទៅ</h3>
+            <h2 class="text-[15px] font-khmer text-blue-600">4-កិច្ចសន្យា (Contract)</h2>
+            <div class="font-battambang mb-8 mt-4 text-[15px]">
+                <h3>&nbsp; ខ្ញុំបាទ/នាងខ្ញុំ សូមបញ្ញាក់ថា រាល់ព័ត៌មានដែលបានរៀបរាប់ជូនខាងលើ ពិតជាត្រឹមត្រូវពិតប្រាកដមែន ហើយយល់</h3>
+                <h3>ព្រមចូលជាសមាជិកយុវជនកាកបាទក្រហម ចាប់ពីថ្ងៃចុះហត្ថលេខានេះតទៅ</h3>
             </div>
                 <!--
             <button class="px-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800">Export to PDF (EMT)</button>
             -->
-        </div>
-        
-            
-    </div>
-    <div class="mr-4 mt-4 mb-4 text-end">
-        <button id="clear_btn" class="px-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800">លុប</button>
-        <button class="px-2 py-2 bg-green-500 text-white rounded-lg hover:bg-green-800">យល់ព្រម</button>
-        <button class="word-btn px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-800" id="word-btn" onclick="exportHTML();">Export word</button>
+        </div>   
     </div>
     @endsection
 
