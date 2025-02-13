@@ -1,9 +1,9 @@
-@extends('layouts.templates.att.master')
+{{-- @extends('layouts.templates.att.master')
 @push('CSS')
-@endpush
+@endpush --}}
 
-@section('Content')
-@include('components.member_navigation', ['id' => $member->member_id])
+{{-- @section('Content') --}}
+{{-- @include('components.member_navigation', ['id' => $member->member_id]) --}}
     <div class="mx-[25%] bg-white px-8 py-8 mt-5 mb-5 hidden" id="request-form">
         <div class="head mt-2">
             <h3 class="font-battambang font-bold text-xl">សាខាកាកបាទក្រហមកម្ពុជា</h3>
@@ -68,4 +68,4 @@
             <p>- ឯកសារ កាលប្បវត្តិ</p>
         </div>
     </div>
-@endsection
+{{-- @endsection --}}
