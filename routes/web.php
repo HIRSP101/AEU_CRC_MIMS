@@ -88,7 +88,16 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branchheiprivate', "{$appC}\\ReportController@branchheiprivate");
     Route::get('/allbranches', "{$appC}\\ReportController@branches_hei_report");
     Route::get('/branch/{id}', "{$appC}\\BranchController@get");
-    Route::get('/member/{id}', "{$appC}\\MemberController@getMemberDetail");
+
+    // option page
+    Route::get('/member/option/{id}', "{$appC}\\MemberController@getMemberOption")->name('member.option');
+    // get user detail form
+    Route::get('/member/{id}', "{$appC}\\MemberController@getMemberDetail")->name('member.detail');
+    // get request form
+    Route::get('/member/request/{id}', "{$appC}\\MemberController@getRequestForm")->name('member.request');
+    // Card
+    Route::get('/member/card/{id}', "{$appC}\\MemberController@getMemberCard")->name('member.card');
+
     Route::post('/createbranch', "{$appC}\\BranchController@index")->name('createbranch');
     Route::get('/uploadint', "{$appC}\\ResourceController@index");
     Route::post('/uploadimage', "{$appC}\\ResourceController@uploadImage");
@@ -97,12 +106,13 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/deletememberone', "{$appC}\\MemberController@deleteMember");
     Route::get('/update-member/{id}', "{$appC}\\MemberController@getupdateMember")->name("memberupdate");
     Route::post('/update-member/{memberId}', "{$appC}\\MemberController@updateMember");
+    // all reports routes
     Route::get('/reports', "{$appC}\\ReportController@index")->name('report');
     Route::get('/branchesreport', "{$appC}\\ReportController@branches_report")->name('branchesreport');
     Route::get('/private/university', "$appC\\ReportController@branchheiprivate")->name('private.university');
     Route::get('/public/university', "$appC\\ReportController@branchheipublic")->name('public.university');
     Route::get('/total/university', "$appC\\ReportController@branchhei_all")->name('total.university');
-    Route::get('/total/member/university', "$appC\\ReportController@branches_hei_report")->name('total.member.university');
+    Route::get('/total/member/university', "$appC\\ReportController@branchesHeiReport")->name('total.member.university');
 
     Route::get('/create-branch', "{$appC}\\BranchController@createform")->name('create-branch');
     Route::post('/create-branch', "{$appC}\\BranchController@store")->name('branch.store');
@@ -111,17 +121,27 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/update-members', "{$appC}\\MemberController@updateMember");
     Route::post('/delete-branch', "{$appC}\\BranchController@deleteBranch");
     Route::post('/delete-branches', "{$appC}\\BranchController@deleteBranches");
+
     Route::get('/institute', "{$appC}\\InstituteController@index1")->name('institute');
     Route::get('/institute/{id}', "{$appC}\\InstituteController@get");
     Route::get('/generate-report/{id}', "{$appC}\\InstituteController@generateReport");
     // Create village
     Route::get('/branch/{id}/village/create', "{$appC}\\VillageController@create")->name('village.create');
     Route::post('/branch/{id}/village/store', "{$appC}\\VillageController@store")->name('village.store');
-    
+    Route::get('/getVillages/{branchId}', "{$appC}\\VillageController@getVillages");
+    // Create school
+    Route::get('/branch/{id}/village/{v_id}/school/create', "{$appC}\\SchoolController@create")->name('school.create');
+    Route::post('/branch/{id}/village/{v_id}/school/store', "{$appC}\\SchoolController@store")->name('school.store');
+
     Route::get('/branch/{id}/village', "{$appC}\\VillageController@index")->name('village');
     Route::get('/branch/{id}/village/{v_id}', "{$appC}\\VillageController@get");
-    Route::get('/branch/{id}/village/{v_id}/school', "{$appC}\\SchoolController@index1");
+    Route::get('/branch/{id}/village/{v_id}/school', "{$appC}\\SchoolController@index1")->name('school');
     Route::get('/branch/{id}/village/{v_id}/school/{s_id}', "{$appC}\\SchoolController@get");
+
+    Route::get('/document', "{$appC}\\DocumentController@index")->name('document');
+    Route::get('/document/{id}', "{$appC}\\DocumentController@get");
+
+    Route::get('/detail/{id}', "{$appC}\\MemberController@memberDetailPdf");
 });
 
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");

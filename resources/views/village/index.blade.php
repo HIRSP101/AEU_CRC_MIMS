@@ -12,21 +12,18 @@
         </div>
         <ul>
             @foreach ($villages as $village)
-            @php
-                $totals = $total_mem_school->firstWhere('village', $village->village);
-            @endphp
                 <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                    <a href="{{ url('/branch/' . $branchId . '/village/' . $village->village . '/school') }}">
+                        <a href="{{ url('/branch/' . $branchId . '/village/' . $village->village_id . '/school') }}">
                         <div class="flex justify-between items-center py-4 pl-6">
                             <div class="flex items-center">
-                                <span class="text-lg siemreap-regular">{{ $village->village }}</span>
+                                <span class="text-lg siemreap-regular">{{ $village->village_name }}</span>
                             </div>
                             <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
                                 <span class="text-xs siemreap-regular">
-                                    ស.ម <strong>{{ $totals->total_mem ?? 0 }} នាក់</strong>
+                                    ស.ម <strong>{{ $village->total_members ?? 0 }} នាក់</strong>
                                 </span>
                                 <span class="text-xs siemreap-regular">
-                                    {{ $totals->total_institutes ?? 0 }} អនុសាខា
+                                    {{ $village->total_schools ?? 0 }} អនុសាខា
                                 </span>
                             </div>
                         </div>
@@ -42,7 +39,7 @@
         $("input#ogbranchswitch").change(function(e) {
         window.location = "{{ url('/') }}/village"
     })
-    const array = @json($total_mem_school);
+    const array = @json($villages);
         let originalArray = [...array];
         
         function updateVillageList(data) {

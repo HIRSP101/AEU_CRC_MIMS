@@ -26,10 +26,11 @@
     <div class="flex h-screen">
         @include('dashboard.partials.sidebar')
         <div id="body" class="transition-transform flex flex-col flex-1 overflow-y-auto bg-[#F1F5F9]">
-            <div class="flex items-center justify-between h-16 bg-cover  bg-no-repeat border-b border-gray-200 px-4 py-1"
-                style="background-image: url('{{ asset('images/FoC.png') }}');">
+            <div class="flex items-center justify-between h-16 bg-cover object-fill bg-no-repeat border-b border-gray-200 bg-red-600 px-4 py-1"
+                {{-- style="background-image: url('{{ asset('images/navbar.png') }}');" --}}
+                >
                 <button id="openSidebar" class="text-gray-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16" />

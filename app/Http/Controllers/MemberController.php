@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\DB;
 use App\Services\Members\DeleteMemberService;
 use App\Services\Members\CreateMemberService;
 use App\Services\Members\UpdateMemberService;
+
 use Exception;
 use Log;
 use SebastianBergmann\Diff\Chunk;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class MemberController extends Controller
 {
@@ -38,7 +40,7 @@ class MemberController extends Controller
         $branchhei = branch_hei::all()->pluck('institute_kh', 'bhei_id');
         return view('member.index', compact('branches', 'branchhei'));
     }
-    public function getMemberDetail(Request $request): View
+    public function getMemberDetail($id): View
     {
         $member = member_personal_detail::with([
             'member_guardian_detail',
@@ -46,10 +48,56 @@ class MemberController extends Controller
             'member_education_background',
             'member_current_address',
             'member_pob_address'
-        ])->findOrFail($request->id);
+        ])->findOrFail($id);
 
         return view('member_detail.index', compact('member'));
     }
+
+    public function getMemberOption($id)
+    {
+        return view('memberOption.index', compact('id'));
+        //return view('member_detail.index', compact('id'));
+    }
+
+    public function getRequestForm($id)
+    {
+        $member = member_personal_detail::with([
+            'member_guardian_detail',
+            'member_registration_detail',
+            'member_education_background',
+            'member_current_address',
+            'member_pob_address',
+        ])->findOrFail($id);
+        return view('member_detail.option.request-form', compact('member'));
+    }
+
+    public function getMemberCard($id)
+    {
+        $member = member_personal_detail::with([
+            'member_guardian_detail',
+            'member_registration_detail',
+            'member_education_background',
+            'member_current_address',
+            'member_pob_address',
+        ])->findOrFail($id);
+        return view('member_detail.option.card', compact('member'));
+    }
+
+    public function memberDetailPdf($id)
+    {
+        $member = member_personal_detail::with([
+            'member_guardian_detail',
+            'member_registration_detail',
+            'member_education_background',
+            'member_current_address',
+            'member_pob_address',
+        ])->findOrFail($id);
+        $pdfContent = PDF::loadView('pdf-preview.single-member.detail', ['member' => $member]); 
+        // $pdfContent->setPaper('A4','landscape');
+        return $pdfContent->stream('example.pdf');
+        // return view('pdf-preview.single-member.detail', compact('member'));
+    }
+
     public function insertMember(MemberRequest $request): JsonResponse
     {
         try {

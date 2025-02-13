@@ -12,7 +12,7 @@
             </div>
         <ul>
             @foreach ($total_member_institute as $mem_tute)
-                @include('institude.partials.list_institude')
+                {{-- @include('institude.partials.list_institude') --}}
             @endforeach
         </ul>
     </div>
