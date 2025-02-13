@@ -36,7 +36,7 @@
                             <div class="flex justify-between items-center">
                                 <div class="flex items-center">
                                     <img
-                                        src="${item.image}"
+                                        src="${item.branchhei_image}"
                                         alt="Logo 1"
                                         class="ml-10 w-16 mr-8 rounded-full object-cover h-16"
                                     />

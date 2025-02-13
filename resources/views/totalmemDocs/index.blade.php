@@ -129,7 +129,7 @@
 @endsection
 
 @push('JS')
-@vite(['resources/js/exportToExcel.js'])
+
 <script type="module">
     import { handleTotalmem } from "{{ asset('js/handleTotalmem.js') }}";
     document.addEventListener('DOMContentLoaded', function () {

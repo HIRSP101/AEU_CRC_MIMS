@@ -39,7 +39,7 @@
                    <a href="/branch/${item.branch_id}/village">
                        <div class="flex justify-between items-center">
                            <div class="flex items-center">
-                               <img src="${item.image}" alt="Logo" class="ml-10 w-16 mr-8 rounded-full object-cover h-16" />
+                               <img src="${item.branch_image}" alt="Logo" class="ml-10 w-16 mr-8 rounded-full object-cover h-16" />
                                <span class="text-lg siemreap-regular">${item.branch_kh}</span>
                            </div>
                            <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
