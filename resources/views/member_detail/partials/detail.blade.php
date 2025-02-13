@@ -23,7 +23,7 @@
     </div>
     <div class="flex flex-wrap w-full md:w-full md:mb-0">
         <h3 class="px-2">
-            ទីកន្លែងកំណើត (Place of Birth)
+            &ensp; ទីកន្លែងកំណើត (Place of Birth)
         </h3>
         <h3 class="px-2">
             ភូមិ ៖ <span class="font-bold">{{$member_pob->village ?? ""}}</span>
@@ -51,7 +51,7 @@
     </div>
     <div class="flex w-full md:w-1/3  md:mb-0">
         <h3 class="px-2">
-            ផ្លូវ​​​ ៖ <span class="font-bold"> {{$member_addr->street_no ?? ""}} </span>
+            &ensp; ផ្លូវ​​​ ៖ <span class="font-bold"> {{$member_addr->street_no ?? ""}} </span>
         </h3>
     </div>
     <div class="flex w-full md:w-1/4  md:mb-0">
@@ -67,7 +67,7 @@
     </div>
     <div class="flex w-full md:w-1/3  md:mb-0">
         <h3 class="px-2">
-            ស្រុក/ខណ្ទ ៖ <span class="font-bold">{{$member_addr->district_khan ?? ""}}</span>
+            &ensp; ស្រុក/ខណ្ឌ ៖ <span class="font-bold">{{$member_addr->district_khan ?? ""}}</span>
         </h3>
     </div>
     <div class="flex w-full md:w-1/3 md:mb-0">

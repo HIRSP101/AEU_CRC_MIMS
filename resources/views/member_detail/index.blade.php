@@ -26,8 +26,8 @@
                 <div class="col-span-5 flex flex-col items-center justify-center mb-5 ml-24 mt-6">
                     <img class="w-[120px] h-[120px] mb-1" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}"
                         alt="">
-                    <h1 class="text-[15px] font-khmer text-blue-600">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
-                    <h1 class="text-[15px]">Cambodian Red Cross Youth Individual Information</h1>
+                    <h1 class="text-[14px] font-khmer text-blue-600">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
+                    <h1 class="text-[14px]">Cambodian Red Cross Youth Individual Information</h1>
                     <p class="text-xs">── ✦ 𝒯𝒜𝒞𝒯𝐼𝐸𝒩𝒢 ✦ ──</p>
                 </div>
                 
@@ -41,20 +41,20 @@
                 </div>
             </div>           
 
-            <h2 class="text-[15px] font-khmer text-blue-600">1-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន (Personal Detail)</h2>
-            <div class="font-battambang my-3 text-[15px]">
+            <h2 class="text-[15px] font-khmer text-blue-600">១-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន (Personal Detail)</h2>
+            <div class="font-battambang my-3 text-[14px]">
                 @include('member_detail.partials.detail')
             </div>
-            <h2 class="text-[15px] font-khmer text-blue-600">2-វគ្គបណ្ដុះបណ្ដាលដែលទទួលបានកន្លងមក (Training Skill)</h2>
-            <div class="font-battambang text-[15px]">
+            <h2 class="text-[15px] font-khmer text-blue-600">២-វគ្គបណ្ដុះបណ្ដាលដែលទទួលបានកន្លងមក (Training Skill)</h2>
+            <div class="font-battambang text-[14px]">
                 @include('member_detail.partials.training_skill')
             </div>
-            <h2 class="text-[15px] font-khmer text-blue-600">3-ព័ត៌មានគ្រួសារ (Family Information)</h2>
-            <div class="font-battambang text-[15px]">
+            <h2 class="text-[15px] font-khmer text-blue-600">៣-ព័ត៌មានគ្រួសារ (Family Information)</h2>
+            <div class="font-battambang text-[14px]">
                 @include('member_detail.partials.family_info')
             </div>
-            <h2 class="text-[15px] font-khmer text-blue-600">4-កិច្ចសន្យា (Contract)</h2>
-            <div class="font-battambang mb-8 mt-4 text-[15px]">
+            <h2 class="text-[15px] font-khmer text-blue-600">៤-កិច្ចសន្យា (Contract)</h2>
+            <div class="font-battambang mb-8 mt-4 text-[14px]">
                 <h3>&nbsp; ខ្ញុំបាទ/នាងខ្ញុំ សូមបញ្ញាក់ថា រាល់ព័ត៌មានដែលបានរៀបរាប់ជូនខាងលើ ពិតជាត្រឹមត្រូវពិតប្រាកដមែន ហើយយល់</h3>
                 <h3>ព្រមចូលជាសមាជិកយុវជនកាកបាទក្រហម ចាប់ពីថ្ងៃចុះហត្ថលេខានេះតទៅ</h3>
             </div>
