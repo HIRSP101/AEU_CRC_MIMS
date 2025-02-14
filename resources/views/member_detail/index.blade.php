@@ -138,6 +138,12 @@
                                 font-size: 12px
                                 line-height: 1.6;
                             }
+                            .title {
+                                text-align: center;
+                            }
+                            h1 {
+                                font-size: 20px;
+                            }
                             h1, h2 {
                                 text-align: center;
                             }
@@ -163,7 +169,8 @@
                     <div>
                         <img class="logo" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/Logo_of_Cambodian_Red_Cross.svg'))) }}" />
                         <h1>សលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
-                        <p>Cambodian Red Cross Youth Individual Information</p>
+                        <p class="title">Cambodian Red Cross Youth Individual Information</p>
+                        ១-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន (Personal Detail)
                         <table>
                             <tr>
                                 <td>
@@ -184,7 +191,7 @@
                             <tr>
                                 <td>
                                     អសយដ្ធានបច្ចុប្បន្ន (Current Address) ផ្ទះលេខ ៖ {{$member_addr->home_no ?? "......."}}
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;
                                     ផ្លូវ​​​ ៖ {{$member_addr->street_no ?? "........"}}
                                 </td>
                                 <td>ភូមិ ៖ {{$member_addr->village ?? "........."}}</td>
@@ -198,7 +205,7 @@
                                 <td>ខេត្ត/រាជធានី ៖ {{$member_addr->provience_city ?? ""}}</td>
                             </tr>
                             <tr merge 2 col>
-                                <td>កម្រិតវប្បធម៌ ឬថ្នាក់ទី ឬឆ្នាំទី (Education or Class) ៖ {{$member_edu->acadmedic_year ?? "........."}}</td>
+                                <td>កម្រិតវប្បធម៌ ឬថ្នាក់ទី ឬឆ្នាំទី (Education or Class) ៖ <span style="font-size: 14px;">{{$member_edu->acadmedic_year ?? "........."}}</span></td>
                             </tr>
                             <tr merge 2 col>
                                 <td>ភាសាបរទេស (Foreign language ) ៖ {{$member_edu->language}}</td>
@@ -228,7 +235,7 @@
                                 <td>ទំហំ អាវ ៖ {{$member->shirt_size}}</td>
                             </tr>
                             <tr merge 2 col>
-                                <td>លេខទូរសព្ទទំនាក់ទំនង (Phone Number) ៖ {{$member->phone_number}}</td>
+                                <td>លេខទូរសព្ទទំនាក់ទំនង (Phone Number) ៖ <span style="font-size: 14px;">{{$member->phone_number}}</span></td>
                             </tr>
                             <tr merge 2 col>
                                 <td>អ៊ីម៉ែល និងហ្វេសប៊ុក (E-mail and Facebook) ៖ {{$member->email}} {{$member->facebook}}</td>
