@@ -29,20 +29,21 @@ class BranchController extends Controller
     public function index()
     {
         $total_mem_branches = $this->totalmem_branches()
-        ->where('branch.branch_id','<', '28')
-        ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image')
-        ->get();
-        return view('branch.index', compact('total_mem_branches'));
+            ->where('branch.branch_id', '<', '28')
+            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image')
+            ->get();
+
+        return view('branch.index', compact('total_mem_branches',));
     }
 
     public function branch_hei()
     {
         $total_mem_branchhei = $this->totalmem_branches()
-        ->where('branch.branch_id' , '>', '28')
-        ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image')
-        ->get();
-        // dd($total_mem_branchhei);
-        return view('branch_hei.index', compact('total_mem_branchhei', ));
+            ->where('branch.branch_id', '>', '28')
+            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
+            ->get();
+        //dd($total_mem_branchhei);
+        return view('branch_hei.index', compact('total_mem_branchhei',));
     }
 
     public function totalmem_branches()
@@ -50,14 +51,14 @@ class BranchController extends Controller
         $total_mem_branches = DB::table('branch as branch')
             ->leftjoin('member_education_background as meb', 'branch.branch_id', '=', 'meb.branch_id')
             ->leftjoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
-            ->leftJoin('village', 'branch.branch_id', '=', 'village.branch_id')
+            ->leftJoin('district', 'branch.branch_id', '=', 'district.branch_id')
             ->select(
                 'branch.branch_id',
                 'branch.branch_kh',
                 'branch.branch_image',
                 //DB::raw(value: "COUNT(distinct meb.institute_id) AS total_institutes"),
                 DB::raw("COUNT(meb.member_id) AS total_mem"),
-                DB::raw("COUNT(DISTINCT village.village_id) AS total_villages")
+                DB::raw("COUNT(DISTINCT district.district_id) AS total_villages")
             )
             ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image');
 
@@ -68,7 +69,7 @@ class BranchController extends Controller
     {
         $total_mem_branches = $this->totalmem_branches()
             ->where("branch.branch_id", '<', 28)
-            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image')
+            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
             ->orderBy('total_institutes', 'desc')
             ->get();
         $bhei_col = branch_hei::all();

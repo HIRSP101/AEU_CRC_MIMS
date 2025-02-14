@@ -61,8 +61,11 @@
                 <!--
             <button class="px-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800">Export to PDF (EMT)</button>
             -->
-        </div>   
+        </div>
+         
     </div>
+    @include('member_detail.option.request-form')   
+        @include('member_detail.option.card')
     @endsection
     
     @push('JS')

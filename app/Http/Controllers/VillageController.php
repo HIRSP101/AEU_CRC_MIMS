@@ -18,16 +18,16 @@ class VillageController extends Controller
             ->select('branch_kh')
             ->first();
 
-        $villages = DB::table('village')
-            ->leftJoin('school', 'village.village_id', '=', 'school.village_id')
-            ->where('village.branch_id', $branchId)
+        $villages = DB::table('district')
+            ->leftJoin('school', 'district.district_id', '=', 'school.district_id')
+            ->where('district.branch_id', $branchId)
             ->select(
-        'village.village_id', 
-                    'village.village_name',
-                    DB::raw('COUNT(school.school_id) as total_schools')
+                'district.district_id',
+                'district.district_name',
+                DB::raw('COUNT(school.school_id) as total_schools')
             )
-            ->groupBy('village.village_id', 'village.village_name')
-            ->get();   
+            ->groupBy('district.district_id', 'district.district_name')
+            ->get();
 
         return view('village.index', compact('villages', 'branchId', 'branch'));
     }
@@ -47,21 +47,21 @@ class VillageController extends Controller
         $branch = branch::findOrFail($branchId);
         return view('village.create-village', compact('branch'));
     }
-   
+
     public function store(VillageRequest $request, CreateVillageService $service)
     {
         $data = $request->validated();
         $data['branch_id'] = $request->route('id');
-    
+
         $village = $service->createVillage($data);
-    
+
         return redirect()->route('village', ['id' => $village->branch_id])
-                     ->with('success', 'Village created successfully');
+            ->with('success', 'Village created successfully');
     }
 
     public function getVillages($branchId)
     {
-        $villages = DB::table('village')->where('branch_id', $branchId)->get();
+        $villages = DB::table('district')->where('branch_id', $branchId)->get();
         return response()->json($villages);
     }
 }

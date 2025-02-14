@@ -7,11 +7,26 @@ use Illuminate\Support\Facades\DB;
 
 class DocumentController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $document = DB::table('school as s')
-            ->select('school_id', 'school_name', 'branch_id', 'district_id')
+            ->leftJoin('member_education_background as meb', 'meb.school_id', '=', 's.school_id')
+            ->leftJoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
+            ->select(
+                's.school_id',
+                's.school_name',
+                's.branch_id',
+                's.district_id',
+                DB::raw('COALESCE(COUNT(meb.member_id), 0) as total_mem')
+            )
+            ->groupBy('s.school_id', 's.school_name', 's.branch_id', 's.district_id')
             ->get();
+
+
+        // $document = DB::table('school as s')
+        //     ->select('school_id', 'school_name', 'branch_id', 'district_id')
+        //     ->get();
+
         // $document = DB::table('school as s')
         //     ->leftJoin('village as v', function ($join) {
         //         $join->on('v.district_id', '=', 's.district_id')

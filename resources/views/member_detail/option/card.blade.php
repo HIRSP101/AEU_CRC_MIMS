@@ -1,6 +1,6 @@
 
     <div id="card" class="hidden">
-        <div class="text-center mt-7">
+        <div class="text-center">
             <h1 class="text-2xl font-siemreap font-bold">ប័ណ្ណសម្គាល់ខ្លួនយុវជន</h1>
         </div>
             <div class="flex justify-evenly mt-12">

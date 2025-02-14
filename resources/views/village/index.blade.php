@@ -13,10 +13,10 @@
         <ul>
             @foreach ($villages as $village)
                 <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                        <a href="{{ url('/branch/' . $branchId . '/village/' . $village->village_id . '/school') }}">
+                        <a href="{{ url('/branch/' . $branchId . '/village/' . $village->district_id . '/school') }}">
                         <div class="flex justify-between items-center py-4 pl-6">
                             <div class="flex items-center">
-                                <span class="text-lg siemreap-regular">{{ $village->village_name }}</span>
+                                <span class="text-lg siemreap-regular">{{ $village->district_name }}</span>
                             </div>
                             <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
                                 <span class="text-xs siemreap-regular">

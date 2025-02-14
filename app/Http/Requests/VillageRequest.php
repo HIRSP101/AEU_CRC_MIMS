@@ -13,7 +13,7 @@ class VillageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "village_name" => "required|string",
+            "district_name" => "required|string",
             "registration_date" => "nullable|date",
             "branch_id" => "required|exists:branch,branch_id",
         ];
