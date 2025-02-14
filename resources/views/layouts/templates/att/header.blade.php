@@ -12,7 +12,6 @@
     <link href="{{ asset('build/assets/app.css') }}" rel="stylesheet">
     <script src="{{ asset('build/assets/app.js') }}"></script>
     <script src="{{ asset('js/exportToPdf.js') }}"></script>
-
     <script src="{{asset("js/vfs_fonts.min.js")}}"></script>
     <script src="{{asset("js/pdfmake.min.js")}}"></script>
     <script src="{{ asset('js/jszip.min.js') }}"></script>

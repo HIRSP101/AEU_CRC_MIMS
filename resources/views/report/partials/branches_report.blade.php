@@ -8,9 +8,9 @@
     $i = 0;
     ?>
     <div class="bg-white mt-2 mx-2 px-3 shadow-lg rounded-lg">
-        <h1 class="text-center moul-regular my-2 text-lg text-blue-800 font-bold mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា បណ្តាញយុវជន ទីប្រឹក្សាយុវជន នឹងយុវជន</h1>
-        <h1 class="text-center moul-regular my-2 text-lg text-blue-800 font-bold">នៃសាខាកាកបាទក្រហមកម្ពុជា ២៥ រាជធានី ខេត្ត</h1>
-        <h2 class="text-center moul-regular mb-2 text-lg font-bold text-blue-800">បច្ចុប្បន្នភាពឆ្នាំ២០២៤</h2>
+        <h1 class="text-center font-khmer my-2 text-lg text-blue-800 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា បណ្តាញយុវជន ទីប្រឹក្សាយុវជន នឹងយុវជន</h1>
+        <h1 class="text-center font-khmer my-2 text-lg text-blue-800">នៃសាខាកាកបាទក្រហមកម្ពុជា ២៥ រាជធានី ខេត្ត</h1>
+        <h2 class="text-center font-khmer mb-2 text-lg text-blue-800">បច្ចុប្បន្នភាពឆ្នាំ២០២៤</h2>
         <div class="flex justify-between items-center mt-5">
             <div>
                 <button id="export_pdf" class="bg-gray-500 text-white mt-2 px-4 py-2 rounded">Export PDF</button>

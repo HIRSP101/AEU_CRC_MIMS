@@ -1,11 +1,17 @@
 {
     "khmerosbattambang": {
-        "normal": "khmerosbattambang_normal_2d799101d427900154b1c93f40e5854a"
+        "normal": "khmerosbattambang_normal_b8846b90bfb8c2e9b6dca3e2adca617c"
     },
     "khmerossiemreap": {
-        "normal": "khmerossiemreap_normal_257a219c5a878aa02dcfd2e06db86fba"
+        "normal": "khmerossiemreap_normal_c2e98d6fc87ba00bdcdb4f416fec508e"
     },
     "khmer_font": {
-        "normal": "khmer_font_normal_2d799101d427900154b1c93f40e5854a"
+        "normal": "khmer_font_normal_b8846b90bfb8c2e9b6dca3e2adca617c"
+    },
+    "khmerosmoullight": {
+        "normal": "khmerosmoullight_normal_f38cdcca4cf76862c2995f45c5fabf63"
+    },
+    "khmer": {
+        "normal": "khmer_normal_b8846b90bfb8c2e9b6dca3e2adca617c"
     }
 }

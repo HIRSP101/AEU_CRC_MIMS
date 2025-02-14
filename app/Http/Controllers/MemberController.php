@@ -49,6 +49,7 @@ class MemberController extends Controller
             'member_current_address',
             'member_pob_address'
         ])->findOrFail($id);
+        // dd($member);
 
         return view('member_detail.index', compact('member'));
     }
@@ -119,6 +120,7 @@ class MemberController extends Controller
             'member_current_address',
             'member_pob_address',
         ])->findOrFail($id);
+        // dd($member);
         $pdfContent = PDF::loadView('pdf-preview.single-member.detail', ['member' => $member]);
         // $pdfContent->setPaper('A4','landscape');
         return $pdfContent->stream('example.pdf');
