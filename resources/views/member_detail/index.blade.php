@@ -130,45 +130,20 @@
                                 font-size: 12px
                                 line-height: 1.6;
                             }
-                            
-                            h1 {
-                                font-size: 16px;
-                                font-weight: bold;
+                            h1, h2 {
                                 text-align: center;
                             }
-                            h2 {
-                                font-size: 14px;
-                                font-weight: bold;
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
                             }
-                            h3 {
-                                font-size: 12px;
-                                font-weight: normal;
-                            }
-                            p {
-                                font-size: 12px;
-                                font-weight: bold; 
-                            }
-                            .title {
-                                font-size: 14px;
-                                text-align: center;
-                            }
-                            .container {
-                                width: 90%;
-                                margin: auto;
-                                padding: 20px;
+                            td, th {
+                                
+                                padding: auto;
                             }
                             .logo {
-                                width: 50px;
-                                height: 50px;
-                            }
-                            .profile-image {
+                                margin: 0 auto;
                                 width: 100px;
-                                height: 120px;
-                                border-radius: 10px;
-                                object-fit: cover;
-                                border: 2px solid #ccc;
-                                display: block;
-                                margin: auto;
                             }
                         </style>        
                     </head>
@@ -177,16 +152,91 @@
                 var content = document.getElementById("source-html").innerHTML;
                 
                 var formattedContent = `
-                    <div class="container">
-                        <img class="logo" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}" />
+                    <div>
+                        <img class="logo" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/Logo_of_Cambodian_Red_Cross.svg'))) }}" />
                         <h1>សលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
                         <p>Cambodian Red Cross Youth Individual Information</p>
-                        <img class="profile-image" src="{{ asset($member->image ?? 'public/images/placeholder.png') }}" />
-                        ${content}
+                        <table>
+                            <tr>
+                                <td>
+                                    ឈ្មោះ {{ $member->name_kh ?? "........." }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    អក្សរឡាតាំង {{ $member->name_en ?? "..........." }}
+                                   
+                                </td>
+                                <td>
+                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ភេទ {{$member->gender}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ថ្ងៃទី ខែ ឆ្នាំកំណើត (Date of Birth): {{$member->date_of_birth ?? "........................."}}</td>
+                            </tr>
+                            <tr>
+                                <td>ទីកន្លែងកំណើត (Place of Birth): {{$member->pob ?? "............................."}}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    អសយដ្ធានបច្ចុប្បន្ន (Current Address) ផ្ទះលេខ ៖ {{$member_addr->home_no ?? "......."}}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    ផ្លូវ​​​ ៖ {{$member_addr->street_no ?? "........"}}
+                                </td>
+                                <td>ភូមិ ៖ {{$member_addr->village ?? "........."}}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    ឃុំ/សង្កាត់ ៖ {{$member_addr->commune_sangkat ?? "........."}}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    ស្រុក/ខណ្ទ ៖ {{$member_addr->district_khan ?? "........."}}
+                                </td>
+                                <td>ខេត្ត/រាជធានី ៖ {{$member_addr->provience_city ?? ""}}</td>
+                            </tr>
+                            <tr merge 2 col>
+                                <td>កម្រិតវប្បធម៌ ឬថ្នាក់ទី ឬឆ្នាំទី (Education or Class) ៖ {{$member_edu->acadmedic_year ?? "........."}}</td>
+                            </tr>
+                            <tr merge 2 col>
+                                <td>ភាសាបរទេស (Foreign language ) ៖ {{$member_edu->language}}</td>
+                            </tr>
+                            <tr merge 2 col>
+                                <td>ជំនាញផ្ទាល់ខ្លួន (Life Skills ) ៖ {{$member_edu->major}}</td>
+                            </tr>
+                            <tr merge 2 col>
+                                <td>ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនកាកបាទក្រហមកម្ពុជា (RCY Recruitment Date) ៖ {{$member_regis->registration_date}}</td>
+                            </tr>
+                            <tr merge 2 col>
+                                <td>ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនជាតិកាយរឹទ្ធិកម្ពុជា (Scout Youth Recruitment Date) ៖ {{$member_regis->registration_date}}</td>
+                            </tr>
+                            <tr merge 2 col>
+                                <td>ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជន ស.ស.យ​.ក (UYFC Recruitment Date) ៖ {{$member_regis->registration_date}}</td>
+                            </tr>
+                            <tr merge 2 col>
+                                <td>ថ្ងៃ ខែ ឆ្នាំ ចូលជាអង្គការចាត់តាំងយុវជនផ្សេងៗ (Other NGos Recruitment Date) ៖ {{$member_regis->registration_date}}</td>
+                            </tr>
+                            <tr merge 2 col>
+                                <td>វគ្គបណ្ដុះបណ្ដាលទទួលបាន ៖ {{$member_edu->misc_skill}}</td>
+                            </tr>
+                            <tr merge 2 col>
+                                <td>ឈ្មោះសាលារៀន ឬសាកលវិទ្យាល័យ (Name of School or University) ៖ {{$member_edu->institute_id}}</td>
+                            </tr>
+                            <tr>
+                                <td>ទំហំ អាវ ៖ {{$member->shirt_size}}</td>
+                            </tr>
+                            <tr merge 2 col>
+                                <td>លេខទូរសព្ទទំនាក់ទំនង (Phone Number) ៖ {{$member->phone_number}}</td>
+                            </tr>
+                            <tr merge 2 col>
+                                <td>អ៊ីម៉ែល និងហ្វេសប៊ុក (E-mail and Facebook) ៖ {{$member->email}} {{$member->facebook}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </table>
                     </div>`;
 
                 var footer = "</body></html>";
-                var sourceHTML = header+document.getElementById("source-html").innerHTML+footer;
+                var sourceHTML = header + formattedContent + footer;
+                //var sourceHTML = header+document.getElementById("source-html").innerHTML+footer;
 
                 var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
                 var fileDownload = document.createElement("a");

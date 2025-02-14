@@ -10,11 +10,11 @@ class DocumentController extends Controller
     public function index(Request $request)
     {
         $document = DB::table('school as s')
-            ->select('school_id', 'school_name', 'branch_id', 'village_id')
+            ->select('school_id', 'school_name', 'branch_id', 'district_id')
             ->get();
         // $document = DB::table('school as s')
         //     ->leftJoin('village as v', function ($join) {
-        //         $join->on('v.village_id', '=', 's.village_id')
+        //         $join->on('v.district_id', '=', 's.district_id')
         //             ->on('s.branch_id', '=', 'v.branch_id');
         //     })
         //     ->leftJoin('member_education_background as meb', function ($join) {
@@ -29,7 +29,7 @@ class DocumentController extends Controller
         //         's.type',
         //         's.district',
         //         's.branch_id',
-        //         's.village_id',
+        //         's.district_id',
         //         DB::raw('COUNT(meb.member_id) as total_mem')
         //     )
         //     ->groupBy('s.school_id', 's.school_name', 's.type', 's.district')
@@ -49,9 +49,9 @@ class DocumentController extends Controller
     //         // ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
     //         ->join('branch as b', 'meb.branch_id', '=', 'b.branch_id')
     //         ->join('school as s', 'meb.school_id', '=', 's.school_id')
-    //         ->join('village as v', 'v.village_id', '=', 's.village_id')
+    //         ->join('village as v', 'v.district_id', '=', 's.district_id')
     //         ->where('meb.branch_id', $branchId)
-    //         ->where('s.village_id', $villageId)
+    //         ->where('s.district_id', $villageId)
     //         ->where('meb.school_id', $schoolId)
     //         ->select([
     //             'mpd.member_id',
