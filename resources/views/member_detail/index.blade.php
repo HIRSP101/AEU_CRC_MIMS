@@ -14,12 +14,13 @@
     @include('components.member_navigation', ['id' => $member->id])
 
     {{-- button --}}
-    <div class="mr-4 mt-4 mb-4 text-end">
+    <div class="px-4 mb-4">
         <button id="clear_btn" class="bg-red-500 text-white hover:bg-red-400 font-battambang focus:ring-2 focus:outline-none rounded-xl px-4 py-2 text-center inline-flex items-center justify-between mr-2 mb-2">លុប</button>
         <button class="focus:ring-2 bg-green-500 text-white hover:bg-green-400 font-battambang focus:outline-none rounded-xl px-4 py-2 text-center inline-flex items-center justify-between mr-2 mb-2">យល់ព្រម</button>
         <button class="word-btn text-white text-[17px] bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-2 focus:outline-none rounded-xl px-4 py-2 text-center inline-flex items-center justify-between mr-2 mb-2" id="word-btn" onclick="exportHTML();">Export word</button>
     </div>
 
+    {{-- content A4 --}}
     <div class="w-[210mm] h-[330mm] bg-white shadow-lg mx-auto">
         <div class="px-12 hidden" id="source-html">
             <div class="grid grid-cols-6 ">
@@ -35,27 +36,27 @@
                     <div class="w-28 h-36 border border-black text-center p-2">
                         <p class="text-[12px] font-battambang">ភ្ជាប់មកនូវ</p>
                         <p class="text-[12px] font-battambang">រូបថត</p>
-                        <p class="text-[12px] mt-2">4x6</p>
-                        <p class="text-[12px]">3x4</p>
+                        <p class="text-[13px] mt-2">4x6</p>
+                        <p class="text-[13px]">3x4</p>
                     </div>
                 </div>
             </div>           
 
-            <h2 class="text-[15px] font-khmer text-blue-600">១-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន (Personal Detail)</h2>
-            <div class="font-battambang my-3 text-[14px]">
+            <h2 class="text-[14px] font-khmer text-blue-600">១-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន (Personal Detail)</h2>
+            <div class="font-battambang my-3 text-[15px]">
                 @include('member_detail.partials.detail')
             </div>
-            <h2 class="text-[15px] font-khmer text-blue-600">២-វគ្គបណ្ដុះបណ្ដាលដែលទទួលបានកន្លងមក (Training Skill)</h2>
-            <div class="font-battambang text-[14px]">
+            <h2 class="text-[14px] font-khmer text-blue-600">២-វគ្គបណ្ដុះបណ្ដាលដែលទទួលបានកន្លងមក (Training Skill)</h2>
+            <div class="font-battambang text-[15px]">
                 @include('member_detail.partials.training_skill')
             </div>
-            <h2 class="text-[15px] font-khmer text-blue-600">៣-ព័ត៌មានគ្រួសារ (Family Information)</h2>
-            <div class="font-battambang text-[14px]">
+            <h2 class="text-[14px] font-khmer text-blue-600">៣-ព័ត៌មានគ្រួសារ (Family Information)</h2>
+            <div class="font-battambang text-[15px]">
                 @include('member_detail.partials.family_info')
             </div>
-            <h2 class="text-[15px] font-khmer text-blue-600">៤-កិច្ចសន្យា (Contract)</h2>
-            <div class="font-battambang mb-8 mt-4 text-[14px]">
-                <h3>&nbsp; ខ្ញុំបាទ/នាងខ្ញុំ សូមបញ្ញាក់ថា រាល់ព័ត៌មានដែលបានរៀបរាប់ជូនខាងលើ ពិតជាត្រឹមត្រូវពិតប្រាកដមែន ហើយយល់</h3>
+            <h2 class="text-[14px] font-khmer text-blue-600">៤-កិច្ចសន្យា (Contract)</h2>
+            <div class="font-battambang mb-8 mt-4 text-[15px]">
+                <h3 class="px-2">&nbsp; ខ្ញុំបាទ/នាងខ្ញុំ សូមបញ្ញាក់ថា រាល់ព័ត៌មានដែលបានរៀបរាប់ជូនខាងលើ ពិតជាត្រឹមត្រូវពិតប្រាកដមែន ហើយយល់</h3>
                 <h3>ព្រមចូលជាសមាជិកយុវជនកាកបាទក្រហម ចាប់ពីថ្ងៃចុះហត្ថលេខានេះតទៅ</h3>
             </div>
                 <!--
