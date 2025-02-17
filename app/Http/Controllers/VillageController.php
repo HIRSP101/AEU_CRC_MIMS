@@ -18,17 +18,38 @@ class VillageController extends Controller
             ->select('branch_kh')
             ->first();
 
-        $villages = DB::table('district')
-            ->leftJoin('school', 'district.district_id', '=', 'school.district_id')
-            ->where('district.branch_id', $branchId)
+        $villages = DB::table('district as d')
+            ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
+            ->leftJoin('member_education_background as meb', function ($join) {
+                $join->on('meb.school_id', '=', 's.school_id')
+                    ->on('meb.branch_id', '=', 'd.branch_id');
+            })
+            ->leftJoin('member_personal_detail as mpd', function ($join) {
+                $join->on('mpd.member_id', '=', 'meb.member_id');
+            })
+            ->where('d.branch_id', $branchId)
             ->select(
-                'district.district_id',
-                'district.district_name',
-                DB::raw('COUNT(school.school_id) as total_schools')
+                'd.district_id',
+                'd.district_name',
+                DB::raw('COUNT(DISTINCT s.school_id) as total_schools'),
+                DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
             )
-            ->groupBy('district.district_id', 'district.district_name')
+            ->groupBy('d.district_id', 'd.district_name')
             ->get();
 
+
+
+        // $villages = DB::table('district')
+        //     ->leftJoin('school', 'district.district_id', '=', 'school.district_id')
+        //     ->where('district.branch_id', $branchId)
+        //     ->select(
+        //         'district.district_id',
+        //         'district.district_name',
+        //         DB::raw('COUNT(school.school_id) as total_schools'),
+        //         DB::raw('COUNT(meb.member_id) as total_mem')
+        //     )
+        //     ->groupBy('district.district_id', 'district.district_name')
+        //     ->get();
         return view('village.index', compact('villages', 'branchId', 'branch'));
     }
 

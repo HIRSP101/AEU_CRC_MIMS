@@ -5,7 +5,7 @@
 @section('Content')
     <div class="bg-[#fff] p-8 rounded-lg max-w-1000px m-5 shadow-md font-siemreap">
         
-        <h2 class="text-2xl font-bold text-center siemreap-regular my-2 pb-3 mb-10">គ្រឹះស្ថានឧត្តមសិក្សា កាកបាទក្រហមកម្ពុជានៃស្រុក/ភូមិ {{ $village->district_name }}</h2> 
+        <h2 class="text-2xl font-bold text-center siemreap-regular my-2 pb-3 mb-10">គ្រឹះស្ថានសិក្សា កាកបាទក្រហមកម្ពុជានៃស្រុក/ខណ្ឌ {{ $village->district_name }}</h2> 
         <div class="filter_institute flex justify-end space-x-2 mt-12 mb-5">
             <a href="{{ route('school.create', ['id' => $branchId, 'v_id' => $villageId]) }}" class="bg-blue-500 text-white px-4 py-2 rounded">
                 New School
