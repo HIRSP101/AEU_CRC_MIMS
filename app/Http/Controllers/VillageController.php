@@ -37,19 +37,6 @@ class VillageController extends Controller
             ->groupBy('d.district_id', 'd.district_name')
             ->get();
 
-
-
-        // $villages = DB::table('district')
-        //     ->leftJoin('school', 'district.district_id', '=', 'school.district_id')
-        //     ->where('district.branch_id', $branchId)
-        //     ->select(
-        //         'district.district_id',
-        //         'district.district_name',
-        //         DB::raw('COUNT(school.school_id) as total_schools'),
-        //         DB::raw('COUNT(meb.member_id) as total_mem')
-        //     )
-        //     ->groupBy('district.district_id', 'district.district_name')
-        //     ->get();
         return view('village.index', compact('villages', 'branchId', 'branch'));
     }
 

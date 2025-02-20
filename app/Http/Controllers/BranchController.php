@@ -29,8 +29,8 @@ class BranchController extends Controller
     public function index()
     {
         $total_mem_branches = $this->totalmem_branches()
-            ->where('branch.branch_id', '<', '28')
-            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image')
+            ->where('b.branch_id', '<', '28')
+            ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image')
             ->get();
 
         return view('branch.index', compact('total_mem_branches',));
@@ -39,8 +39,8 @@ class BranchController extends Controller
     public function branch_hei()
     {
         $total_mem_branchhei = $this->totalmem_branches()
-            ->where('branch.branch_id', '>', '28')
-            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.image')
+            ->where('b.branch_id', '>', '28')
+            ->groupBy('b.branch_id', 'b.branch_kh', 'b.image')
             ->get();
         //dd($total_mem_branchhei);
         return view('branch_hei.index', compact('total_mem_branchhei',));
@@ -48,19 +48,24 @@ class BranchController extends Controller
 
     public function totalmem_branches()
     {
-        $total_mem_branches = DB::table('branch as branch')
-            ->leftjoin('member_education_background as meb', 'branch.branch_id', '=', 'meb.branch_id')
-            ->leftjoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
-            ->leftJoin('district', 'branch.branch_id', '=', 'district.branch_id')
+        $total_mem_branches = DB::table('branch as b')
+            ->leftJoin('district as d', 'b.branch_id', '=', 'd.branch_id')
+            ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
+            ->leftjoin('member_education_background as meb', function ($join) {
+                $join->on('meb.school_id', '=', 's.school_id')
+                    ->on('meb.branch_id', '=', 'b.branch_id');
+            })
+            ->leftJoin('member_personal_detail as mpd', function ($join) {
+                $join->on('mpd.member_id', '=', 'meb.member_id');
+            })
             ->select(
-                'branch.branch_id',
-                'branch.branch_kh',
-                'branch.branch_image',
-                //DB::raw(value: "COUNT(distinct meb.institute_id) AS total_institutes"),
-                DB::raw("COUNT(meb.member_id) AS total_mem"),
-                DB::raw("COUNT(DISTINCT district.district_id) AS total_villages")
+                'b.branch_id',
+                'b.branch_kh',
+                'b.branch_image',
+                DB::raw("COUNT(DISTINCT meb.member_id) AS total_mem"),
+                DB::raw("COUNT(DISTINCT d.district_id) AS total_villages")
             )
-            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image');
+            ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image');
 
         return $total_mem_branches;
     }
