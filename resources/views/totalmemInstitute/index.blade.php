@@ -9,7 +9,7 @@
     $total_mem_detail = "";
     $member_pob = "";
     $institute_kh = $institution->institute_kh;
-            ?>
+                        ?>
     @if(count($total_mem) > 0)
         <?php
             $current_branch = explode(' ', $total_mem[0]->full_current_address)[3] ?? "";
@@ -28,7 +28,8 @@
                     ,
                     $total_mem[$i]->member_type
                     ,
-                    // $total_mem[$i]->branchhei_id 
+                    // $total_mem[$i]->branchhei_id,
+                    $total_mem[$i]->institute_kh,
 
                     $total_mem[$i]->education_level
                     ,
@@ -54,10 +55,10 @@
                     $total_mem[$i]->commune_sangkat_current,
                     $total_mem[$i]->home_no_current,
                     $total_mem[$i]->street_no_current,
-                    $total_mem[$i]->institute_kh,
+
                 );
             }
-                                            ?>
+                                                                    ?>
         <div id="loadingSpinner" class="fixed top-0 left-0 z-50 w-screen h-screen bg-gray-300 bg-opacity-50 h-full hidden">
             <p id="textload" class="hidden textload text-center font-siemreap">សូមរងចាំ...</p>
             <p id="textsucc" class="hidden textload text-center font-siemreap">ទាញយកជោគជ័យ</p>
@@ -332,7 +333,7 @@
                 });
             });
 
-                    /*@json($total_total)[0]["total_mem"], @json($total_fem)[0]["total_mem_fem"] */
+                                /*@json($total_total)[0]["total_mem"], @json($total_fem)[0]["total_mem_fem"] */
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endpush

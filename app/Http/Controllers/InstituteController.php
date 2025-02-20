@@ -23,35 +23,20 @@ class InstituteController extends Controller
     public function index1()
     {
         $total_member_institute = $this->totalMemberInstitute();
-        // dd($total_member_institute);
         return view("institude.index", compact("total_member_institute"));
     }
     public function totalMemberInstitute()
     {
-        // return DB::table('branch_hei as bhei')
-        //     ->leftJoin('member_education_background as meb', 'bhei.bhei_id', '=', 'meb.member_id')
-        //     ->leftJoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
-        //     ->select('bhei.bhei_id', 'bhei.institute_kh', 'bhei.image', DB::raw('COUNT(DISTINCT mpd.member_id) as total_members'))
-        //     ->groupBy('bhei.bhei_id', 'bhei.institute_kh', 'bhei.image')
-        //     ->get();
-
-        return DB::table('branch_hei as bhei')
-            ->leftJoin('branch as b', 'b.branch_id', '=', 'bhei.branch_id')
-            ->leftJoin('member_education_background as meb', function ($join) {
-                $join->on('meb.branchhei_id', '=', 'bhei.bhei_id')
-                    //->on('meb.branch_id', '=', 'bhei.branch_id')
-                    ->on('meb.branch_id', '=', 'b.branch_id');
-            })
-            ->leftJoin('member_personal_detail as mpd', function ($join) {
-                $join->on('mpd.member_id', '=', 'meb.member_id');
-            })
+        return DB::table('member_personal_detail as mpd')
+            ->leftJoin('member_education_background as meb', 'meb.member_id', '=', 'mpd.member_id')
+            ->join('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
             ->select(
-                'bhei.bhei_id',
-                'bhei.institute_kh',
-                'bhei.image',
-                DB::raw('COUNT(DISTINCT meb.member_id) as total_members') // Use COUNT DISTINCT to ensure unique member count
+                'hei.bhei_id',
+                'hei.institute_kh',
+                'hei.image',
+                DB::raw('COUNT(DISTINCT meb.member_id) as total_members')
             )
-            ->groupBy('bhei.bhei_id', 'bhei.institute_kh', 'bhei.image')
+            ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image')
             ->get();
     }
 
@@ -59,16 +44,16 @@ class InstituteController extends Controller
     {
 
         $instituteId = $request->id;
-        $institution = branch_hei::find($instituteId)->select('institute_kh')->first();
+        $institution = branch_hei::find($instituteId)->select('institute_kh')->findOrFail($instituteId);
 
         $baseQuery = DB::table('member_personal_detail as mpd')
-            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-            ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
-            ->join('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
-            ->join('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
-            ->join('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
-            ->join('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
+            ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+            ->leftJoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
+            ->leftJoin('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
+            ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
+            ->leftJoin('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
             ->where('meb.branchhei_id', '=', $instituteId);
 
         $total_fem = (clone $baseQuery)
@@ -91,6 +76,7 @@ class InstituteController extends Controller
                 'mpd.gender',
                 'mpd.date_of_birth',
                 // 'meb.institute_id',
+                'hei.institute_kh',
                 'branch.branch_name',
                 'mpd.member_type',
                 'meb.education_level',
@@ -114,7 +100,7 @@ class InstituteController extends Controller
                 'mcad.commune_sangkat as commune_sangkat_current',
                 'mcad.district_khan as district_khan_current',
                 'mcad.provience_city as provience_city_current',
-                'hei.institute_kh',
+
             ])
             ->distinct()
             ->get();
