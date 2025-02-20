@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\school;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -108,6 +109,7 @@ class DocumentController extends Controller
     public function get(Request $request)
     {
         $schoolId = $request->id;
+        $school = school::find($schoolId)->select('school_name')->findOrFail($schoolId);
 
         $baseQuery = DB::table('member_personal_detail as mpd')
             ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
@@ -148,10 +150,11 @@ class DocumentController extends Controller
                 'mpd.phone_number',
                 'mgd.guardian_phone',
                 'mpd.email',
-                'mpd.shirt_size'
+                'mpd.shirt_size',
+                's.school_name'
             ])
             ->distinct()
             ->get();
-        return view('totalmemDocs.index', compact('total_mem', 'total_fem', 'total_total'));
+        return view('totalmemDocs.index', compact('total_mem', 'total_fem', 'total_total', 'school'));
     }
 }

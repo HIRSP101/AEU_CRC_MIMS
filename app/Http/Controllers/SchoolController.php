@@ -6,6 +6,7 @@ use App\Http\Requests\SchoolRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\branch;
+use App\Models\school;
 use App\Models\village;
 use App\Services\Schools\CreateSchoolService;
 
@@ -64,6 +65,8 @@ class SchoolController extends Controller
     {
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
+        //$currentSchoolId = $request->id;
+        $currentSchool = school::find($schoolId)->select('school_name')->findOrFail($schoolId);
 
         $query = DB::table('member_personal_detail as mpd')
             ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
@@ -127,7 +130,7 @@ class SchoolController extends Controller
             'branchId' => $branchId,
             'villageId' => $villageId,
             'schoolId' => $schoolId
-        ]);
+        ], compact('currentSchool'));
     }
 
     public function create($branchId, $villageId)
