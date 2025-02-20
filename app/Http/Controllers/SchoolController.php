@@ -69,11 +69,11 @@ class SchoolController extends Controller
         $currentSchool = school::find($schoolId)->select('school_name')->findOrFail($schoolId);
 
         $query = DB::table('member_personal_detail as mpd')
-            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-            ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->join('branch as b', 'meb.branch_id', '=', 'b.branch_id')
-            ->join('school as s', 'meb.school_id', '=', 's.school_id')
-            ->join('district as v', 'v.district_id', '=', 's.district_id')
+            ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->leftJoin('branch as b', 'meb.branch_id', '=', 'b.branch_id')
+            ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
+            ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
             ->where('meb.branch_id', $branchId)
             ->where('s.district_id', $villageId)
             ->where('meb.school_id', $schoolId)

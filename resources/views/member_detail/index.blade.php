@@ -9,7 +9,7 @@
     $member_regis = $member->member_registration_detail ?? '';
     $member_guardian = $member->member_guardian_detail ?? '';
     $member_pob = $member->member_pob_address ?? '';
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ?>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ?>
 
     @include('components.member_navigation', ['id' => $member->id])
 
@@ -25,57 +25,57 @@
     </div>
 
     <div class="w-[210mm] h-[330mm] bg-white shadow-lg mx-auto">
-        <div class="px-12 hidden" id="source-html">
-            <div class="grid grid-cols-6 ">
-                <div class="col-span-5 flex flex-col items-center justify-center mb-5 ml-24 mt-6">
-                    <img class="w-[120px] h-[120px] mb-1" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}"
-                        alt="">
-                    <h1 class="text-[14px] font-khmer text-blue-600">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
-                    <h1 class="text-[14px]">Cambodian Red Cross Youth Individual Information</h1>
-                    <p class="text-xs">── ✦ 𝒯𝒜𝒞𝒯𝐼𝐸𝒩𝒢 ✦ ──</p>
-                </div>
+            <div class="px-12 hidden" id="source-html">
+                <div class="grid grid-cols-6 ">
+                    <div class="col-span-5 flex flex-col items-center justify-center mb-5 ml-24 mt-6">
+                        <img class="w-[120px] h-[120px] mb-1" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}"
+                            alt="">
+                        <h1 class="text-[14px] font-khmer text-blue-600">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
+                        <h1 class="text-[14px]">Cambodian Red Cross Youth Individual Information</h1>
+                        <p class="text-xs">── ✦ 𝒯𝒜𝒞𝒯𝐼𝐸𝒩𝒢 ✦ ──</p>
+                    </div>
 
-                <div class="flex justify-end mt-8">
-                    <div class="w-28 h-36 border border-black text-center p-2">
-                        <p class="text-[12px] font-battambang">ភ្ជាប់មកនូវ</p>
-                        <p class="text-[12px] font-battambang">រូបថត</p>
-                        <p class="text-[12px] mt-2">4x6</p>
-                        <p class="text-[12px]">3x4</p>
+                    <div class="flex justify-end mt-8">
+                        <div class="w-28 h-36 border border-black text-center p-2">
+                            <p class="text-[12px] font-battambang">ភ្ជាប់មកនូវ</p>
+                            <p class="text-[12px] font-battambang">រូបថត</p>
+                            <p class="text-[12px] mt-2">4x6</p>
+                            <p class="text-[12px]">3x4</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <h2 class="text-[15px] font-khmer text-blue-600">១-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន (Personal Detail)</h2>
-            <div class="font-battambang my-3 text-[14px]">
-                @include('member_detail.partials.detail')
+                <h2 class="text-[15px] font-khmer text-blue-600">១-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន (Personal Detail)</h2>
+                <div class="font-battambang my-3 text-[14px]">
+                    @include('member_detail.partials.detail')
+                </div>
+                <h2 class="text-[15px] font-khmer text-blue-600">២-វគ្គបណ្ដុះបណ្ដាលដែលទទួលបានកន្លងមក (Training Skill)</h2>
+                <div class="font-battambang text-[14px]">
+                    @include('member_detail.partials.training_skill')
+                </div>
+                <h2 class="text-[15px] font-khmer text-blue-600">៣-ព័ត៌មានគ្រួសារ (Family Information)</h2>
+                <div class="font-battambang text-[14px]">
+                    @include('member_detail.partials.family_info')
+                </div>
+                <h2 class="text-[15px] font-khmer text-blue-600">៤-កិច្ចសន្យា (Contract)</h2>
+                <div class="font-battambang mb-8 mt-4 text-[14px]">
+                    <h3>&nbsp; ខ្ញុំបាទ/នាងខ្ញុំ សូមបញ្ញាក់ថា រាល់ព័ត៌មានដែលបានរៀបរាប់ជូនខាងលើ ពិតជាត្រឹមត្រូវពិតប្រាកដមែន
+                        ហើយយល់</h3>
+                    <h3>ព្រមចូលជាសមាជិកយុវជនកាកបាទក្រហម ចាប់ពីថ្ងៃចុះហត្ថលេខានេះតទៅ</h3>
+                </div>
+                <!--
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button class="px-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800">Export to PDF (EMT)</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    -->
             </div>
-            <h2 class="text-[15px] font-khmer text-blue-600">២-វគ្គបណ្ដុះបណ្ដាលដែលទទួលបានកន្លងមក (Training Skill)</h2>
-            <div class="font-battambang text-[14px]">
-                @include('member_detail.partials.training_skill')
-            </div>
-            <h2 class="text-[15px] font-khmer text-blue-600">៣-ព័ត៌មានគ្រួសារ (Family Information)</h2>
-            <div class="font-battambang text-[14px]">
-                @include('member_detail.partials.family_info')
-            </div>
-            <h2 class="text-[15px] font-khmer text-blue-600">៤-កិច្ចសន្យា (Contract)</h2>
-            <div class="font-battambang mb-8 mt-4 text-[14px]">
-                <h3>&nbsp; ខ្ញុំបាទ/នាងខ្ញុំ សូមបញ្ញាក់ថា រាល់ព័ត៌មានដែលបានរៀបរាប់ជូនខាងលើ ពិតជាត្រឹមត្រូវពិតប្រាកដមែន
-                    ហើយយល់</h3>
-                <h3>ព្រមចូលជាសមាជិកយុវជនកាកបាទក្រហម ចាប់ពីថ្ងៃចុះហត្ថលេខានេះតទៅ</h3>
-            </div>
-            <!--
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button class="px-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800">Export to PDF (EMT)</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                -->
         </div>
-    </div>
-    <div class="request-form">
-        <div>
-            @include('member_detail.option.request-form')  
-                                                                                                                    </div>
-        <div>
-            @include('member_detail.option.card')
+        <div class="request-form">
+            <div>
+                @include('member_detail.option.request-form')  
+                                                                                                                        </div>
+            <div>
+                @include('member_detail.option.card')
+            </div>
         </div>
-    </div>
 @endsection
 
 @push('JS')
