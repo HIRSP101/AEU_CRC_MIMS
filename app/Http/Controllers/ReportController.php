@@ -1,108 +1,120 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Services\Reports\TotalsummarizedProvience;
+// use Spatie\LaravelPdf\Facades\Pdf;
+use Response;
+use Spatie\Browsershot\Browsershot;
+use App\Models\member_personal_detail;
+use App\Models\branch_hei;
+use ZipArchive;
 
 class ReportController extends Controller
 {
 
-    public function index() 
+    public function index()
     {
         return view('report.index');
     }
 
-    public function branches_report() {
+    public function branches_report()
+    {
         $branchesreport = $this->branches()
-        ->where('branch.branch_id', '!=', '28')
-        ->where('meb.branchhei_id', '=', null)
-        ->groupBy( 'branch.branch_kh', 'branch.branch_id')
-        ->orderBy('branch.branch_id','asc')
-        ->get();
+            ->where('branch.branch_id', '!=', '28')
+            ->where('meb.branchhei_id', '=', null)
+            ->groupBy('branch.branch_kh', 'branch.branch_id')
+            ->orderBy('branch.branch_id', 'asc')
+            ->get();
         return view('report.partials.branches_report', compact('branchesreport'));
     }
 
-    public function branchesHeiReport() {
+    public function branchesHeiReport()
+    {
 
         $branchesReport = $this->branches()
-            // ->with(['branchhei '])
-            ->select('branch.branch_kh', 'branch.branch_id')
             ->where('branch.branch_id', '!=', '28')
+            ->select('branch.branch_kh', 'branch.branch_id') // Remove province
             ->groupBy('branch.branch_kh', 'branch.branch_id')
             ->orderBy('branch.branch_id', 'asc')
             ->get();
 
         $branchHeiReport = $this->branchhei()
-            ->select('hei.institute_kh', 'hei.bhei_id', 'hei.branch_id',)
-            ->groupBy('hei.institute_kh', 'hei.bhei_id', 'hei.branch_id',)
+            ->select('hei.institute_kh', 'hei.bhei_id', 'hei.branch_id') // Include branch_id
+            ->groupBy('hei.institute_kh', 'hei.bhei_id', 'hei.branch_id')
             ->orderBy('hei.bhei_id', 'asc')
             ->get();
 
         $branchesReports = $branchesReport->merge($branchHeiReport);
         $groupedReports = $branchesReports->groupBy('branch_kh');
+
         return view('report.partials.total-member-university', compact('groupedReports'));
     }
-    
-    public function branches() {
+
+
+    public function branches()
+    {
         $branches = DB::table('member_education_background as meb')
-        ->rightjoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
-        ->leftjoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
-        ->select(
-            'branch.branch_kh',
-            DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' THEN mpd.member_id END) AS total_wm"),
-            DB::raw("COUNT(mpd.member_id) AS total_mem"),
-            DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' and mpd.member_type like 'ទីប្រឹក្សា%' THEN mpd.member_id END) AS total_ls_wm"),
-            DB::raw("COUNT(CASE WHEN mpd.member_type like 'ទីប្រឹក្សា%' THEN mpd.member_id END) AS total_ls"),
-            DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'វិទ្យាល័យ%' or institute_id like '%វិ.ហ%' and meb.branch_id != 28 THEN meb.institute_id END)) as total_hs"),
-            DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'អនុ%' and meb.branch_id != 28  THEN meb.institute_id END)) as total_ms"),
-            DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'សាកល%' or institute_id like 'សកល%' THEN meb.institute_id END)) as total_hei")
-        );
+            ->rightjoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
+            ->leftjoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
+            ->select(
+                'branch.branch_kh',
+                DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' THEN mpd.member_id END) AS total_wm"),
+                DB::raw("COUNT(mpd.member_id) AS total_mem"),
+                DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' and mpd.member_type like 'ទីប្រឹក្សា%' THEN mpd.member_id END) AS total_ls_wm"),
+                DB::raw("COUNT(CASE WHEN mpd.member_type like 'ទីប្រឹក្សា%' THEN mpd.member_id END) AS total_ls"),
+                DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'វិទ្យាល័យ%' or institute_id like '%វិ.ហ%' and meb.branch_id != 28 THEN meb.institute_id END)) as total_hs"),
+                DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'អនុ%' and meb.branch_id != 28  THEN meb.institute_id END)) as total_ms"),
+                DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'សាកល%' or institute_id like 'សកល%' THEN meb.institute_id END)) as total_hei")
+            );
 
         return $branches;
     }
 
-    public function branchhei() {
+    public function branchhei()
+    {
         $branchhei = DB::table('member_education_background as meb')
-        ->rightjoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
-        ->leftjoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
-        ->select(
-            'hei.institute_kh as branch_kh',
-            DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' THEN mpd.member_id END) AS total_wm"),
-            DB::raw("COUNT(mpd.member_id) AS total_mem"),
-            DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' and mpd.member_type like 'ទីប្រឹក្សា%' THEN mpd.member_id END) AS total_ls_wm"),
-            DB::raw("COUNT(CASE WHEN mpd.member_type like 'ទីប្រឹក្សា%' THEN mpd.member_id END) AS total_ls"),
-            DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'វិទ្យាល័យ%' or institute_id like '%វិ.ហ%' THEN meb.institute_id END)) as total_hs"),
-            DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'អនុ%'  THEN meb.institute_id END)) as total_ms"),
-            DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'សាកល%' or institute_id like 'សកល%' THEN meb.institute_id END)) as total_hei")
-        );
+            ->rightjoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftjoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
+            ->select(
+                'hei.institute_kh as branch_kh',
+                DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' THEN mpd.member_id END) AS total_wm"),
+                DB::raw("COUNT(mpd.member_id) AS total_mem"),
+                DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' and mpd.member_type like 'ទីប្រឹក្សា%' THEN mpd.member_id END) AS total_ls_wm"),
+                DB::raw("COUNT(CASE WHEN mpd.member_type like 'ទីប្រឹក្សា%' THEN mpd.member_id END) AS total_ls"),
+                DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'វិទ្យាល័យ%' or institute_id like '%វិ.ហ%' THEN meb.institute_id END)) as total_hs"),
+                DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'អនុ%'  THEN meb.institute_id END)) as total_ms"),
+                DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'សាកល%' or institute_id like 'សកល%' THEN meb.institute_id END)) as total_hei")
+            );
         return $branchhei;
     }
-    public function branchheiprivate() {
+    public function branchheiprivate()
+    {
         $branchesreport = $this->branchhei()
-        ->where('hei.type', '=', 'ឯកជន')
-        ->groupBy( 'hei.institute_kh', 'hei.bhei_id')
-        ->orderBy('hei.bhei_id','asc')
-        ->get();
+            ->where('hei.type', '=', 'ឯកជន')
+            ->groupBy('hei.institute_kh', 'hei.bhei_id')
+            ->orderBy('hei.bhei_id', 'asc')
+            ->get();
         return view('report.partials.private-university', compact('branchesreport'));
     }
 
-    public function branchheipublic() {
+    public function branchheipublic()
+    {
         $branchesreport = $this->branchhei()
-        ->where('hei.type', '=', 'សាធារណះ')
-        ->groupBy( 'hei.institute_kh', 'hei.bhei_id')
-        ->orderBy('hei.bhei_id','asc')
-        ->get();
+            ->where('hei.type', '=', 'សាធារណះ')
+            ->groupBy('hei.institute_kh', 'hei.bhei_id')
+            ->orderBy('hei.bhei_id', 'asc')
+            ->get();
         return view('report.partials.public-university', compact('branchesreport'));
     }
 
-    public function branchhei_all() {
+    public function branchhei_all()
+    {
         $branchesreport = $this->branchhei()
-        ->groupBy( 'hei.institute_kh', 'hei.bhei_id')
-        ->orderBy('hei.bhei_id','asc')
-        ->get();
+            ->groupBy('hei.institute_kh', 'hei.bhei_id')
+            ->orderBy('hei.bhei_id', 'asc')
+            ->get();
         return view('report.partials.total-university', compact('branchesreport'));
     }
-
-} 
+}

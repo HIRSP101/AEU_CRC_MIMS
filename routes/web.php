@@ -124,7 +124,7 @@ Route::middleware('auth')->group(function () use ($appC) {
 
     Route::get('/institute', "{$appC}\\InstituteController@index1")->name('institute');
     Route::get('/institute/{id}', "{$appC}\\InstituteController@get");
-    Route::get('/generate-report/{id}', "{$appC}\\InstituteController@generateReport");
+    Route::get('/generate-report/{id}', "{$appC}\\PdfController@generateReport");
     // Create village
     Route::get('/branch/{id}/village/create', "{$appC}\\VillageController@create")->name('village.create');
     Route::post('/branch/{id}/village/store', "{$appC}\\VillageController@store")->name('village.store');
