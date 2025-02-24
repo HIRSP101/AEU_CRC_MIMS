@@ -18,16 +18,24 @@ class VillageController extends Controller
             ->select('branch_kh')
             ->first();
 
-        $villages = DB::table('village')
-            ->leftJoin('school', 'village.village_id', '=', 'school.village_id')
-            ->where('village.branch_id', $branchId)
+        $villages = DB::table('district as d')
+            ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
+            ->leftJoin('member_education_background as meb', function ($join) {
+                $join->on('meb.school_id', '=', 's.school_id')
+                    ->on('meb.branch_id', '=', 'd.branch_id');
+            })
+            ->leftJoin('member_personal_detail as mpd', function ($join) {
+                $join->on('mpd.member_id', '=', 'meb.member_id');
+            })
+            ->where('d.branch_id', $branchId)
             ->select(
-        'village.village_id', 
-                    'village.village_name',
-                    DB::raw('COUNT(school.school_id) as total_schools')
+                'd.district_id',
+                'd.district_name',
+                DB::raw('COUNT(DISTINCT s.school_id) as total_schools'),
+                DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
             )
-            ->groupBy('village.village_id', 'village.village_name')
-            ->get();   
+            ->groupBy('d.district_id', 'd.district_name')
+            ->get();
 
         return view('village.index', compact('villages', 'branchId', 'branch'));
     }
@@ -47,21 +55,21 @@ class VillageController extends Controller
         $branch = branch::findOrFail($branchId);
         return view('village.create-village', compact('branch'));
     }
-   
+
     public function store(VillageRequest $request, CreateVillageService $service)
     {
         $data = $request->validated();
         $data['branch_id'] = $request->route('id');
-    
+
         $village = $service->createVillage($data);
-    
+
         return redirect()->route('village', ['id' => $village->branch_id])
-                     ->with('success', 'Village created successfully');
+            ->with('success', 'Village created successfully');
     }
 
     public function getVillages($branchId)
     {
-        $villages = DB::table('village')->where('branch_id', $branchId)->get();
+        $villages = DB::table('district')->where('branch_id', $branchId)->get();
         return response()->json($villages);
     }
 }

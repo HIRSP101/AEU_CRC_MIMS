@@ -49,37 +49,65 @@ class MemberController extends Controller
             'member_current_address',
             'member_pob_address'
         ])->findOrFail($id);
+        // dd($member);
 
         return view('member_detail.index', compact('member'));
     }
 
-    public function getMemberOption($id)
-    {
-        return view('memberOption.index', compact('id'));
-        //return view('member_detail.index', compact('id'));
-    }
+    // public function getMemberOption($id)
+    // {
+    //     return view('memberOption.index', compact('id'));
+    //     //return view('member_detail.index', compact('id'));
+    // }
 
-    public function getRequestForm($id)
+    public function getRequestForm($r_id)
     {
-        $member = member_personal_detail::with([
-            'member_guardian_detail',
-            'member_registration_detail',
-            'member_education_background',
-            'member_current_address',
-            'member_pob_address',
-        ])->findOrFail($id);
+        $member = DB::table('member_personal_detail as mpd')
+            ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+            ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->join('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
+            ->join('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
+            ->join('school as s', 'meb.school_id', '=', 's.school_id')
+            ->join('branch as b', 'b.branch_id', '=', 'meb.branch_id')
+            ->where('mpd.member_id', $r_id)
+            ->select(
+                'mpd.*',
+                'mgd.*',
+                'mrd.*',
+                'meb.*',
+                'mca.*',
+                'mpa.*',
+                's.school_name',
+                'b.branch_kh'
+            )
+            ->first();
+
         return view('member_detail.option.request-form', compact('member'));
     }
 
-    public function getMemberCard($id)
+    public function getMemberCard($c_id)
     {
-        $member = member_personal_detail::with([
-            'member_guardian_detail',
-            'member_registration_detail',
-            'member_education_background',
-            'member_current_address',
-            'member_pob_address',
-        ])->findOrFail($id);
+        $member = DB::table('member_personal_detail as mpd')
+            ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+            ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->join('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
+            ->join('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
+            ->join('school as s', 'meb.school_id', '=', 's.school_id')
+            ->join('branch as b', 'b.branch_id', '=', 'meb.branch_id')
+            ->where('mpd.member_id', $c_id)
+            ->select(
+                'mpd.*',
+                'mgd.*',
+                'mrd.*',
+                'meb.*',
+                'mca.*',
+                'mpa.*',
+                's.school_name',
+                'b.branch_kh'
+            )
+            ->first();
         return view('member_detail.option.card', compact('member'));
     }
 
@@ -92,7 +120,8 @@ class MemberController extends Controller
             'member_current_address',
             'member_pob_address',
         ])->findOrFail($id);
-        $pdfContent = PDF::loadView('pdf-preview.single-member.detail', ['member' => $member]); 
+        // dd($member);
+        $pdfContent = PDF::loadView('pdf-preview.single-member.detail', ['member' => $member]);
         // $pdfContent->setPaper('A4','landscape');
         return $pdfContent->stream('example.pdf');
         // return view('pdf-preview.single-member.detail', compact('member'));

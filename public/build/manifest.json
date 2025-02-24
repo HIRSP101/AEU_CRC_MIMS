@@ -1,16 +1,28 @@
 {
   "resources/css/app.css": {
+<<<<<<< HEAD
     "file": "assets/app-iwr5Nudi.css",
+=======
+    "file": "assets/app-DHfQm9n9.css",
+>>>>>>> 4bbf433d2d27ce5ca15f98f336180a9bae485aa2
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
+<<<<<<< HEAD
     "file": "assets/app-DsRcIJ90.js",
+=======
+    "file": "assets/app-Ctdfor3K.js",
+>>>>>>> 4bbf433d2d27ce5ca15f98f336180a9bae485aa2
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
+<<<<<<< HEAD
       "assets/app-tpDL4rN6.css"
+=======
+      "assets/app-C2Zq6lBn.css"
+>>>>>>> 4bbf433d2d27ce5ca15f98f336180a9bae485aa2
     ]
   }
 }

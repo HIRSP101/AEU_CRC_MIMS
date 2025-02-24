@@ -91,7 +91,7 @@ class testdbconnection extends Controller
     {
         $member_id = $request->input("member_id");
         // dd($member_id);
-        $memberPersonalDetail = member_personal_detail::findall();
+        $memberPersonalDetail = member_personal_detail::all();
 
         if (!$memberPersonalDetail) {
             return response()->json([
