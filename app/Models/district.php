@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class village extends Model
+class district extends Model
 {
     protected $connection = "mysql";
-    protected $table = "village";
-    protected $primaryKey = "village_id";
+    protected $table = "district";
+    protected $primaryKey = "district_id";
     public $timestamps = false;
-    protected $fillable = ["village_name", "registration_date", "branch_id"];
+    protected $fillable = ["district_name", "registration_date", "branch_id"];
 
     public function branch(): BelongsTo
     {

@@ -75,6 +75,7 @@ export default function setuppagination(array, attr_arr, updateroute) {
         $(".footer span").text(
             `បង្ហាញពី ${start_index} ដល់ ${end_index}​ នាក់ នៃចំនួនសរុប ${array_length} នាក់`
         );
+        // ${array_length + 2}
         $(".index_buttons button").removeClass("active");
         $(`.index_buttons button[data-index='${current_index}']`).addClass(
             "active"
