@@ -173,9 +173,9 @@ $institute_kh = $institution->institute_kh;
                 </div>
             </div>
         </div>
-@else
-    <p class="font-siemreap"> មិនមានទិន្ទន័យគ្រប់គ្រង </p>
-@endif
+    @else
+    <p class="font-battambang text-center text-2xl mt-4"> មិនមានទិន្ទន័យគ្រប់គ្រង </p>
+    @endif
     @endsection
 
     @push('JS')

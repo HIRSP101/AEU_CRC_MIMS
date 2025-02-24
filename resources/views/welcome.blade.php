@@ -11,8 +11,7 @@
 
 <body class="bg-gray-100 p-8">
     <h1 class="text-xl font-bold mb-4">Test Progress</h1>
-
-
+    
     <!-- Progress -->
     <div class="flex w-full h-3 bg-gray-200 rounded-full overflow-hidden dark:bg-neutral-700" role="progressbar"
         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">

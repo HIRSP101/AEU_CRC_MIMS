@@ -124,7 +124,7 @@
    
    
 @else
-    <p class="font-siemreap"> មិនមានទិន្ទន័យគ្រប់គ្រង </p>
+    <p class="font-battambang text-center text-2xl mt-4"> មិនមានទិន្ទន័យគ្រប់គ្រង </p>
 @endif
 @endsection
 

@@ -8,12 +8,14 @@ use App\Models\branch_hei;
 use App\Models\member_personal_detail;
 use App\Http\Requests\MemberRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use App\Services\Members\DeleteMemberService;
 use App\Services\Members\CreateMemberService;
 use App\Services\Members\UpdateMemberService;
+use Spatie\Browsershot\Browsershot;
 
 use Exception;
 use Log;
@@ -51,7 +53,7 @@ class MemberController extends Controller
         ])->findOrFail($id);
         // dd($member);
 
-        return view('member_detail.index', compact('member'));
+        return view('pdf-preview.single-member.print-single-member', compact('member'));
     }
 
     public function getMemberOption($id)
@@ -94,10 +96,21 @@ class MemberController extends Controller
             'member_pob_address',
         ])->findOrFail($id);
         // dd($member);
-        $pdfContent = PDF::loadView('pdf-preview.single-member.detail', ['member' => $member]); 
-        // $pdfContent->setPaper('A4','landscape');
-        return $pdfContent->stream('example.pdf');
-        // return view('pdf-preview.single-member.detail', compact('member'));
+        try {
+            $html = view('pdf-preview.single-member.print-single-member', compact('member'))->render();
+        
+            $PDF = Browsershot::html($html)
+                ->setOption('no-sandbox', true)
+                ->setOption('disable-setuid-sandbox', true)
+                ->pdf(); 
+        
+            return response($PDF, 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="example.pdf"',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function insertMember(MemberRequest $request): JsonResponse

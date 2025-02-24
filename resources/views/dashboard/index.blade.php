@@ -29,17 +29,18 @@
                     <!-- Initial Cards (First 5 Cards) -->
                     <div>
                         <div id="initial-cards" class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-battambang p-2">
-                            @foreach ($branches as $key => $val)
-                                @if ($loop->index < 5)
-                                    <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
-                                        <div class="relative bg-white p-2">
+                            @foreach ($branches as $val)
+                            
+                                @if ($loop->index < 10)
+                                    <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg transition-transform duration-150 ease-in-out hover:scale-110">
+                                        <div class="relative bg-white p-2 border">
                                             <div class="flex justify-center items-center">
-                                                <img class="w-[200px] h-[180px] rounded-md" src="{{ asset("images/branches/b-$key.jpg") }}" alt="Branch Image">
+                                                <img class="w-[150px] h-[130px] sm:w-[180px] sm:h-[160px] md:w-[200px] md:h-[170px] lg:w-[200px] lg:h-[170px]  rounded-md" src="{{ asset($val->branch_image) }}" alt="Branch Image">
                                             </div>
                                         </div>
                                         <div class="p-2 bg-[#f1f5f9] font-battambang text-center">
                                             @if (auth()->user()->hasRole('admin'))
-                                                <a href="/branch/{{ $key }}" class="block opacity-100 mb-1">{{ $val }}</a>
+                                                <a href="/branch/{{ $val->branch_id }}" class="block opacity-100 mb-1">{{ $val->branch_kh }}</a>
                                             @else
                                                 <p class="block opacity-100 mb-1">{{ $val }}</p>
                                             @endif
@@ -47,23 +48,24 @@
                                     </div>
                                 @endif
                             @endforeach
+                            
                         </div>
                     </div>
         
                     <!-- Additional Cards (Hidden Initially) -->
                     <span id="more-cards" class="hidden">
-                        <div class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-siemreap p-2">
-                            @foreach ($branches as $key => $val)
-                                @if ($loop->index >= 5)
-                                    <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
-                                        <div class="relative bg-white p-2">
+                        <div class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-battambang p-2">
+                            @foreach ($branches as $val)
+                                @if ($loop->index > 5)
+                                    <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg transition-transform duration-150 ease-in-out hover:scale-110">
+                                        <div class="relative bg-white p-2 border">
                                             <div class="flex justify-center items-center">
-                                                <img class="w-[200px] h-[180px] rounded-md" src="{{ asset("images/branches/b-$key.jpg") }}" alt="Branch Image">
+                                                <img class="w-[200px] h-[170px] rounded-md" src="{{ asset($val->branch_image) }}" alt="Branch Image">
                                             </div>
                                         </div>
                                         <div class="p-2 bg-[#f1f5f9] font-battambang text-center">
                                             @if (auth()->user()->hasRole('admin'))
-                                                <a href="/branch/{{ $key }}" class="block opacity-100 mb-1">{{ $val }}</a>
+                                                <a href="/branch/{{ $val->branch_id  }}" class="block opacity-100 mb-1">{{ $val->branch_kh  }}</a>
                                             @else
                                                 <p class="block opacity-100 mb-1">{{ $val }}</p>
                                             @endif
@@ -88,7 +90,7 @@
         </div> 
 
         <div class="w-full p-2 mt-4">
-            <h1 class="text-center text-gray-800 font-battambang font-black text-2xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
+            <h1 class="text-center text-gray-800 font-khmer text-xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
             <div class="bg-white shadow-md rounded my-6">
                 <table class="min-w-max w-full table-auto font-battambang">
                     <thead>
