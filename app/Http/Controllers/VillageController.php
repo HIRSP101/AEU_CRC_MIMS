@@ -66,10 +66,31 @@ class VillageController extends Controller
         return redirect()->route('village', ['id' => $village->branch_id])
             ->with('success', 'Village created successfully');
     }
+    public function create2()
+    {
+        $branches = DB::table('branch')->get();
+        return view('village.create-village2', compact('branches'));
+    }
+    public function store2(VillageRequest $request, CreateVillageService $service)
+    {
+        $data = $request->validated();
+        $data['branch_id'] = $request->route('id');
+
+        $village = $service->createVillage($data);
+
+        return redirect()->route('village', ['id' => $village->branch_id])
+            ->with('success', 'Village created successfully');
+    }
 
     public function getVillages($branchId)
     {
         $villages = DB::table('district')->where('branch_id', $branchId)->get();
         return response()->json($villages);
+    }
+
+    public function getDistrict()
+    {
+        $districts = DB::table('district')->get();
+        return response()->json($districts);
     }
 }

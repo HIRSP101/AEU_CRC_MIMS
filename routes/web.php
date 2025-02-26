@@ -133,6 +133,14 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branch/{id}/village/{v_id}/school/create', "{$appC}\\SchoolController@create")->name('school.create');
     Route::post('/branch/{id}/village/{v_id}/school/store', "{$appC}\\SchoolController@store")->name('school.store');
 
+    //Create district2
+    Route::get('/createdistrict', "{$appC}\\VillageController@create2")->name('createdistrict');
+    Route::post('/storedistrict', "{$appC}\\VillageController@store2")->name('storedistrict');
+    Route::get('/get-district', "{$appC}\\VillageController@getDistrict");
+    // Create school 2
+    Route::get('/createschool', "{$appC}\\SchoolController@create2")->name('createschool');
+    Route::post('/storeschool', "{$appC}\\SchoolController@store2")->name('storeschool');
+
     Route::get('/branch/{id}/village', "{$appC}\\VillageController@index")->name('village');
     Route::get('/branch/{id}/village/{v_id}', "{$appC}\\VillageController@get");
     Route::get('/branch/{id}/village/{v_id}/school', "{$appC}\\SchoolController@index1")->name('school');

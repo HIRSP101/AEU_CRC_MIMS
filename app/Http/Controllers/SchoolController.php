@@ -153,4 +153,27 @@ class SchoolController extends Controller
         return redirect()->route('school', ['id' => $school->branch_id, 'v_id' => $school->district_id])
             ->with('success', 'School created successfully');
     }
+
+    // School 2
+    public function create2()
+    {
+        $branch = DB::table('branch')->get();
+        $village = DB::table('district')->get();
+        $branches = DB::table('branch')->get();
+        $villages = DB::table('district')->get();
+
+        return view('school.create-school2', compact('branch', 'village', 'branches', 'villages'));
+    }
+
+    public function store2(SchoolRequest $request, CreateSchoolService $service)
+    {
+        $data = $request->validated();
+        $data['branch_id'] = $request->route('id');
+        $data['district_id'] = $request->route('v_id');
+
+        $school = $service->createSchool($data);
+
+        return redirect()->route('school', ['id' => $school->branch_id, 'v_id' => $school->district_id])
+            ->with('success', 'School created successfully');
+    }
 }
