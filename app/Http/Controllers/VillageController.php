@@ -73,13 +73,17 @@ class VillageController extends Controller
     }
     public function store2(VillageRequest $request, CreateVillageService $service)
     {
-        $data = $request->validated();
-        $data['branch_id'] = $request->route('id');
+        $request->validate([
+            'district_name' => 'required|string|max:255',
+            'branch_id' => 'required|exists:branch,branch_id'
+        ]);
 
-        $village = $service->createVillage($data);
+        $districtId = DB::table('district')->insertGetId([
+            'district_name' => $request->input('district_name'),
+            'branch_id' => $request->input('branch_id')
+        ]);
 
-        return redirect()->route('village', ['id' => $village->branch_id])
-            ->with('success', 'Village created successfully');
+        return redirect()->route('createdistrict')->with('success', 'District created successfully');
     }
 
     public function getVillages($branchId)

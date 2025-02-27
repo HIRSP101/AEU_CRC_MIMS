@@ -41,8 +41,8 @@
 
                     <div class="grid grid-cols-3 gap-4">
                         <div>
-                            <label for="district" class="block font-siemreap mb-2">ភូមិ</label>
-                            <input type="text" name="district" id="district"
+                            <label for="village_name" class="block font-siemreap mb-2">ភូមិ</label>
+                            <input type="text" name="village_name" id="village_name"
                                 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
                                 required>
                         </div>
@@ -51,11 +51,9 @@
                             <select name="district_id" id="district_id"
                                 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
                                 @foreach($villages as $v)
-
-                                    <option>
+                                    <option value="{{ $v->district_id }}">
                                         {{ $v->district_name }}
                                     </option>
-
                                 @endforeach
                             </select>
                         </div>
@@ -64,11 +62,9 @@
                             <select name="branch_id" id="branch_id"
                                 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
                                 @foreach($branches as $b)
-
-                                    <option>
+                                    <option value="{{ $b->branch_id }}">
                                         {{ $b->branch_kh }}
                                     </option>
-
                                 @endforeach
                             </select>
                         </div>

@@ -27,11 +27,9 @@
                         <select name="branch_id" id="branch_id"
                             class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
                             @foreach($branches as $b)
-
-                                <option>
+                                <option value="{{ $b->branch_id }}">
                                     {{ $b->branch_kh }}
                                 </option>
-
                             @endforeach
                         </select>
                     </div>

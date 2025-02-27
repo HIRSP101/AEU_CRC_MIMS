@@ -19,23 +19,6 @@ class SchoolController extends Controller
             ->select('district_name')
             ->first();
 
-        // $schools = DB::table('school as s')
-        // ->join('village as v', 'v.village_id', '=', 's.village_id')
-        // ->leftJoin('branch as b', 'b.branch_id', '=', 's.branch_id')
-        // ->leftJoin('member_education_background as meb', 'b.branch_id', '=', 'meb.branch_id')
-        // ->leftJoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
-        // ->where('s.branch_id', $branchId)
-        // ->where('s.village_id', $villageId)
-        // ->select(
-        //     's.school_id',
-        //     's.school_name',
-        //     's.type',
-        //     's.district',
-        //     DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
-        // )
-        // ->groupBy('s.school_id', 's.school_name', 's.type', 's.district')
-        // ->get();
-
         $schools = DB::table('school as s')
             ->leftJoin('district as v', function ($join) {
                 $join->on('v.district_id', '=', 's.district_id')
@@ -167,13 +150,25 @@ class SchoolController extends Controller
 
     public function store2(SchoolRequest $request, CreateSchoolService $service)
     {
-        $data = $request->validated();
-        $data['branch_id'] = $request->route('id');
-        $data['district_id'] = $request->route('v_id');
+        $request->validate([
+            'school_name' => 'required|string|max:255',
+            'type' => 'required|string',
+            'registration_date' => 'required|date',
+            'village_name' => 'required|string',
+            'district_id' => 'required|exists:district,district_id',
+            'branch_id' => 'required|exists:branch,branch_id',
+        ]);
 
-        $school = $service->createSchool($data);
+        // $school = DB::table('school')->insertGetId([
+        //     'school_name' => $request->input('school_name'),
+        //     'type' => $request->input('type'),
+        //     'village_name' => $request->input('village_name'),
+        //     'registration_date' => $request->input('registration_date'),
+        //     'branch_id' => $request->input('branch_id'),
+        //     'district_id' => $request->input('district_id'),
+        // ]);
+        // dd($request->all());
 
-        return redirect()->route('school', ['id' => $school->branch_id, 'v_id' => $school->district_id])
-            ->with('success', 'School created successfully');
+        return redirect()->route('createschool')->with('success', 'School created successfully.');
     }
 }
