@@ -7,7 +7,7 @@
     <?php
     $current_branch = "";
     $total_mem_detail = [];
-    $school_name = $currentSchool->school_name;
+    $school_name = $currentSchool?->school_name;
                     ?>
     @if(isset($data) && count($data) > 0)
         <?php
@@ -15,27 +15,34 @@
             foreach ($data as $item) {
                 $total_mem_detail[] = [
                     $item->member_id,
-                    $item->name_kh,
-                    $item->name_en,
-                    $item->gender,
-                    $item->date_of_birth,
-                    $item->school_name,
-                    $item->member_type,
-                    $item->education_level,
-                    $item->registration_date,
-                    $item->full_current_address,
-                    $item->phone_number,
+                    $item->name_kh ?: '',
+                    $item->name_en ?: '',
+                    $item->gender ?: '',
+                    $item->date_of_birth ?: '',
+                    $item->school_name ?: '',
+                    $item->member_type ?: '',
+                    $item->education_level ?: '',
+                    $item->registration_date ?: '',
+                    $item->full_current_address ?: '',
+                    $item->phone_number ?: '',
                     //$item->guardian_phone,
-                    $item->shirt_size,
-                    $item->school_name
+                    $item->shirt_size ?: '',
+                    $item->school_name ?: ''
                 ];
             }
 
-                                ?>
+        ?>
         <div class="bg-white mt-2 mx-3 shadow-lg">
             <h1 class="text-center font-siemreap my-2 font-bold text-2xl"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន
                 និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
-            <h2 class="text-center font-siemreap mb-2 text-2xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា {{$school_name}}</h2>
+
+            <h2 class="text-center font-siemreap mb-2 text-2xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា
+            @if ($school_name)
+                {{ $school_name }}
+            @else 
+                {{$data[0]->branch_kh}}
+            @endif    
+            </h2>
 
             <div class="flex justify-between items-center mb-4 mt-14 px-4">
                 <!-- Search Bar -->

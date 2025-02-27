@@ -137,6 +137,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branch/{id}/village/{v_id}', "{$appC}\\VillageController@get");
     Route::get('/branch/{id}/village/{v_id}/school', "{$appC}\\SchoolController@index1")->name('school');
     Route::get('/branch/{id}/village/{v_id}/school/{s_id}', "{$appC}\\SchoolController@get");
+    Route::get("/wholebranch/{id}", "{$appC}\\SchoolController@get")->name("wholebranch");
 
     Route::get('/document', "{$appC}\\DocumentController@index")->name('document');
     Route::get('/document/{id}', "{$appC}\\DocumentController@get");

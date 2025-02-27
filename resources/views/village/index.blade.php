@@ -13,6 +13,23 @@
             </a>
         </div>
         <ul>
+            <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
+                <a href="{{ route('wholebranch', ['id' => $branchId]) }}">
+                    <div class="flex justify-between items-center py-4 pl-6">
+                        <div class="flex items-center">
+                            <span class="text-lg siemreap-regular">សរុប </span>
+                        </div>
+                        <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
+                            <span class="text-xs siemreap-regular">
+                                ស.ម <strong>{{ $branchWhole->total_mem ?? 0 }} នាក់</strong>
+                            </span>
+                            <span class="text-xs siemreap-regular">
+                                {{ $branchWhole->total_schools ?? 0 }} អនុសាខា
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </li>
             @foreach ($villages as $village)
                 <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
                     <a href="{{ url('/branch/' . $branchId . '/village/' . $village->district_id . '/school') }}">

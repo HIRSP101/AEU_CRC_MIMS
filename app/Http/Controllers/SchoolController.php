@@ -61,22 +61,17 @@ class SchoolController extends Controller
         return view('school.index', compact('schools', 'branchId', 'villageId', 'village'));
     }
 
-    public function get($branchId, $villageId, $schoolId, Request $request)
+    public function get(Request $request, $branchId = null, $villageId = null, $schoolId = null)
     {
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
-        //$currentSchoolId = $request->id;
-        $currentSchool = school::find($schoolId)->select('school_name')->findOrFail($schoolId);
-
+        //dd($branchId);
         $query = DB::table('member_personal_detail as mpd')
             ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
             ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
             ->leftJoin('branch as b', 'meb.branch_id', '=', 'b.branch_id')
             ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
             ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
-            ->where('meb.branch_id', $branchId)
-            ->where('s.district_id', $villageId)
-            ->where('meb.school_id', $schoolId)
             ->select([
                 'mpd.member_id',
                 'mpd.member_code',
@@ -85,6 +80,7 @@ class SchoolController extends Controller
                 'mpd.gender',
                 'mpd.date_of_birth',
                 'b.branch_name',
+                'b.branch_kh',
                 'mpd.member_type',
                 's.school_name',
                 'meb.education_level',
@@ -95,42 +91,41 @@ class SchoolController extends Controller
                 'mpd.phone_number',
                 'mpd.email',
                 'mpd.shirt_size',
-                // DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
-            ])
-            ->groupBy([
-                'mpd.member_id',
-                'mpd.member_code',
-                'mpd.name_kh',
-                'mpd.name_en',
-                'mpd.gender',
-                'meb.school_id',
-                's.school_name',
-                'mpd.date_of_birth',
-                'mpd.member_type',
-                'meb.education_level',
-                'meb.acadmedic_year',
-                'mrd.registration_date',
-                'mrd.expiration_date',
-                'mpd.full_current_address',
-                'mpd.phone_number',
-                'mpd.email',
-                'mpd.shirt_size'
             ]);
-
-        $total_mem = $query->get();
-
+        
+        if ($branchId) {
+            $query->where('meb.branch_id', $branchId);
+        }
+        
+        if ($villageId) {
+            $query->where('s.district_id', $villageId);
+        }
+        
+        if ($schoolId) {
+            $query->where('meb.school_id', $schoolId);
+        }
+        
         if ($startDate && $endDate) {
             $query->whereBetween('mrd.registration_date', [$startDate, $endDate]);
         }
-
+        
+        $currentSchool = null;
+        if ($schoolId) {
+            $currentSchool = DB::table('school')
+                ->select('school_name')
+                ->where('school_id', $schoolId)
+                ->first();
+        }
+        
         $data = $query->get();
-
+        //dd($data);
         return view('totalmemSchool.index', [
             'data' => $data,
             'branchId' => $branchId,
             'villageId' => $villageId,
-            'schoolId' => $schoolId
-        ], compact('currentSchool'));
+            'schoolId' => $schoolId,
+            'currentSchool' => $currentSchool
+        ]);
     }
 
     public function create($branchId, $villageId)

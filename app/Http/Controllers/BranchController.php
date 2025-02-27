@@ -32,8 +32,7 @@ class BranchController extends Controller
             ->where('b.branch_id', '<', '28')
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image')
             ->get();
-
-        return view('branch.index', compact('total_mem_branches',));
+        return view('branch.index', compact('total_mem_branches'));
     }
 
     public function branch_hei()
@@ -87,6 +86,7 @@ class BranchController extends Controller
         //dd($bhei_col);
         return view('branch.partials.createform.update', compact('total_branches', 'bhei'));
     }
+
     // public function get(Request $request)
     // {
     //     $baseQuery = DB::table('member_personal_detail as mpd')
