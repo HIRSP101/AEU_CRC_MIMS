@@ -13,40 +13,34 @@ class VillageController extends Controller
 {
     public function index($branchId)
     {
-        $branch = DB::table('branch')
-            ->where('branch_id', $branchId)
-            ->select('branch_kh')
-            ->first();
+        $branch = DB::table('branch')->where('branch_id', $branchId)->select('branch_kh')->first();
 
-        $villages = DB::table('district as d')
+        $data = DB::table('district as d')
+            ->select('d.district_id', 'd.district_name', DB::raw('COUNT(DISTINCT s.school_id) as total_schools'), DB::raw('COUNT(DISTINCT meb.member_id) as total_mem'))
             ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
-            ->leftJoin('member_education_background as meb', function ($join) {
-                $join->on('meb.school_id', '=', 's.school_id')
-                    ->on('meb.branch_id', '=', 'd.branch_id');
+            ->leftJoin('member_education_background as meb', function ($join) use ($branchId) {
+                $join->on('meb.school_id', '=', 's.school_id')->where('meb.branch_id', '=', DB::raw($branchId));
             })
-            ->leftJoin('member_personal_detail as mpd', function ($join) {
-                $join->on('mpd.member_id', '=', 'meb.member_id');
-            })
+            ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
             ->where('d.branch_id', $branchId)
-            ->select(
-                'd.district_id',
-                'd.district_name',
-                DB::raw('COUNT(DISTINCT s.school_id) as total_schools'),
-                DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
-            )
             ->groupBy('d.district_id', 'd.district_name')
             ->get();
 
-        return view('village.index', compact('villages', 'branchId', 'branch'));
+        $branchTotals = (object) [
+            'total_schools' => $data->sum('total_schools'),
+            'total_mem' => $data->sum('total_mem'),
+        ];
+        //dd($branchTotals);
+        return view('village.index', [
+            'villages' => $data,
+            'branchId' => $branchId,
+            'branch' => $branch,
+            'branchWhole' => $branchTotals,
+        ]);
     }
-
     public function get($branchId, $villageId)
     {
-        $schools = DB::table('branch_hei')
-            ->where('branch_id', $branchId)
-            ->where('village', $villageId)
-            ->select('bhei_id', 'institute_kh', 'image')
-            ->get();
+        $schools = DB::table('branch_hei')->where('branch_id', $branchId)->where('village', $villageId)->select('bhei_id', 'institute_kh', 'image')->get();
         return view('school.index', compact('schools', 'branchId', 'villageId'));
     }
 
@@ -63,7 +57,8 @@ class VillageController extends Controller
 
         $village = $service->createDistrict($data);
 
-        return redirect()->route('village', ['id' => $village->branch_id])
+        return redirect()
+            ->route('village', ['id' => $village->branch_id])
             ->with('success', 'Village created successfully');
     }
     public function create2()
