@@ -154,4 +154,8 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/detail/{id}', "{$appC}\\MemberController@memberDetailPdf");
 });
 
+
+
+
+
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");
