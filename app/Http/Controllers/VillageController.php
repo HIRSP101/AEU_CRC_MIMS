@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VillageRequest;
-use App\Services\Villages\CreateVillageService;
+use App\Services\Villages\CreateDistrictService;
 use Illuminate\Http\Request;
 use App\Models\branch;
 use App\Models\village;
@@ -56,12 +56,12 @@ class VillageController extends Controller
         return view('village.create-village', compact('branch'));
     }
 
-    public function store(VillageRequest $request, CreateVillageService $service)
+    public function store(VillageRequest $request, CreateDistrictService $service)
     {
         $data = $request->validated();
         $data['branch_id'] = $request->route('id');
 
-        $village = $service->createVillage($data);
+        $village = $service->createDistrict($data);
 
         return redirect()->route('village', ['id' => $village->branch_id])
             ->with('success', 'Village created successfully');
@@ -71,7 +71,7 @@ class VillageController extends Controller
         $branches = DB::table('branch')->get();
         return view('village.create-village2', compact('branches'));
     }
-    public function store2(VillageRequest $request, CreateVillageService $service)
+    public function store2(VillageRequest $request, CreateDistrictService $service)
     {
         $request->validate([
             'district_name' => 'required|string|max:255',

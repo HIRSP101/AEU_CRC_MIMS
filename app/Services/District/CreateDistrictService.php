@@ -4,9 +4,9 @@ namespace App\Services\Villages;
 
 use App\Models\district;
 
-class CreateVillageService
+class CreateDistrictService
 {
-    public function createVillage(array $data): district
+    public function createDistrict(array $data): district
     {
         return district::create([
             "district_name" => $data['district_name'],

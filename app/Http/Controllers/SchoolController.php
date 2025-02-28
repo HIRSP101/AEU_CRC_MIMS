@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\branch;
 use App\Models\school;
-use App\Models\village;
+use App\Models\district;
 use App\Services\Schools\CreateSchoolService;
 
 class SchoolController extends Controller
@@ -159,15 +159,14 @@ class SchoolController extends Controller
             'branch_id' => 'required|exists:branch,branch_id',
         ]);
 
-        // $school = DB::table('school')->insertGetId([
-        //     'school_name' => $request->input('school_name'),
-        //     'type' => $request->input('type'),
-        //     'village_name' => $request->input('village_name'),
-        //     'registration_date' => $request->input('registration_date'),
-        //     'branch_id' => $request->input('branch_id'),
-        //     'district_id' => $request->input('district_id'),
-        // ]);
-        // dd($request->all());
+        $school = DB::table('school')->insertGetId([
+            'school_name' => $request->input('school_name'),
+            'type' => $request->input('type'),
+            'village_name' => $request->input('village_name'),
+            'registration_date' => $request->input('registration_date'),
+            'branch_id' => $request->input('branch_id'),
+            'district_id' => $request->input('district_id'),
+        ]);
 
         return redirect()->route('createschool')->with('success', 'School created successfully.');
     }

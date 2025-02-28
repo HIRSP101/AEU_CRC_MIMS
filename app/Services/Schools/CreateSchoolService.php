@@ -10,7 +10,7 @@ class CreateSchoolService
     {
         return school::create([
             "school_name" => $data['school_name'],
-            "type" => $data['type'],
+            "school_type" => $data['school_type'],
             "village_name" => $data['village_name'],
             "registration_date" => $data['registration_date'],
             "branch_id" => $data['branch_id'],
