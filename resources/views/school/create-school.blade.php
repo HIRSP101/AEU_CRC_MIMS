@@ -24,8 +24,8 @@
                         <div>
                             <label for="type" class="block font-siemreap mb-2">ប្រភេទ</label>
                             <select name="type" id="type" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
-                                <option value="Secondary School">អនុវិទ្យាល័យ</option>
-                                <option value="High School">វិទ្យាល័យ</option>
+                                <option value="អនុវិទ្យាល័យ">អនុវិទ្យាល័យ</option>
+                                <option value="វិទ្យាល័យ">វិទ្យាល័យ</option>
                             </select>
                         </div>
                         <div>

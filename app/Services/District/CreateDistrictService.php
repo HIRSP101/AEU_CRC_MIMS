@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Villages;
+namespace App\Services\District;
 
 use App\Models\district;
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VillageRequest;
-use App\Services\Villages\CreateDistrictService;
+use App\Services\District\CreateDistrictService;
 use Illuminate\Http\Request;
 use App\Models\branch;
 use App\Models\village;
