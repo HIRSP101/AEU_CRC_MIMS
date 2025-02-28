@@ -36,8 +36,8 @@
 
                     <div class="grid grid-cols-3 gap-4">
                         <div>
-                            <label for="district" class="block font-siemreap mb-2">ភូមិ</label>
-                            <input type="text" name="district" id="district" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300" required>
+                            <label for="village_name" class="block font-siemreap mb-2">ភូមិ</label>
+                            <input type="text" name="village_name" id="village_name" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300" required>
                         </div>
                         <div>
                             <label for="district_id" class="block font-siemreap mb-2">ស្រុក/ខណ្ឌ</label>
