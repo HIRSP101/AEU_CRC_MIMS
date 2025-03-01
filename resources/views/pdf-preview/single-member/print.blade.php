@@ -66,9 +66,9 @@
 
         .inline-fields {
             display: flex;
-            gap: 10px;
+            gap: 5px;
             flex-wrap: wrap;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .inline-fields span {
@@ -147,8 +147,12 @@
         </div>
         <div class="inline-fields">
             <span>- កម្រិតវប្បធម៌ <strong>{{ $member_edu->acadmedic_year ?? '...' }}</strong></span>
-            <span>ភាសាបរទេស <strong>{{ $member_edu->language ?? '...' }}</strong></span>
-            <span>ជំនាញផ្ទាល់ខ្លួន <strong>{{ $member_edu->major ?? '...' }}</strong></span>
+        </div>
+        <div class="inline-fields">
+            <span>- ភាសាបរទេស <strong>{{ $member_edu->language ?? '...' }}</strong></span>
+        </div>
+        <div class="inline-fields">
+            <span>- ជំនាញផ្ទាល់ខ្លួន <strong>{{ $member_edu->major ?? '...' }}</strong></span>
         </div>
         <div class="shirt-size">
             <label>- ទំហំអាវ:</label>
@@ -163,13 +167,19 @@
             <span>អ៊ីម៉ែល និងហ្វេសប៊ុក: <strong>{{ $member->email ?? '...' }}
                     {{ $member->facebook ?? '...' }}</strong></span>
         </div>
+
         {{-- 2 --}}
         <h4 class="section-title">២- វគ្គបណ្ដុះបណ្ដាល (Training Skill)</h4>
         <div class="inline-fields">
             <span>- ជំនាញភាសាបរទេស <strong>{{ $member_edu->language ?? '...' }}</strong></span>
-            <span>ជំនាញកុំព្យូទ័រ <strong>{{ $member_edu->computer_skill ?? '...' }}</strong></span>
-            <span>ជំនាញផ្សេងៗ <strong>{{ $member_edu->misc_skill ?? '...' }}</strong></span>
         </div>
+        <div class="inline-fields">
+            <span>- ជំនាញកុំព្យូទ័រ <strong>{{ $member_edu->computer_skill ?? '...' }}</strong></span>
+        </div>
+        <div class="inline-fields">
+            <span>- ជំនាញផ្សេងៗ <strong>{{ $member_edu->misc_skill ?? '...' }}</strong></span>
+        </div>
+
         {{-- 3 --}}
         <h4 class="section-title">៣- ព័ត៌មានគ្រួសារ (Family Information)</h4>
         <div class="inline-fields">
