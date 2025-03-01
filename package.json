@@ -23,7 +23,7 @@
         "jquery-csv": "^1.0.40",
         "laravel-echo": "^1.17.1",
         "pdfmake": "^0.2.15",
-        "puppeteer": "^24.2.1",
+        "puppeteer": "^24.3.0",
         "pusher-js": "^8.4.0-rc2"
     }
 }
