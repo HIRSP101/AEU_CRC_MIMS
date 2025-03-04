@@ -4,113 +4,158 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Report</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 8px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f4f4f4;
-        }
-
-        /* Ensure each employee starts on a new page */
-        .page-break {
-            page-break-before: always;
-        }
-
-        /* Optional: Styling for individual employee rows */
-        .employee-info {
-            margin-top: 20px;
-        }
-
-        /* Hide table header on each page after the first page */
-        .employee-info table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .employee-info th {
-            background-color: #f4f4f4;
-            font-weight: bold;
-        }
-
-        .employee-info td {
-            padding: 8px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/app.css">
 </head>
 <body>
-
-    <h1>Employee Information for Department</h1>
-
-    @foreach($member as $members)
-        <!-- Page break before each employee's information -->
-        <div class="page-break"></div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi deserunt vel ipsa dolorem consectetur libero quae fugiat, laborum inventore numquam quos itaque ex tenetur, repudiandae suscipit molestiae molestias sint nemo.</div>
-
-        <div class="employee-info">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Employee ID</th>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th>Hire Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <td>{{ $members->member_id }}</td>
-                    <td>{{ $members->name_kh }}</td>
-                    <td>{{ $members->shirt_size }}</td>
-                    <td>{{ $members->gender }}</td>
-                    <td>{{ $members->date_of_birth }}</td>
-                    <td>{{ $members->home_no }}</td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="flex flex-wrap mx-3 my-3 gap-1">
+        <div class=" flex w-full md:w-1/3 md:mb-0">
+            <h3 class="px-2">
+                - ឈ្មោះ <span class="font-bold font-khmer">{{$member->name_kh ?? ""}}</span>
+            </h3>
         </div>
-
-    @endforeach
+    
+        <div class="flex w-full md:w-1/2 md:mb-0">
+            <h3 class="px-2">
+                អក្សរឡាតាំង <span class="font-bold"> {{$member->name_en ?? ""}}</span>
+            </h3>
+        </div>
+    
+        <div class="flex w-full md:w-[80px] md:mb-0">
+            <h3 class="px-2">
+                ភេទ <span class="font-bold"> {{$member->gender ?? ""}}</span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-1/2 md:mb-0">
+            <h3 class="px-2">
+                - ថ្ងៃទី ខែ ឆ្នាំកំណើត (Date of Birth) <span class="font-bold">  {{$member->date_of_birth ?? ""}}</span>
+            </h3>
+        </div>
+        <div class="flex flex-wrap w-full md:w-full md:mb-0">
+            <h3 class="px-2">
+                &ensp; ទីកន្លែងកំណើត (Place of Birth)
+            </h3>
+            <h3 class="px-2">
+                ភូមិ ៖ <span class="font-bold">{{$member->member_pob_address->village ?? ""}}</span>
+            </h3>
+            <h3 class="px-2">
+                 ឃុំ/សង្កាត់ ៖
+                <span class="font-bold">{{$member->member_pob_address->commune_sangkat ?? ""}}</span>
+            </h3>
+            <h3 class="px-2">
+                 ស្រុក/ខណ្ទ ៖ <span class="font-bold">{{$member->member_pob_address->district_khan ?? ""}}</span>
+            </h3>
+            <h3 class="px-2">
+               - រាជធានី/ខេត្ត ៖​ <span class="font-bold">{{$member->member_pob_address->provience_city ?? ""}}</span>
+            </h3>
+        </div>
+        <div class="flex  w-full md:w-1/2  md:mb-0">
+            <h3 class="px-2">
+                - អសយដ្ធានបច្ចុប្បន្ន (Current Address)
+            </h3>
+        </div>
+        <div class="flex w-full md:w-1/3 md:mb-0">
+            <h3 class="px-2">
+                ផ្ទះលេខ ៖ <span class="font-bold"> {{ $member->member_current_address->home_no ?? ""}}</span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-1/3  md:mb-0">
+            <h3 class="px-2">
+                &ensp; ផ្លូវ​​​ ៖ <span class="font-bold"> {{$member->member_current_address->street_no ?? ""}} </span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-1/4  md:mb-0">
+            <h3 class="px-2">
+               ភូមិ ៖ <span class="font-bold"> {{$member->member_current_address->village ?? ""}} </span>
+            </h3>
+    
+        </div>
+        <div class="flex w-full md:w-1/4 md:mb-0">
+            <h3 class="px-2">
+                ឃុំ/សង្កាត់ ៖ <span class="font-bold">{{$member->member_current_address->commune_sangkat ?? ""}}</span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-1/3  md:mb-0">
+            <h3 class="px-2">
+                &ensp; ស្រុក/ខណ្ឌ ៖ <span class="font-bold">{{$member->member_current_address->district_khan ?? ""}}</span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-1/3 md:mb-0">
+            <h3 class="px-2">
+                ខេត្ត/រាជធានី ៖ <span class="font-bold">{{$member->member_current_address->provience_city ?? ""}}</span>
+            </h3>
+    
+        </div>
+    
+        <div class="flex w-full md:w-full md:mb-0">
+            <h3 class="px-2">
+               - កម្រិតវប្បធម៌ ឬថ្នាក់ទី ឬឆ្នាំទី (Education or Class or Year) ៖ <span
+                    class="font-bold">{{$member->member_education_background->acadmedic_year ?? ""}}</span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-full md:mb-0">
+            <h3 class="px-2">
+               - ភាសាបរទេស (Foreign language ) ៖ <span class="font-bold">{{$member->member_education_background->language}}</span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-full md:mb-0">
+            <h3 class="px-2">
+               - ជំនាញផ្ទាល់ខ្លួន (Life Skills ) ៖
+            </h3>
+            <P>{{$member->member_education_background->major}}</P>
+        </div>
+        <div class="flex w-full md:w-full md:mb-0">
+            <h3 class="px-2">
+                - ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនកាកបាទក្រហមកម្ពុជា (RCY Recruitment Date) ៖ <span
+                    class="font-bold">{{$member->member_education_background->registration_date}}</span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-full md:mb-0">
+            <h3 class="px-2">
+               - ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនជាតិកាយរឹទ្ធិកម្ពុជា (Scout Youth Recruitment Date) ៖ <span
+                    class="font-bold">{{$member->member_education_background->registration_date}}</span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-full md:mb-0">
+            <h3 class="px-2">
+                - ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជន ស.ស.យ​.ក (UYFC Recruitment Date) ៖ <span
+                    class="font-bold">{{$member->member_education_background->registration_date}}</span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-full md:mb-0">
+            <h3 class="px-2">
+               - ថ្ងៃ ខែ ឆ្នាំ ចូលជាអង្គការចាត់តាំងយុវជនផ្សេងៗ (Other NGos Recruitment Date) ៖ <span
+                    class="font-bold">{{$member->member_education_background->registration_date}}</span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-full md:mb-0">
+            <h3 class="px-2">
+               - វគ្គបណ្ដុះបណ្ដាលទទួលបាន ៖
+            </h3>
+            <P>{{$member->member_education_background->misc_skill}}</P>
+        </div>
+        <div class="flex w-full md:w-full md:mb-0">
+            <h3 class="px-2">
+               - ឈ្មោះសាលារៀន ឬសាកលវិទ្យាល័យ (Name of School or University) ៖ <span
+                    class="font-bold">{{$member->member_education_background->institute_id}}</span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-full md:mb-0">
+            <h3 class="px-2">
+               - ទំហំ អាវ ៖ <span class="font-bold">{{$member->shirt_size}}</span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-full md:mb-0">
+            <h3 class="px-2">
+               - លេខទូរសព្ទទំនាក់ទំនង (Phone Number) ៖ <span class="font-bold">{{$member->phone_number}}</span>
+            </h3>
+        </div>
+        <div class="flex w-full md:w-full  md:mb-0">
+            <h3 class="px-2">
+                - អ៊ីម៉ែល និងហ្វេសប៊ុក (E-mail and Facebook) ៖
+            </h3>
+            <P>{{$member->email}} {{$member->facebook}}</P>
+        </div>
+    </div>
 
 </body>
 <script>
