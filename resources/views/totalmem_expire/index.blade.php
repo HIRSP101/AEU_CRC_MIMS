@@ -7,8 +7,7 @@
     <?php
     $current_branch = "";
     $total_mem_detail = [];
-    $school_name = $currentSchool?->school_name;
-                        ?>
+                                        ?>
     @if(isset($data) && count($data) > 0)
         <?php
             $current_branch = explode(' ', $data[0]->full_current_address)[3] ?? "";
@@ -31,17 +30,10 @@
                 ];
             }
 
-                ?>
+                                                ?>
         <div class="bg-white mt-2 mx-3 shadow-lg">
-            <h1 class="text-center font-siemreap my-2 font-bold text-2xl"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន
+            <h1 class="text-center font-siemreap my-2 font-bold text-2xl"> បញ្ជីតារាងទិន្នន័យផុតកំណត់យុវជន
                 និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
-
-            <h2 class="text-center font-siemreap mb-2 text-2xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា
-                @if ($school_name)
-                    {{ $school_name }}
-                @else 
-                    {{$data[0]->branch_kh}}
-                @endif      </h2>
 
             <div class="flex justify-between items-center mb-4 mt-14 px-4">
                 <!-- Search Bar -->

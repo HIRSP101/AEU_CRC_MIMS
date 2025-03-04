@@ -29,6 +29,7 @@ class SchoolController extends Controller
                     ->on('meb.branch_id', '=', 's.branch_id');
             })
             ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
             ->where('s.branch_id', $branchId)
             ->where('s.district_id', $villageId)
             ->select(
@@ -36,7 +37,8 @@ class SchoolController extends Controller
                 's.school_name',
                 's.type',
                 's.village_name',
-                DB::raw('COUNT(meb.member_id) as total_mem')
+                //DB::raw('COUNT(meb.member_id) as total_mem')
+                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
             )
             ->groupBy('s.school_id', 's.school_name', 's.type', 's.village_name')
             ->get();
@@ -55,6 +57,7 @@ class SchoolController extends Controller
             ->leftJoin('branch as b', 'meb.branch_id', '=', 'b.branch_id')
             ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
             ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
+            ->whereRaw('mrd.registration_date > NOW() - INTERVAL 6 YEAR')
             ->select([
                 'mpd.member_id',
                 'mpd.member_code',
