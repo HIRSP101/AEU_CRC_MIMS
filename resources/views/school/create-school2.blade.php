@@ -29,6 +29,7 @@
                                 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
                                 <option value="អនុវិទ្យាល័យ">អនុវិទ្យាល័យ</option>
                                 <option value="វិទ្យាល័យ">វិទ្យាល័យ</option>
+                                <option value="សាកលវិទ្យាល័យ">សាកលវិទ្យាល័យ</option>
                             </select>
                         </div>
                         <div>
@@ -43,6 +44,12 @@
                         <div>
                             <label for="village_name" class="block font-siemreap mb-2">ភូមិ</label>
                             <input type="text" name="village_name" id="village_name"
+                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                                required>
+                        </div>
+                        <div>
+                            <label for="khom" class="block font-siemreap mb-2">ឃុំ</label>
+                            <input type="text" name="khom" id="khom"
                                 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
                                 required>
                         </div>

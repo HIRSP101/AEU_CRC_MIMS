@@ -75,23 +75,23 @@ class SchoolController extends Controller
                 'mpd.email',
                 'mpd.shirt_size',
             ]);
-        
+
         if ($branchId) {
             $query->where('meb.branch_id', $branchId);
         }
-        
+
         if ($villageId) {
             $query->where('s.district_id', $villageId);
         }
-        
+
         if ($schoolId) {
             $query->where('meb.school_id', $schoolId);
         }
-        
+
         if ($startDate && $endDate) {
             $query->whereBetween('mrd.registration_date', [$startDate, $endDate]);
         }
-        
+
         $currentSchool = null;
         if ($schoolId) {
             $currentSchool = DB::table('school')
@@ -99,7 +99,7 @@ class SchoolController extends Controller
                 ->where('school_id', $schoolId)
                 ->first();
         }
-        
+
         $data = $query->get();
         //dd($data);
         return view('totalmemSchool.index', [
@@ -152,6 +152,7 @@ class SchoolController extends Controller
             'village_name' => 'required|string',
             'district_id' => 'required|exists:district,district_id',
             'branch_id' => 'required|exists:branch,branch_id',
+            'khom' => 'required|string'
         ]);
 
         $school = DB::table('school')->insertGetId([
@@ -161,6 +162,7 @@ class SchoolController extends Controller
             'registration_date' => $request->input('registration_date'),
             'branch_id' => $request->input('branch_id'),
             'district_id' => $request->input('district_id'),
+            'khom' => $request->input('khom')
         ]);
 
         return redirect()->route('createschool')->with('success', 'School created successfully.');

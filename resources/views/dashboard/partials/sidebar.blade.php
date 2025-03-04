@@ -1,6 +1,6 @@
-<div id="sidebar" class="top-0 left-0 border shadow">
+<div id="sidebar" class="top-0 left-0 border shadow bg-red-600">
     <div class="flex flex-col flex-1 overflow-y-auto">
-        <nav class="flex-1 px-2 py-4 bg-white">
+        <nav class="flex-1 px-2 py-4">
 
             <a class="flex justify-center items-center" href="{{ route('dashboard') }}">
                 <img class="logo w-20" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}">
@@ -11,8 +11,9 @@
                         class="flex items-center font-siemreap px-4 py-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                         <img width="23" height="23"
                             src="https://img.icons8.com/external-glyph-zulfa-mahendra/48/external-building-nature-and-ecology-2-glyph-zulfa-mahendra-3.png"
-                            alt="external-building-nature-and-ecology-2-glyph-zulfa-mahendra-3" />
-                        <span class="module-content ml-2">
+                            alt="external-building-nature-and-ecology-2-glyph-zulfa-mahendra-3"
+                            class="invert brightness-200" />
+                        <span class="module-content ml-2 text-white">
                             សាខា
                         </span>
                     </a>
@@ -20,16 +21,18 @@
                         class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                         <img width="23" height="23"
                             src="https://img.icons8.com/external-gradak-royyan-wijaya/24/external-building-gradak-medical-solidarity-gradak-royyan-wijaya.png"
-                            alt="external-building-gradak-medical-solidarity-gradak-royyan-wijaya" />
-                        <span class="module-content ml-2">
+                            alt="external-building-gradak-medical-solidarity-gradak-royyan-wijaya"
+                            class="invert brightness-200" />
+                        <span class="module-content ml-2 text-white">
                             គ្រឹះស្ថានឧត្តមសិក្សា
                         </span>
                     </a>
                     <a href="{{route('document')}}"
-                        class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        class="group flex items-center font-siemreap px-4 py-2 mt-2 font-semibold hover:bg-white hover:text-red-600 rounded">
                         <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/documents-folder--v1.png"
-                            alt="documents-folder--v1" />
-                        <span class="module-content ml-2">
+                            alt="documents-folder--v1"
+                            class="invert brightness-200 group-hover:invert-0 group-hover:brightness-100" />
+                        <span class="module-content ml-2 text-white group-hover:text-red-600">
                             ឯកសារដ្ឋបាល
                         </span>
                     </a>
@@ -38,22 +41,22 @@
                     class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                     <img width="23" height="23"
                         src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
-                        alt="add-user-group-man-man--v2" />
+                        alt="add-user-group-man-man--v2" class="invert brightness-200" />
                     <span
-                        class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">បញ្ចូលសាមាជិក</span>
+                        class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap text-white">បញ្ចូលសាមាជិក</span>
                 </a>
                 <div id="dropdown-add" class="ml-5 dropdown_entry hidden">
                     <a href="{{ route('import') }}"
                         class=" module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span> បញ្ជូលជា File</span>
+                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png" alt="add--v1"
+                            class="invert brightness-200" />
+                        <span class="text-white"> បញ្ជូលជា File</span>
                     </a>
                     <a href="{{ route('createmember') }}"
                         class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span> បញ្ជូលតាម Form</span>
+                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png" alt="add--v1"
+                            class="invert brightness-200" />
+                        <span class="text-white"> បញ្ជូលតាម Form</span>
                     </a>
                 </div>
                 {{-- @if(auth()->user()->hasRole('admin'))
@@ -82,33 +85,35 @@
                     class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                     <img width="23" height="23"
                         src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
-                        alt="add-user-group-man-man--v2" />
-                    <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">បង្កើត</span>
+                        alt="add-user-group-man-man--v2" class="invert brightness-200" />
+                    <span
+                        class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap text-white">បង្កើត</span>
                 </a>
                 <div id="dropdown-create" class="ml-5 dropdown_entry hidden">
                     <a href="{{ route('createmember') }}"
                         class=" module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span>បង្កើតអ្នកប្រើប្រាស់</span>
+                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png" alt="add--v1"
+                            class="invert brightness-200" />
+                        <span class="text-white">អ្នកប្រើប្រាស់</span>
                     </a>
                     <a href="{{ route('createdistrict') }}"
                         class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span> បង្កើតស្រុក/ក្រុង</span>
+                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png" alt="add--v1"
+                            class="invert brightness-200" />
+                        <span class="text-white"> ស្រុក/ក្រុង</span>
                     </a>
                     <a href="{{ route('createschool') }}"
                         class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span> បង្កើតគ្រឹះស្ថានសិក្សា</span>
+                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png" alt="add--v1"
+                            class="invert brightness-200" />
+                        <span class="text-white"> គ្រឹះស្ថានសិក្សា</span>
                     </a>
                 </div>
                 <a href="{{route('report')}}"
                     class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/ratings.png" alt="ratings" />
-                    <span class="module-content ml-2">
+                    <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/ratings.png" alt="ratings"
+                        class="invert brightness-200" />
+                    <span class="module-content ml-2 text-white">
                         របាយការណ៍
                     </span>
                 </a>
