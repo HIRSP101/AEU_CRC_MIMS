@@ -148,6 +148,7 @@ class SchoolController extends Controller
 
     public function store2(SchoolRequest $request, CreateSchoolService $service)
     {
+
         $request->validate([
             'school_name' => 'required|string|max:255',
             'type' => 'required|string',
@@ -157,16 +158,31 @@ class SchoolController extends Controller
             'branch_id' => 'required|exists:branch,branch_id',
             'khom' => 'required|string'
         ]);
-
-        $school = DB::table('school')->insertGetId([
-            'school_name' => $request->input('school_name'),
-            'type' => $request->input('type'),
-            'village_name' => $request->input('village_name'),
-            'registration_date' => $request->input('registration_date'),
-            'branch_id' => $request->input('branch_id'),
-            'district_id' => $request->input('district_id'),
-            'khom' => $request->input('khom')
-        ]);
+        if ($request->type == 'សាកលវិទ្យាល័យ') {
+            $branch = branch::where('branch_id', '=', $request->input('branch_id'))->first();
+            $district = district::where('district_id', $request->input('district_id'))->first();
+            $school = DB::table('branch_hei')->insertGetId([
+                'institute_kh' => $request->input('school_name'),
+                'type' => $request->input('typeUniversity'),
+                'institute_type' => $request->input('type'),
+                'village' => $request->input('village_name'),
+                'commune_sangkat' => $request->input('khom'),
+                'registered_at' => $request->input('registration_date'),
+                'branch_id' => $request->input('branch_id'),
+                'district_khan' => $district->district_name,
+                'provience_city' => $branch->branch_kh,
+            ]);
+        } else {
+            $school = DB::table('school')->insertGetId([
+                'school_name' => $request->input('school_name'),
+                'type' => $request->input('type'),
+                'village_name' => $request->input('village_name'),
+                'registration_date' => $request->input('registration_date'),
+                'branch_id' => $request->input('branch_id'),
+                'district_id' => $request->input('district_id'),
+                'khom' => $request->input('khom')
+            ]);
+        }
 
         return redirect()->route('createschool')->with('success', 'School created successfully.');
     }

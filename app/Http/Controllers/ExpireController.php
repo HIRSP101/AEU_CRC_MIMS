@@ -18,6 +18,7 @@ class ExpireController extends Controller
             ->leftJoin('branch as b', 'meb.branch_id', '=', 'b.branch_id')
             ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
             ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
+            ->whereIn('s.type', ['អនុវិទ្យាល័យ', 'វិទ្យាល័យ'])
             ->whereRaw('mrd.registration_date <= NOW() - INTERVAL 6 YEAR')
             ->select([
                 'mpd.member_id',

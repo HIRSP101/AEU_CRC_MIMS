@@ -32,6 +32,15 @@
                                 <option value="សាកលវិទ្យាល័យ">សាកលវិទ្យាល័យ</option>
                             </select>
                         </div>
+                        <div hidden id="typeU">
+                            <label for="typeUniversity" class="block font-siemreap mb-2">ប្រភេទ</label>
+                            <select name="typeUniversity" id="typeUniversity"
+                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
+                                <option value="">---</option>
+                                <option value="រដ្ធ">សាធារណៈ</option>
+                                <option value="ឯកជន">ឯកជន</option>
+                            </select>
+                        </div>
                         <div>
                             <label for="registration_date" class="block font-siemreap mb-2">ថ្ងៃចូលសមាជិក</label>
                             <input type="date" name="registration_date" id="registration_date"
@@ -104,6 +113,17 @@
                     });
                 });
         });
+
+        $('#type').on('change', function () {
+            console.log($(this).val());
+            if ($(this).val() == "សាកលវិទ្យាល័យ") {
+                $('#typeU').attr('hidden', false);
+            }
+            else {
+                $('#typeU').attr('hidden', true);
+            }
+
+        })
 
     </script>
 @endpush
