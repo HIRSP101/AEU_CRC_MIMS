@@ -153,6 +153,7 @@ Route::middleware('auth')->group(function () use ($appC) {
 
     Route::get('/pdf/{id}', "{$appC}\\MemberController@memberDetailPdf");
     Route::get('/expire', "{$appC}\\ExpireController@index")->name('expire');
+    Route::get('/instituteexpire', "{$appC}\\ExpireController@index1")->name('institute_ex');
 });
 
 

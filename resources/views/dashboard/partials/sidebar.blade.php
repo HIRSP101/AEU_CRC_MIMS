@@ -67,28 +67,6 @@
                         <span class="text-white"> បញ្ជូលតាម Form</span>
                     </a>
                 </div>
-                {{-- @if(auth()->user()->hasRole('admin'))
-                <a href="" id="dropdown_create"
-                    class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <img width="23" height="23" src="https://img.icons8.com/stamp/32/create-new.png" alt="create-new" />
-                    <span
-                        class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">បង្កើតអ្នកប្រើប្រាស់</span>
-                </a>
-                <div class="ml-5 dropdown_create hidden">
-                    <a href="{{ route('userroles') }}"
-                        class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span> បង្កើត User</span>
-                    </a>
-                    <a href="{{ route('create-branch') }}"
-                        class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span> បង្កើត សាខា&អនុសាខា</span>
-                    </a>
-                </div>
-                @endif --}}
                 <a href="" id="subModule-create"
                     class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                     <img width="23" height="23"
@@ -125,14 +103,36 @@
                         របាយការណ៍
                     </span>
                 </a>
-                <a href="{{route('expire')}}"
+                {{-- <a href="{{route('expire')}}"
                     class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                     <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/ratings.png" alt="ratings"
                         class="invert brightness-200" />
                     <span class="module-content ml-2 text-white">
                         ផុតកំណត់
                     </span>
+                </a> --}}
+                <a href="" id="subModule-expire"
+                    class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                    <img width="23" height="23"
+                        src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
+                        alt="add-user-group-man-man--v2" class="invert brightness-200" />
+                    <span
+                        class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap text-white">ផុតកំណត់</span>
                 </a>
+                <div id="dropdown-expire" class="ml-5 dropdown_entry hidden">
+                    <a href="{{ route('expire') }}"
+                        class=" module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png" alt="add--v1"
+                            class="invert brightness-200" />
+                        <span class="text-white"> អនុវិទ្យាល័យ/វិទ្យាល័យ</span>
+                    </a>
+                    <a href="{{ route('institute_ex') }}"
+                        class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png" alt="add--v1"
+                            class="invert brightness-200" />
+                        <span class="text-white"> សាកលវិទ្យាល័យ</span>
+                    </a>
+                </div>
             </div>
         </nav>
     </div>
@@ -148,6 +148,11 @@
             e.preventDefault();
             $("#dropdown-create").toggleClass('hidden', 500);
         });
+
+        $("#subModule-expire").click((e) => {
+            e.preventDefault();
+            $("#dropdown-expire").toggleClass('hidden', 500);
+        })
     </script>
 
 @endpush

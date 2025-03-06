@@ -30,12 +30,16 @@ class InstituteController extends Controller
     {
         return DB::table('member_personal_detail as mpd')
             ->leftJoin('member_education_background as meb', 'meb.member_id', '=', 'mpd.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
             ->join('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
             ->select(
                 'hei.bhei_id',
                 'hei.institute_kh',
                 'hei.image',
-                DB::raw('COUNT(DISTINCT meb.member_id) as total_members')
+                //DB::raw('COUNT(DISTINCT meb.member_id) as total_members')
+                DB::raw("COUNT(CASE 
+                    WHEN mrd.registration_date > NOW() - INTERVAL 4 YEAR
+                    THEN meb.member_id END) as total_members")
             )
             ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image')
             ->get();
@@ -55,19 +59,9 @@ class InstituteController extends Controller
             ->leftJoin('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
             ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
             ->leftJoin('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
-            ->where('meb.branchhei_id', '=', $instituteId);
-
-        $total_fem = (clone $baseQuery)
-            ->select(DB::raw('COUNT(meb.member_id) as total_mem_fem'))
-            ->where('mpd.gender', 'ស្រី')
-            ->first()
-            ->total_mem_fem;
-
-        $total_total = (clone $baseQuery)
-            ->select(DB::raw('COUNT(meb.member_id) as total_mem'))
-            ->first()
-            ->total_mem;
-
+            ->where('meb.branchhei_id', '=', $instituteId)
+            ->where('hei.institute_type', '=', 'សាកលវិទ្យាល័យ')
+            ->whereRaw('mrd.registration_date > NOW() - INTERVAL 4 YEAR');
         $total_mem = (clone $baseQuery)
             ->select([
                 'mpd.member_id',
@@ -78,6 +72,7 @@ class InstituteController extends Controller
                 'mpd.date_of_birth',
                 // 'meb.institute_id',
                 'hei.institute_kh',
+                'hei.institute_type',
                 'branch.branch_name',
                 'mpd.member_type',
                 'meb.education_level',
@@ -105,7 +100,7 @@ class InstituteController extends Controller
             ])
             ->distinct()
             ->get();
-        return view('totalmemInstitute.index', compact('total_mem', 'total_fem', 'total_total', 'institution'));
+        return view('totalmemInstitute.index', compact('total_mem', 'institution'));
     }
 
     public function generateReport($id)
