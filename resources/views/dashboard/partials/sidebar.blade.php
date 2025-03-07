@@ -110,6 +110,13 @@
                         alt="add-user-group-man-man--v2" class="invert brightness-200" />
                     <span
                         class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap text-white">ផុតកំណត់</span>
+
+                    {{-- alert --}}
+                    @if(session('newExpiredCount') > 0)
+                        <span class="absolute top-0 right-0 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                            {{ session('newExpiredCount') }}
+                        </span>
+                    @endif
                 </a>
                 <div id="dropdown-expire" class="ml-5 dropdown_entry hidden">
                     <a href="{{ route('expire') }}"
@@ -145,6 +152,29 @@
             e.preventDefault();
             $("#dropdown-expire").toggleClass('hidden', 500);
         })
+        function checkExpiredMembers() {
+            $.ajax({
+                url: "{{ route('checkExpiredMembers') }}",
+                method: "GET",
+                success: function (response) {
+                    let count = response.newExpiredCount;
+                    let badge = $("#subModule-expire .notification-badge");
+
+                    if (count > 0) {
+                        if (badge.length === 0) {
+                            $("#subModule-expire").append(`<span class="absolute top-0 right-0 bg-red-500 text-white text-xs px-2 py-1 rounded-full notification-badge">${count}</span>`);
+                        } else {
+                            badge.text(count);
+                        }
+                    } else {
+                        badge.remove();
+                    }
+                }
+            });
+        }
+
+        // Run the check every 10 seconds
+        setInterval(checkExpiredMembers, 10000);
     </script>
 
 @endpush

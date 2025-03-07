@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\branch_hei;
 use App\Models\member_registration_detail;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -102,5 +103,14 @@ class ExpireController extends Controller
             ->distinct()
             ->get();
         return view('totalmemInstitute_ex.index', compact('total_mem'));
+    }
+
+    public function checkExpiredMembers()
+    {
+        $newExpiredCount = member_registration_detail::where('registration_date', '<', now()->subYears(6))
+            ->where('notified', false)
+            ->count();
+        Session::put('newExpiredCount', $newExpiredCount);
+        return redirect()->route('dashboard');
     }
 }
