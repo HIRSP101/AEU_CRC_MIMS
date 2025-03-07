@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\branch_hei;
+use App\Models\member_registration_detail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

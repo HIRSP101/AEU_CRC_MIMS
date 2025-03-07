@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Events\TestProgress;
+use App\Models\member_personal_detail;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 Route::post('/test-progress', function () {

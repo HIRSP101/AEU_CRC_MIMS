@@ -76,7 +76,7 @@
                         class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap text-white">បង្កើត</span>
                 </a>
                 <div id="dropdown-create" class="ml-5 dropdown_entry hidden">
-                    <a href="{{ route('createmember') }}"
+                    <a href="{{ route('userroles') }}"
                         class=" module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                         <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png" alt="add--v1"
                             class="invert brightness-200" />
@@ -103,14 +103,6 @@
                         របាយការណ៍
                     </span>
                 </a>
-                {{-- <a href="{{route('expire')}}"
-                    class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/ratings.png" alt="ratings"
-                        class="invert brightness-200" />
-                    <span class="module-content ml-2 text-white">
-                        ផុតកំណត់
-                    </span>
-                </a> --}}
                 <a href="" id="subModule-expire"
                     class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                     <img width="23" height="23"

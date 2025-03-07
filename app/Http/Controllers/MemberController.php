@@ -55,7 +55,7 @@ class MemberController extends Controller
         ])->findOrFail($id);
         // dd($member);
 
-        return view('pdf-preview.single-member.print-single-member', compact('member'));
+        return view('member_detail.index', compact('member'));
     }
 
     // public function getMemberOption($id)
