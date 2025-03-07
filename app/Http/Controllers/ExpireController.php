@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\branch_hei;
+use App\Models\member_personal_detail;
 use App\Models\member_registration_detail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -107,10 +108,10 @@ class ExpireController extends Controller
 
     public function checkExpiredMembers()
     {
-        $newExpiredCount = member_registration_detail::where('registration_date', '<', now()->subYears(6))
-            ->where('notified', false)
-            ->count();
-        Session::put('newExpiredCount', $newExpiredCount);
-        return redirect()->route('dashboard');
+        $expiredMembersCount = member_personal_detail::whereHas('member_registration_detail', function ($query) {
+            $query->where('registration_date', '<', now()->subYears(6));
+        })->count();
+
+        return response()->json(['expired_count' => $expiredMembersCount]);
     }
 }
