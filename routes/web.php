@@ -157,7 +157,9 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/expire', "{$appC}\\ExpireController@index")->name('expire');
     Route::get('/instituteexpire', "{$appC}\\ExpireController@index1")->name('institute_ex');
 
+    // Notification expire
     Route::get('/check-expired-members', "{$appC}\\ExpireController@checkExpiredMembers")->name('checkExpiredMembers');
+    Route::get('/check-expired-members-institute', "{$appC}\\ExpireController@checkExpiredMemberInstitute")->name('checkExpiredMemberInstitute');
 });
 
 

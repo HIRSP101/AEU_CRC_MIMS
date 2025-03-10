@@ -110,10 +110,8 @@
                         alt="add-user-group-man-man--v2" class="invert brightness-200" />
                     <span
                         class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap text-white">ផុតកំណត់</span>
-
-                    <span id="expired-member-notification" class="bg-red-500 text-white rounded-full px-2 hidden">
-                        0
-                    </span>
+                    <span id="total-expired-notification"
+                        class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
                 </a>
                 <div id="dropdown-expire" class="ml-5 dropdown_entry hidden">
                     <a href="{{ route('expire') }}"
@@ -121,12 +119,16 @@
                         <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png" alt="add--v1"
                             class="invert brightness-200" />
                         <span class="text-white"> អនុវិទ្យាល័យ/វិទ្យាល័យ</span>
+                        <span id="expired-member-highschool"
+                            class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
                     </a>
                     <a href="{{ route('institute_ex') }}"
                         class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                         <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png" alt="add--v1"
                             class="invert brightness-200" />
                         <span class="text-white"> សាកលវិទ្យាល័យ</span>
+                        <span id="expired-member-institute"
+                            class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
                     </a>
                 </div>
             </div>
@@ -149,18 +151,62 @@
             e.preventDefault();
             $("#dropdown-expire").toggleClass('hidden', 500);
         })
+
         document.addEventListener("DOMContentLoaded", function () {
-            fetch("{{ route('checkExpiredMembers') }}")
-                .then(response => response.json())
-                .then(data => {
-                    if (data.expired_count > 0) {
-                        let notification = document.getElementById("expired-member-notification");
-                        notification.innerText = data.expired_count;
-                        notification.classList.remove("hidden");
+            async function fetchExpiredCounts() {
+                try {
+                    let highschoolResponse = await fetch("{{ route('checkExpiredMembers') }}");
+                    let instituteResponse = await fetch("{{ route('checkExpiredMemberInstitute') }}");
+
+                    let highschoolData = await highschoolResponse.json();
+                    let instituteData = await instituteResponse.json();
+
+                    let highschoolCount = highschoolData.count || 0;
+                    let instituteCount = instituteData.count || 0;
+                    let totalCount = highschoolCount + instituteCount;
+
+                    // Update counts in sidebar
+                    let highschoolNotification = document.getElementById("expired-member-highschool");
+                    let instituteNotification = document.getElementById("expired-member-institute");
+                    let totalNotification = document.getElementById("total-expired-notification");
+
+                    if (highschoolCount > 0) {
+                        highschoolNotification.textContent = highschoolCount;
+                        highschoolNotification.classList.remove("hidden");
+                    } else {
+                        highschoolNotification.classList.add("hidden");
                     }
-                })
-                .catch(error => console.error("Error fetching expired members count:", error));
+
+                    if (instituteCount > 0) {
+                        instituteNotification.textContent = instituteCount;
+                        instituteNotification.classList.remove("hidden");
+                    } else {
+                        instituteNotification.classList.add("hidden");
+                    }
+
+                    if (totalCount > 0) {
+                        totalNotification.textContent = totalCount;
+                        totalNotification.classList.remove("hidden");
+                    } else {
+                        totalNotification.classList.add("hidden");
+                    }
+                } catch (error) {
+                    console.error("Error fetching expired members:", error);
+                }
+            }
+            fetchExpiredCounts();
+
+            document.getElementById("subModule-expire").addEventListener("click", function () {
+                document.getElementById("total-expired-notification").classList.add("hidden");
+            });
+
+            document.getElementById("expired-member-highschool").parentElement.addEventListener("click", function () {
+                document.getElementById("expired-member-highschool").classList.add("hidden");
+            });
+
+            document.getElementById("expired-member-institute").parentElement.addEventListener("click", function () {
+                document.getElementById("expired-member-institute").classList.add("hidden");
+            });
         });
     </script>
-
 @endpush
