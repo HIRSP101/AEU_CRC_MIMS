@@ -10,26 +10,26 @@
      {{-- card list of all reports --}}
      <div class="py-1 px-5">
         <a href="{{ route('branch') }}" class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">បញ្ជីរបាយការណ៍សមាជិកនៃសាខា កាកបាទក្រហម ប្រចាំសាខានីមួយៗ</p>
+            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំសាខានីមួយៗ</p>
         </a>
      </div>
     @if(auth()->user()->hasRole('admin'))
      <div class="py-1 px-5">
         <a href="{{ route('branchesreport') }}" class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">តារាងទិន្នន័យ បច្ចុប្បន្នភាពគ្រឹះស្ថានទីបឹក្សា នឹងយុវជន ២៥ រាជធានីខេត្ត</p>
+            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីបឹក្សា នឹងយុវជនប្រចាំសាខានីមួយៗ</p>
         </a>
      </div>
 
      <div class="py-1 px-5">
         <a href="{{ route('total.member.university') }}" class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">តារាងទិន្នន័យគ្រឹះស្ថានឧត្តមសិក្សា(សមាជិកសរុប)</p>
+            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីបឹក្សា នឹងយុវជន ២៥រាជធានី/ខេត្ត និងគ្រឹះស្ថានឧត្តមសិក្សា</p>
         </a>
      </div>
 
     <div class="py-1 px-5">
         <details class="mb-2 details-dropdown">
             <summary class="cursor-pointer block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                <span class="font-semibold font-battambang text-gray-700">តារាងទិន្នន័យបច្ចុប្បន្នភាព​ សាមាជិកយុជនតាមគ្រឹះស្ថានឧត្តមសិក្សា</span>
+                <span class="font-semibold font-battambang text-gray-700">តារាងទិន្នន័យបច្ចុប្បន្នភាពទីប្រឹក្សា​ និងយុវជនប្រចាំសាខាគ្រឹះស្ថានឧត្តមសិក្សា</span>
                 <span class="dropdown-icon transition-transform duration-300 transform rotate-0 inline-block ml-2 text-red-600">▼</span>
             </summary>
     
@@ -37,21 +37,21 @@
                 <li>
                    <a href="{{ route('total.university') }}">
                     <div class="cursor-pointer block max-w-full p-5 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                        <p class="text-gray-700 font-battambang text-[16px] font-semibold">គ្រឹះស្ថានឧត្តមសិក្សា សរុប</p>
+                        <p class="text-gray-700 font-battambang text-[16px] font-semibold">តារាងទិន្នន័យបច្ចុប្បន្នភាពទីប្រឹក្សា​ និងយុវជនប្រចាំគ្រឹះស្ថានឧត្តមសិក្សាសរុប</p>
                     </div>
                    </a>
                 </li>
                 <li>
                   <a href="{{ route('public.university') }}">
                     <div class="cursor-pointer block max-w-full p-5 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                        <p class="text-gray-700 font-battambang text-[16px] font-semibold">គ្រឹះស្ថានឧត្តមសិក្សា​ សាធារណៈ</p>
+                        <p class="text-gray-700 font-battambang text-[16px] font-semibold">តារាងទិន្នន័យបច្ចុប្បន្នភាពទីប្រឹក្សា​ និងយុវជនប្រចាំគ្រឹះស្ថានឧត្តមសិក្សាសាធារណៈ</p>
                     </div>
                   </a>
                 </li>
                 <li>
                     <a href="{{ route('private.university') }}">
                         <div class="cursor-pointer block max-w-full p-5 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                            <p class="text-gray-700 font-battambang text-[16px] font-semibold">គ្រឹះស្ថានឧត្តមសិក្សា ឯកជន</p>
+                            <p class="text-gray-700 font-battambang text-[16px] font-semibold">តារាងទិន្នន័យបច្ចុប្បន្នភាពទីប្រឹក្សា​ និងយុវជនប្រចាំគ្រឹះស្ថានឧត្តមសិក្សាឯកជន</p>
                         </div>
                     </a>
                 </li>
