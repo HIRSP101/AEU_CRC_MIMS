@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\branch_bindding_user;
 use App\Models\branch_hei;
 use App\Models\member_personal_detail;
 use App\Models\member_registration_detail;
@@ -9,6 +10,7 @@ use App\Models\membership_detail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ExpireController extends Controller
@@ -18,6 +20,9 @@ class ExpireController extends Controller
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
 
+        //dd(branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id);
+        $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
+
         $query = DB::table('member_personal_detail as mpd')
             ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
             ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
@@ -26,6 +31,7 @@ class ExpireController extends Controller
             ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
             ->whereIn('s.type', ['អនុវិទ្យាល័យ', 'វិទ្យាល័យ'])
             ->whereRaw('mrd.registration_date <= NOW() - INTERVAL 6 YEAR')
+            ->where('meb.branch_id', '=', $user)
             ->select([
                 'mpd.member_id',
                 'mpd.member_code',

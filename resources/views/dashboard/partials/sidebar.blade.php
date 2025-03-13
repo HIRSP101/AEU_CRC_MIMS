@@ -33,112 +33,170 @@
                             ឯកសារដ្ឋបាល
                         </span>
                     </a>
-                    {{-- <style>
-                        .filter-white {
-                            filter: invert(100%) brightness(200%);
-                        }
 
-                        .group:hover .filter-white {
-                            filter: invert(18%) sepia(98%) saturate(7481%) hue-rotate(358deg) brightness(96%) contrast(117%);
-                        }
-                    </style> --}}
+
+                    <a href="" id="subModule-add"
+                        class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        <img width="23" height="23"
+                            src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
+                            alt="add-user-group-man-man--v2" />
+                        <span
+                            class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">បញ្ចូលសាមាជិក</span>
+                    </a>
+                    <div id="dropdown-add" class="ml-5 dropdown_entry hidden">
+                        <a href="{{ route('import') }}"
+                            class=" module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+                                alt="add--v1" />
+                            <span> បញ្ជូលជា File</span>
+                        </a>
+                        <a href="{{ route('createmember') }}"
+                            class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+                                alt="add--v1" />
+                            <span> បញ្ជូលតាម Form</span>
+                        </a>
+                    </div>
+                    <a href="" id="subModule-create"
+                        class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        <img width="23" height="23"
+                            src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
+                            alt="add-user-group-man-man--v2" />
+                        <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">បង្កើត</span>
+                    </a>
+                    <div id="dropdown-create" class="ml-5 dropdown_entry hidden">
+                        <a href="{{ route('userroles') }}"
+                            class=" module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+                                alt="add--v1" />
+                            <span>អ្នកប្រើប្រាស់</span>
+                        </a>
+                        <a href="{{ route('createdistrict') }}"
+                            class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+                                alt="add--v1" />
+                            <span> ស្រុក/ក្រុង</span>
+                        </a>
+                        <a href="{{ route('createschool') }}"
+                            class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+                                alt="add--v1" />
+                            <span> គ្រឹះស្ថានសិក្សា</span>
+                        </a>
+                    </div>
+                    <a href="{{route('report')}}"
+                        class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/ratings.png" alt="ratings" />
+                        <span class="module-content ml-2">
+                            របាយការណ៍
+                        </span>
+                    </a>
+
+                    <a href="" id="subModule-expire"
+                        class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        <img width="23" height="23"
+                            src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
+                            alt="add-user-group-man-man--v2" />
+                        <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">
+                            ផុតកំណត់
+                        </span>
+                        <span id="total-expired-notification"
+                            class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
+                    </a>
+
+                    <div id="dropdown-expire" class="ml-5 dropdown_entry hidden">
+                        <a href="{{ route('expire') }}"
+                            class=" module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+                                alt="add--v1" />
+                            <span> វិទ្យាល័យ</span>
+                            <span id="expired-member-highschool"
+                                class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
+                        </a>
+                        <a href="{{ route('institute_ex') }}"
+                            class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+                                alt="add--v1" />
+                            <span> សាកលវិទ្យាល័យ</span>
+                            <span id="expired-member-institute"
+                                class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
+                        </a>
+                    </div>
+                @else
+                    <a href="" id="subModule-add"
+                        class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        <img width="23" height="23"
+                            src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
+                            alt="add-user-group-man-man--v2" />
+                        <span
+                            class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">បញ្ចូលសាមាជិក</span>
+                    </a>
+                    <div id="dropdown-add" class="ml-5 dropdown_entry hidden">
+                        <a href="{{ route('import') }}"
+                            class=" module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+                                alt="add--v1" />
+                            <span> បញ្ជូលជា File</span>
+                        </a>
+                        <a href="{{ route('createmember') }}"
+                            class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+                                alt="add--v1" />
+                            <span> បញ្ជូលតាម Form</span>
+                        </a>
+                    </div>
+                    <a href="" id="subModule-create"
+                        class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        <img width="23" height="23"
+                            src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
+                            alt="add-user-group-man-man--v2" />
+                        <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">បង្កើត</span>
+                    </a>
+                    <div id="dropdown-create" class="ml-5 dropdown_entry hidden">
+                        <a href="{{ route('createdistrict') }}"
+                            class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+                                alt="add--v1" />
+                            <span> ស្រុក/ក្រុង</span>
+                        </a>
+                        <a href="{{ route('createschool') }}"
+                            class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+                                alt="add--v1" />
+                            <span> គ្រឹះស្ថានសិក្សា</span>
+                        </a>
+                    </div>
+                    <a href="{{route('report')}}"
+                        class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/ratings.png" alt="ratings" />
+                        <span class="module-content ml-2">
+                            របាយការណ៍
+                        </span>
+                    </a>
+
+                    <a href="" id="subModule-expire"
+                        class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        <img width="23" height="23"
+                            src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
+                            alt="add-user-group-man-man--v2" />
+                        <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">
+                            ផុតកំណត់
+                        </span>
+                        <span id="total-expired-notification"
+                            class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
+                    </a>
+
+                    <div id="dropdown-expire" class="ml-5 dropdown_entry hidden">
+                        <a href="{{ route('expire') }}"
+                            class=" module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+                                alt="add--v1" />
+                            <span> វិទ្យាល័យ</span>
+                            <span id="expired-member-highschool"
+                                class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
+                        </a>
+                    </div>
                 @endif
-                <a href="" id="subModule-add"
-                    class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <img width="23" height="23"
-                        src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
-                        alt="add-user-group-man-man--v2" />
-                    <span
-                        class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">បញ្ចូលសាមាជិក</span>
-                </a>
-                <div id="dropdown-add" class="ml-5 dropdown_entry hidden">
-                    <a href="{{ route('import') }}"
-                        class=" module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span> បញ្ជូលជា File</span>
-                    </a>
-                    <a href="{{ route('createmember') }}"
-                        class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span> បញ្ជូលតាម Form</span>
-                    </a>
-                </div>
-                <a href="" id="subModule-create"
-                    class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <img width="23" height="23"
-                        src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
-                        alt="add-user-group-man-man--v2" />
-                    <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">បង្កើត</span>
-                </a>
-                <div id="dropdown-create" class="ml-5 dropdown_entry hidden">
-                    <a href="{{ route('userroles') }}"
-                        class=" module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span>អ្នកប្រើប្រាស់</span>
-                    </a>
-                    <a href="{{ route('createdistrict') }}"
-                        class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span> ស្រុក/ក្រុង</span>
-                    </a>
-                    <a href="{{ route('createschool') }}"
-                        class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span> គ្រឹះស្ថានសិក្សា</span>
-                    </a>
-                </div>
-                <a href="{{route('report')}}"
-                    class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/ratings.png" alt="ratings" />
-                    <span class="module-content ml-2">
-                        របាយការណ៍
-                    </span>
-                </a>
-                {{-- <a href="" id="subModule-expire"
-                    class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <img width="23" height="23"
-                        src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
-                        alt="add-user-group-man-man--v2" class="invert brightness-200" />
-                    <span
-                        class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap text-white">ផុតកំណត់</span>
-                    <span id="total-expired-notification"
-                        class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
-                </a> --}}
-                <a href="" id="subModule-expire"
-                    class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                    <img width="23" height="23"
-                        src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
-                        alt="add-user-group-man-man--v2" />
-                    <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">
-                        ផុតកំណត់
-                    </span>
-                    <span id="total-expired-notification"
-                        class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
-                </a>
-
-                <div id="dropdown-expire" class="ml-5 dropdown_entry hidden">
-                    <a href="{{ route('expire') }}"
-                        class=" module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span> វិទ្យាល័យ</span>
-                        <span id="expired-member-highschool"
-                            class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
-                    </a>
-                    <a href="{{ route('institute_ex') }}"
-                        class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                        <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                            alt="add--v1" />
-                        <span> សាកលវិទ្យាល័យ</span>
-                        <span id="expired-member-institute"
-                            class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
-                    </a>
-                </div>
             </div>
         </nav>
     </div>

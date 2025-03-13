@@ -28,46 +28,53 @@
                 <div class="leading-relaxed">
                     <!-- Initial Cards (First 5 Cards) -->
                     <div>
-                        <div id="initial-cards" class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-battambang p-2">
+                        <div id="initial-cards"
+                            class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-battambang p-2">
                             @foreach ($branches as $val)
-                            
+
                                 @if ($loop->index < 10)
-                                    <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg transition-transform duration-150 ease-in-out hover:scale-110">
+                                    <div
+                                        class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg transition-transform duration-150 ease-in-out hover:scale-110">
                                         <div class="relative bg-white p-2 border">
                                             <div class="flex justify-center items-center">
-                                                <img class="w-[150px] h-[130px] sm:w-[180px] sm:h-[160px] md:w-[200px] md:h-[170px] lg:w-[200px] lg:h-[170px]  rounded-md" src="{{ asset($val->branch_image) }}" alt="Branch Image">
+                                                <img class="w-[150px] h-[130px] sm:w-[180px] sm:h-[160px] md:w-[200px] md:h-[170px] lg:w-[200px] lg:h-[170px]  rounded-md"
+                                                    src="{{ asset($val->branch_image) }}" alt="Branch Image">
                                             </div>
                                         </div>
                                         <div class="p-2 bg-[#f1f5f9] font-battambang text-center">
                                             @if (auth()->user()->hasRole('admin'))
-                                                <a href="/branch/{{ $val->branch_id }}" class="block opacity-100 mb-1">{{ $val->branch_kh }}</a>
+                                                <a href="/branch/{{ $val->branch_id }}/village"
+                                                    class="block opacity-100 mb-1">{{ $val->branch_kh }}</a>
                                             @else
-                                                <p class="block opacity-100 mb-1">{{ $val }}</p>
+                                                <p class="block opacity-100 mb-1">{{ $val->branch_kh  }}</p>
                                             @endif
                                         </div>
                                     </div>
                                 @endif
                             @endforeach
-                            
+
                         </div>
                     </div>
-        
+
                     <!-- Additional Cards (Hidden Initially) -->
                     <span id="more-cards" class="hidden">
                         <div class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-battambang p-2">
                             @foreach ($branches as $val)
                                 @if ($loop->index > 5)
-                                    <div class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg transition-transform duration-150 ease-in-out hover:scale-110">
+                                    <div
+                                        class="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg transition-transform duration-150 ease-in-out hover:scale-110">
                                         <div class="relative bg-white p-2 border">
                                             <div class="flex justify-center items-center">
-                                                <img class="w-[200px] h-[170px] rounded-md" src="{{ asset($val->branch_image) }}" alt="Branch Image">
+                                                <img class="w-[200px] h-[170px] rounded-md" src="{{ asset($val->branch_image) }}"
+                                                    alt="Branch Image">
                                             </div>
                                         </div>
                                         <div class="p-2 bg-[#f1f5f9] font-battambang text-center">
                                             @if (auth()->user()->hasRole('admin'))
-                                                <a href="/branch/{{ $val->branch_id  }}" class="block opacity-100 mb-1">{{ $val->branch_kh  }}</a>
+                                                <a href="/branch/{{ $val->branch_id  }}/village"
+                                                    class="block opacity-100 mb-1">{{ $val->branch_kh  }}</a>
                                             @else
-                                                <p class="block opacity-100 mb-1">{{ $val }}</p>
+                                                <p class="block opacity-100 mb-1">{{  $val->branch_kh }}</p>
                                             @endif
                                         </div>
                                     </div>
@@ -76,18 +83,19 @@
                         </div>
                     </span>
                 </div>
-        
+
                 <!-- Toggle Buttons -->
                 <div class="flex justify-center items-center">
                     <button id="toggle-btn" class="mt-4 text-blue-500 focus:outline-none flex">
-                        <img width="24" height="24" src="https://img.icons8.com/ios-filled/50/down-squared--v1.png" alt="Show More" />
+                        <img width="24" height="24" src="https://img.icons8.com/ios-filled/50/down-squared--v1.png"
+                            alt="Show More" />
                     </button>
                     <button id="hide-btn" class="hidden mt-4 text-blue-500 focus:outline-none">
                         <img width="24" height="24" src="https://img.icons8.com/ios-glyphs/30/hide.png" alt="Show Less" />
                     </button>
                 </div>
             </div>
-        </div> 
+        </div>
 
         <div class="w-full p-2 mt-4">
             <h1 class="text-center text-gray-800 font-khmer text-xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
@@ -108,7 +116,7 @@
                 </table>
             </div>
         </div>
-    @endsection
+@endsection
 
     @push('JS')
         <script>
@@ -117,7 +125,7 @@
                 document.getElementById('toggle-btn').classList.add('hidden');
                 document.getElementById('hide-btn').classList.remove('hidden');
             });
-        
+
             document.getElementById('hide-btn').addEventListener('click', function () {
                 document.getElementById('more-cards').classList.add('hidden');
                 document.getElementById('toggle-btn').classList.remove('hidden');
@@ -125,7 +133,7 @@
             });
         </script>
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 if (isWWactive) {
                     fetchLocationAndWeather();
                 }
@@ -185,7 +193,7 @@
                     return data;
                 }
 
-                $("#ww-refresh").click(function(e) {
+                $("#ww-refresh").click(function (e) {
                     fetchLocationAndWeather();
                 })
 
@@ -194,7 +202,7 @@
                 $("#weatherwidget").toggle(isWWactive);
                 $("#chkbxww").prop("checked", isWWactive);
 
-                $("#chkbxww").click(function() {
+                $("#chkbxww").click(function () {
                     $("#weatherwidget").toggle(this.checked);
                     isWWactive = this.checked;
                     if (isWWactive) {
