@@ -7,6 +7,7 @@ use App\Models\branch_hei;
 use App\Models\member_personal_detail;
 use App\Models\member_registration_detail;
 use App\Models\membership_detail;
+use App\Models\school;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -19,6 +20,8 @@ class ExpireController extends Controller
     {
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
+        $schoolId = $request->id;
+        $school = school::find($schoolId)->select('school_name')->findOrFail($schoolId);
 
         //dd(branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id);
         $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
@@ -30,6 +33,7 @@ class ExpireController extends Controller
             ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
             ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
             ->whereIn('s.type', ['អនុវិទ្យាល័យ', 'វិទ្យាល័យ'])
+            ->where('meb.school_id', $schoolId)
             ->whereRaw('mrd.registration_date <= NOW() - INTERVAL 6 YEAR')
             ->where('meb.branch_id', '=', $user)
             ->select([
@@ -58,10 +62,12 @@ class ExpireController extends Controller
         $data = $query->get();
         return view('totalmem_expire.index', [
             'data' => $data
-        ]);
+        ], compact('school'));
     }
     public function index1(Request $request)
     {
+        $instituteId = $request->id;
+        $institution = branch_hei::find($instituteId)->select('institute_kh')->findOrFail($instituteId);
 
         $baseQuery = DB::table('member_personal_detail as mpd')
             ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
@@ -72,6 +78,7 @@ class ExpireController extends Controller
             ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
             ->leftJoin('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
             ->where('hei.institute_type', '=', 'សាកលវិទ្យាល័យ')
+            ->where('meb.branchhei_id', '=', $instituteId)
             ->whereRaw('mrd.registration_date <= NOW() - INTERVAL 4 YEAR');
         $total_mem = (clone $baseQuery)
             ->select([
@@ -145,5 +152,48 @@ class ExpireController extends Controller
             ->whereRaw('mrd.registration_date <= NOW() - INTERVAL 4 YEAR')
             ->count();
         return response()->json(['count' => $count]);
+    }
+
+    public function getListSchool()
+    {
+        $schools = DB::table('school as s')
+            ->leftJoin('member_education_background as meb', 'meb.school_id', '=', 's.school_id')
+            ->leftJoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->select(
+                's.school_id',
+                's.school_name',
+                's.branch_id',
+                's.district_id',
+                //DB::raw('COALESCE(COUNT(meb.member_id), 0) as total_mem')
+                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
+            )
+            ->groupBy('s.school_id', 's.school_name', 's.branch_id', 's.district_id')
+            ->get();
+
+        return view("totalmem_expire.list-school", compact('schools'));
+    }
+    public function getListInstitute()
+    {
+        $total_member_institute = $this->totalMemberInstitute();
+        return view("totalmemInstitute_ex.list-institute", compact("total_member_institute"));
+    }
+    public function totalMemberInstitute()
+    {
+        return DB::table('member_personal_detail as mpd')
+            ->leftJoin('member_education_background as meb', 'meb.member_id', '=', 'mpd.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->join('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->select(
+                'hei.bhei_id',
+                'hei.institute_kh',
+                'hei.image',
+                //DB::raw('COUNT(DISTINCT meb.member_id) as total_members')
+                DB::raw("COUNT(CASE 
+                    WHEN mrd.registration_date > NOW() - INTERVAL 4 YEAR
+                    THEN meb.member_id END) as total_members")
+            )
+            ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image')
+            ->get();
     }
 }

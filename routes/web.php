@@ -154,8 +154,11 @@ Route::middleware('auth')->group(function () use ($appC) {
     // Route::get('/document/{id}/{v_id}/{s_id}', "{$appC}\\DocumentController@get");
 
     Route::get('/pdf/{id}', "{$appC}\\MemberController@memberDetailPdf");
-    Route::get('/expire', "{$appC}\\ExpireController@index")->name('expire');
-    Route::get('/instituteexpire', "{$appC}\\ExpireController@index1")->name('institute_ex');
+    Route::get('/listschool', "{$appC}\\ExpireController@getListSchool")->name('listschool');
+    Route::get('/listschool/{id}', "{$appC}\\ExpireController@index");
+    Route::get('/list-institute', "{$appC}\\ExpireController@getListInstitute")->name('list-institute');
+    Route::get('/listschool/{id}', "{$appC}\\ExpireController@index1");
+    //Route::get('/instituteexpire', "{$appC}\\ExpireController@index1")->name('institute_ex');
 
     // Notification expire
     Route::get('/check-expired-members', "{$appC}\\ExpireController@checkExpiredMembers")->name('checkExpiredMembers');
