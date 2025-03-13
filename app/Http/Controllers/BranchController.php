@@ -12,6 +12,7 @@ use App\Models\branch_hei;
 use App\Services\Branches\DeleteBranchService;
 use App\Services\Branches\CreateBranchService;
 use App\Services\Branches\UpdateBranchService;
+use Illuminate\Support\Facades\Route;
 use Exception;
 
 class BranchController extends Controller
@@ -28,10 +29,12 @@ class BranchController extends Controller
     }
     public function index()
     {
+        dd(Route::currentRouteName());
         $total_mem_branches = $this->totalmem_branches()
             ->where('b.branch_id', '<', '28')
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image')
             ->get();
+        
         return view('branch.index', compact('total_mem_branches'));
     }
 

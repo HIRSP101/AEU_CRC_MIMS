@@ -45,12 +45,9 @@ class ReportController extends Controller
         return view('report.partials.total-member-university', compact('groupedReports'));
     }
     
-    public function branches() {
-        $branches = DB::table('member_education_background as meb')
-        ->rightjoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
-        ->leftjoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
-        ->select(
-            'branch.branch_kh',
+    public function branches($is_district = null) {
+
+        $base_select = [
             DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' THEN mpd.member_id END) AS total_wm"),
             DB::raw("COUNT(mpd.member_id) AS total_mem"),
             DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' and mpd.member_type like 'ទីប្រឹក្សា%' THEN mpd.member_id END) AS total_ls_wm"),
@@ -58,10 +55,39 @@ class ReportController extends Controller
             DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'វិទ្យាល័យ%' or institute_id like '%វិ.ហ%' and meb.branch_id != 28 THEN meb.institute_id END)) as total_hs"),
             DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'អនុ%' and meb.branch_id != 28  THEN meb.institute_id END)) as total_ms"),
             DB::raw("COUNT(distinct (CASE WHEN meb.institute_id like 'សាកល%' or institute_id like 'សកល%' THEN meb.institute_id END)) as total_hei")
+        ];
+
+        $additional_select = [
+        
+        ];
+
+
+        $branches = DB::table('member_education_background as meb')
+        ->rightjoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id');
+        if($is_district) {
+            $branches->leftJoin('school','meb.school_id','=','school.school_id');
+            $branches->leftJoin('district','school.district_id','=','district.district_id');
+            array_push( $additional_select,'district.district_name');
+        }
+        $branches->leftjoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
+        ->select(
+            array_merge($additional_select, $base_select)
         );
 
         return $branches;
     }
+
+    public function branch_report_exclude(Request $request) {
+        if(empty($request->id)) {
+            return redirect('report');
+        }
+        $branchesReport = $this->branches(true)
+            ->where('meb.branch_id', '=', $request->id)
+            ->groupBy('district.district_name')
+            ->get();
+        dd($branchesReport);
+        return view('report.partials.total-member-university', compact('branchesReport'));
+        }
 
     public function branchhei() {
         $branchhei = DB::table('member_education_background as meb')

@@ -15,7 +15,7 @@
      </div>
     @if(auth()->user()->hasRole('admin'))
      <div class="py-1 px-5">
-        <a href="{{ route('branchesreport') }}" class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+        <a href="{{ route('branch.report.exclude') }}" class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
             <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីបឹក្សា នឹងយុវជនប្រចាំសាខានីមួយៗ</p>
         </a>
      </div>
