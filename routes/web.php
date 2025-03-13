@@ -79,7 +79,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     //All Members Routes
     Route::get('/insertmember', "{$appC}\\testdbconnection@getMemberColumns")->name('import');
     Route::post('/insertmemberfr', "{$appC}\\testdbconnection@insertMember");
-    Route::post('/importdata', "{$appC}\\ImportController@import");
+    // Route::post('/importdata', "{$appC}\\ImportController@import");
     Route::get('/member', "{$appC}\\testdbconnection@eloquent_relation_delete");
     Route::get("/deleteall", "{$appC}\\testdbconnection@deleteall_elo");
     Route::get("/create", "{$appC}\\MemberController@index")->name('createmember');
@@ -90,7 +90,9 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branchheiprivate', "{$appC}\\ReportController@branchheiprivate");
     Route::get('/allbranches', "{$appC}\\ReportController@branches_hei_report");
     Route::get('/branch/{id}', "{$appC}\\BranchController@get");
-
+    Route::get('/branch_report', "{$appC}\\BranchController@index")->name('branch.report.exclude');
+    Route::get('/branch_report/{id}', "{$appC}\\ReportController@branch_report_exclude")->name('branch.report.exclude');
+   
     // option page
     //Route::get('/member/option/{id}', "{$appC}\\MemberController@getMemberOption")->name('member.option');
     // get user detail form

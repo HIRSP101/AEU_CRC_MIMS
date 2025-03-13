@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>CRC_MIMS</title>
+    <title>ប្រព័ន្ធគ្រប់គ្រងព័ត៍មានសមាជិក</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -16,6 +16,7 @@
     <script src="{{asset("js/pdfmake.min.js")}}"></script>
     <script src="{{ asset('js/jszip.min.js') }}"></script>
     <script src="{{ asset('js/FileSaver.min.js') }}"></script>
+    <link rel="icon" type="image/x-icon" href="{{URL::asset('images/Logo_of_Cambodian_Red_Cross.svg')}}">
     @stack('CSS')
 </head>
 <body>
