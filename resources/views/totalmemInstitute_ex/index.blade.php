@@ -8,7 +8,7 @@
     $current_branch = "";
     $total_mem_detail = "";
     $member_pob = "";
-                                                                    ?>
+                                                                        ?>
     @if(count($total_mem) > 0)
         <?php
             $current_branch = explode(' ', $total_mem[0]->full_current_address)[3] ?? "";
@@ -57,7 +57,7 @@
 
                 );
             }
-                                                                                                                                                            ?>
+                                                                                                                                                                    ?>
         <div id="loadingSpinner" class="fixed top-0 left-0 z-50 w-screen h-screen bg-gray-300 bg-opacity-50 h-full hidden">
             <p id="textload" class="hidden textload text-center font-siemreap">សូមរងចាំ...</p>
             <p id="textsucc" class="hidden textload text-center font-siemreap">ទាញយកជោគជ័យ</p>
@@ -173,7 +173,10 @@
                 </div>
             </div>
     @else
-        <p class="font-siemreap"> មិនមានទិន្ទន័យគ្រប់គ្រង </p>
+        <div class="flex flex-col items-center justify-center h-screen space-y-4">
+            <img src="../images/not.png" alt="No Data" width="150" height="150">
+            <p class="font-siemreap">មិនមានទិន្នន័យគ្រប់គ្រង</p>
+        </div>
     @endif
 @endsection
 
