@@ -12,6 +12,7 @@ use App\Models\branch_hei;
 use App\Services\Branches\DeleteBranchService;
 use App\Services\Branches\CreateBranchService;
 use App\Services\Branches\UpdateBranchService;
+use Illuminate\Support\Facades\Route;
 use Exception;
 
 class BranchController extends Controller
@@ -28,10 +29,12 @@ class BranchController extends Controller
     }
     public function index()
     {
+        dd(Route::currentRouteName());
         $total_mem_branches = $this->totalmem_branches()
             ->where('b.branch_id', '<', '28')
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image')
             ->get();
+        
         return view('branch.index', compact('total_mem_branches'));
     }
 
@@ -57,11 +60,15 @@ class BranchController extends Controller
             ->leftJoin('member_personal_detail as mpd', function ($join) {
                 $join->on('mpd.member_id', '=', 'meb.member_id');
             })
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
             ->select(
                 'b.branch_id',
                 'b.branch_kh',
                 'b.branch_image',
-                DB::raw("COUNT(DISTINCT meb.member_id) AS total_mem"),
+                //DB::raw("COUNT(DISTINCT meb.member_id) AS total_mem"),
+                DB::raw("COUNT(CASE 
+                    WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR
+                    THEN meb.member_id END) as total_mem"),
                 DB::raw("COUNT(DISTINCT d.district_id) AS total_villages")
             )
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image');

@@ -29,6 +29,7 @@ class SchoolController extends Controller
                     ->on('meb.branch_id', '=', 's.branch_id');
             })
             ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
             ->where('s.branch_id', $branchId)
             ->where('s.district_id', $villageId)
             ->select(
@@ -36,7 +37,8 @@ class SchoolController extends Controller
                 's.school_name',
                 's.type',
                 's.village_name',
-                DB::raw('COUNT(meb.member_id) as total_mem')
+                //DB::raw('COUNT(meb.member_id) as total_mem')
+                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
             )
             ->groupBy('s.school_id', 's.school_name', 's.type', 's.village_name')
             ->get();
@@ -55,6 +57,7 @@ class SchoolController extends Controller
             ->leftJoin('branch as b', 'meb.branch_id', '=', 'b.branch_id')
             ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
             ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
+            ->whereRaw('mrd.registration_date > NOW() - INTERVAL 6 YEAR')
             ->select([
                 'mpd.member_id',
                 'mpd.member_code',
@@ -75,23 +78,23 @@ class SchoolController extends Controller
                 'mpd.email',
                 'mpd.shirt_size',
             ]);
-        
+
         if ($branchId) {
             $query->where('meb.branch_id', $branchId);
         }
-        
+
         if ($villageId) {
             $query->where('s.district_id', $villageId);
         }
-        
+
         if ($schoolId) {
             $query->where('meb.school_id', $schoolId);
         }
-        
+
         if ($startDate && $endDate) {
             $query->whereBetween('mrd.registration_date', [$startDate, $endDate]);
         }
-        
+
         $currentSchool = null;
         if ($schoolId) {
             $currentSchool = DB::table('school')
@@ -99,7 +102,7 @@ class SchoolController extends Controller
                 ->where('school_id', $schoolId)
                 ->first();
         }
-        
+
         $data = $query->get();
         //dd($data);
         return view('totalmemSchool.index', [
@@ -145,6 +148,7 @@ class SchoolController extends Controller
 
     public function store2(SchoolRequest $request, CreateSchoolService $service)
     {
+
         $request->validate([
             'school_name' => 'required|string|max:255',
             'type' => 'required|string',
@@ -152,16 +156,33 @@ class SchoolController extends Controller
             'village_name' => 'required|string',
             'district_id' => 'required|exists:district,district_id',
             'branch_id' => 'required|exists:branch,branch_id',
+            'khom' => 'required|string'
         ]);
-
-        $school = DB::table('school')->insertGetId([
-            'school_name' => $request->input('school_name'),
-            'type' => $request->input('type'),
-            'village_name' => $request->input('village_name'),
-            'registration_date' => $request->input('registration_date'),
-            'branch_id' => $request->input('branch_id'),
-            'district_id' => $request->input('district_id'),
-        ]);
+        if ($request->type == 'សាកលវិទ្យាល័យ') {
+            $branch = branch::where('branch_id', '=', $request->input('branch_id'))->first();
+            $district = district::where('district_id', $request->input('district_id'))->first();
+            $school = DB::table('branch_hei')->insertGetId([
+                'institute_kh' => $request->input('school_name'),
+                'type' => $request->input('typeUniversity'),
+                'institute_type' => $request->input('type'),
+                'village' => $request->input('village_name'),
+                'commune_sangkat' => $request->input('khom'),
+                'registered_at' => $request->input('registration_date'),
+                'branch_id' => $request->input('branch_id'),
+                'district_khan' => $district->district_name,
+                'provience_city' => $branch->branch_kh,
+            ]);
+        } else {
+            $school = DB::table('school')->insertGetId([
+                'school_name' => $request->input('school_name'),
+                'type' => $request->input('type'),
+                'village_name' => $request->input('village_name'),
+                'registration_date' => $request->input('registration_date'),
+                'branch_id' => $request->input('branch_id'),
+                'district_id' => $request->input('district_id'),
+                'khom' => $request->input('khom')
+            ]);
+        }
 
         return redirect()->route('createschool')->with('success', 'School created successfully.');
     }

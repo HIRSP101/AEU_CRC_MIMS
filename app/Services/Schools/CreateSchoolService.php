@@ -14,7 +14,8 @@ class CreateSchoolService
             "village_name" => $data['village_name'],
             "registration_date" => $data['registration_date'],
             "branch_id" => $data['branch_id'],
-            "district_id" => $data['district_id']
+            "district_id" => $data['district_id'],
+            "khom" => $data['khom']
         ]);
     }
 }

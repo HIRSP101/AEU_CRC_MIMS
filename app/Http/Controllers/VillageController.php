@@ -16,12 +16,20 @@ class VillageController extends Controller
         $branch = DB::table('branch')->where('branch_id', $branchId)->select('branch_kh')->first();
 
         $data = DB::table('district as d')
-            ->select('d.district_id', 'd.district_name', DB::raw('COUNT(DISTINCT s.school_id) as total_schools'), DB::raw('COUNT(DISTINCT meb.member_id) as total_mem'))
+            ->select(
+                'd.district_id',
+                'd.district_name',
+                DB::raw('COUNT(DISTINCT s.school_id) as total_schools'),
+                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
+                //DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
+
+            )
             ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
             ->leftJoin('member_education_background as meb', function ($join) use ($branchId) {
                 $join->on('meb.school_id', '=', 's.school_id')->where('meb.branch_id', '=', DB::raw($branchId));
             })
             ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
             ->where('d.branch_id', $branchId)
             ->groupBy('d.district_id', 'd.district_name')
             ->get();

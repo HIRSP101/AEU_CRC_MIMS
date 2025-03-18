@@ -8,8 +8,7 @@
     $current_branch = "";
     $total_mem_detail = "";
     $member_pob = "";
-    $institute_kh = $institution->institute_kh;
-                                                                                                                                ?>
+                                                                        ?>
     @if(count($total_mem) > 0)
         <?php
             $current_branch = explode(' ', $total_mem[0]->full_current_address)[3] ?? "";
@@ -58,7 +57,7 @@
 
                 );
             }
-                                                                                                                                                                                                                                                                                    ?>
+                                                                                                                                                                    ?>
         <div id="loadingSpinner" class="fixed top-0 left-0 z-50 w-screen h-screen bg-gray-300 bg-opacity-50 h-full hidden">
             <p id="textload" class="hidden textload text-center font-siemreap">សូមរងចាំ...</p>
             <p id="textsucc" class="hidden textload text-center font-siemreap">ទាញយកជោគជ័យ</p>
@@ -80,9 +79,8 @@
             </div>
         </div>
         <div class="bg-white mt-2 mx-3 shadow-lg">
-            <h1 class="text-center font-siemreap my-2 font-bold text-2xl"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន
+            <h1 class="text-center font-siemreap my-2 font-bold text-2xl"> បញ្ជីតារាងទិន្នន័យផុតកំណត់យុវជន
                 និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
-            <h2 class="text-center font-siemreap mb-2 text-2xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា {{$institute_kh}} </h2>
             <div class="flex justify-between items-center mb-4 mt-14 px-4">
                 <!-- Search Bar -->
                 <div class="tab_filter_container flex items-center space-x-2">
@@ -190,7 +188,6 @@
                 handleTotalmemInstitute(array);
                 if (array.length > 0) {
                     exportToExcel(@json($current_branch), @json($total_mem_detail));
-
                 }
 
                 $("#export_pdf").on("click", async () => {
@@ -231,7 +228,6 @@
                                 var blob = new Blob([response], { type: 'application/zip' }); // Use 'application/pdf' for PDFs
                                 var url = URL.createObjectURL(blob);
                                 link.href = url;
-                                link.download = `សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន_យុវជន_កក្រកប្រចាំ${@json($institute_kh)}.zip`; // Specify the desired file name for download
                                 link.click();
                             },
                             error: function (xhr, status, error) {
@@ -249,41 +245,6 @@
                         $("#tick").hide();
                         $("#ok").hide();
                         console.log("op2");
-                        // $.ajax({
-                        //     url: '/generate-report/' + instituteId.split('/')[2] + '/certificate',
-                        //     method: 'GET',
-                        //     xhrFields: {
-                        //         responseType: 'blob'  // Ensures the response is treated as a binary file
-                        //     },
-                        //     success: function (response) {
-                        //         $("#loadingSpinner").show();
-                        //         $("#textload").hide();
-                        //         $("#spinner").hide();
-                        //         $("#textsucc").show();
-                        //         $("#tick").show();
-                        //         $("#ok").show();
-                        //         $("#ok").on("click", function () {
-                        //             $("#loadingSpinner").hide();
-                        //             $("#textload").hide();
-                        //             $("#spinner").hide();
-                        //             $("#textsucc").hide();
-                        //             $("#tick").hide();
-                        //             $("#ok").hide();
-                        //         });
-                        //         // Create a URL for the blob
-                        //         var link = document.createElement('a');
-                        //         var blob = new Blob([response], { type: 'application/zip' }); // Use 'application/pdf' for PDFs
-                        //         var url = URL.createObjectURL(blob);
-                        //         link.href = url;
-                        //         link.download = `បណ្ណសម្គាល់ខ្លួន_យុវជន_កក្រកប្រចាំ${@json($institute_kh)}.zip`; // Specify the desired file name for download
-                        //         link.click();
-                        //     },
-                        //     error: function (xhr, status, error) {
-                        //         $("#loadingSpinner").hide();
-                        //         console.error("Error generating report:", error);
-                        //     }
-                        // });
-
                     });
                     $('#downloadop3').on('click', () => {
                         $("#downloadoption").hide();
@@ -294,41 +255,6 @@
                         $("#tick").hide();
                         $("#ok").hide();
                         console.log("op3");
-                        // $.ajax({
-                        //     url: '/generate-report/' + instituteId.split('/')[2] + '/certificate',
-                        //     method: 'GET',
-                        //     xhrFields: {
-                        //         responseType: 'blob'  // Ensures the response is treated as a binary file
-                        //     },
-                        //     success: function (response) {
-                        //         $("#loadingSpinner").show();
-                        //         $("#textload").hide();
-                        //         $("#spinner").hide();
-                        //         $("#textsucc").show();
-                        //         $("#tick").show();
-                        //         $("#ok").show();
-                        //         $("#ok").on("click", function () {
-                        //             $("#loadingSpinner").hide();
-                        //             $("#textload").hide();
-                        //             $("#spinner").hide();
-                        //             $("#textsucc").hide();
-                        //             $("#tick").hide();
-                        //             $("#ok").hide();
-                        //         });
-                        //         // Create a URL for the blob
-                        //         var link = document.createElement('a');
-                        //         var blob = new Blob([response], { type: 'application/zip' }); // Use 'application/pdf' for PDFs
-                        //         var url = URL.createObjectURL(blob);
-                        //         link.href = url;
-                        //         link.download = `បណ្ណសម្គាល់ខ្លួន_យុវជន_កក្រកប្រចាំ${@json($institute_kh)}.zip`; // Specify the desired file name for download
-                        //         link.click();
-                        //     },
-                        //     error: function (xhr, status, error) {
-                        //         $("#loadingSpinner").hide();
-                        //         console.error("Error generating report:", error);
-                        //     }
-                        // });
-
                     });
 
                 });

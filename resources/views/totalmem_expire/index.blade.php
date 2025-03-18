@@ -6,46 +6,34 @@
 @section('Content')
     <?php
     $current_branch = "";
-    $total_mem_detail = "";
-    $school_name = $school->school_name;
+    $total_mem_detail = [];
                                             ?>
-    @if(count($total_mem) > 0)
+    @if(isset($data) && count($data) > 0)
         <?php
-            $current_branch = explode(' ', $total_mem[0]->full_current_address)[3] ?? "";
-            $total_mem_detail = array();
-            for ($i = 0; $i < count($total_mem); $i++) {
-                $total_mem_detail[$i] = array(
-                    $total_mem[$i]->member_id
-                    ,
-                    $total_mem[$i]->name_kh
-                    ,
-                    $total_mem[$i]->name_en
-                    ,
-                    $total_mem[$i]->gender
-                    ,
-                    $total_mem[$i]->date_of_birth
-                    ,
-                    $total_mem[$i]->member_type
-                    // ,$total_mem[$i]->institute_id
-                    ,
-                    $total_mem[$i]->education_level
-                    ,
-                    $total_mem[$i]->registration_date
-                    ,
-                    $total_mem[$i]->full_current_address
-                    ,
-                    $total_mem[$i]->phone_number
-                    //,$total_mem[$i]->guardian_phone
-                    ,
-                    $total_mem[$i]->shirt_size,
-                    $total_mem[$i]->school_name,
-                );
+            $current_branch = explode(' ', $data[0]->full_current_address)[3] ?? "";
+            foreach ($data as $item) {
+                $total_mem_detail[] = [
+                    $item->member_id,
+                    $item->name_kh ?: '',
+                    $item->name_en ?: '',
+                    $item->gender ?: '',
+                    $item->date_of_birth ?: '',
+                    $item->school_name ?: '',
+                    $item->member_type ?: '',
+                    $item->education_level ?: '',
+                    $item->registration_date ?: '',
+                    $item->full_current_address ?: '',
+                    $item->phone_number ?: '',
+                    //$item->guardian_phone,
+                    $item->shirt_size ?: '',
+                    $item->school_name ?: ''
+                ];
             }
-                                                                                ?>
+
+                                                        ?>
         <div class="bg-white mt-2 mx-3 shadow-lg">
-            <h1 class="text-center font-siemreap my-2 font-bold text-2xl"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន
+            <h1 class="text-center font-siemreap my-2 font-bold text-2xl"> បញ្ជីតារាងទិន្នន័យផុតកំណត់យុវជន
                 និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
-            <h2 class="text-center font-siemreap mb-2 text-2xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា {{$school_name}} </h2>
 
             <div class="flex justify-between items-center mb-4 mt-14 px-4">
                 <!-- Search Bar -->
@@ -92,7 +80,7 @@
 
             <div class="w-full overflow-scroll mx-3 my-3 max-h-[760px]">
                 <div class="w-full overflow-scroll my-3 max-h-[760px] table">
-                    <table class="min-w-max w-full table-auto font-siemreap">
+                    <table class="min-w-max w-full table-auto font-siemreap" id="dataTable">
                         <thead>
                             <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                 <th class="py-3 pl-5 text-left">
@@ -148,16 +136,17 @@
 @endsection
 
     @push('JS')
-        @vite(['resources/js/exportToExcel.js'])
         <script type="module">
             import { handleTotalmem } from "{{ asset('js/handleTotalmem.js') }}";
-            document.addEventListener('DOMContentLoaded', function () {
-                var array = @json($total_mem);
 
+            document.addEventListener('DOMContentLoaded', function () {
+                var array = @json($data);
+                console.log(@json($data));
                 handleTotalmem(array);
                 if (array.length > 0) {
                     exportToExcel(@json($current_branch), @json($total_mem_detail)
-                        , @json($total_mem))
+                        , @json($data)
+                        , @json($data));
                 }
             });
         </script>

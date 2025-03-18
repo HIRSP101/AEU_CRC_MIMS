@@ -9,12 +9,12 @@
                 <div class="col-span-5 flex flex-col items-center justify-center mb-10 ml-24">
                     <img class="w-[125px] h-[125px] mb-3" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}"
                         alt="">
-                    <h1 class="mb-1 text-[18px]">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
+                    <h1 class="mb-1 text-[18px]">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុffgfgfវជនកាកបាទក្រហមកម្ពុជា</h1>
                     <h1 class="text-[18px]">Cambodian Red Cross Youth Individual Information</h1>
                 </div>
                 <div class="">
-                    <img class="image w-28 h-32 bg-red-300 border rounded-sm" src="{{ asset('images/members/default-profile.jpg') }}"
-                        alt="img">
+                    <img class="image w-28 h-32 bg-red-300 border rounded-sm"
+                        src="{{ asset('images/members/default-profile.jpg') }}" alt="img">
                 </div>
             </div>
 
@@ -43,17 +43,17 @@
 
 @push('JS')
     <script>
-        $("#image").on('change', function(e) {
+        $("#image").on('change', function (e) {
             e.preventDefault();
             var file = e.target.files;
             previewImage(file);
         });
 
-        $("#clear_btn").click(function(e) {
+        $("#clear_btn").click(function (e) {
             e.preventDefault();
             $("input").val("");
         })
-        $("#submit_btn").click(function(e) {
+        $("#submit_btn").click(function (e) {
             e.preventDefault();
             var formData = new FormData();
             var memberObj = {
@@ -73,10 +73,10 @@
                     "pob_village": $("input#village").val(),
                     "pob_commune_sangkat": $("input#commune").val(),
                     "pob_district_khan": $("input#district").val(),
-                    "branch_id": $("#current_proviencelist option").filter(function() {
+                    "branch_id": $("#current_proviencelist option").filter(function () {
                         return $(this).val() == $("input#current_provience").val();
                     }).data('id') || null,
-                    "branchhei_id": $("#branchname_list option").filter(function() {
+                    "branchhei_id": $("#branchname_list option").filter(function () {
                         return $(this).val() == $("input#branch_name").val();
                     }).data('id') || null,
                     "pob_provience_city": $("input#provience").val(),
@@ -127,12 +127,12 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
+                success: function (response) {
                     console.log(response.message);
                     //   $("#loading-overlay").hide();
                     alert(response.message);
                 },
-                error: function(error) {
+                error: function (error) {
                     console.error(error);
                 }
             })
@@ -140,10 +140,10 @@
 
         function previewImage(files) {
             $("#imagepreview").html('');
-            $.each(files, function(i, file) {
+            $.each(files, function (i, file) {
                 if (file.type.startsWith('image/')) {
                     var reader = new FileReader();
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
 
                         $("img.image").attr('src', e.target.result);
                     };

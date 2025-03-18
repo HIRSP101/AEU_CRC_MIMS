@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('national_id');
             $table->string('shirt_size', 45);
             $table->string('member_type', 45);
+            $table->enum('member_type', ['សមាជិក យុវជន','ទីប្រឹក្សាយុវជន','ជនពិការ']);
             $table->string('member_code', 45);
             $table->timestamp();
         });

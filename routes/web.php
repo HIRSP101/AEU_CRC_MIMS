@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Events\TestProgress;
+use App\Models\member_personal_detail;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 Route::post('/test-progress', function () {
@@ -77,7 +79,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     //All Members Routes
     Route::get('/insertmember', "{$appC}\\testdbconnection@getMemberColumns")->name('import');
     Route::post('/insertmemberfr', "{$appC}\\testdbconnection@insertMember");
-    Route::post('/importdata', "{$appC}\\ImportController@import");
+    // Route::post('/importdata', "{$appC}\\ImportController@import");
     Route::get('/member', "{$appC}\\testdbconnection@eloquent_relation_delete");
     Route::get("/deleteall", "{$appC}\\testdbconnection@deleteall_elo");
     Route::get("/create", "{$appC}\\MemberController@index")->name('createmember');
@@ -88,7 +90,9 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branchheiprivate', "{$appC}\\ReportController@branchheiprivate");
     Route::get('/allbranches', "{$appC}\\ReportController@branches_hei_report");
     Route::get('/branch/{id}', "{$appC}\\BranchController@get");
-
+    Route::get('/branch_report', "{$appC}\\BranchController@index")->name('branch.report.exclude');
+    Route::get('/branch_report/{id}', "{$appC}\\ReportController@branch_report_exclude")->name('branch.report.exclude');
+   
     // option page
     //Route::get('/member/option/{id}', "{$appC}\\MemberController@getMemberOption")->name('member.option');
     // get user detail form
@@ -151,7 +155,16 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/document/{id}', "{$appC}\\DocumentController@get");
     // Route::get('/document/{id}/{v_id}/{s_id}', "{$appC}\\DocumentController@get");
 
-    Route::get('/detail/{id}', "{$appC}\\MemberController@memberDetailPdf");
+    Route::get('/pdf/{id}', "{$appC}\\MemberController@memberDetailPdf");
+    Route::get('/listschool', "{$appC}\\ExpireController@getListSchool")->name('listschool');
+    Route::get('/listschool/{id}', "{$appC}\\ExpireController@index");
+    Route::get('/list-institute', "{$appC}\\ExpireController@getListInstitute")->name('list-institute');
+    Route::get('/list-institute/{id}', "{$appC}\\ExpireController@index1");
+    //Route::get('/instituteexpire', "{$appC}\\ExpireController@index1")->name('institute_ex');
+
+    // Notification expire
+    Route::get('/check-expired-members', "{$appC}\\ExpireController@checkExpiredMembers")->name('checkExpiredMembers');
+    Route::get('/check-expired-members-institute', "{$appC}\\ExpireController@checkExpiredMemberInstitute")->name('checkExpiredMemberInstitute');
 });
 
 

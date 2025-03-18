@@ -22,6 +22,8 @@ use Log;
 use SebastianBergmann\Diff\Chunk;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
+use function Psy\debug;
+
 class MemberController extends Controller
 {
     protected CreateMemberService $createService;
@@ -53,7 +55,7 @@ class MemberController extends Controller
         ])->findOrFail($id);
         // dd($member);
 
-        return view('pdf-preview.single-member.print-single-member', compact('member'));
+        return view('member_detail.index', compact('member'));
     }
 
     // public function getMemberOption($id)
@@ -115,6 +117,20 @@ class MemberController extends Controller
 
     public function memberDetailPdf($id)
     {
+        ini_set('memory_limit', '512M'); // Increase memory limit
+        ini_set('max_execution_time', '300'); // Increase execution time
+
+        $imagePath = public_path('images/CRC LOGO_3_inch.svg');
+
+        // Check if the image file exists
+        if (!file_exists($imagePath)) {
+            abort(404, "Image file not found at: " . $imagePath);
+        }
+
+        // Convert the image to Base64 format
+        $base64Image = 'data:image/svg+xml;base64,' . base64_encode(file_get_contents($imagePath));
+
+        // Fetch member details
         $member = member_personal_detail::with([
             'member_guardian_detail',
             'member_registration_detail',
@@ -122,20 +138,21 @@ class MemberController extends Controller
             'member_current_address',
             'member_pob_address',
         ])->findOrFail($id);
-        // dd($member);
-        try {
-            $html = view('pdf-preview.single-member.print-single-member', compact('member'))->render();
 
-            $PDF = Browsershot::html($html)
-                ->setOption('no-sandbox', true)
-                ->setOption('disable-setuid-sandbox', true)
+        try {
+            // Pass $base64Image to the view
+            $html = view('pdf-preview.single-member.print', compact('member', 'base64Image'))->render();
+
+            $pdf = Browsershot::html($html)
+                ->setOption('debug', true)
                 ->pdf();
 
-            return response($PDF, 200, [
+            return response($pdf, 200, [
                 'Content-Type' => 'application/pdf',
                 'Content-Disposition' => 'attachment; filename="example.pdf"',
+                'Content-Length' => strlen($pdf),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
