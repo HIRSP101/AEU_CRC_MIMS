@@ -3,9 +3,6 @@
 @endpush
 
 @section('Content')
-    @php
-
-    @endphp
     <div class="flex justify-center items-center h-screen bg-gray-100">
         <div class="bg-white px-[10%] py-[5%] rounded-lg shadow-md w-[97%] h-[95%]">
             <div class="text-center text-2xl font-bold mb-6 font-siemreap">

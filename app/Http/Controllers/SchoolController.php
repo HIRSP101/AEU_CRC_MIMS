@@ -6,6 +6,7 @@ use App\Http\Requests\SchoolRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\branch;
+use App\Models\branch_bindding_user;
 use App\Models\school;
 use App\Models\district;
 use App\Services\Schools\CreateSchoolService;
@@ -116,9 +117,12 @@ class SchoolController extends Controller
 
     public function create($branchId, $villageId)
     {
+        $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
         $branch = DB::table('branch')->where('branch_id', $branchId)->first();
         $village = DB::table('district')->where('district_id', $villageId)->first();
-        $branches = DB::table('branch')->get();
+        $branches = DB::table('branch')
+            ->where('branch_id', $branchId)
+            ->get();
         $villages = DB::table('district')->where('branch_id', $branchId)->get();
 
         return view('school.create-school', compact('branch', 'village', 'branches', 'villages'));
@@ -138,12 +142,14 @@ class SchoolController extends Controller
     // School 2
     public function create2()
     {
-        $branch = DB::table('branch')->get();
+        $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
         $village = DB::table('district')->get();
-        $branches = DB::table('branch')->get();
+        $branches = DB::table('branch')
+            ->where('branch_id', $user)
+            ->get();
         $villages = DB::table('district')->get();
 
-        return view('school.create-school2', compact('branch', 'village', 'branches', 'villages'));
+        return view('school.create-school2', compact('village', 'branches', 'villages'));
     }
 
     public function store2(SchoolRequest $request, CreateSchoolService $service)

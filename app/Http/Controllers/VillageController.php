@@ -6,6 +6,7 @@ use App\Http\Requests\VillageRequest;
 use App\Services\District\CreateDistrictService;
 use Illuminate\Http\Request;
 use App\Models\branch;
+use App\Models\branch_bindding_user;
 use App\Models\village;
 use Illuminate\Support\Facades\DB;
 
@@ -71,7 +72,10 @@ class VillageController extends Controller
     }
     public function create2()
     {
-        $branches = DB::table('branch')->get();
+        $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
+        $branches = DB::table('branch')
+            ->where('branch_id', $user)
+            ->get();
         return view('village.create-village2', compact('branches'));
     }
     public function store2(VillageRequest $request, CreateDistrictService $service)
@@ -97,6 +101,7 @@ class VillageController extends Controller
 
     public function getDistrict()
     {
+
         $districts = DB::table('district')->get();
         return response()->json($districts);
     }

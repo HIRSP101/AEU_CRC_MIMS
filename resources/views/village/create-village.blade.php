@@ -23,11 +23,22 @@
                             class="appearance-none md:w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white font-siemreap"
                             name="district_name" id="districtName" type="text" required>
                     </div>
-                    <div>
+                    {{-- <div>
                         <label for="registration_date" class="font-siemreap">ថ្ងៃចូលសមាជិក</label>
                         <input type="date" name="registration_date" id="registration_date"
                             class="appearance-none md:w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white font-siemreap"
                             required>
+                    </div> --}}
+                    <div>
+                        <label for="branch_id" class="block font-siemreap mb-2">ខេត្ត/ក្រុង</label>
+                        <select name="branch_id" id="branch_id"
+                            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
+                            @foreach($branches as $b)
+                                <option value="{{ $b->branch_id }}">
+                                    {{ $b->branch_kh }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div>
                         <button type="submit"
