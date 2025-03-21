@@ -25,14 +25,14 @@
                             គ្រឹះស្ថានឧត្តមសិក្សា
                         </span>
                     </a>
-                    <a href="{{route('document')}}"
+                    {{-- <a href="{{route('document')}}"
                         class="group flex items-center font-siemreap px-4 py-2 mt-2 font-semibold hover:bg-red-400 rounded">
                         <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/ratings.png" alt="ratings"
                             class="transition-all duration-200 filter-white group-hover:filter-red" />
                         <span class="module-content ml-2">
                             ឯកសារដ្ឋបាល
                         </span>
-                    </a>
+                    </a> --}}
 
 
                     <a href="" id="subModule-add"
@@ -100,8 +100,8 @@
                         <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">
                             ផុតកំណត់
                         </span>
-                        <span id="total-expired-notification"
-                            class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
+                        {{-- <span id="total-expired-notification"
+                            class="bg-red-500 text-white rounded-full px-2 hidden">0</span> --}}
                     </a>
 
                     <div id="dropdown-expire" class="ml-5 dropdown_entry hidden">
@@ -112,7 +112,8 @@
                                     alt="add--v1" />
                                 <span> វិទ្យាល័យ</span>
                             </div>
-                            <span id="expired-member-highschool" class="text-red-500 rounded-full px-2 hidden">0</span>
+                            {{-- <span id="expired-member-highschool" class="text-red-500 rounded-full px-2 hidden">0</span>
+                            --}}
                         </a>
                         <a href="{{ route('list-institute') }}"
                             class="module-content flex items-center justify-between font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
@@ -121,7 +122,8 @@
                                     alt="add--v1" />
                                 <span> សាកលវិទ្យាល័យ</span>
                             </div>
-                            <span id="expired-member-institute" class="text-red-500 rounded-full px-2 hidden">0</span>
+                            {{-- <span id="expired-member-institute" class="text-red-500 rounded-full px-2 hidden">0</span>
+                            --}}
                         </a>
                     </div>
                 @else
@@ -184,8 +186,8 @@
                         <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">
                             ផុតកំណត់
                         </span>
-                        <span id="total-expired-notification"
-                            class="bg-red-500 text-white rounded-full px-2 hidden">0</span>
+                        {{-- <span id="total-expired-notification"
+                            class="bg-red-500 text-white rounded-full px-2 hidden">0</span> --}}
                     </a>
 
                     <div id="dropdown-expire" class="ml-5 dropdown_entry hidden">
@@ -196,7 +198,8 @@
                                     alt="add--v1" />
                                 <span> វិទ្យាល័យ</span>
                             </div>
-                            <span id="expired-member-highschool" class="text-red-500 rounded-full px-2 hidden">0</span>
+                            {{-- <span id="expired-member-highschool" class="text-red-500 rounded-full px-2 hidden">0</span>
+                            --}}
                         </a>
                     </div>
                 @endif
