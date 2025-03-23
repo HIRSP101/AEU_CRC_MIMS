@@ -92,7 +92,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branch/{id}', "{$appC}\\BranchController@get");
     Route::get('/branch_report', "{$appC}\\BranchController@index")->name('branch.report.exclude');
     Route::get('/branch_report/{id}', "{$appC}\\ReportController@branch_report_exclude")->name('branch.report.exclude');
-   
+
     // option page
     //Route::get('/member/option/{id}', "{$appC}\\MemberController@getMemberOption")->name('member.option');
     // get user detail form
@@ -141,6 +141,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/createdistrict', "{$appC}\\VillageController@create2")->name('createdistrict');
     Route::post('/storedistrict', "{$appC}\\VillageController@store2")->name('storedistrict');
     Route::get('/get-district', "{$appC}\\VillageController@getDistrict");
+    Route::post('/deletedistrict', "{$appC}\\VillageController@deleteDistrict");
     // Create school 2
     Route::get('/createschool', "{$appC}\\SchoolController@create2")->name('createschool');
     Route::post('/storeschool', "{$appC}\\SchoolController@store2")->name('storeschool');
