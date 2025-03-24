@@ -121,4 +121,18 @@ class VillageController extends Controller
         $this->deleteService->deleteDistrict($request->id);
         return response()->json(['message' => 'District deleted successfully']);
     }
+    public function editDistrict($id)
+    {
+        $district = district::findOrFail($id);
+        $branches = branch::all();
+        return view('village.edit-district', compact('district', 'branches'));
+    }
+    public function updateDistrict(Request $request, $id)
+    {
+        $district = district::findOrFail($id);
+        $district->district_name = $request->district_name;
+        $district->branch_id = $request->branch_id;
+        $district->save();
+        return redirect()->route('createdistrict')->with('success', 'District updated successfully');
+    }
 }
