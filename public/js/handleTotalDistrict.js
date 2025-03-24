@@ -2,7 +2,7 @@ import ajaxtoRoute from "./genericCalltoRoute.js";
 import setuppagination from "./paginationDistrict.js";
 export function handleTotalDistrict(array) {
     const attr_arr = ["district_id", "district_name", "branch_kh"];
-    setuppagination(array, attr_arr, "update-member");
+    setuppagination(array, attr_arr, "update-district");
 
     $("#districtTableBody").on("click", ".btn-delete", function (e) {
         e.preventDefault();
