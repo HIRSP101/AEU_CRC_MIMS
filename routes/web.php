@@ -148,6 +148,9 @@ Route::middleware('auth')->group(function () use ($appC) {
     // Create school 2
     Route::get('/createschool', "{$appC}\\SchoolController@create2")->name('createschool');
     Route::post('/storeschool', "{$appC}\\SchoolController@store2")->name('storeschool');
+    Route::post('/deleteschool', "{$appC}\\SchoolController@deleteSchool");
+    Route::get('/update-school/{id}', "{$appC}\\SchoolController@editSchool")->name('update-school');
+    Route::post('/update-school/{id}', "{$appC}\\SchoolController@updateSchool")->name('updateschool');
 
     Route::get('/branch/{id}/village', "{$appC}\\VillageController@index")->name('village');
     Route::get('/branch/{id}/village/{v_id}', "{$appC}\\VillageController@get");

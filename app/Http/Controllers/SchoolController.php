@@ -7,12 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\branch;
 use App\Models\branch_bindding_user;
+use App\Models\branch_hei;
 use App\Models\school;
 use App\Models\district;
 use App\Services\Schools\CreateSchoolService;
+use App\Services\Schools\DeleteSchoolService;
 
 class SchoolController extends Controller
 {
+    protected DeleteSchoolService $deleteService;
+    public function __construct(DeleteSchoolService $deleteService)
+    {
+        $this->deleteService = $deleteService;
+    }
     public function index1($branchId, $villageId)
     {
         $village = DB::table('district')
@@ -149,7 +156,11 @@ class SchoolController extends Controller
             ->get();
         $villages = DB::table('district')->get();
 
-        return view('school.create-school2', compact('village', 'branches', 'villages'));
+        $schools = DB::table('school as s')
+            ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
+            ->get();
+
+        return view('school.create-school2', compact('village', 'branches', 'villages', 'schools'));
     }
 
     public function store2(SchoolRequest $request, CreateSchoolService $service)
@@ -191,5 +202,57 @@ class SchoolController extends Controller
         }
 
         return redirect()->route('createschool')->with('success', 'School created successfully.');
+    }
+    public function deleteSchool(Request $request)
+    {
+        $this->deleteService->deleteSchool($request->id);
+        return response()->json(['message' => 'School deleted successfully']);
+    }
+    public function editSchool($id)
+    {
+        $school = school::findOrFail($id);
+        $districts = district::all();
+        $branches = branch::all();
+        return view('school.edit-school', compact('school', 'districts', 'branches'));
+    }
+    public function updateSchool(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'school_name' => 'required|string|max:255',
+            'type' => 'required',
+            'registration_date' => 'required|date',
+            'village_name' => 'required|string',
+            'khom' => 'required|string',
+            'district_id' => 'required',
+            'branch_id' => 'required',
+        ]);
+
+        if ($request->input('type') == 'សាកលវិទ្យាល័យ') {
+            $university = branch_hei::findOrFail($id);
+            $university->institute_kh = $request->input('school_name');
+            $university->type = $request->input('typeUniversity');
+            $university->institute_type = $request->input('type');
+            $university->village = $request->input('village_name');
+            $university->commune_sangkat = $request->input('khom');
+            $university->registered_at = $request->input('registration_date');
+            $university->branch_id = $request->input('branch_id');
+            $university->district_khan = $request->input('district_id');
+            $university->provience_city = $request->input('branch_id');
+
+            $university->save();
+        } else {
+            $school = school::findOrFail($id);
+            $school->school_name = $request->input('school_name');
+            $school->type = $request->input('type');
+            $school->registration_date = $request->input('registration_date');
+            $school->village_name = $request->input('village_name');
+            $school->khom = $request->input('khom');
+            $school->district_id = $request->input('district_id');
+            $school->branch_id = $request->input('branch_id');
+
+            $school->save();
+        }
+
+        return redirect()->route('createschool')->with('success', 'School updated successfully.');
     }
 }

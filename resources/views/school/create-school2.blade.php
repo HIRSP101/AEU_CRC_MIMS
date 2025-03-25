@@ -3,8 +3,8 @@
 @endpush
 
 @section('Content')
-    <div class="flex justify-center items-center h-screen bg-gray-100">
-        <div class="bg-white px-[10%] py-[5%] rounded-lg shadow-md w-[97%] h-[95%]">
+    <div class="flex justify-center items-center bg-gray-100">
+        <div class="bg-white px-[10%] py-[5%] rounded-lg shadow-md w-[97%] mt-5">
             <div class="text-center text-2xl font-bold mb-6 font-siemreap">
                 <h1>បង្កើតសាលារៀន​</h1>
             </div>
@@ -81,14 +81,34 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
-
-                    <div class="mt-4">
-                        <button type="submit"
-                            class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 font-siemreap">បង្កើត</button>
+                        <div class="mt-8">
+                            <button type="submit"
+                                class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 font-siemreap">បង្កើត</button>
+                        </div>
                     </div>
                 </div>
             </form>
+            {{-- Table --}}
+            <div class="w-full overflow-scroll mx-3 my-3 max-h-[760px] mt-10">
+                <table class="min-w-max w-full table-auto font-siemreap">
+                    <thead>
+                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                            <th class="py-2 pl-5 text-left">លេខរៀង</th>
+                            <th class="py-2 text-center">សាលារៀន</th>
+                            <th class="py-2 text-center">ថ្ងៃចូលសមាជិក</th>
+                            <th class="py-2 text-center">ខេត្ត/ក្រុង</th>
+                            <th class="py-2 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-600 text-sm font-light" id="schoolTableBody"></tbody>
+                </table>
+
+                {{-- Pagination --}}
+                <div class="flex justify-end mt-8">
+                    <span id="paginationText" class="font-siemreap text-sm"></span>
+                    <div class="flex gap-2 index_buttons"></div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -122,5 +142,13 @@
 
         })
 
+    </script>
+    <script type="module">
+        import { handleListSchool } from "{{ asset('js/handleListSchool.js') }}";
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var array = @json($schools);
+            handleListSchool(array);
+        });
     </script>
 @endpush
