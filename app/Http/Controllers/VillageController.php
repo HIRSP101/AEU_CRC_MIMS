@@ -118,6 +118,7 @@ class VillageController extends Controller
     }
     public function deleteDistrict(Request $request)
     {
+        // dd($request->id);
         $this->deleteService->deleteDistrict($request->id);
         return response()->json(['message' => 'District deleted successfully']);
     }

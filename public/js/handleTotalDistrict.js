@@ -13,6 +13,7 @@ export function handleTotalDistrict(array) {
             "Are you sure you want to delete this district?"
         );
         if (confirmDelete) {
+            console.log("fghjk", districtId);
             ajaxtoRoute("POST", "/deletedistrict", [districtId]);
         }
     });
