@@ -166,6 +166,18 @@ class CreateMemberService
         ]);
     }
 
+    private function handleImageUpload(?array $data, ?UploadedFile $image, int $currentMemberId): ?string
+    {
+        if (!$image || !isset($data[0]['name_en'])) {
+            return null;
+        }
+
+        $imageName = 'mem-' . str_replace(' ', '', $data[0]["name_en"] . ($currentMemberId + 1)) . '.' . $image->extension();
+        $image->move(public_path('images/members'), $imageName);
+
+        return "images/members/$imageName";
+    }
+    
     private function convertDate($date)
     {
         return date('Y-m-d', strtotime(str_replace('/', '-', $date)));
