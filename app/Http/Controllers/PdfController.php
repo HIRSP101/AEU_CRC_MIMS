@@ -34,7 +34,7 @@ class PdfController extends Controller
         $tempDir = storage_path('app/reports/');
         $pdfFilePath = $tempDir . "សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន.pdf";
 
-        $html = view('pdf-preview.request-form.index', compact('member'))->render();
+        $html = view('pdf-preview.request-form-preview.index', compact('member'))->render();
         Browsershot::html($html)->format('A4')->savePdf($pdfFilePath);
         return response()->download($pdfFilePath)->deleteFileAfterSend(true);  // Automatically delete after download
 
@@ -51,22 +51,32 @@ class PdfController extends Controller
             ->join('school as s', 'meb.school_id', '=', 's.school_id')
             ->join('branch as b', 'b.branch_id', '=', 'meb.branch_id')
             ->where('mpd.member_id', $id)
-            ->select(
-                'mpd.*',
-                'mgd.*',
-                'mrd.*',
-                'meb.*',
-                'mca.*',
-                'mpa.*',
+            ->select([
+                'mpd.member_id',
+                'mpd.member_code',
+                'mpd.name_kh',
+                'mpd.name_en',
+                'mpd.gender',
+                'mpd.date_of_birth',
+                'b.branch_name',
+                'b.branch_kh',
+                'mpd.member_type',
                 's.school_name',
-                'b.branch_kh'
-            )
+                'meb.education_level',
+                'meb.acadmedic_year',
+                'mrd.registration_date',
+                'mrd.expiration_date',
+                'mpd.full_current_address',
+                'mpd.phone_number',
+                'mpd.email',
+                'mpd.shirt_size',
+            ])
             ->first();
         //return response()->json($member);
         $tempDir = storage_path('app/reports/');
         $pdfFilePath = $tempDir . "សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន.pdf";
 
-        $html = view('pdf-preview.detail-form.index', compact('member'))->render();
+        $html = view('pdf-preview.detail-form-preview.index', compact('member'))->render();
         Browsershot::html($html)->format('A4')->savePdf($pdfFilePath);
         return response()->download($pdfFilePath)->deleteFileAfterSend(true);
     }
