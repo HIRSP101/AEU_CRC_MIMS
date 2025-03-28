@@ -125,6 +125,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/update-members', "{$appC}\\MemberController@updateMember");
     Route::post('/delete-branch', "{$appC}\\BranchController@deleteBranch");
     Route::post('/delete-branches', "{$appC}\\BranchController@deleteBranches");
+    Route::get('/getBranchByUser', "{$appC}\\BranchController@getBranchByUser");
 
     Route::get('/institute', "{$appC}\\InstituteController@index1")->name('institute');
     Route::get('/institute/{id}', "{$appC}\\InstituteController@get");
@@ -136,11 +137,17 @@ Route::middleware('auth')->group(function () use ($appC) {
     // Create school
     Route::get('/branch/{id}/village/{v_id}/school/create', "{$appC}\\SchoolController@create")->name('school.create');
     Route::post('/branch/{id}/village/{v_id}/school/store', "{$appC}\\SchoolController@store")->name('school.store');
+    Route::get('/getSchool', "{$appC}\\SchoolController@getSchool");
+    // new Code 2025/03/27 get school by district 
+    Route::get('/getSchoolByDistrictId/{id}',"{$appC}\\SchoolController@getSchoolByDistrictId");
 
     //Create district2
     Route::get('/createdistrict', "{$appC}\\VillageController@create2")->name('createdistrict');
     Route::post('/storedistrict', "{$appC}\\VillageController@store2")->name('storedistrict');
     Route::get('/get-district', "{$appC}\\VillageController@getDistrict");
+    Route::get('/get-district/{id}', "{$appC}\\VillageController@getDistrictByBranchId");
+    // new code get district by user login
+    Route::get('/getDistrictByUserLogin', "{$appC}\\VillageController@getDistrictByUserLogin");
     // Create school 2
     Route::get('/createschool', "{$appC}\\SchoolController@create2")->name('createschool');
     Route::post('/storeschool', "{$appC}\\SchoolController@store2")->name('storeschool');
@@ -159,7 +166,8 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/listschool', "{$appC}\\ExpireController@getListSchool")->name('listschool');
     Route::get('/listschool/{id}', "{$appC}\\ExpireController@index");
     Route::get('/list-institute', "{$appC}\\ExpireController@getListInstitute")->name('list-institute');
-    Route::get('/list-institute/{id}', "{$appC}\\ExpireController@index1");
+    Route::get('/list-institute/{id}', "{$appC}\\ExpireController@getListSchoolByDistrict");
+    Route::get('/listschool/{did}', "{$appC}\\ExpireController@Lujs");
     //Route::get('/instituteexpire', "{$appC}\\ExpireController@index1")->name('institute_ex');
 
     // Notification expire

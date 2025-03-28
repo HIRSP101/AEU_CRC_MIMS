@@ -21,19 +21,6 @@
                 <div id="sheetTable">
 
                 </div>
-
-                <button id="sheetBtn"
-                    class="text-gray-800 dark:text-gray-400 absolute top-6 right-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
-                    aria-label="close">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 6L6 18" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M6 6L18 18" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </button>
-
                 <hr class="w-full mt-4 mb-2 bg-red-600 p-[1px] border dark:bg-red-600">
                 <div class="flex justify-between items-center gap-4 sticky end-0">
                     <button id="sheetBtn" class="px-3 py-2 bg-red-500 text-white rounded-lg">Cancel</button>

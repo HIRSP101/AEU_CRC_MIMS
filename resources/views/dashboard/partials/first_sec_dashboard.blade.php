@@ -10,7 +10,7 @@ $firstEle_total = $firstEle->total_mem;
         <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 ">
             <div class="p-4 rounded-xl shadow-md px-3 mb-3 border">
                 <h1 class="text-blue-900 text-2xl font-khmer">សួស្តី
-                    {{explode(' ', auth()->user()->name)[1] ?? auth()->user()->name}}</h1>
+                    {{explode(' ', string: auth()->user()->name)[1] ?? auth()->user()->name}}</h1>
                 <h3 class="text-blue-900 text-xl font-battambang mt-3.5">សូមសា្វគមន៍មកកាន់ប្រព័ន្ធគ្រប់គ្រងទិន្នន័យ​
                     សមាជិកយុវជន ក.ក្រ.ក</h3>
                 <div class="grid justify-items-end my-3 opacity-5 hover:opacity-100">

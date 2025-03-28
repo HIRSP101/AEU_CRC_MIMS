@@ -1,28 +1,69 @@
 {
+  "_axios-BimPEqV4.js": {
+    "file": "assets/axios-BimPEqV4.js",
+    "name": "axios"
+  },
   "resources/css/app.css": {
-<<<<<<< HEAD
-    "file": "assets/app-Bi8klsoL.css",
-=======
-    "file": "assets/app-5QZvv7NS.css",
->>>>>>> 9b251317fafa3306c4c5a63b3b85a5c30e6f2d5e
+    "file": "assets/app-ClQm8FZJ.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-<<<<<<< HEAD
-    "file": "assets/app-Bgk2WaO4.js",
-=======
-    "file": "assets/app-CM15HCGu.js",
->>>>>>> 9b251317fafa3306c4c5a63b3b85a5c30e6f2d5e
+    "file": "assets/app-BE9yzBa4.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
+    "imports": [
+      "_axios-BimPEqV4.js",
+      "resources/js/exportToExcel.js"
+    ],
     "css": [
-<<<<<<< HEAD
-      "assets/app-DyIloYpa.css"
-=======
-      "assets/app-CS_MvI2D.css"
->>>>>>> 9b251317fafa3306c4c5a63b3b85a5c30e6f2d5e
+      "assets/app-B635_Ofk.css"
     ]
+  },
+  "resources/js/bootstrap.js": {
+    "file": "assets/bootstrap-zFMa9SER.js",
+    "name": "bootstrap",
+    "src": "resources/js/bootstrap.js",
+    "isEntry": true,
+    "imports": [
+      "_axios-BimPEqV4.js"
+    ]
+  },
+  "resources/js/exportToExcel.js": {
+    "file": "assets/exportToExcel-DeJInSqA.js",
+    "name": "exportToExcel",
+    "src": "resources/js/exportToExcel.js",
+    "isEntry": true
+  },
+  "resources/js/exportToExcel_branch.js": {
+    "file": "assets/exportToExcel_branch-BODyAAbk.js",
+    "name": "exportToExcel_branch",
+    "src": "resources/js/exportToExcel_branch.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/exportToExcel.js"
+    ]
+  },
+  "resources/js/import.js": {
+    "file": "assets/import-cjdB3qCo.js",
+    "name": "import",
+    "src": "resources/js/import.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/exportToExcel.js"
+    ]
+  },
+  "resources/js/loadingscreen.js": {
+    "file": "assets/loadingscreen-l0sNRNKZ.js",
+    "name": "loadingscreen",
+    "src": "resources/js/loadingscreen.js",
+    "isEntry": true
+  },
+  "resources/js/sheetTable.js": {
+    "file": "assets/sheetTable-l0sNRNKZ.js",
+    "name": "sheetTable",
+    "src": "resources/js/sheetTable.js",
+    "isEntry": true
   }
 }

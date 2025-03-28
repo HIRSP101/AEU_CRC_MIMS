@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SchoolRequest;
+use App\Models\branch_bindding_user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\branch;
@@ -12,6 +13,49 @@ use App\Services\Schools\CreateSchoolService;
 
 class SchoolController extends Controller
 {
+    public function getSchool()
+    {
+        $user = branch_bindding_user::where('user_id', operator: auth()->user()->id)->first()->branch_id;
+
+        if (auth()->user()->hasRole('admin')) {
+            $schools = DB::table('school as s')
+                ->leftJoin('member_education_background as meb', 'meb.school_id', '=', 's.school_id')
+                ->leftJoin('member_registration_detail as mrd', 'meb.member_id', '=', 'mrd.member_id')
+                //->where('s.branch_id', '=', $user) // Filter schools by user branch
+                ->whereIn('s.type', ['អនុវិទ្យាល័យ', 'វិទ្យាល័យ']) // School types
+                ->select(
+                    's.school_id',
+                    's.school_name',
+                    's.branch_id',
+                    DB::raw("COUNT(DISTINCT CASE WHEN mrd.registration_date <= NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem") // Count expired members
+                )
+                ->groupBy('s.school_id', 's.school_name', 's.branch_id')
+                ->get();
+        } else {
+            $schools = DB::table('school as s')
+                ->leftJoin('member_education_background as meb', 'meb.school_id', '=', 's.school_id')
+                ->leftJoin('member_registration_detail as mrd', 'meb.member_id', '=', 'mrd.member_id')
+                ->where('s.branch_id', '=', $user) // Filter schools by user branch
+                ->whereIn('s.type', ['អនុវិទ្យាល័យ', 'វិទ្យាល័យ']) // School types
+                ->select(
+                    's.school_id',
+                    's.school_name',
+                    's.branch_id',
+                    DB::raw("COUNT(DISTINCT CASE WHEN mrd.registration_date <= NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem") // Count expired members
+                )
+                ->groupBy('s.school_id', 's.school_name', 's.branch_id')
+                ->get();
+        }
+
+        return response()->json($schools);
+    }
+
+    //new code on 2025/03/27 
+    public function getSchoolByDistrictId($id){
+        $schools = DB::table('school as s')->where('s.district_id',$id)->get();
+        return response()->json($schools);
+    }
+
     public function index1($branchId, $villageId)
     {
         $village = DB::table('district')
@@ -186,4 +230,6 @@ class SchoolController extends Controller
 
         return redirect()->route('createschool')->with('success', 'School created successfully.');
     }
+
+
 }

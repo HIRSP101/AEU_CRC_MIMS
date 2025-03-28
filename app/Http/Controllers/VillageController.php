@@ -100,4 +100,17 @@ class VillageController extends Controller
         $districts = DB::table('district')->get();
         return response()->json($districts);
     }
+
+    // new code 2025/03/27 get district by user when login 
+    public function getDistrictByUserLogin()
+    {
+        $districts = DB::table('district')
+        ->leftJoin('branch', 'district.branch_id', '=', 'branch.branch_id')
+        ->leftJoin('branch_bindding_user', 'branch.branch_id', '=', 'branch_bindding_user.branch_id')
+        ->where('branch_bindding_user.user_id', auth()->user()->id)
+        ->get();
+        return response()->json($districts);
+    }
+
+
 }
