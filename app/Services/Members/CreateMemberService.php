@@ -166,7 +166,6 @@ class CreateMemberService
         ]);
     }
 
-
     private function convertDate($date)
     {
         return date('Y-m-d', strtotime(str_replace('/', '-', $date)));
