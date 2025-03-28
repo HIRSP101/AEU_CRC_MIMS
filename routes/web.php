@@ -172,6 +172,12 @@ Route::middleware('auth')->group(function () use ($appC) {
     // Notification expire
     Route::get('/check-expired-members', "{$appC}\\ExpireController@checkExpiredMembers")->name('checkExpiredMembers');
     Route::get('/check-expired-members-institute', "{$appC}\\ExpireController@checkExpiredMemberInstitute")->name('checkExpiredMemberInstitute');
+
+    // PDF COntroller request-form
+    Route::get('/generate-request-form/{id}', "{$appC}\\PdfController@exportPdfRequestForm");
+
+    // PDF Controller detail-form
+    Route::get('/generate-detail-form/{id}', "{$appC}\\PdfController@exportPdfDetailForm");
 });
 
 
