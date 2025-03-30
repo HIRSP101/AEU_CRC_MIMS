@@ -13,7 +13,8 @@ class member_current_address extends Model
     public $timestamps = false;
     protected $fillable = ["mca_id", "member_id", "village", "commune_sangkat", "provience_city", "zipcode", "district_khan", "home_no", "street_no"];
 
-    public function member_personal_detail() {
+    public function member_personal_detail()
+    {
         return $this->belongsTo(member_personal_detail::class, 'member_id');
     }
 }
