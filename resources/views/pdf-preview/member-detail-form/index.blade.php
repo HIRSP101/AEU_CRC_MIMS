@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&family=Nunito:wght@700&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
@@ -13,25 +18,28 @@
         <div class="px-12 " id="source-html">
             <div class="grid grid-cols-6 ">
                 <div class="col-span-5 flex flex-col items-center justify-center mb-5 ml-24 mt-6">
-                    {{-- <img class="w-[120px] h-[120px] mb-1"
-                        src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}" alt=""> --}}
-                    <h1 class="text-[14px] font-khmer text-blue-600">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា
+                    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path($member->member_image ?? 'images/crc.png'))) }}"
+                        width="100" alt="Company Logo">
+                    <h1 class="text-[14px] text-blue-600" style="font-family: 'Moul'">
+                        សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា
                     </h1>
-                    <h1 class="text-[14px]">Cambodian Red Cross Youth Individual Information</h1>
+                    <h1 class="text-[14px]" style="font-family: 'Battambang'">Cambodian Red Cross Youth Individual
+                        Information</h1>
                 </div>
 
                 <div class="flex justify-end mt-8">
                     <div class="w-28 h-36 border border-black text-center p-2">
-                        <p class="text-[12px] font-battambang">ភ្ជាប់មកនូវ</p>
-                        <p class="text-[12px] font-battambang">រូបថត</p>
-                        <p class="text-[12px] mt-2">4x6</p>
-                        <p class="text-[12px]">3x4</p>
+                        <p class="text-[12px]" style="font-family: 'Battambang'">ភ្ជាប់មកនូវ</p>
+                        <p class="text-[12px]" style="font-family: 'Battambang'">រូបថត</p>
+                        <p class="text-[12px] mt-2" style="font-family: 'Battambang'">4x6</p>
+                        <p class="text-[12px]" style="font-family: 'Battambang'">3x4</p>
                     </div>
                 </div>
             </div>
 
-            <h2 class="text-[15px] font-khmer text-blue-600">១-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន (Personal Detail)</h2>
-            <div class="font-battambang my-3 text-[14px]">
+            <h2 class="text-[15px] font-khmer text-blue-600" style="font-family: 'Moul'">១-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន
+                (Personal Detail)</h2>
+            <div class="my-3 text-[14px]" style="font-family: 'Battambang'">
                 <div class="flex flex-wrap mx-3 my-3 gap-1">
                     <div class=" flex w-full md:w-1/3 md:mb-0">
                         <h3 class="px-2">
@@ -183,8 +191,9 @@
                     </div>
                 </div>
             </div>
-            <h2 class="text-[15px] font-khmer text-blue-600">២-វគ្គបណ្ដុះបណ្ដាលដែលទទួលបានកន្លងមក (Training Skill)</h2>
-            <div class="font-battambang text-[14px]">
+            <h2 class="text-[15px] font-khmer text-blue-600" style="font-family: 'Moul'">
+                ២-វគ្គបណ្ដុះបណ្ដាលដែលទទួលបានកន្លងមក (Training Skill)</h2>
+            <div class="text-[14px]" style="font-family: 'Battambang'">
                 <div class="flex flex-wrap mx-3 my-3 gap-1">
                     <div class="flex w-full md:w-full md:mb-0">
                         <h3 class="px-2">
@@ -206,8 +215,9 @@
                     </div>
                 </div>
             </div>
-            <h2 class="text-[15px] font-khmer text-blue-600">៣-ព័ត៌មានគ្រួសារ (Family Information)</h2>
-            <div class="font-battambang text-[14px]">
+            <h2 class="text-[15px] font-khmer text-blue-600" style="font-family: 'Moul'">៣-ព័ត៌មានគ្រួសារ (Family
+                Information)</h2>
+            <div class="text-[14px]" style="font-family: 'Battambang'">
                 <div class="flex flex-wrap mx-3 my-3 gap-1">
                     <div class="flex w-full md:w-1/2 md:mb-0">
                         <h3 class="px-2">
@@ -254,12 +264,12 @@
                     </div>
                 </div>
             </div>
-            <h2 class="text-[15px] font-khmer text-blue-600">៤-កិច្ចសន្យា (Contract)</h2>
-            <div class="font-battambang mb-8 mt-4 text-[14px]">
+            <h2 class="text-[15px] font-khmer text-blue-600" style="font-family: 'Moul'">៤-កិច្ចសន្យា (Contract)</h2>
+            <div class="mb-8 mt-4 text-[14px]" style="font-family: 'Battambang'">
                 <h3>&nbsp;&nbsp;&nbsp;&nbsp; ខ្ញុំបាទ/នាងខ្ញុំ សូមបញ្ញាក់ថា រាល់ព័ត៌មានដែលបានរៀបរាប់ជូនខាងលើ
                     ពិតជាត្រឹមត្រូវពិតប្រាកដមែន
                     ហើយយល់</h3>
-                <h3>ព្រមចូលជាសមាជិកយុវជនកាកបាទក្រហម ចាប់ពីថ្ងៃចុះហត្ថលេខានេះតទៅ</h3>
+                <h3>ព្រមចូលជាសមាជិកយុវជនកាកបាទក្រហម ចាប់ពីថ្ងៃចុះហត្ថលេខានេះតទៅ ។</h3>
             </div>
         </div>
     </div>
