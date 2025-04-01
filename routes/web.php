@@ -92,7 +92,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branch/{id}', "{$appC}\\BranchController@get");
     Route::get('/branch_report', "{$appC}\\BranchController@index")->name('branch.report.exclude');
     Route::get('/branch_report/{id}', "{$appC}\\ReportController@branch_report_exclude")->name('branch.report.exclude');
-   
+
     // option page
     //Route::get('/member/option/{id}', "{$appC}\\MemberController@getMemberOption")->name('member.option');
     // get user detail form
@@ -141,9 +141,16 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/createdistrict', "{$appC}\\VillageController@create2")->name('createdistrict');
     Route::post('/storedistrict', "{$appC}\\VillageController@store2")->name('storedistrict');
     Route::get('/get-district', "{$appC}\\VillageController@getDistrict");
+    Route::post('/deletedistrict', "{$appC}\\VillageController@deleteDistrict");
+    Route::get('/update-district/{id}', "{$appC}\\VillageController@editDistrict")->name('update-district');
+    Route::post('/update-district/{id}', "{$appC}\\VillageController@updateDistrict")->name('updatedistrict');
+
     // Create school 2
     Route::get('/createschool', "{$appC}\\SchoolController@create2")->name('createschool');
     Route::post('/storeschool', "{$appC}\\SchoolController@store2")->name('storeschool');
+    Route::post('/deleteschool', "{$appC}\\SchoolController@deleteSchool");
+    Route::get('/update-school/{id}', "{$appC}\\SchoolController@editSchool")->name('update-school');
+    Route::post('/update-school/{id}', "{$appC}\\SchoolController@updateSchool")->name('updateschool');
 
     Route::get('/branch/{id}/village', "{$appC}\\VillageController@index")->name('village');
     Route::get('/branch/{id}/village/{v_id}', "{$appC}\\VillageController@get");
@@ -165,6 +172,12 @@ Route::middleware('auth')->group(function () use ($appC) {
     // Notification expire
     Route::get('/check-expired-members', "{$appC}\\ExpireController@checkExpiredMembers")->name('checkExpiredMembers');
     Route::get('/check-expired-members-institute', "{$appC}\\ExpireController@checkExpiredMemberInstitute")->name('checkExpiredMemberInstitute');
+
+    // PDF COntroller request-form
+    Route::get('/generate-request-form/{id}', "{$appC}\\PdfController@exportPdfRequestForm");
+
+    // PDF Controller detail-form
+    Route::get('/generate-detail-form/{id}', "{$appC}\\PdfController@exportPdfDetailForm");
 });
 
 

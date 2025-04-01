@@ -6,11 +6,20 @@ use App\Http\Requests\VillageRequest;
 use App\Services\District\CreateDistrictService;
 use Illuminate\Http\Request;
 use App\Models\branch;
+use App\Models\branch_bindding_user;
+use App\Models\district;
 use App\Models\village;
+use App\Services\District\DeleteDistrictService;
 use Illuminate\Support\Facades\DB;
 
 class VillageController extends Controller
 {
+    protected DeleteDistrictService $deleteService;
+
+    public function __construct(DeleteDistrictService $deleteService)
+    {
+        $this->deleteService = $deleteService;
+    }
     public function index($branchId)
     {
         $branch = DB::table('branch')->where('branch_id', $branchId)->select('branch_kh')->first();
@@ -71,8 +80,15 @@ class VillageController extends Controller
     }
     public function create2()
     {
-        $branches = DB::table('branch')->get();
-        return view('village.create-village2', compact('branches'));
+        $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
+        $branches = DB::table('branch')
+            ->where('branch_id', $user)
+            ->get();
+
+        $districts = DB::table('district as d')
+            ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')
+            ->get();
+        return view('village.create-village2', compact('branches', 'districts'));
     }
     public function store2(VillageRequest $request, CreateDistrictService $service)
     {
@@ -99,5 +115,25 @@ class VillageController extends Controller
     {
         $districts = DB::table('district')->get();
         return response()->json($districts);
+    }
+    public function deleteDistrict(Request $request)
+    {
+        // dd($request->id);
+        $this->deleteService->deleteDistrict($request->id);
+        return response()->json(['message' => 'District deleted successfully']);
+    }
+    public function editDistrict($id)
+    {
+        $district = district::findOrFail($id);
+        $branches = branch::all();
+        return view('village.edit-district', compact('district', 'branches'));
+    }
+    public function updateDistrict(Request $request, $id)
+    {
+        $district = district::findOrFail($id);
+        $district->district_name = $request->district_name;
+        $district->branch_id = $request->branch_id;
+        $district->save();
+        return redirect()->route('createdistrict')->with('success', 'District updated successfully');
     }
 }

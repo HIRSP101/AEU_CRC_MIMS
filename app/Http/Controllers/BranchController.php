@@ -29,12 +29,12 @@ class BranchController extends Controller
     }
     public function index()
     {
-        dd(Route::currentRouteName());
+        // dd(Route::currentRouteName());
         $total_mem_branches = $this->totalmem_branches()
             ->where('b.branch_id', '<', '28')
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image')
             ->get();
-        
+
         return view('branch.index', compact('total_mem_branches'));
     }
 
