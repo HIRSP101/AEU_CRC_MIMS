@@ -1,33 +1,52 @@
-import {showLoading, hideLoading} from './loadingscreen';
+import { showLoading, hideLoading } from './loadingscreen';
 
-export default function constructSheetTable(sheetObj = {}) {
-    showLoading();
-    var tableHeader = `<tr>`;
-    var tableValue = ``;
-    var tableStructure = `<div class="w-full overflow-scroll max-h-[450px] my-4 rounded-md border-solid border-2 border-black">
-    <table class="min-w-full divide-y divide-black font-siemreap"><thead class="bg-gray-600 ">`;
-    const sheetEntries = Object.entries(sheetObj);
-    // get table header
-    const [fKey, fVal] = sheetEntries[0];
-
-    for (const [key, value] of Object.entries(fVal)) {
-        tableHeader += `<th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">${value}</th>`;
+export default function constructSheetTable(sheetObj = {},header = []) {
+    if (Object.keys(sheetObj).length === 0) {
+        console.warn("Sheet data is empty!");
+        return;
     }
-    tableHeader += `</tr>`
-    tableStructure += tableHeader + `</thead><tbody class="bg-white divide-y divide-gray-200">`;
-    // generate the rest of the table here
-    sheetEntries.slice(1).forEach(([basekey, basevalue]) => {
-        tableValue +=  `<tr>`;
-        for (const[subkey, subValue] of Object.entries(basevalue)) {
-            if(subkey != 'village' && subkey != 'commune_sangkat' && subkey != 'district_khan' && subkey != 'provience_city') {
-                tableValue += `<td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">${subValue}</td>`
-            } else {
-                tableValue += '';
-            }
-        }
-        tableValue += `</tr>`;
+
+    let tableHeader = `<tr>`;
+    let tableRows = ``;
+    let tableStructure = `<div class="w-full overflow-scroll max-h-[450px] my-4 rounded-md border border-black">
+        <table class="min-w-full divide-y divide-black font-siemreap">
+        <thead class="bg-gray-600 text-white text-xs uppercase tracking-wider">`;
+
+    const sheetEntries = Object.entries(sheetObj);
+
+
+    const firstRowData = sheetEntries[0]?.[1] || {};
+    let columnNames = Object.keys(firstRowData);
+    const excludeColumns = ["home_no", "street_no", "village", "commune_sangkat", "district_khan", "provience_city"];
+
+    columnNames = columnNames.filter(col => !excludeColumns.includes(col));
+   
+    header.forEach((col) => {
+        tableHeader += `<th class="px-6 py-3 text-left whitespace-nowrap">${col}</th>`;
     });
-    tableStructure += tableValue + `</tbody></table></div>`;
+    tableHeader += `</tr>`;
+    tableStructure += tableHeader + `</thead><tbody class="bg-white divide-y divide-gray-200">`;
+
+    function formatDate(dateString) {
+        if (!dateString) return "-";
+        let date = new Date(dateString);
+        if (isNaN(date.getTime())) return dateString; // Return as is if invalid date
+        return date.toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" }); // Format as DD-MM-YYYY
+    }
+
+    sheetEntries.slice(1).forEach(([rowIndex, rowData]) => {
+        tableRows += `<tr>`;
+        columnNames.forEach((colName) => {
+            let cellValue = rowData[colName] || "-";
+            if (colName === "registration_date") {
+                cellValue = formatDate(cellValue);
+            }
+            tableRows += `<td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">${cellValue}</td>`;
+        });
+
+        tableRows += `</tr>`;
+    });
+
+    tableStructure += tableRows + `</tbody></table></div>`;
     $("#sheetTable").html(tableStructure);
-    hideLoading();
 }

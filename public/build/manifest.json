@@ -1,5 +1,10 @@
 {
+  "_axios-BimPEqV4.js": {
+    "file": "assets/axios-BimPEqV4.js",
+    "name": "axios"
+  },
   "resources/css/app.css": {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "file": "assets/app-Bi8klsoL.css",
@@ -9,10 +14,14 @@
 =======
     "file": "assets/app-XCHkTv4F.css",
 >>>>>>> 89b6d831b0c039ab9c213bb0c6685b4d1ec62690
+=======
+    "file": "assets/app-ClQm8FZJ.css",
+>>>>>>> cc460554c9725469f8adf14e92731de2c2dd771d
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "file": "assets/app-Bgk2WaO4.js",
@@ -22,10 +31,14 @@
 =======
     "file": "assets/app-CWuqe4nS.js",
 >>>>>>> 89b6d831b0c039ab9c213bb0c6685b4d1ec62690
+=======
+    "file": "assets/app-BE9yzBa4.js",
+>>>>>>> cc460554c9725469f8adf14e92731de2c2dd771d
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
+<<<<<<< HEAD
       "resources/js/exportToExcel_branch.js"
     ],
     "css": [
@@ -57,11 +70,50 @@
   },
   "resources/js/import.js": {
     "file": "assets/import-DfUcWnml.js",
+=======
+      "_axios-BimPEqV4.js",
+      "resources/js/exportToExcel.js"
+    ],
+    "css": [
+      "assets/app-B635_Ofk.css"
+    ]
+  },
+  "resources/js/bootstrap.js": {
+    "file": "assets/bootstrap-zFMa9SER.js",
+    "name": "bootstrap",
+    "src": "resources/js/bootstrap.js",
+    "isEntry": true,
+    "imports": [
+      "_axios-BimPEqV4.js"
+    ]
+  },
+  "resources/js/exportToExcel.js": {
+    "file": "assets/exportToExcel-DeJInSqA.js",
+    "name": "exportToExcel",
+    "src": "resources/js/exportToExcel.js",
+    "isEntry": true
+  },
+  "resources/js/exportToExcel_branch.js": {
+    "file": "assets/exportToExcel_branch-BODyAAbk.js",
+    "name": "exportToExcel_branch",
+    "src": "resources/js/exportToExcel_branch.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/exportToExcel.js"
+    ]
+  },
+  "resources/js/import.js": {
+    "file": "assets/import-cjdB3qCo.js",
+>>>>>>> cc460554c9725469f8adf14e92731de2c2dd771d
     "name": "import",
     "src": "resources/js/import.js",
     "isEntry": true,
     "imports": [
+<<<<<<< HEAD
       "resources/js/exportToExcel_branch.js"
+=======
+      "resources/js/exportToExcel.js"
+>>>>>>> cc460554c9725469f8adf14e92731de2c2dd771d
     ]
   },
   "resources/js/loadingscreen.js": {

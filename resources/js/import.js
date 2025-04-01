@@ -1,11 +1,5 @@
 import ExcelJS from "exceljs";
 import constructSheetTable from "./sheetTable";
-import { showLoading, hideLoading } from "./loadingscreen";
-var columnNames = [];
-var colValues = {};
-var idCounter = 0;
-var todelIndex = 0;
-var ignoreColIndexes = [];
 var sheetObj = {};
 var activeSheet = "";
 const branch_dict = {
@@ -37,36 +31,77 @@ const branch_dict = {
 };
 
 var khDict = {
-    "ល.រ": "member_id",
-    លេខកូដ: "member_code",
-    "ឈ្មោះ (ខ្មែរ)": "name_kh",
-    "ឈ្មោះ (អង់គ្លេស)": "name_en",
-    ភេទ: "gender",
-    ថ្ងៃខែឆ្នាំកំណើត: "date_of_birth",
-    ទីកន្លែងកំណើត: "pob_provience_city",
-    គ្រឹះស្ថានសិក្សា: "institute_id",
-    តួនាទី: "type",
-    កម្រិតសិក្សា: "education_level",
-    ឆ្នាំសិក្សា: "acadmedic_year",
-    ថ្ងៃខែឆ្នាំចូលជាសមាជិក: "registration_date",
-    ថ្ងៃផុតកំណត់: "expiration_date",
-    អាស័យដ្ឋានបច្ចុប្បន្ន: "full_current_address",
-    ទូរស័ព្ទផ្ទាល់ខ្លួន: "phone_number",
-    ទូរស័ព្ទអាណាព្យាបាល: "guardian_phone",
-    "ហ្វេសបុក/អ៊ីម៉ែល": "email",
-    ទំហំអាវ: "shirt_size",
+    "នាម គោត្តនាម": "name_kh",
+    "ឈ្មោះឡាតាំង": "name_en",
+    "ភេទ": "gender",
+    "ថ្ងៃខែឆ្នាំកំណើត": "date_of_birth",
+    "ទីកន្លែងកំណើត": "pob_provience_city",
+    "គ្រឹះស្ថានសិក្សា": "institute_id",
+    "តួនាទី": "type",
+    "កម្រិតសិក្សា": "education_level",
+    "ទទួលបានវគ្គបណ្ដុះបណ្ដាល": "training_received",
+    "ពិការភាព": "member_status",
+    "ឆ្នាំសិក្សា": "acadmedic_year",
+    "ថ្ងៃខែឆ្នាំចូលជាសមាជិក": "registration_date",
+    "អាសយដ្ឋានបច្ចុប្បន្ន": "full_current_address",
+    "ទូរស័ព្ទផ្ទាល់ខ្លួន/តេលេក្រាម": "phone_number",
+    "ទូរស័ព្ទអាណាព្យាបាល": "guardian_phone",
+    "ទំហំអាវ": "shirt_size",
+    "ផ្ទះលេខ": "home_no",
+    "ផ្លូវលេខ": "street_no",
+    "ភូមិ": "village",
+    "ឃុំ/សង្កាត់": "commune_sangkat",
+    "ស្រុក/ខណ្ឌ": "district_khan",
+    "ខេត្តរាជធានី": "provience_city",
 };
+
 $(document).ready(function () {
-    $("#sheetBtn").change(function (e) {
+    var school_id = "";
+    //start up code goes here
+    getDistrctKhan();
+    $.ajax({
+        type: "GET",
+        url: "/getBranchByUser",
+        data: {},
+        success: function (data) {
+            $("#branch_name").val(data[0].branch_kh);
+            
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+
+    //select Change event on district and school
+    $("#district-select").on("change", function () {
+        var dId = $("#district-select").val();
+        $("#import-section").addClass("hidden");
+            getSchool(dId);
+    });
+    $("#school-select").on("change", function () {
+        var sId = $("#school-select").val();
+        school_id = sId;
+        console.log(sId);
+        
+        $("#import-section").removeClass("hidden");
+    });
+
+    $("#sheetBtn").on("click", function (e) {
         e.preventDefault();
         $("#menu").addClass("hidden");
     });
-
     $("#dropzone-file").on("change", async function () {
+        var columnNames = [];
+        var startRow = 0;
+        var lastRow = 0;
+        var colValues = {};
+        sheetObj = {};
+        activeSheet = "";
         const fileInput = $("#dropzone-file")[0];
-        // console.log(fileInput);
         if (fileInput.files.length > 0) {
-            // showLoading();
             const file = fileInput.files[0];
             const reader = new FileReader();
 
@@ -78,170 +113,64 @@ $(document).ready(function () {
                     await workbook.xlsx.load(fileArrayBuffer);
 
                     workbook.eachSheet((worksheet, sheetId) => {
-                        console.log(
-                            `Sheet Name: ${worksheet.name}, ${sheetId}`
-                        );
-                        idCounter = 0;
-                        ignoreColIndexes = [];
-                        columnNames = [];
-                        colValues = {};
-                        worksheet.eachRow(
-                            { includeEmpty: false },
-                            (row, rowNumber) => {
-                                var filledRows = fillEmptySlotsWithNull(
-                                    row.values
-                                );
-                                var splitValues = filledRows.map((value) => {
-                                    if (value === "ល.រ") {
-                                        idCounter++;
-                                        console.log(
-                                            "*--->*--->*---->start cutting from here"
-                                        );
+                        console.log(`Sheet Name: ${worksheet.name}, ${sheetId}`);
+
+                        const allData = worksheet.getSheetValues();
+                        console.log("All sheet data:", allData);
+                        const rowCount = worksheet.rowCount;
+
+                        let startRow = null;
+                        let lastRow = null;
+                        let colValues = {};
+
+                        worksheet.eachRow((row, rowNumber) => {
+                            const rowValues = row.values.slice(1);
+                            if (rowValues.includes("ល.រ")) {
+                                columnNames = rowValues.slice(1);
+                                startRow = rowNumber;
+                            }
+
+                            if (rowValues.some(val => val && val.toString().includes("សរុបចំនួន"))) {
+                                lastRow = rowNumber;
+                            }
+                        });
+
+                        if (startRow && lastRow) {
+                            for (let i = startRow; i < lastRow; i++) {
+                                let row = worksheet.getRow(i);
+                                let rowData = row.values.slice(2).map(cell => {
+                                    if (cell && typeof cell === "object" && cell.result !== undefined) {
+                                        return cell.result;
                                     }
-                                    console.log(
-                                        value instanceof Date
-                                            ? value.toLocaleDateString()
-                                            : "t"
-                                    );
-                                    value =
-                                        value instanceof Date
-                                            ? value.toLocaleDateString()
-                                            : value;
-                                    return typeof value === "object"
-                                        ? value?.result ?? value?.text ?? value
-                                        : value;
+                                    return cell !== null && cell !== undefined ? cell : null;
+                                });
+                                let rowObject = {};
+                                columnNames.forEach((colName, index) => {
+                                    let cellValue = rowData[index] || null;
+                                    if (colName === "ថ្ងៃខែឆ្នាំកំណើត" && containsUnicodeNumber(cellValue)) {
+                                        cellValue = translatekhdateToen(cellValue);
+                                    }
+                                    if (colName === "អាសយដ្ឋានបច្ចុប្បន្ន") {
+                                        const addressParts = (cellValue || "").split(" ").filter(part => part.trim() !== "");
+                                        const address = reverseCurrentArrayAddress(addressParts);
+                                        rowObject["home_no"] = address[0] || null;
+                                        rowObject["street_no"] = address[1] || null;
+                                        rowObject["village"] = address[2] || null;
+                                        rowObject["commune_sangkat"] = address[3] || null;
+                                        rowObject["district_khan"] = address[4] || null;
+                                        rowObject["provience_city"] = address[5] || null;
+                                    }
+                                    rowObject[khDict[colName]] = cellValue;
                                 });
 
-                                if (splitValues.length > 0 && idCounter > 0) {
-                                    delete splitValues[0];
-
-                                    if (idCounter > 0) {
-                                        if (columnNames.length == 0) {
-                                            columnNames = []; // Handle edge-cases (stacked/merged header columns)
-                                        }
-                                        if (
-                                            splitValues[1] == "ល.រ" &&
-                                            columnNames.length == 0
-                                        ) {
-                                            for (
-                                                let i = 1;
-                                                i < splitValues.length;
-                                                i++
-                                            ) {
-                                                columnNames.push(
-                                                    splitValues[i]
-                                                );
-                                            }
-                                        }
-                                        for (
-                                            let i = 1;
-                                            i < columnNames.length;
-                                            i++
-                                        ) {
-                                            if (
-                                                khDict[columnNames[i]] ==
-                                                "date_of_birth"
-                                            ) {
-                                                // Convert localized date to std date format for mysql (YYYY/MM/dd)
-                                                if (
-                                                    splitValues[i + 1] !=
-                                                    "ថ្ងៃខែឆ្នាំកំណើត"
-                                                ) {
-                                                    if (
-                                                        containsUnicodeNumber(
-                                                            splitValues[i + 1]
-                                                        )
-                                                    ) {
-                                                        colValues[rowNumber] = {
-                                                            ...colValues[
-                                                                rowNumber
-                                                            ],
-                                                            [khDict[
-                                                                columnNames[i]
-                                                            ]]:
-                                                                translatekhdateToen(
-                                                                    splitValues[
-                                                                        i + 1
-                                                                    ]
-                                                                ),
-                                                        };
-                                                    }
-                                                }
-                                            } else {
-                                                colValues[rowNumber] = {
-                                                    ...colValues[rowNumber],
-                                                    [khDict[columnNames[i]]]:
-                                                        splitValues[i + 1] ==
-                                                        "-"
-                                                            ? null
-                                                            : splitValues[
-                                                                  i + 1
-                                                              ],
-                                                };
-                                            }
-                                        }
-                                    }
-                                }
+                                colValues[i] = rowObject;
                             }
-                        );
-                        for (const key in colValues) {
-                            if (
-                                colValues[key]["full_current_address"] !==
-                                    null &&
-                                colValues[key]["full_current_address"] !==
-                                    undefined
-                            ) {
-                                for (
-                                    var i = 0;
-                                    i <
-                                    colValues[key][
-                                        "full_current_address"
-                                    ].split(" ").length;
-                                    i++
-                                ) {
-                                    var splitVal =
-                                        colValues[key][
-                                            "full_current_address"
-                                        ].split(" ");
-                                    if (splitVal[i].includes("ភូមិ")) {
-                                        colValues[key]["village"] = splitVal[i];
-                                    }
-                                    if (
-                                        splitVal[i].includes("ឃុំ") ||
-                                        splitVal[i].includes("សង្កាត់")
-                                    ) {
-                                        colValues[key]["commune_sangkat"] =
-                                            splitVal[i];
-                                    }
-                                    if (
-                                        splitVal[i].includes("ស្រុក") ||
-                                        splitVal[i].includes("ខណ្ឌ") ||
-                                        splitVal[i].includes("ក្រុង")
-                                    ) {
-                                        colValues[key]["district_khan"] =
-                                            splitVal[i];
-                                    }
-                                    if (
-                                        splitVal[i].includes("ខេត្ត") ||
-                                        splitVal[i].includes("រាជធានី")
-                                    ) {
-                                        colValues[key]["provience_city"] =
-                                            splitVal[i];
-                                    }
-                                }
-                            }
-                            /*
-                            if (colValues[key]["member_code"] == "លេខកូដ") {
-                                delete colValues[key];
-                                }
-                                */
                         }
                         sheetObj[worksheet.name] = colValues;
-                        console.log(colValues);
-                        //insertMember(colValues);
+
+
                     });
-                    // console.log(sheetObj);
-                    // hideLoading();
+
                     var btnElement = ``;
                     for (let i = 0; i < Object.keys(sheetObj).length; i++) {
                         btnElement += constructSheetBtn(
@@ -252,7 +181,6 @@ $(document).ready(function () {
                     $("#sheetContainer").html(btnElement);
                     $("div#sheetContainer").on("click", "button", function (e) {
                         e.preventDefault();
-                        initializeProgressTracking();
                         $("div#sheetContainer")
                             .find("button")
                             .not(this)
@@ -265,149 +193,55 @@ $(document).ready(function () {
                         $(this).attr("disabled", true);
 
                         activeSheet = $(this).text().trim();
-                        constructSheetTable(sheetObj[activeSheet]);
-                        // console.log(sheetObj[activeSheet]);
-                    });
 
-                    $("#sheetImport").click(function (e) {
-                        e.preventDefault();
-                        delete sheetObj[
-                            activeSheet
-                        ][Object.keys(sheetObj[activeSheet])[0]];
-                        if (activeSheet.length > 0) {
-                            //  showLoading();
-                            var formData = new FormData();
-                            formData.append(
-                                "members",
-                                JSON.stringify(sheetObj[activeSheet])
-                            );
-                            //console.log(formData);
-                            insertMember(formData);
-                        } else {
-                            console.log("please select a sheet to import!!");
-                        }
+                        constructSheetTable(sheetObj[activeSheet], columnNames);
+                        console.log("sheetobj=>", sheetObj[activeSheet]);
+
                     });
                 } catch (error) {
                     console.error("Error reading Excel file:", error);
-                    hideLoading();
                 }
             };
-            reader.onerror = function (error) {
-                console.error("Error reading file:", error);
-            };
             reader.readAsArrayBuffer(file);
-        } else {
-            console.log("No file selected.");
         }
     });
 
-    function fillEmptySlotsWithNull(arr) {
-        return Array.from(arr, (_, i) => {
-            if (!(i in arr)) return "-";
-            else return arr[i];
-        });
-    }
-    /*
-    function insertMember(member) {
-        $.ajax({
-            type: 'POST',
-            url: '/createmember',
-            data: member,
-            contentType: false,
-            processData: false,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-                console.log(response.message);
-                hideLoading();
-            },
-            error: function (error) {
-                console.error(error);
-            }
-        })
-    }
-    */
-
-    function updateProgress(percentage, status = null) {
-        $("#progressBar").css("width", `${percentage}%`);
-        $("#progressPercentage").text(`${percentage}%`);
-
-        if (status) {
-            $("#progressStatus").text(status);
-        } else if (percentage === 100) {
-            $("#progressStatus").text("Import completed successfully!");
-        } else {
-            $("#progressStatus").text("Processing...");
+    $("#sheetImport").on("click", function () {
+        if (!activeSheet || !sheetObj[activeSheet]) {
+            alert("No active sheet selected!");
+            return;
         }
-    }
 
-    function showProgressBar() {
-        $("#progressContainer").removeClass("hidden");
-        updateProgress(0, "Starting import...");
-    }
-
-    function hideProgressBar() {
-        setTimeout(() => {
-            $("#progressContainer").addClass("hidden");
-            updateProgress(0);
-        }, 2000);
-    }
-
+        let memberData = Object.values(sheetObj[activeSheet]);
+        memberData = memberData.map(member => ({
+            ...member,
+            school_id: school_id 
+        }));
+        
+        console.log("memberData=>", memberData);
+        insertMember(memberData.slice(1));
+    });
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     function insertMember(member) {
-        showProgressBar();
-        // showLoading();
-
         $.ajax({
-            type: "POST",
             url: "/importmember",
-            data: member,
-            contentType: false,
-            processData: false,
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ members: member }),
             success: function (response) {
-                updateProgress(100, "Import completed successfully!");
-                console.log(response.message);
-                setTimeout(() => {
-                    hideLoading();
-                    hideProgressBar();
-                }, 1000);
+                console.log("Success:", response);
             },
-            error: function (error) {
-                updateProgress(0, "Error occurred during import");
-                console.error(error);
-                hideLoading();
-                setTimeout(() => {
-                    hideProgressBar();
-                }, 3000);
-            },
+            error: function (xhr) {
+                console.error("Error:", xhr.responseText);
+            }
         });
     }
 
-    function initializeProgressTracking() {
-        const progressBarHtml = `
-            <div id="progressContainer" class="hidden mt-4 w-full">
-                <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mb-2">
-                    <div id="progressBar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
-                </div>
-                <div class="flex justify-between">
-                    <span id="progressStatus" class="text-sm text-gray-500">Processing...</span>
-                    <span id="progressPercentage" class="text-sm text-gray-500">0%</span>
-                </div>
-            </div>
-        `;
-        $("#sheetContainer").after(progressBarHtml);
 
-        window.Echo.channel("import-progress").listen(
-            "import.progress",
-            (e) => {
-                console.log(e.progress);
-                updateProgress(e.progress);
-            }
-        );
-    }
 
     function constructSheetBtn(btntext = "") {
         var btnElement = `<button
@@ -425,12 +259,6 @@ $(document).ready(function () {
 
             // Split the date string into day, month, and date components
             const parts = datestr.split(" ");
-            if (parts.length !== 3) {
-                throw new Error(
-                    "Invalid format: The input string must be in 'day month date' format."
-                );
-            }
-
             const [day_uni_str, month_uni_str, date_uni_str] = parts;
 
             // Month dictionary for translating Khmer month to numeric month
@@ -483,7 +311,7 @@ $(document).ready(function () {
                 );
             }
 
-            const result = `${transDateNum}/${month_uni_dict[month_uni_str]}/${transDayNum}`;
+            const result = `${transDateNum}-${month_uni_dict[month_uni_str]}-${transDayNum}`;
             // console.log(result);
             return result;
         } catch (error) {
@@ -496,4 +324,84 @@ $(document).ready(function () {
     function containsUnicodeNumber(s) {
         return regex.test(s);
     }
+
+    function reverseCurrentArrayAddress(addressParts) {
+
+        const addressLength = Array(6).fill("");
+
+        const trimmedParts = addressParts.map(part => part.trim()).filter(part => part !== "");
+
+        let targetIndex = 5;
+        for (let i = trimmedParts.length - 1; i >= 0 && targetIndex >= 0; i--) {
+            addressLength[targetIndex] = trimmedParts[i];
+            targetIndex--;
+        }
+
+        return addressLength;
+    }
+
+    $("#importBtn").on("click", function () {
+
+    });
+
+
+    // get district and khan automatically when user login by Id join to userbind
+    function getDistrctKhan() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: "GET",
+                url: '/getDistrictByUserLogin',
+                data: {},
+                success: function (data) {
+                    console.log(data);
+                    var selectList = $('#district-select');
+                    selectList.empty();
+                    selectList.append(`<option value="">--------------------------------</option>`);
+                    $.each(data, function (index, item) {
+                        selectList.append($('<option>', {
+                            value: item.district_id,
+                            text: item.district_name
+                        }));
+                    });
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+    }
+
+    // get school and khan automatically when user login by Id join to userbind  
+    function getSchool(district_id) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: "GET",
+                url: `/getSchoolByDistrictId/${district_id}`,
+                data: {},
+                success: function (data) {
+                    console.log(data);
+                    var selectList = $('#school-select');
+                    selectList.empty();
+                    selectList.append(`<option value="">--------------------------------</option>`);
+                    $.each(data, function (index, item) {
+                        selectList.append($('<option>', {
+                            value: item.school_id,
+                            text: item.school_name
+                        }));
+                    });
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        });
+    }
+
 });

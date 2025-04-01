@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SchoolRequest;
+use App\Models\branch_bindding_user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\branch;
-use App\Models\branch_bindding_user;
 use App\Models\branch_hei;
 use App\Models\school;
 use App\Models\district;
