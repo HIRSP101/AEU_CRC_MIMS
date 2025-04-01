@@ -2,6 +2,10 @@ import ExcelJS from "exceljs";
 import constructSheetTable from "./sheetTable";
 var sheetObj = {};
 var activeSheet = "";
+var columnNames = [];
+var startRow = 0;
+var lastRow = 0;
+var colValues = {};
 const branch_dict = {
     រាជធានីភ្នំពេញ: 1,
     ខេត្តសៀមរាប: 2,
@@ -65,7 +69,7 @@ $(document).ready(function () {
         data: {},
         success: function (data) {
             $("#branch_name").val(data[0].branch_kh);
-            
+
         },
         failure: function (response) {
             alert(response.responseText);
@@ -79,25 +83,32 @@ $(document).ready(function () {
     $("#district-select").on("change", function () {
         var dId = $("#district-select").val();
         $("#import-section").addClass("hidden");
-            getSchool(dId);
+        getSchool(dId);
     });
     $("#school-select").on("change", function () {
         var sId = $("#school-select").val();
         school_id = sId;
         console.log(sId);
-        
+
         $("#import-section").removeClass("hidden");
     });
 
     $("#sheetBtn").on("click", function (e) {
         e.preventDefault();
         $("#menu").addClass("hidden");
+        columnNames = [];
+        startRow = 0;
+        lastRow = 0;
+        colValues = {};
+        sheetObj = {};
+        activeSheet = "";
+
     });
     $("#dropzone-file").on("change", async function () {
-        var columnNames = [];
-        var startRow = 0;
-        var lastRow = 0;
-        var colValues = {};
+        columnNames = [];
+        startRow = 0;
+        lastRow = 0;
+        colValues = {};
         sheetObj = {};
         activeSheet = "";
         const fileInput = $("#dropzone-file")[0];
@@ -118,10 +129,6 @@ $(document).ready(function () {
                         const allData = worksheet.getSheetValues();
                         console.log("All sheet data:", allData);
                         const rowCount = worksheet.rowCount;
-
-                        let startRow = null;
-                        let lastRow = null;
-                        let colValues = {};
 
                         worksheet.eachRow((row, rowNumber) => {
                             const rowValues = row.values.slice(1);
@@ -215,9 +222,9 @@ $(document).ready(function () {
         let memberData = Object.values(sheetObj[activeSheet]);
         memberData = memberData.map(member => ({
             ...member,
-            school_id: school_id 
+            school_id: school_id
         }));
-        
+
         console.log("memberData=>", memberData);
         insertMember(memberData.slice(1));
     });
@@ -339,11 +346,6 @@ $(document).ready(function () {
 
         return addressLength;
     }
-
-    $("#importBtn").on("click", function () {
-
-    });
-
 
     // get district and khan automatically when user login by Id join to userbind
     function getDistrctKhan() {
