@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\branch_hei;
 use Spatie\Browsershot\Browsershot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use ZipArchive;
 
 class PdfController extends Controller
 {
