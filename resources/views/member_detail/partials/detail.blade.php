@@ -1,14 +1,16 @@
 <div class="flex flex-wrap mx-3 my-3 gap-1">
-    <div class=" flex w-full md:w-1/3 md:mb-0">
+    <div class=" flex w-full md:w-1/3 md:mb-0 relative">
         <h3 class="px-2">
-            - ឈ្មោះ <span class="font-bold">{{$member->name_kh ?? ""}}</span>
+            - ឈ្មោះ <span class="font-bold">..........................................</span>
         </h3>
+        <span class="absolute top-[-3px] left-[90px]">{{$member->name_kh ?? ""}}</span>
     </div>
 
-    <div class="flex w-full md:w-1/2 md:mb-0">
+    <div class="flex w-full md:w-1/2 md:mb-0 relative">
         <h3 class="px-2">
-            អក្សរឡាតាំង <span class="font-bold"> {{$member->name_en ?? ""}}</span>
+            អក្សរឡាតាំង <span class="font-bold"> ......................................</span>
         </h3>
+        <span class="absolute top-[-3px] left-[90px]">{{$member->name_en ?? ""}}</span>
     </div>
 
     <div class="flex w-full md:w-[80px] md:mb-0">
@@ -18,7 +20,7 @@
     </div>
     <div class="flex w-full md:w-1/2 md:mb-0">
         <h3 class="px-2">
-            - ថ្ងៃទី ខែ ឆ្នាំកំណើត (Date of Birth) <span class="font-bold">  {{$member->date_of_birth ?? ""}}</span>
+            - ថ្ងៃទី ខែ ឆ្នាំកំណើត (Date of Birth) <span class="font-bold"> {{$member->date_of_birth ?? ""}}</span>
         </h3>
     </div>
     <div class="flex flex-wrap w-full md:w-full md:mb-0">
@@ -29,14 +31,14 @@
             ភូមិ ៖ <span class="font-bold">{{$member_pob->village ?? ""}}</span>
         </h3>
         <h3 class="px-2">
-             ឃុំ/សង្កាត់ ៖
+            ឃុំ/សង្កាត់ ៖
             <span class="font-bold">{{$member_pob->commune_sangkat ?? ""}}</span>
         </h3>
         <h3 class="px-2">
-             ស្រុក/ខណ្ទ ៖ <span class="font-bold">{{$member_pob->district_khan ?? ""}}</span>
+            ស្រុក/ខណ្ទ ៖ <span class="font-bold">{{$member_pob->district_khan ?? ""}}</span>
         </h3>
         <h3 class="px-2">
-           - រាជធានី/ខេត្ត ៖​ <span class="font-bold">{{$member_pob->provience_city ?? ""}}</span>
+            - រាជធានី/ខេត្ត ៖​ <span class="font-bold">{{$member_pob->provience_city ?? ""}}</span>
         </h3>
     </div>
     <div class="flex  w-full md:w-1/2  md:mb-0">
@@ -56,7 +58,7 @@
     </div>
     <div class="flex w-full md:w-1/4  md:mb-0">
         <h3 class="px-2">
-           ភូមិ ៖ <span class="font-bold"> {{$member_addr->village ?? ""}} </span>
+            ភូមិ ៖ <span class="font-bold"> {{$member_addr->village ?? ""}} </span>
         </h3>
 
     </div>
@@ -79,18 +81,18 @@
 
     <div class="flex w-full md:w-full md:mb-0">
         <h3 class="px-2">
-           - កម្រិតវប្បធម៌ ឬថ្នាក់ទី ឬឆ្នាំទី (Education or Class or Year) ៖ <span
+            - កម្រិតវប្បធម៌ ឬថ្នាក់ទី ឬឆ្នាំទី (Education or Class or Year) ៖ <span
                 class="font-bold">{{$member_edu->acadmedic_year ?? ""}}</span>
         </h3>
     </div>
     <div class="flex w-full md:w-full md:mb-0">
         <h3 class="px-2">
-           - ភាសាបរទេស (Foreign language ) ៖ <span class="font-bold">{{$member_edu->language}}</span>
+            - ភាសាបរទេស (Foreign language ) ៖ <span class="font-bold">{{$member_edu->language}}</span>
         </h3>
     </div>
     <div class="flex w-full md:w-full md:mb-0">
         <h3 class="px-2">
-           - ជំនាញផ្ទាល់ខ្លួន (Life Skills ) ៖
+            - ជំនាញផ្ទាល់ខ្លួន (Life Skills ) ៖
         </h3>
         <P>{{$member_edu->major}}</P>
     </div>
@@ -102,7 +104,7 @@
     </div>
     <div class="flex w-full md:w-full md:mb-0">
         <h3 class="px-2">
-           - ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនជាតិកាយរឹទ្ធិកម្ពុជា (Scout Youth Recruitment Date) ៖ <span
+            - ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនជាតិកាយរឹទ្ធិកម្ពុជា (Scout Youth Recruitment Date) ៖ <span
                 class="font-bold">{{$member_regis->registration_date}}</span>
         </h3>
     </div>
@@ -114,30 +116,30 @@
     </div>
     <div class="flex w-full md:w-full md:mb-0">
         <h3 class="px-2">
-           - ថ្ងៃ ខែ ឆ្នាំ ចូលជាអង្គការចាត់តាំងយុវជនផ្សេងៗ (Other NGos Recruitment Date) ៖ <span
+            - ថ្ងៃ ខែ ឆ្នាំ ចូលជាអង្គការចាត់តាំងយុវជនផ្សេងៗ (Other NGos Recruitment Date) ៖ <span
                 class="font-bold">{{$member_regis->registration_date}}</span>
         </h3>
     </div>
     <div class="flex w-full md:w-full md:mb-0">
         <h3 class="px-2">
-           - វគ្គបណ្ដុះបណ្ដាលទទួលបាន ៖
+            - វគ្គបណ្ដុះបណ្ដាលទទួលបាន ៖
         </h3>
         <P>{{$member_edu->misc_skill}}</P>
     </div>
     <div class="flex w-full md:w-full md:mb-0">
         <h3 class="px-2">
-           - ឈ្មោះសាលារៀន ឬសាកលវិទ្យាល័យ (Name of School or University) ៖ <span
+            - ឈ្មោះសាលារៀន ឬសាកលវិទ្យាល័យ (Name of School or University) ៖ <span
                 class="font-bold">{{$member_edu->institute_id}}</span>
         </h3>
     </div>
     <div class="flex w-full md:w-full md:mb-0">
         <h3 class="px-2">
-           - ទំហំ អាវ ៖ <span class="font-bold">{{$member->shirt_size}}</span>
+            - ទំហំ អាវ ៖ <span class="font-bold">{{$member->shirt_size}}</span>
         </h3>
     </div>
     <div class="flex w-full md:w-full md:mb-0">
         <h3 class="px-2">
-           - លេខទូរសព្ទទំនាក់ទំនង (Phone Number) ៖ <span class="font-bold">{{$member->phone_number}}</span>
+            - លេខទូរសព្ទទំនាក់ទំនង (Phone Number) ៖ <span class="font-bold">{{$member->phone_number}}</span>
         </h3>
     </div>
     <div class="flex w-full md:w-full  md:mb-0">

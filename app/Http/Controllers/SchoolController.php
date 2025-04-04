@@ -255,4 +255,11 @@ class SchoolController extends Controller
 
         return redirect()->route('createschool')->with('success', 'School updated successfully.');
     }
+
+    //new code on 2025/03/27 
+    public function getSchoolByDistrictId($id)
+    {
+        $schools = DB::table('school as s')->where('s.district_id', $id)->get();
+        return response()->json($schools);
+    }
 }

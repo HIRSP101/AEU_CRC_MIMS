@@ -2,6 +2,10 @@ import ExcelJS from "exceljs";
 import constructSheetTable from "./sheetTable";
 var sheetObj = {};
 var activeSheet = "";
+var columnNames = [];
+var startRow = 0;
+var lastRow = 0;
+var colValues = {};
 const branch_dict = {
     រាជធានីភ្នំពេញ: 1,
     ខេត្តសៀមរាប: 2,
@@ -32,27 +36,27 @@ const branch_dict = {
 
 var khDict = {
     "នាម គោត្តនាម": "name_kh",
-    "ឈ្មោះឡាតាំង": "name_en",
-    "ភេទ": "gender",
-    "ថ្ងៃខែឆ្នាំកំណើត": "date_of_birth",
-    "ទីកន្លែងកំណើត": "pob_provience_city",
-    "គ្រឹះស្ថានសិក្សា": "institute_id",
-    "តួនាទី": "type",
-    "កម្រិតសិក្សា": "education_level",
-    "ទទួលបានវគ្គបណ្ដុះបណ្ដាល": "training_received",
-    "ពិការភាព": "member_status",
-    "ឆ្នាំសិក្សា": "acadmedic_year",
-    "ថ្ងៃខែឆ្នាំចូលជាសមាជិក": "registration_date",
-    "អាសយដ្ឋានបច្ចុប្បន្ន": "full_current_address",
+    ឈ្មោះឡាតាំង: "name_en",
+    ភេទ: "gender",
+    ថ្ងៃខែឆ្នាំកំណើត: "date_of_birth",
+    ទីកន្លែងកំណើត: "pob_provience_city",
+    គ្រឹះស្ថានសិក្សា: "institute_id",
+    តួនាទី: "type",
+    កម្រិតសិក្សា: "education_level",
+    ទទួលបានវគ្គបណ្ដុះបណ្ដាល: "training_received",
+    ពិការភាព: "member_status",
+    ឆ្នាំសិក្សា: "acadmedic_year",
+    ថ្ងៃខែឆ្នាំចូលជាសមាជិក: "registration_date",
+    អាសយដ្ឋានបច្ចុប្បន្ន: "full_current_address",
     "ទូរស័ព្ទផ្ទាល់ខ្លួន/តេលេក្រាម": "phone_number",
-    "ទូរស័ព្ទអាណាព្យាបាល": "guardian_phone",
-    "ទំហំអាវ": "shirt_size",
-    "ផ្ទះលេខ": "home_no",
-    "ផ្លូវលេខ": "street_no",
-    "ភូមិ": "village",
+    ទូរស័ព្ទអាណាព្យាបាល: "guardian_phone",
+    ទំហំអាវ: "shirt_size",
+    ផ្ទះលេខ: "home_no",
+    ផ្លូវលេខ: "street_no",
+    ភូមិ: "village",
     "ឃុំ/សង្កាត់": "commune_sangkat",
     "ស្រុក/ខណ្ឌ": "district_khan",
-    "ខេត្តរាជធានី": "provience_city",
+    ខេត្តរាជធានី: "provience_city",
 };
 
 $(document).ready(function () {
@@ -65,39 +69,44 @@ $(document).ready(function () {
         data: {},
         success: function (data) {
             $("#branch_name").val(data[0].branch_kh);
-            
         },
         failure: function (response) {
             alert(response.responseText);
         },
         error: function (response) {
             alert(response.responseText);
-        }
+        },
     });
 
     //select Change event on district and school
     $("#district-select").on("change", function () {
         var dId = $("#district-select").val();
         $("#import-section").addClass("hidden");
-            getSchool(dId);
+        getSchool(dId);
     });
     $("#school-select").on("change", function () {
         var sId = $("#school-select").val();
         school_id = sId;
         console.log(sId);
-        
+
         $("#import-section").removeClass("hidden");
     });
 
     $("#sheetBtn").on("click", function (e) {
         e.preventDefault();
         $("#menu").addClass("hidden");
+        columnNames = [];
+        startRow = 0;
+        lastRow = 0;
+        colValues = {};
+        sheetObj = {};
+        activeSheet = "";
     });
     $("#dropzone-file").on("change", async function () {
-        var columnNames = [];
-        var startRow = 0;
-        var lastRow = 0;
-        var colValues = {};
+        columnNames = [];
+        startRow = 0;
+        lastRow = 0;
+        colValues = {};
         sheetObj = {};
         activeSheet = "";
         const fileInput = $("#dropzone-file")[0];
@@ -113,15 +122,13 @@ $(document).ready(function () {
                     await workbook.xlsx.load(fileArrayBuffer);
 
                     workbook.eachSheet((worksheet, sheetId) => {
-                        console.log(`Sheet Name: ${worksheet.name}, ${sheetId}`);
+                        console.log(
+                            `Sheet Name: ${worksheet.name}, ${sheetId}`
+                        );
 
                         const allData = worksheet.getSheetValues();
                         console.log("All sheet data:", allData);
                         const rowCount = worksheet.rowCount;
-
-                        let startRow = null;
-                        let lastRow = null;
-                        let colValues = {};
 
                         worksheet.eachRow((row, rowNumber) => {
                             const rowValues = row.values.slice(1);
@@ -130,7 +137,13 @@ $(document).ready(function () {
                                 startRow = rowNumber;
                             }
 
-                            if (rowValues.some(val => val && val.toString().includes("សរុបចំនួន"))) {
+                            if (
+                                rowValues.some(
+                                    (val) =>
+                                        val &&
+                                        val.toString().includes("សរុបចំនួន")
+                                )
+                            ) {
                                 lastRow = rowNumber;
                             }
                         });
@@ -138,27 +151,53 @@ $(document).ready(function () {
                         if (startRow && lastRow) {
                             for (let i = startRow; i < lastRow; i++) {
                                 let row = worksheet.getRow(i);
-                                let rowData = row.values.slice(2).map(cell => {
-                                    if (cell && typeof cell === "object" && cell.result !== undefined) {
-                                        return cell.result;
-                                    }
-                                    return cell !== null && cell !== undefined ? cell : null;
-                                });
+                                let rowData = row.values
+                                    .slice(2)
+                                    .map((cell) => {
+                                        if (
+                                            cell &&
+                                            typeof cell === "object" &&
+                                            cell.result !== undefined
+                                        ) {
+                                            return cell.result;
+                                        }
+                                        return cell !== null &&
+                                            cell !== undefined
+                                            ? cell
+                                            : null;
+                                    });
                                 let rowObject = {};
                                 columnNames.forEach((colName, index) => {
                                     let cellValue = rowData[index] || null;
-                                    if (colName === "ថ្ងៃខែឆ្នាំកំណើត" && containsUnicodeNumber(cellValue)) {
-                                        cellValue = translatekhdateToen(cellValue);
+                                    if (
+                                        colName === "ថ្ងៃខែឆ្នាំកំណើត" &&
+                                        containsUnicodeNumber(cellValue)
+                                    ) {
+                                        cellValue =
+                                            translatekhdateToen(cellValue);
                                     }
                                     if (colName === "អាសយដ្ឋានបច្ចុប្បន្ន") {
-                                        const addressParts = (cellValue || "").split(" ").filter(part => part.trim() !== "");
-                                        const address = reverseCurrentArrayAddress(addressParts);
-                                        rowObject["home_no"] = address[0] || null;
-                                        rowObject["street_no"] = address[1] || null;
-                                        rowObject["village"] = address[2] || null;
-                                        rowObject["commune_sangkat"] = address[3] || null;
-                                        rowObject["district_khan"] = address[4] || null;
-                                        rowObject["provience_city"] = address[5] || null;
+                                        const addressParts = (cellValue || "")
+                                            .split(" ")
+                                            .filter(
+                                                (part) => part.trim() !== ""
+                                            );
+                                        const address =
+                                            reverseCurrentArrayAddress(
+                                                addressParts
+                                            );
+                                        rowObject["home_no"] =
+                                            address[0] || null;
+                                        rowObject["street_no"] =
+                                            address[1] || null;
+                                        rowObject["village"] =
+                                            address[2] || null;
+                                        rowObject["commune_sangkat"] =
+                                            address[3] || null;
+                                        rowObject["district_khan"] =
+                                            address[4] || null;
+                                        rowObject["provience_city"] =
+                                            address[5] || null;
                                     }
                                     rowObject[khDict[colName]] = cellValue;
                                 });
@@ -167,8 +206,6 @@ $(document).ready(function () {
                             }
                         }
                         sheetObj[worksheet.name] = colValues;
-
-
                     });
 
                     var btnElement = ``;
@@ -196,7 +233,6 @@ $(document).ready(function () {
 
                         constructSheetTable(sheetObj[activeSheet], columnNames);
                         console.log("sheetobj=>", sheetObj[activeSheet]);
-
                     });
                 } catch (error) {
                     console.error("Error reading Excel file:", error);
@@ -213,18 +249,18 @@ $(document).ready(function () {
         }
 
         let memberData = Object.values(sheetObj[activeSheet]);
-        memberData = memberData.map(member => ({
+        memberData = memberData.map((member) => ({
             ...member,
-            school_id: school_id 
+            school_id: school_id,
         }));
-        
+
         console.log("memberData=>", memberData);
         insertMember(memberData.slice(1));
     });
     $.ajaxSetup({
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
     });
     function insertMember(member) {
         $.ajax({
@@ -237,11 +273,9 @@ $(document).ready(function () {
             },
             error: function (xhr) {
                 console.error("Error:", xhr.responseText);
-            }
+            },
         });
     }
-
-
 
     function constructSheetBtn(btntext = "") {
         var btnElement = `<button
@@ -326,10 +360,11 @@ $(document).ready(function () {
     }
 
     function reverseCurrentArrayAddress(addressParts) {
-
         const addressLength = Array(6).fill("");
 
-        const trimmedParts = addressParts.map(part => part.trim()).filter(part => part !== "");
+        const trimmedParts = addressParts
+            .map((part) => part.trim())
+            .filter((part) => part !== "");
 
         let targetIndex = 5;
         for (let i = trimmedParts.length - 1; i >= 0 && targetIndex >= 0; i--) {
@@ -340,28 +375,27 @@ $(document).ready(function () {
         return addressLength;
     }
 
-    $("#importBtn").on("click", function () {
-
-    });
-
-
     // get district and khan automatically when user login by Id join to userbind
     function getDistrctKhan() {
         return new Promise((resolve, reject) => {
             $.ajax({
                 type: "GET",
-                url: '/getDistrictByUserLogin',
+                url: "/getDistrictByUserLogin",
                 data: {},
                 success: function (data) {
                     console.log(data);
-                    var selectList = $('#district-select');
+                    var selectList = $("#district-select");
                     selectList.empty();
-                    selectList.append(`<option value="">--------------------------------</option>`);
+                    selectList.append(
+                        `<option value="">--------------------------------</option>`
+                    );
                     $.each(data, function (index, item) {
-                        selectList.append($('<option>', {
-                            value: item.district_id,
-                            text: item.district_name
-                        }));
+                        selectList.append(
+                            $("<option>", {
+                                value: item.district_id,
+                                text: item.district_name,
+                            })
+                        );
                     });
                 },
                 failure: function (response) {
@@ -369,12 +403,12 @@ $(document).ready(function () {
                 },
                 error: function (response) {
                     alert(response.responseText);
-                }
+                },
             });
         });
     }
 
-    // get school and khan automatically when user login by Id join to userbind  
+    // get school and khan automatically when user login by Id join to userbind
     function getSchool(district_id) {
         return new Promise((resolve, reject) => {
             $.ajax({
@@ -383,14 +417,18 @@ $(document).ready(function () {
                 data: {},
                 success: function (data) {
                     console.log(data);
-                    var selectList = $('#school-select');
+                    var selectList = $("#school-select");
                     selectList.empty();
-                    selectList.append(`<option value="">--------------------------------</option>`);
+                    selectList.append(
+                        `<option value="">--------------------------------</option>`
+                    );
                     $.each(data, function (index, item) {
-                        selectList.append($('<option>', {
-                            value: item.school_id,
-                            text: item.school_name
-                        }));
+                        selectList.append(
+                            $("<option>", {
+                                value: item.school_id,
+                                text: item.school_name,
+                            })
+                        );
                     });
                 },
                 failure: function (response) {
@@ -398,10 +436,8 @@ $(document).ready(function () {
                 },
                 error: function (response) {
                     alert(response.responseText);
-                }
+                },
             });
-
         });
     }
-
 });
