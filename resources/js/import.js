@@ -6,6 +6,10 @@ var columnNames = [];
 var startRow = 0;
 var lastRow = 0;
 var colValues = {};
+var columnNames = [];
+var startRow = 0;
+var lastRow = 0;
+var colValues = {};
 const branch_dict = {
     រាជធានីភ្នំពេញ: 1,
     ខេត្តសៀមរាប: 2,
@@ -69,6 +73,7 @@ $(document).ready(function () {
         data: {},
         success: function (data) {
             $("#branch_name").val(data[0].branch_kh);
+
         },
         failure: function (response) {
             alert(response.responseText);
@@ -89,6 +94,7 @@ $(document).ready(function () {
         school_id = sId;
         console.log(sId);
 
+
         $("#import-section").removeClass("hidden");
     });
 
@@ -101,6 +107,7 @@ $(document).ready(function () {
         colValues = {};
         sheetObj = {};
         activeSheet = "";
+
     });
     $("#dropzone-file").on("change", async function () {
         columnNames = [];
@@ -251,7 +258,7 @@ $(document).ready(function () {
         let memberData = Object.values(sheetObj[activeSheet]);
         memberData = memberData.map((member) => ({
             ...member,
-            school_id: school_id,
+            school_id: school_id
         }));
 
         console.log("memberData=>", memberData);
