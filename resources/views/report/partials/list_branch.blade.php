@@ -13,7 +13,7 @@
         <ul>
             @foreach ($total_mem_branches as $branch)
                 <li>
-                    <a href="{{ route('total.member.university') }}">
+                    <a href="{{ route('total.member.university', ['id' => $branch->branch_id]) }}">
                         {{ $branch->branch_kh }}
                     </a>
                 </li>
@@ -36,21 +36,21 @@
             ul.empty();
             data.forEach((item) => {
                 ul.append(`
-                                                <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                                               <a href="/total/member/university">
-                                                   <div class="flex justify-between items-center">
-                                                       <div class="flex items-center">
-                                                           <img src="${item.branch_image}" alt="Logo" class="ml-10 w-16 mr-8 rounded-full object-cover h-16" />
-                                                           <span class="text-lg font-battambang">${item.branch_kh}</span>
-                                                       </div>
-                                                       <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
-                                                           <span class="text-xs font-battambang">ស.ម <strong>${item.total_mem} នាក់</strong></span>
-                                                           <span class="text-xs font-battambang">${item.total_villages} សាខា</span>
-                                                       </div>
-                                                   </div>
-                                               </a>
-                                            </li>
-                                            `)
+                                                            <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
+                                                           <a href="/total/member/university/${item.branch_id}">
+                                                               <div class="flex justify-between items-center">
+                                                                   <div class="flex items-center">
+                                                                       <img src="${item.branch_image}" alt="Logo" class="ml-10 w-16 mr-8 rounded-full object-cover h-16" />
+                                                                       <span class="text-lg font-battambang">${item.branch_kh}</span>
+                                                                   </div>
+                                                                   <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
+                                                                       <span class="text-xs font-battambang">ស.ម <strong>${item.total_mem} នាក់</strong></span>
+                                                                       <span class="text-xs font-battambang">${item.total_villages} សាខា</span>
+                                                                   </div>
+                                                               </div>
+                                                           </a>
+                                                        </li>
+                                                        `)
             })
         }
 

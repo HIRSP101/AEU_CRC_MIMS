@@ -25,26 +25,71 @@ class ReportController extends Controller
         return view('report.partials.branches_report', compact('branchesreport'));
     }
 
-    public function branchesHeiReport()
+    public function branchesHeiReport($branchId)
     {
 
-        $branchesReport = $this->branches()
-            // ->with(['branchhei '])
-            ->select('branch.branch_kh', 'branch.branch_id')
-            ->where('branch.branch_id', '!=', '28')
-            ->groupBy('branch.branch_kh', 'branch.branch_id')
-            ->orderBy('branch.branch_id', 'asc')
+        // $branchesReport = $this->branches()
+        //     // ->with(['branchhei '])
+        //     ->select('branch.branch_kh', 'branch.branch_id')
+        //     ->where('branch.branch_id', '!=', '28')
+        //     ->groupBy('branch.branch_kh', 'branch.branch_id')
+        //     ->orderBy('branch.branch_id', 'asc')
+        //     ->get();
+
+        // $branchHeiReport = $this->branchhei()
+        //     ->select('hei.institute_kh', 'hei.bhei_id', 'hei.branch_id',)
+        //     ->groupBy('hei.institute_kh', 'hei.bhei_id', 'hei.branch_id',)
+        //     ->orderBy('hei.bhei_id', 'asc')
+        //     ->get();
+
+        // $branchesReports = $branchesReport->merge($branchHeiReport);
+        // $groupedReports = $branchesReports->groupBy('branch_kh');
+        // return view('report.partials.total-member-university', compact('groupedReports'));
+
+        $branch = DB::table('branch')->where('branch_id', $branchId)->select('branch_kh')->first();
+
+        $district = DB::table('district as d')
+            ->select(
+                'd.district_id',
+                'd.district_name',
+                's.school_id',
+                's.school_name',
+                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
+            )
+            ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
+            ->leftJoin('member_education_background as meb', function ($join) use ($branchId) {
+                $join->on('meb.school_id', '=', 's.school_id')->where('meb.branch_id', '=', DB::raw($branchId));
+            })
+            ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->where('d.branch_id', $branchId)
+            ->groupBy('d.district_id', 'd.district_name', 's.school_id', 's.school_name')
+            ->orderBy('d.district_name')
             ->get();
 
-        $branchHeiReport = $this->branchhei()
-            ->select('hei.institute_kh', 'hei.bhei_id', 'hei.branch_id',)
-            ->groupBy('hei.institute_kh', 'hei.bhei_id', 'hei.branch_id',)
-            ->orderBy('hei.bhei_id', 'asc')
-            ->get();
 
-        $branchesReports = $branchesReport->merge($branchHeiReport);
-        $groupedReports = $branchesReports->groupBy('branch_kh');
-        return view('report.partials.total-member-university', compact('groupedReports'));
+
+        $branchTotals = (object) [
+            'total_schools' => $district->sum('total_schools'),
+            'total_mem' => $district->sum('total_mem'),
+        ];
+
+        $totalSchools = DB::table('school')
+            ->where('branch_id', $branchId)
+            ->distinct()
+            ->count('school_id');
+
+
+        return view('report.partials.total-member-university', [
+            'district' => $district,
+            'branchId' => $branchId,
+            'branch' => $branch,
+            // 'branchWhole' => $branchTotals,
+            'branchWhole' => (object)[
+                'total_schools' => $totalSchools,
+                'total_mem' => $district->sum('total_mem'),
+            ],
+        ]);
     }
 
     public function branches($is_district = null)

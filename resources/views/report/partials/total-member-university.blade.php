@@ -6,9 +6,10 @@
 @section('Content')
     <?php
     $i = 0;
-    ?>
+                ?>
     <div class="bg-white mt-2 mx-2 px-3 shadow-lg h-max-full rounded-lg">
-        <h1 class="text-center font-khmer my-2 text-lg text-blue-800 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា បណ្តាញយុវជន ទីប្រឹក្សាយុវជន នឹងយុវជន</h1>
+        <h1 class="text-center font-khmer my-2 text-lg text-blue-800 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា បណ្តាញយុវជន
+            ទីប្រឹក្សាយុវជន នឹងយុវជន</h1>
         <h1 class="text-center font-khmer my-2 text-lg text-blue-800">នៃសាខាកាកបាទក្រហមកម្ពុជា ២៥ រាជធានី ខេត្ត</h1>
         <h2 class="text-center font-khmer mb-2 text-lg text-blue-800">បច្ចុប្បន្នភាពឆ្នាំ២០២៤</h2>
         <div class="flex justify-between items-center mt-5">
@@ -21,7 +22,7 @@
                     placeholder="Filter by date">
             </div>
         </div>
-     
+
         <div class="w-full my-3 table">
 
             <div class="w-full mb-5">
@@ -30,19 +31,25 @@
                     <thead>
                         <tr class="bg-gray-100">
                             <th rowspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">ល.រ</th>
-                            <th rowspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">ក្រុង/ស្រុក</th>
-                            <th rowspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">ចំនួនគ្រឹះស្ថានសិក្សា</th>
-                            <th rowspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">ឈ្មោះគ្រឹះស្ថានសិក្សា</th>
+                            <th rowspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">ក្រុង/ស្រុក
+                            </th>
+                            <th rowspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">
+                                ចំនួនគ្រឹះស្ថានសិក្សា</th>
+                            <th rowspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">
+                                ឈ្មោះគ្រឹះស្ថានសិក្សា</th>
                             <th colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">មានបណ្ដាញ</th>
                             <th colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">យុវជន</th>
                             <th colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">ពិការភាព</th>
                             <th colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">ទីប្រឹក្សា</th>
                             <th colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">ពិការភាព</th>
-                            <th rowspan="2" colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">ចំនួនយុវជនទទួលវគ្គ បណ្ដុះបណ្ដាល មូលដ្ឋាន</th>
-                            <th rowspan="2" colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">ចំនួនយុវជនបានទទួល ឯកសណ្ឋាន</th>
+                            <th rowspan="2" colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">
+                                ចំនួនយុវជនទទួលវគ្គ បណ្ដុះបណ្ដាល មូលដ្ឋាន</th>
+                            <th rowspan="2" colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">
+                                ចំនួនយុវជនបានទទួល ឯកសណ្ឋាន</th>
                         </tr>
                         <tr class="bg-gray-100">
-                            <th colspan="2" class="border border-gray-700 font-semibold p-2 font-battambang">យុវជន កក្រក</th>
+                            <th colspan="2" class="border border-gray-700 font-semibold p-2 font-battambang">យុវជន កក្រក
+                            </th>
                             <th class="border border-gray-700 p-2 font-semibold font-battambang">សរុប</th>
                             <th class="border border-gray-700 p-2 font-semibold font-battambang">ស្រី</th>
                             <th class="border border-gray-700 p-2 font-semibold font-battambang">សរុប</th>
@@ -69,43 +76,64 @@
                             <th class="border border-gray-700 font-semibold font-battambang p-2">ប្រុស</th>
                         </tr>
                     </thead>
-            
+
                     <!-- Table Body -->
                     <tbody>
                         @php
+                            // $i = 1;
+                            // $serialNumber = 1;
+                            // $totalInstitude = 0;
+                            $grouped = $district->groupBy('district_id');
                             $i = 1;
-                            $serialNumber = 1;
-                            $totalInstitude = 0;
                         @endphp
-                    
-                        @foreach ($groupedReports as $branch_kh => $reports)
-                            @php
-                                $rowSpan = count($reports);
+
+                        {{-- @foreach ($groupedReports as $branch_kh => $reports)
+                        @php
+                        $rowSpan = count($reports);
+                        @endphp --}}
+
+                        @foreach ($grouped as $districtId => $schools)
+                            @php 
+                                $rowSpan = $schools->count(); 
                             @endphp
-                    
-                            @foreach ($reports as $index => $brreport)
+
+                        {{-- @foreach ($reports as $index => $brreport) --}}
+                            @foreach ($schools as $index => $school)
                                 <tr>
                                     @if ($index === 0)
-                                        <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{ $i++ }}</td>
-                                        <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{ $branch_kh }}</td>
-                                        <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{ $rowSpan }}</td>
+                                    {{-- <td class="border border-gray-700 font-normal font-battambang p-2"
+                                        rowspan="{{ $rowSpan }}">{{ $i++ }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{
+                                        $branch_kh }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{
+                                        $rowSpan }}</td> --}}
+                                    <td rowspan="{{ $rowSpan }}" class="border border-gray-700 font-normal font-battambang p-2">{{ $i++ }}</td>
+                                    <td rowspan="{{ $rowSpan }}" class="border border-gray-700 font-normal font-battambang p-2">{{ $school->district_name }}</td>
+                                    <td rowspan="{{ $rowSpan }}" class="border border-gray-700 font-normal font-battambang p-2">{{ $rowSpan }}</td>
                                     @endif
-                    
+
                                     {{-- Display institute_kh under "Phnom Penh" column if branch_id = 1 --}}
-                                    @if ($brreport->branch_id == 1)
-                                        <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->institute_kh ?? '-' }}</td>
-                                    @else
-                                        <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                                    @endif
-                    
+                                    {{-- @if ($brreport->branch_id == 1) --}}
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school->school_name ?? '-' }}
+                                    </td>
+                                    {{-- @else --}}
+                                    {{-- <td class="border border-gray-700 font-normal font-battambang p-2">-</td> --}}
+                                    {{-- @endif --}}
+
                                     {{-- Other columns --}}
                                     <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->total_mem ?? '-' }}</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->total_wm ?? '-' }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">
+                                        {{ $brreport->total_wm ?? '-' }}
+                                    </td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->total_ls ?? '-' }}</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $brreport->total_ls_wm ?? '-' }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">
+                                        {{ $brreport->total_ls ?? '-' }}
+                                    </td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">
+                                        {{ $brreport->total_ls_wm ?? '-' }}
+                                    </td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
@@ -116,11 +144,12 @@
                                 </tr>
                             @endforeach
                         @endforeach
-                    
-                    
+
                         <tr class="bg-gray-100">
                             <td colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">សរុប</td>
-                            <td class="border border-gray-700 font-battambang p-2 font-semibold">16</td>
+                            <td class="border border-gray-700 font-battambang p-2 font-semibold">
+                                {{ $branchWhole->total_schools }}
+                            </td>
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
@@ -138,26 +167,27 @@
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                         </tr>
                     </tbody>
-                  
-                </table>
-                <p class="font-battambang font-medium text-center mt-2">រៀបចំដោយ៖ ការិយាល័យអភិវឌ្ឍន៍ នៃនាយកដ្ឋានធនធានមនុស្ស កក្រក</p>
-            </div>
-            
-        </div>
-    @endsection
 
+                </table>
+                <p class="font-battambang font-medium text-center mt-2">រៀបចំដោយ៖ ការិយាល័យអភិវឌ្ឍន៍ នៃនាយកដ្ឋានធនធានមនុស្ស
+                    កក្រក</p>
+            </div>
+
+        </div>
+@endsection
+    {{-- var data = @json($reports); --}}
     @push('JS')
         <script type="module">
-        var data = @json($reports);
-        console.log(data);
-        $("#export_excel").on("click", async () => {
-        exportToExcel_branch(data);
-        });
+
+            console.log(data);
+            $("#export_excel").on("click", async () => {
+                exportToExcel_branch(data);
+            });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
         <script>
-          flatpickr("#datepicker", {
+            flatpickr("#datepicker", {
                 mode: "range",
                 dateFormat: "d-F-Y",
                 locale: {
