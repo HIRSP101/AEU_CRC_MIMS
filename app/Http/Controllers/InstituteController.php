@@ -31,7 +31,7 @@ class InstituteController extends Controller
         return DB::table('member_personal_detail as mpd')
             ->leftJoin('member_education_background as meb', 'meb.member_id', '=', 'mpd.member_id')
             ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->join('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->rightJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
             ->select(
                 'hei.bhei_id',
                 'hei.institute_kh',
