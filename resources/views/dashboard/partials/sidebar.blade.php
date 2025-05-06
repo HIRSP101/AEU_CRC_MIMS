@@ -127,6 +127,16 @@
                         </a>
                     </div>
                 @else
+                    @php
+                        $userBranchId = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_id');
+                    @endphp
+                    <a href="/branch/{{ $userBranchId }}/village"
+                        class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                        <img width="23" height="23" src="https://img.icons8.com/ios-filled/50/ratings.png" alt="ratings" />
+                        <span class="module-content ml-2">
+                            អនុសាខា
+                        </span>
+                    </a>
                     <a href="" id="subModule-add"
                         class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                         <img width="23" height="23"
