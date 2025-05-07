@@ -189,6 +189,7 @@ Route::middleware('auth')->group(function () use ($appC) {
 
     //new code for pdf 2025/05/07 generate pdf for all members by institute
     Route::post('/generate-members', "{$appC}\\PdfController@generateMembers");
+    Route::post('/generate-members-request', "{$appC}\\PdfController@generateMembersRequestForm");
 });
 
 
