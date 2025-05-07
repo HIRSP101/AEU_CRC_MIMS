@@ -10,39 +10,7 @@ use ZipArchive;
 
 class PdfController extends Controller
 {
-    public function generateReport($id)
-    {
-
-        ini_set('memory_limit', '512M'); // Set memory limit to 512MB
-        ini_set('max_execution_time', '300');  // Set execution time limit to 300 seconds (5 minutes)
-
-        $tempDir = storage_path('app/reports/');  // Temporary directory to save PDFs
-
-        // Make sure the temporary directory exists
-        if (!file_exists($tempDir)) {
-            mkdir($tempDir, 0777, true);
-        }
-
-        // Start chunking the query
-        $member = DB::table('member_personal_detail as mpd')
-            ->where('mpd.member_id', $id)
-            ->orderBy('mpd.member_id')
-            ->get();
-
-
-        // return response()->json($member);
-
-        $pdfFilePath = $tempDir . "សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន_យុវជន.pdf";
-
-        $html = view('pdf-preview.member-detail-form.index', compact('member'))->render();
-        Browsershot::html($html)->format('A4')->savePdf($pdfFilePath);
-
-        // Return the Zip file as a download in the response
-        // return response()->download($pdfFilePath)->deleteFileAfterSend(true);  // Automatically delete after download
-    }
-
-    // new function to export PDF generate members detail form by institute
-
+    // 2025/05/07 new function to export PDF generate members detail form by institute
     public function generateMembers(Request $request)
     {
         $instituteId = $request->input('institute_id');
@@ -70,7 +38,7 @@ class PdfController extends Controller
             ->join('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
             ->join('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
             ->where('meb.branchhei_id', $instituteId)
-            ->whereIn('mpd.member_id',$memberIds)
+            ->whereIn('mpd.member_id', $memberIds)
             ->orderBy('mpd.member_id')
             ->chunk($chunkSize, function ($members) use ($tempDir, $institution, &$chunkCounter) {
 
@@ -105,6 +73,72 @@ class PdfController extends Controller
         // Return the Zip file as a download in the response
         return response()->download($zipFilePath)->deleteFileAfterSend(true);  // Automatically delete after download
     }
+    public function generateMembersRequestForm(Request $request)
+    {
+        $instituteId = $request->input('institute_id');
+        $memberIds = $request->input('member_ids');
+        $institution = branch_hei::where('bhei_id', $instituteId)->select('institute_kh')->first();
+
+        $chunkSize = 100;
+
+        $chunkCounter = 1;
+        $tempDir = storage_path('app/reports/');
+
+        ini_set('memory_limit', '512M'); // Set memory limit to 512MB
+        ini_set('max_execution_time', '300');
+        DB::table('member_personal_detail as mpd')
+            ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+            ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->join('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
+            ->join('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
+            ->join('school as s', 'meb.school_id', '=', 's.school_id')
+            ->join('branch as b', 'b.branch_id', '=', 'meb.branch_id')
+            ->whereIn('mpd.member_id', $memberIds)
+            ->select(
+                'mpd.*',
+                'mgd.*',
+                'mrd.*',
+                'meb.*',
+                'mca.*',
+                'mpa.*',
+                's.school_name',
+                'b.branch_kh'
+            )
+            ->orderBy('mpd.member_id')
+            ->chunk($chunkSize, function ($members) use ($tempDir, $institution, &$chunkCounter) {
+
+                if ($members->isEmpty())
+                    return;
+
+                $pdfFilePath = $tempDir . "វិញ្ញាបនបត្ររដ្ឋបាលប្រចាំ_យុវជន_កក្រក_ប្រចាំ_{$institution->institute_kh}{$chunkCounter}.pdf";
+
+                $html = view('pdf-preview.multimember-request-form.index', compact('members'))->render();
+                Browsershot::html($html)->format('A4')->savePdf($pdfFilePath);
+
+                $chunkCounter++;
+            });
+
+        // Create a Zip file
+        $zipFilePath = storage_path("app/reports/វិញ្ញាបនបត្ររដ្ឋបាលប្រចាំ_យុវជន_កក្រក_ប្រចាំ_{$institution->institute_kh}.zip");
+        $zip = new ZipArchive();
+        if ($zip->open($zipFilePath, ZipArchive::CREATE) === TRUE) {
+
+            // Add all generated PDFs to the Zip file
+            foreach (glob($tempDir . "វិញ្ញាបនបត្ររដ្ឋបាលប្រចាំ_យុវជន_កក្រក_ប្រចាំ_{$institution->institute_kh}*.pdf") as $file) {
+                $zip->addFile($file, basename($file));  // Add each PDF as a file in the zip
+            }
+            $zip->close();
+        }
+
+        foreach (glob($tempDir . "វិញ្ញាបនបត្ររដ្ឋបាលប្រចាំ_យុវជន_កក្រក_ប្រចាំ_{$institution->institute_kh}*.pdf") as $file) {
+            unlink($file);  // Delete the temporary PDF files
+        }
+
+        // Return the Zip file as a download in the response
+        return response()->download($zipFilePath)->deleteFileAfterSend(true);  // Automatically delete after download
+    }
+    // 2025/05/07 end of new function to export PDF generate members detail form by institute
     public function exportPdfRequestForm($id)
     {
         $member = DB::table('member_personal_detail as mpd')
@@ -136,7 +170,6 @@ class PdfController extends Controller
         return response()->download($pdfFilePath)->deleteFileAfterSend(true);  // Automatically delete after download
 
     }
-
     public function exportPdfDetailForm($id)
     {
         ini_set('memory_limit', '512M'); // Set memory limit to 512MB

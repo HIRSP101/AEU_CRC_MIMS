@@ -73,8 +73,6 @@ $institute_kh = $institution->institute_kh;
         <div class="flex flex-col  justify-center items-center ">
             <button id="downloadop1"
                 class=" w-[350px] text-center bg-green-500 text-white p-5 mb-2 hover:bg-green-600   rounded">ទាញយកសាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន</button>
-            <button id="downloadop2"
-                class=" w-[350px] text-center bg-green-500 text-white p-5 mb-2 hover:bg-green-600 rounded">ទាញយកបណ្ណសម្គាល់ខ្លួន</button>
             <button id="downloadop3"
                 class="  w-[350px] text-center bg-green-500 text-white p-5 mb-2 hover:bg-green-600 rounded">ទាញយកសំណើសុំផ្ទេរជីវភាព</button>
         </div>
@@ -192,8 +190,6 @@ $institute_kh = $institution->institute_kh;
                     exportToExcel(@json($current_branch), @json($total_mem_detail));
 
                 }
-
-
                 $("#export_pdf").on("click", async () => {
                     $("#downloadoption").toggle(500);
                     $('#downloadop1').on('click', () => {
@@ -213,6 +209,119 @@ $institute_kh = $institution->institute_kh;
                         });
                         $.ajax({
                             url: '/generate-members',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                institute_id: instituteId.split('/')[2],
+                                member_ids: memberIds
+                            }),
+                            xhrFields: {
+                                responseType: 'blob' // Ensures the response is treated as a binary file
+                            },
+                            success: function (response) {
+                                $("#loadingSpinner").show();
+                                $("#textload").hide();
+                                $("#spinner").hide();
+                                $("#textsucc").show();
+                                $("#tick").show();
+                                $("#ok").show();
+                                $("#ok").on("click", function () {
+                                    $("#loadingSpinner").hide();
+                                    $("#textload").hide();
+                                    $("#spinner").hide();
+                                    $("#textsucc").hide();
+                                    $("#tick").hide();
+                                    $("#ok").hide();
+                                });
+
+                                var blob = new Blob([response], { type: 'application/zip' });
+                                var url = URL.createObjectURL(blob);
+                                var link = document.createElement('a');
+                                link.href = url;
+                                link.download = `សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន_យុវជន_កក្រកប្រចាំ.zip`;
+                                link.click();
+                            },
+                            error: function (xhr, status, error) {
+                                $("#loadingSpinner").hide();
+                                console.error("Error generating report:", error);
+                            }
+                        });
+
+                    });
+                    // $('#downloadop2').on('click', () => {
+                    //     $("#downloadoption").hide();
+                    //     $("#loadingSpinner").show();
+                    //     $("#textload").show();
+                    //     $("#spinner").show();
+                    //     $("#textsucc").hide();
+                    //     $("#tick").hide();
+                    //     $("#ok").hide();
+                    //     console.log("op2");
+                    //     $.ajaxSetup({
+                    //         headers: {
+                    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    //         }
+                    //     });
+                    //     $.ajax({
+                    //         url: '/generate-members',
+                    //         method: 'POST',
+                    //         contentType: 'application/json',
+                    //         data: JSON.stringify({
+                    //             institute_id: instituteId.split('/')[2],
+                    //             member_ids: memberIds
+                    //         }),
+                    //         xhrFields: {
+                    //             responseType: 'blob' // Ensures the response is treated as a binary file
+                    //         },
+                    //         success: function (response) {
+                    //             $("#loadingSpinner").show();
+                    //             $("#textload").hide();
+                    //             $("#spinner").hide();
+                    //             $("#textsucc").show();
+                    //             $("#tick").show();
+                    //             $("#ok").show();
+
+                    //             $("#ok").on("click", function () {
+                    //                 $("#loadingSpinner").hide();
+                    //                 $("#textload").hide();
+                    //                 $("#spinner").hide();
+                    //                 $("#textsucc").hide();
+                    //                 $("#tick").hide();
+                    //                 $("#ok").hide();
+                    //             });
+
+                    //             var blob = new Blob([response], { type: 'application/zip' });
+                    //             var url = URL.createObjectURL(blob);
+                    //             var link = document.createElement('a');
+                    //             link.href = url;
+                    //             link.download = `សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន_យុវជន_កក្រកប្រចាំ.zip`;
+                    //             link.click();
+                    //         },
+                    //         error: function (xhr, status, error) {
+                    //             $("#loadingSpinner").hide();
+                    //             console.error("Error generating report:", error);
+                    //         }
+                    //     });
+
+                    // });
+                   
+                    $('#downloadop3').on('click', () => {
+                        const memberIds = window.getCurrentPageMemberIds();
+                        var instituteId = window.location.pathname;
+                        $("#downloadoption").hide();
+                        $("#loadingSpinner").show();
+                        $("#textload").show();
+                        $("#spinner").show();
+                        $("#textsucc").hide();
+                        $("#tick").hide();
+                        $("#ok").hide();
+                         $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: '/generate-members-request',
                             method: 'POST',
                             contentType: 'application/json',
                             data: JSON.stringify({
@@ -251,97 +360,6 @@ $institute_kh = $institution->institute_kh;
                                 console.error("Error generating report:", error);
                             }
                         });
-
-                    });
-                    $('#downloadop2').on('click', () => {
-                        $("#downloadoption").hide();
-                        $("#loadingSpinner").show();
-                        $("#textload").show();
-                        $("#spinner").show();
-                        $("#textsucc").hide();
-                        $("#tick").hide();
-                        $("#ok").hide();
-                        console.log("op2");
-                        // $.ajax({
-                        //     url: '/generate-report/' + instituteId.split('/')[2] + '/certificate',
-                        //     method: 'GET',
-                        //     xhrFields: {
-                        //         responseType: 'blob'  // Ensures the response is treated as a binary file
-                        //     },
-                        //     success: function (response) {
-                        //         $("#loadingSpinner").show();
-                        //         $("#textload").hide();
-                        //         $("#spinner").hide();
-                        //         $("#textsucc").show();
-                        //         $("#tick").show();
-                        //         $("#ok").show();
-                        //         $("#ok").on("click", function () {
-                        //             $("#loadingSpinner").hide();
-                        //             $("#textload").hide();
-                        //             $("#spinner").hide();
-                        //             $("#textsucc").hide();
-                        //             $("#tick").hide();
-                        //             $("#ok").hide();
-                        //         });
-                        //         // Create a URL for the blob
-                        //         var link = document.createElement('a');
-                        //         var blob = new Blob([response], { type: 'application/zip' }); // Use 'application/pdf' for PDFs
-                        //         var url = URL.createObjectURL(blob);
-                        //         link.href = url;
-                        //         link.download = `បណ្ណសម្គាល់ខ្លួន_យុវជន_កក្រកប្រចាំ${@json($institute_kh)}.zip`; // Specify the desired file name for download
-                        //         link.click();
-                        //     },
-                        //     error: function (xhr, status, error) {
-                        //         $("#loadingSpinner").hide();
-                        //         console.error("Error generating report:", error);
-                        //     }
-                        // });
-
-                    });
-                    $('#downloadop3').on('click', () => {
-                        $("#downloadoption").hide();
-                        $("#loadingSpinner").show();
-                        $("#textload").show();
-                        $("#spinner").show();
-                        $("#textsucc").hide();
-                        $("#tick").hide();
-                        $("#ok").hide();
-                        console.log("op3");
-                        // $.ajax({
-                        //     url: '/generate-report/' + instituteId.split('/')[2] + '/certificate',
-                        //     method: 'GET',
-                        //     xhrFields: {
-                        //         responseType: 'blob'  // Ensures the response is treated as a binary file
-                        //     },
-                        //     success: function (response) {
-                        //         $("#loadingSpinner").show();
-                        //         $("#textload").hide();
-                        //         $("#spinner").hide();
-                        //         $("#textsucc").show();
-                        //         $("#tick").show();
-                        //         $("#ok").show();
-                        //         $("#ok").on("click", function () {
-                        //             $("#loadingSpinner").hide();
-                        //             $("#textload").hide();
-                        //             $("#spinner").hide();
-                        //             $("#textsucc").hide();
-                        //             $("#tick").hide();
-                        //             $("#ok").hide();
-                        //         });
-                        //         // Create a URL for the blob
-                        //         var link = document.createElement('a');
-                        //         var blob = new Blob([response], { type: 'application/zip' }); // Use 'application/pdf' for PDFs
-                        //         var url = URL.createObjectURL(blob);
-                        //         link.href = url;
-                        //         link.download = `បណ្ណសម្គាល់ខ្លួន_យុវជន_កក្រកប្រចាំ${@json($institute_kh)}.zip`; // Specify the desired file name for download
-                        //         link.click();
-                        //     },
-                        //     error: function (xhr, status, error) {
-                        //         $("#loadingSpinner").hide();
-                        //         console.error("Error generating report:", error);
-                        //     }
-                        // });
-
                     });
 
                 });
