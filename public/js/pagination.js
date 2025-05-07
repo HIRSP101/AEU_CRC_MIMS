@@ -101,7 +101,7 @@ export default function setuppagination(array, attr_arr, updateroute) {
         let rowHTML = `<tr class='border-b border-slate-300 hover:bg-slate-300 hoverablebranch' data-id="${
             item[attr_arr[0]]
         }">`;
-        console.log(item);
+        // console.log(item);
         attr_arr.forEach((attr) => {
             if (attr == "image") {
                 rowHTML += `<td class='px-2 py-4 text-sm text-center whitespace-nowrap'><img src="${origin}/${item[attr]}" class="object-contain w-auto h-[64px] mx-0 my-0 px-0 py-0"></td>`;
@@ -155,10 +155,22 @@ export default function setuppagination(array, attr_arr, updateroute) {
         }
     });
 
+    // new code get only members that contains in the current table 
+    function getCurrentPageMemberIds() {
+        const tab_start = start_index - 1;
+        const tab_end = end_index;
+    
+        const currentMembers = array.slice(tab_start, tab_end);
+        const memberIds = currentMembers.map(item => item[attr_arr[0]]);
+    
+        return memberIds;
+    }
+
     window.next = next;
     window.prev = prev;
     window.indexPagination = indexPagination;
-
+    window.getCurrentPageMemberIds = getCurrentPageMemberIds;
+    
     $("#gender_filter").change(function () {
         if ($(this).val() === "all") {
             array = [...originalArray];

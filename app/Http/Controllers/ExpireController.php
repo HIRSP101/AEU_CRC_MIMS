@@ -215,10 +215,66 @@ class ExpireController extends Controller
                 'hei.institute_kh',
                 'hei.image',
                 DB::raw("COUNT(CASE 
-                    WHEN mrd.registration_date <= NOW() - INTERVAL 4 YEAR
+                    WHEN mrd.expiration_date < NOW()
                     THEN meb.member_id END) as total_members")
             )
             ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image')
             ->get();
     }
+
+    public function getListSchoolByInstituteId( $id)
+    {
+        $institution = branch_hei::find($id)->select('institute_kh')->findOrFail($id);
+        $baseQuery = DB::table('member_personal_detail as mpd')
+            ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+            ->leftJoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
+            ->leftJoin('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
+            ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
+            ->leftJoin('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
+            ->where('meb.branchhei_id', '=', $id)
+            ->where('hei.institute_type', '=', 'សាកលវិទ្យាល័យ')
+            ->whereRaw('mrd.expiration_date < NOW()');
+        $total_mem = (clone $baseQuery)
+            ->select([
+                'mpd.member_id',
+                'mpd.member_code',
+                'mpd.name_kh',
+                'mpd.name_en',
+                'mpd.gender',
+                'mpd.date_of_birth',
+                // 'meb.institute_id',
+                'hei.institute_kh',
+                'hei.institute_type',
+                'branch.branch_name',
+                'mpd.member_type',
+                'meb.education_level',
+                'meb.acadmedic_year',
+                'mrd.registration_date',
+                'mrd.expiration_date',
+                'mpd.full_current_address',
+                'mpd.phone_number',
+                'mgd.guardian_phone',
+                'mpd.email',
+                'mpd.shirt_size',
+                'mpob.village',
+                'mpob.commune_sangkat',
+                'mpob.district_khan',
+                'mpob.provience_city',
+                'mpob.home_no',
+                'mpob.street_no',
+                'mcad.home_no as home_no_current',
+                'mcad.street_no as street_no_current',
+                'mcad.village  as village_current',
+                'mcad.commune_sangkat as commune_sangkat_current',
+                'mcad.district_khan as district_khan_current',
+                'mcad.provience_city as provience_city_current',
+
+            ])
+            ->distinct()
+            ->get();
+        return view('totalmemInstitute.index', compact('total_mem', 'institution'));
+    }
+    
 }

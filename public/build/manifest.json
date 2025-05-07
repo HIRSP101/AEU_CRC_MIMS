@@ -4,78 +4,21 @@
     "name": "axios"
   },
   "resources/css/app.css": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "file": "assets/app-Bi8klsoL.css",
-=======
-    "file": "assets/app-5QZvv7NS.css",
->>>>>>> 9b251317fafa3306c4c5a63b3b85a5c30e6f2d5e
-=======
-    "file": "assets/app-XCHkTv4F.css",
->>>>>>> 89b6d831b0c039ab9c213bb0c6685b4d1ec62690
-=======
-    "file": "assets/app-ClQm8FZJ.css",
->>>>>>> cc460554c9725469f8adf14e92731de2c2dd771d
+    "file": "assets/app-BOgeg4zo.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "file": "assets/app-Bgk2WaO4.js",
-=======
-    "file": "assets/app-CM15HCGu.js",
->>>>>>> 9b251317fafa3306c4c5a63b3b85a5c30e6f2d5e
-=======
-    "file": "assets/app-CWuqe4nS.js",
->>>>>>> 89b6d831b0c039ab9c213bb0c6685b4d1ec62690
-=======
-    "file": "assets/app-BE9yzBa4.js",
->>>>>>> cc460554c9725469f8adf14e92731de2c2dd771d
+    "file": "assets/app-BQNwiVZn.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-<<<<<<< HEAD
-      "resources/js/exportToExcel_branch.js"
-    ],
-    "css": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "assets/app-DyIloYpa.css"
-=======
-      "assets/app-CS_MvI2D.css"
->>>>>>> 9b251317fafa3306c4c5a63b3b85a5c30e6f2d5e
-=======
-      "assets/app-B19Ld9Db.css"
->>>>>>> 89b6d831b0c039ab9c213bb0c6685b4d1ec62690
-    ]
-  },
-  "resources/js/exportToExcel.js": {
-    "file": "assets/exportToExcel-DgFjA85c.js",
-    "name": "exportToExcel",
-    "src": "resources/js/exportToExcel.js",
-    "isEntry": true,
-    "imports": [
-      "resources/js/exportToExcel_branch.js"
-    ]
-  },
-  "resources/js/exportToExcel_branch.js": {
-    "file": "assets/exportToExcel_branch-DeJInSqA.js",
-    "name": "exportToExcel_branch",
-    "src": "resources/js/exportToExcel_branch.js",
-    "isEntry": true
-  },
-  "resources/js/import.js": {
-    "file": "assets/import-DfUcWnml.js",
-=======
       "_axios-BimPEqV4.js",
       "resources/js/exportToExcel.js"
     ],
     "css": [
-      "assets/app-B635_Ofk.css"
+      "assets/app-BlSv4nnf.css"
     ]
   },
   "resources/js/bootstrap.js": {
@@ -103,17 +46,12 @@
     ]
   },
   "resources/js/import.js": {
-    "file": "assets/import-cjdB3qCo.js",
->>>>>>> cc460554c9725469f8adf14e92731de2c2dd771d
+    "file": "assets/import-C0ToHOhA.js",
     "name": "import",
     "src": "resources/js/import.js",
     "isEntry": true,
     "imports": [
-<<<<<<< HEAD
-      "resources/js/exportToExcel_branch.js"
-=======
       "resources/js/exportToExcel.js"
->>>>>>> cc460554c9725469f8adf14e92731de2c2dd771d
     ]
   },
   "resources/js/loadingscreen.js": {

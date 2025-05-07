@@ -10,6 +10,7 @@ var columnNames = [];
 var startRow = 0;
 var lastRow = 0;
 var colValues = {};
+var importedSheets = {};
 const branch_dict = {
     រាជធានីភ្នំពេញ: 1,
     ខេត្តសៀមរាប: 2,
@@ -64,7 +65,8 @@ var khDict = {
 };
 
 $(document).ready(function () {
-    var school_id = "";
+    var school_id = null;
+    var institute_id = null;
     //start up code goes here
     getDistrctKhan();
     $.ajax({
@@ -90,11 +92,18 @@ $(document).ready(function () {
         getSchool(dId);
     });
     $("#school-select").on("change", function () {
-        var sId = $("#school-select").val();
-        school_id = sId;
-        console.log(sId);
-
-
+        var val = $("#school-select").val();
+        if (val.startsWith("school_")) {
+            let schoolId = val.replace("school_", "");
+            school_id = schoolId;
+            console.log("Selected school ID:", schoolId);
+        } else if (val.startsWith("institute_")) {
+            let instituteId = val.replace("institute_", "");
+            institute_id = instituteId;
+            console.log("Selected institute ID:", instituteId);
+        }
+        // school_id = sId;
+        // console.log(sId);
         $("#import-section").removeClass("hidden");
     });
 
@@ -107,7 +116,7 @@ $(document).ready(function () {
         colValues = {};
         sheetObj = {};
         activeSheet = "";
-
+        
     });
     $("#dropzone-file").on("change", async function () {
         columnNames = [];
@@ -116,6 +125,8 @@ $(document).ready(function () {
         colValues = {};
         sheetObj = {};
         activeSheet = "";
+        importedSheets = {};
+        $("#sheetImport").prop("disabled", false); 
         const fileInput = $("#dropzone-file")[0];
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
@@ -238,6 +249,9 @@ $(document).ready(function () {
 
                         activeSheet = $(this).text().trim();
 
+                        // new code 2025/05/05 Enable import button if this sheet hasn't been imported yet
+                        $("#sheetImport").prop("disabled", importedSheets[activeSheet] || false);
+
                         constructSheetTable(sheetObj[activeSheet], columnNames);
                         console.log("sheetobj=>", sheetObj[activeSheet]);
                     });
@@ -254,11 +268,17 @@ $(document).ready(function () {
             alert("No active sheet selected!");
             return;
         }
-
+        // new code 2025/05/05 insert control avoid reinsert
+        if (importedSheets[activeSheet]) {
+            alert("This sheet has already been imported. Please select a different sheet.");
+            return;
+        }
         let memberData = Object.values(sheetObj[activeSheet]);
         memberData = memberData.map((member) => ({
             ...member,
-            school_id: school_id
+            school_id: school_id,
+            institute_id: institute_id,
+            branchhei_id: institute_id
         }));
 
         console.log("memberData=>", memberData);
@@ -276,6 +296,9 @@ $(document).ready(function () {
             contentType: "application/json",
             data: JSON.stringify({ members: member }),
             success: function (response) {
+                // Mark this sheet as imported
+                importedSheets[activeSheet] = true;
+                alert("ជោគជ័យ");
                 console.log("Success:", response);
             },
             error: function (xhr) {
@@ -430,10 +453,12 @@ $(document).ready(function () {
                         `<option value="">--------------------------------</option>`
                     );
                     $.each(data, function (index, item) {
-                        selectList.append(
+                        //add prefix to the id for school and institute to check the condition
+                        let prefix = item.type === 'institute' ? 'institute_' : 'school_';
+                        $("#school-select").append(
                             $("<option>", {
-                                value: item.school_id,
-                                text: item.school_name,
+                                value: prefix + item.id,
+                                text: item.name
                             })
                         );
                     });
