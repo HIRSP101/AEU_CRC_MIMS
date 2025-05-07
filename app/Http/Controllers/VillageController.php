@@ -56,6 +56,7 @@ class VillageController extends Controller
                 'villages' => $data,
                 'branchId' => $branchId,
                 'branch' => $branch,
+                'branches' => $branches,
                 'user' => $user,
                 'branchWhole' => $branchTotals,
             ]);
@@ -103,7 +104,23 @@ class VillageController extends Controller
     public function create($branchId)
     {
         $branch = branch::findOrFail($branchId);
-        return view('village.create-village', compact('branch'));
+        if (auth()->user()->hasRole('user')) {
+            $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
+            $branches = DB::table('branch')
+                ->where('branch_id', $user)
+                ->get();
+            $districts = DB::table('district as d')
+                ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')
+                ->where('d.branch_id', $user)
+                ->get();
+        } else {
+            $branch = branch::findOrFail($branchId);
+            $branches = DB::table('branch')->get();
+            $districts = DB::table('district as d')
+                ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')->get();
+        }
+
+        return view('village.create-village', compact('branch', 'branches', 'districts'));
     }
 
     public function store(VillageRequest $request, CreateDistrictService $service)
@@ -120,13 +137,25 @@ class VillageController extends Controller
     public function create2()
     {
         $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
-        $branches = DB::table('branch')
-            ->where('branch_id', $user)
-            ->get();
 
-        $districts = DB::table('district as d')
-            ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')
-            ->get();
+        if (auth()->user()->hasRole('user')) {
+            $branches = DB::table('branch')
+                ->where('branch_id', $user)
+                ->get();
+
+            $districts = DB::table('district as d')
+                ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')
+                ->where('d.branch_id', $user)
+                ->get();
+        } else {
+            $branches = DB::table('branch')
+                ->where('branch_id', $user)
+                ->get();
+
+            $districts = DB::table('district as d')
+                ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')
+                ->get();
+        }
         return view('village.create-village2', compact('branches', 'districts'));
     }
     public function store2(VillageRequest $request, CreateDistrictService $service)
