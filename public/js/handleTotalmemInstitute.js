@@ -13,7 +13,6 @@ export function handleTotalmemInstitute(array, ExcelObj) {
     ];
 
     setuppagination(array, attr_arr, "update-member");
-
     $(".table table tbody").on("click", ".hoverablebranch", function (e) {
         if ($(e.target).closest("td").hasClass("action")) {
             return;
@@ -33,6 +32,7 @@ export function handleTotalmemInstitute(array, ExcelObj) {
         console.log(userId);
         window.location.href = `/member/${userId}`;
     });
+    
 
     $("#delete").on("click", function (e) {
         e.preventDefault();
@@ -65,6 +65,21 @@ export function handleTotalmemInstitute(array, ExcelObj) {
         if (confirmDelete) {
             ajaxtoRoute("POST", "/deletemember", [userId]);
         }
+    });
+
+    $(".table table tbody").on("click", ".del-one", function (e) {
+        e.preventDefault();
+        console.log($(this).val);
+        
+        // e.preventDefault();
+        // const userId = $(this).attr("data-id");
+        // console.log(userId);
+        // const confirmDelete = confirm(
+        //     "Are you sure you want to delete this user?"
+        // );
+        // if (confirmDelete) {
+        //     ajaxtoRoute("POST", "/deletemember", [userId]);
+        // }
     });
 
     // Date filtering range
