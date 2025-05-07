@@ -22,12 +22,20 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label for="type" class="block font-siemreap mb-2">ប្រភេទ</label>
-                            <select name="type" id="type"
-                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
-                                <option value="អនុវិទ្យាល័យ">អនុវិទ្យាល័យ</option>
-                                <option value="វិទ្យាល័យ">វិទ្យាល័យ</option>
-                                <option value="សាកលវិទ្យាល័យ">សាកលវិទ្យាល័យ</option>
-                            </select>
+                            @if (auth()->user()->hasRole('user'))
+                                <select name="type" id="type"
+                                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
+                                    <option value="អនុវិទ្យាល័យ">អនុវិទ្យាល័យ</option>
+                                    <option value="វិទ្យាល័យ">វិទ្យាល័យ</option>
+                                </select>
+                            @else
+                                <select name="type" id="type"
+                                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
+                                    <option value="អនុវិទ្យាល័យ">អនុវិទ្យាល័យ</option>
+                                    <option value="វិទ្យាល័យ">វិទ្យាល័យ</option>
+                                    <option value="សាកលវិទ្យាល័យ">សាកលវិទ្យាល័យ</option>
+                                </select>
+                            @endif
                         </div>
                         <div hidden id="typeU">
                             <label for="typeUniversity" class="block font-siemreap mb-2">ប្រភេទ</label>
