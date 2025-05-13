@@ -28,6 +28,7 @@ Route::post('/test-progress', function () {
 
 
 
+
 Route::get('/welcome', function () {
     return view('welcome');
 });
@@ -45,7 +46,12 @@ Route::get('/welcome', function () {
 
 $appC = "App\Http\Controllers";
 
-
+// handle all public operations
+Route::prefix('public')->name('public.')->group(function () use ($appC) {
+    Route::get('/form', "{$appC}\\PublicController@index")->name('index');
+    Route::post('/create',"{$appC}\\PublicController@store")->name('');
+})->middleware('throttle:100,1');
+/**     ///      */
 
 Route::get('/', function () {
     return redirect('/login');
@@ -111,6 +117,8 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/deletememberone', "{$appC}\\MemberController@deleteMember");
     Route::get('/update-member/{id}', "{$appC}\\MemberController@getupdateMember")->name("memberupdate");
     Route::post('/update-member/{memberId}', "{$appC}\\MemberController@updateMember");
+
+    /**        Report Routes          */
     // all reports routes
     Route::get('/reports', "{$appC}\\ReportController@index")->name('report');
     Route::get('/branchesreport', "{$appC}\\ReportController@branches_report")->name('branchesreport');
@@ -118,7 +126,11 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/public/university', "$appC\\ReportController@branchheipublic")->name('public.university');
     Route::get('/total/university', "$appC\\ReportController@branchhei_all")->name('total.university');
     Route::get('/total/member/university/{id}', "$appC\\ReportController@branchesHeiReport")->name('total.member.university');
+    /**          ///             */
 
+
+    /**     CRUD opp (branch)       */
+    // create branch
     Route::get('/create-branch', "{$appC}\\BranchController@createform")->name('create-branch');
     Route::post('/create-branch', "{$appC}\\BranchController@store")->name('branch.store');
     Route::get('/update-branch/{id}', "{$appC}\\BranchController@updateform");
@@ -127,44 +139,70 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/delete-branch', "{$appC}\\BranchController@deleteBranch");
     Route::post('/delete-branches', "{$appC}\\BranchController@deleteBranches");
     Route::get('/getBranchByUser', "{$appC}\\BranchController@getBranchByUser");
+    /**        ///             */
+
 
     Route::get('/institute', "{$appC}\\InstituteController@index1")->name('institute');
     Route::get('/institute/{id}', "{$appC}\\InstituteController@get");
     Route::get('/generate-report/{id}', "{$appC}\\InstituteController@generateReport");
+
+
+    /**  CRUD opp (village)  */
     // Create village
     Route::get('/branch/{id}/village/create', "{$appC}\\VillageController@create")->name('village.create');
     Route::post('/branch/{id}/village/store', "{$appC}\\VillageController@store")->name('village.store');
     Route::get('/getVillages/{branchId}', "{$appC}\\VillageController@getVillages");
+    /**        ///           */
+
+    /**   CRUD opp (school1) */
     // Create school
     Route::get('/branch/{id}/village/{v_id}/school/create', "{$appC}\\SchoolController@create")->name('school.create');
     Route::post('/branch/{id}/village/{v_id}/school/store', "{$appC}\\SchoolController@store")->name('school.store');
     Route::get('/getSchool', "{$appC}\\SchoolController@getSchool");
-    // new Code 2025/03/27 get school by district 
+    /**       ///           */
+
+    // get school by district (2025/03/27)
     Route::get('/getSchoolByDistrictId/{id}', "{$appC}\\SchoolController@getSchoolByDistrictId");
 
+
+    /**       */
     //Create district2
     Route::get('/createdistrict', "{$appC}\\VillageController@create2")->name('createdistrict');
     Route::post('/storedistrict', "{$appC}\\VillageController@store2")->name('storedistrict');
     Route::get('/get-district', "{$appC}\\VillageController@getDistrict");
     Route::get('/get-district/{id}', "{$appC}\\VillageController@getDistrictByBranchId");
-    // new code get district by user login
+    /**       */
+
+
+    /**       */
+    // get district via user id (logged in)
     Route::get('/getDistrictByUserLogin', "{$appC}\\VillageController@getDistrictByUserLogin");
     Route::post('/deletedistrict', "{$appC}\\VillageController@deleteDistrict");
     Route::get('/update-district/{id}', "{$appC}\\VillageController@editDistrict")->name('update-district');
     Route::post('/update-district/{id}', "{$appC}\\VillageController@updateDistrict")->name('updatedistrict');
+    /**      */
 
+    /**    CRUD opp (school 2)   */
     // Create school 2
     Route::get('/createschool', "{$appC}\\SchoolController@create2")->name('createschool');
     Route::post('/storeschool', "{$appC}\\SchoolController@store2")->name('storeschool');
     Route::post('/deleteschool', "{$appC}\\SchoolController@deleteSchool");
     Route::get('/update-school/{id}', "{$appC}\\SchoolController@editSchool")->name('update-school');
     Route::post('/update-school/{id}', "{$appC}\\SchoolController@updateSchool")->name('updateschool');
+    /**         ///             */
 
+
+    /**                */
+    // branch/village
     Route::get('/branch/{id}/village', "{$appC}\\VillageController@index")->name('village');
     Route::get('/branch/{id}/village/{v_id}', "{$appC}\\VillageController@get");
     Route::get('/branch/{id}/village/{v_id}/school', "{$appC}\\SchoolController@index1")->name('school');
     Route::get('/branch/{id}/village/{v_id}/school/{s_id}', "{$appC}\\SchoolController@get");
     Route::get("/wholebranch/{id}", "{$appC}\\SchoolController@get")->name("wholebranch");
+
+    /***     ///      */
+
+
 
     Route::get('/document', "{$appC}\\DocumentController@index")->name('document');
     Route::get('/document/{id}', "{$appC}\\DocumentController@get");
@@ -178,15 +216,21 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/listschool/{did}', "{$appC}\\ExpireController@Lujs");
     //Route::get('/instituteexpire', "{$appC}\\ExpireController@index1")->name('institute_ex');
 
+    /**          */
     // Notification expire
     Route::get('/check-expired-members', "{$appC}\\ExpireController@checkExpiredMembers")->name('checkExpiredMembers');
     Route::get('/check-expired-members-institute', "{$appC}\\ExpireController@checkExpiredMemberInstitute")->name('checkExpiredMemberInstitute');
+    /**    //      */
 
+    /**        */
     // PDF COntroller request-form
     Route::get('/generate-request-form/{id}', "{$appC}\\PdfController@exportPdfRequestForm");
+    /**   //     */
 
+    /**         */
     // PDF Controller detail-form
     Route::get('/generate-detail-form/{id}', "{$appC}\\PdfController@exportPdfDetailForm");
+    /**   ///     */
 });
 
 
