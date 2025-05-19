@@ -26,6 +26,7 @@ class InstituteController extends Controller
         $total_member_institute = $this->totalMemberInstitute();
         return view("institude.index", compact("total_member_institute"));
     }
+
     public function totalMemberInstitute()
     {
         return DB::table('member_personal_detail as mpd')

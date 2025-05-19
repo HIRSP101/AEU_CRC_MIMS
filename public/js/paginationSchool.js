@@ -29,8 +29,8 @@ export default function setuppagination(array, attr_arr, updateroute) {
             <tr class="border-b border-gray-200 hover:bg-gray-100">
                 <td class="py-2 pl-5 text-left">${index + 1}</td>
                 <td class="py-2 text-center">${item[attr_arr[1]]}</td>
-                <td class="py-2 text-center">${item[attr_arr[2]]}</td>
-                <td class="py-2 text-center">${item[attr_arr[3]]}</td>
+                <td class="py-2 text-center">${item[attr_arr[4]]}</td>
+                <td class="py-2 text-center">${item[attr_arr[5]]}</td>
                 <td class="py-2 text-center">
                     <a href="/${updateroute}/${
             item[attr_arr[0]]

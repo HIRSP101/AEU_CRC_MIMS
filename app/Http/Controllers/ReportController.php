@@ -54,7 +54,8 @@ class ReportController extends Controller
                 'd.district_name',
                 's.school_id',
                 's.school_name',
-                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
+                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem"),
+                DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' AND mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem_fem"),
             )
             ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
             ->leftJoin('member_education_background as meb', function ($join) use ($branchId) {
@@ -66,8 +67,6 @@ class ReportController extends Controller
             ->groupBy('d.district_id', 'd.district_name', 's.school_id', 's.school_name')
             ->orderBy('d.district_name')
             ->get();
-
-
 
         $branchTotals = (object) [
             'total_schools' => $district->sum('total_schools'),
@@ -88,6 +87,7 @@ class ReportController extends Controller
             'branchWhole' => (object)[
                 'total_schools' => $totalSchools,
                 'total_mem' => $district->sum('total_mem'),
+                'total_mem_fem' => $district->sum('total_mem_fem'),
             ],
         ]);
     }
