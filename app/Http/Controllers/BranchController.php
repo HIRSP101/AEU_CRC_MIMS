@@ -45,7 +45,7 @@ class BranchController extends Controller
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.image')
             ->get();
         //dd($total_mem_branchhei);
-        return view('branch_hei.index', compact('total_mem_branchhei', ));
+        return view('branch_hei.index', compact('total_mem_branchhei',));
     }
 
     public function totalmem_branches()
@@ -153,11 +153,10 @@ class BranchController extends Controller
     public function getBranchByUser()
     {
         $branch = DB::table('branch')
-        ->leftJoin('branch_bindding_user', 'branch.branch_id', '=', 'branch_bindding_user.branch_id')
-        ->where('user_id', auth()->user()->id)
-        ->get();
+            ->leftJoin('branch_bindding_user', 'branch.branch_id', '=', 'branch_bindding_user.branch_id')
+            ->where('user_id', auth()->user()->id)
+            ->get();
         return response()->json($branch);
-
     }
 
     public function store(BranchRequest $request): RedirectResponse

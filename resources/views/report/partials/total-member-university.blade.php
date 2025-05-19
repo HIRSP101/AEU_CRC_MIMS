@@ -62,8 +62,8 @@
                         <tr>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">មាន</th>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">អត់</th>
-                            <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                            <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
+                            <th class="border border-gray-700 font-semibold font-battambang p-2">{{ $branchWhole->total_mem }}</th>
+                            <th class="border border-gray-700 font-semibold font-battambang p-2">{{ $branchWhole->total_mem_fem }}</th>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
@@ -124,13 +124,12 @@
                                     <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">
-                                        {{ $brreport->total_wm ?? '-' }}
+                                        {{ $school->total_mem ?? '-' }}
                                     </td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school->total_mem_fem ?? '-' }}</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">
-                                        {{ $brreport->total_ls ?? '-' }}
-                                    </td>
+                                    
                                     <td class="border border-gray-700 font-normal font-battambang p-2">
                                         {{ $brreport->total_ls_wm ?? '-' }}
                                     </td>
