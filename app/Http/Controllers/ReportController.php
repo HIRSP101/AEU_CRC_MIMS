@@ -71,17 +71,6 @@ class ReportController extends Controller
             ->orderBy('d.district_name')
             ->get();
 
-        // $member_type = DB::table('member_personal_detail as mpd')
-        //     ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-        //     ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-        //     ->leftJoin('branch as b', 'meb.branch_id', '=', 'b.branch_id')
-        //     ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
-        //     ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
-        //     ->where('mpd.member_type', '!=', ['សមាជិកា យុវជន', null])
-        //     ->select(
-        //         'mrd.member_type',
-        //     );
-
         $branchTotals = (object) [
             'total_schools' => $district->sum('total_schools'),
             'total_mem' => $district->sum('total_mem'),
@@ -104,6 +93,50 @@ class ReportController extends Controller
                 'total_mem_fem' => $district->sum('total_mem_fem'),
                 'total_mem_advisor' => $district->sum('total_mem_advisor'),
                 'total_mem_fem_advisor' => $district->sum('total_mem_fem_advisor'),
+            ],
+        ]);
+    }
+
+    public function reportOption3()
+    {
+        $member_report_all_branch = DB::table('district as d')
+            ->select(
+                'b.branch_id',
+                'b.branch_kh',
+                's.school_id',
+                's.school_name',
+                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem"),
+                DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' AND mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem_fem"),
+
+                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) as total_mem_advisor"),
+                DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' AND mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) as total_mem_fem_advisor"),
+            )
+            ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
+            ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
+            ->leftJoin('member_education_background as meb', function ($join) {
+                $join->on('meb.school_id', '=', 's.school_id')
+                    ->on('meb.branch_id', '=', 'b.branch_id');
+            })
+            ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->groupBy('d.district_id', 'd.district_name', 's.school_id', 's.school_name')
+            ->orderBy('d.district_name')
+            ->get();
+
+        $totalSchools = DB::table('school as s')
+            ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
+            // ->where('b.branch_id', '!=', '28')
+            ->distinct()
+            ->count('school_id');
+
+        return view('report.partials.report-option3', [
+            'member_report_all_branch' => $member_report_all_branch,
+            'branchWhole' => (object)[
+                'total_schools' => $totalSchools,
+                'total_mem' => $member_report_all_branch->sum('total_mem'),
+                'total_mem_fem' => $member_report_all_branch->sum('total_mem_fem'),
+                'total_mem_advisor' => $member_report_all_branch->sum('total_mem_advisor'),
+                'total_mem_fem_advisor' => $member_report_all_branch->sum('total_mem_fem_advisor'),
             ],
         ]);
     }

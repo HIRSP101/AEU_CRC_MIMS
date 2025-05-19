@@ -44,7 +44,7 @@
                     </a>
                 </div>
                 <div class="py-1 px-5">
-                    {{-- <a href="{{ route('total.member.university') }}" --}} <a href="{{ route('list_branches') }}"
+                    <a href="{{ route('member.report.all.branch') }}"
                         class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
                         <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
                             តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជន២៥រាជធានី/ខេត្ត​​
