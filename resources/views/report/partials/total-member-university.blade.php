@@ -62,14 +62,14 @@
                         <tr>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">មាន</th>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">អត់</th>
-                            <th class="border border-gray-700 font-semibold font-battambang p-2">{{ $branchWhole->total_mem }}</th>
-                            <th class="border border-gray-700 font-semibold font-battambang p-2">{{ $branchWhole->total_mem_fem }}</th>
-                            <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                            <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                            <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                            <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                            <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
-                            <th class="border border-gray-700 font-semibold font-battambang p-2">-</th>
+                            <th class="border border-gray-700 font-semibold font-battambang p-2">{{ $branchWhole->total_mem ?? '0'}}</th>
+                            <th class="border border-gray-700 font-semibold font-battambang p-2">{{ $branchWhole->total_mem_fem ?? '0'}}</th>
+                            <th class="border border-gray-700 font-semibold font-battambang p-2">0</th>
+                            <th class="border border-gray-700 font-semibold font-battambang p-2">0</th>
+                            <th class="border border-gray-700 font-semibold font-battambang p-2">{{ $branchWhole->total_mem_advisor ?? '0'}}</th>
+                            <th class="border border-gray-700 font-semibold font-battambang p-2">{{ $branchWhole->total_mem_fem_advisor ?? '0'}}</th>
+                            <th class="border border-gray-700 font-semibold font-battambang p-2">0</th>
+                            <th class="border border-gray-700 font-semibold font-battambang p-2">0</th>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">ស្រីសរុប</th>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">ប្រុស</th>
                             <th class="border border-gray-700 font-semibold font-battambang p-2">ស្រីសរុប</th>
@@ -124,17 +124,17 @@
                                     <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">
-                                        {{ $school->total_mem ?? '-' }}
+                                        {{ $school->total_mem ?? '0' }}
                                     </td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school->total_mem_fem ?? '-' }}</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school->total_mem_fem ?? '0' }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                                     
                                     <td class="border border-gray-700 font-normal font-battambang p-2">
-                                        {{ $brreport->total_ls_wm ?? '-' }}
+                                        {{ $school->total_mem_advisor ?? '0' }}
                                     </td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school->total_mem_fem_advisor ?? '0' }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
@@ -152,12 +152,12 @@
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $branchWhole->total_mem ?? 0 }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $branchWhole->total_mem_fem ?? 0 }}</td>
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $branchWhole->total_mem_advisor ?? 0 }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $branchWhole->total_mem_fem_advisor ?? 0 }}</td>
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
                             <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
