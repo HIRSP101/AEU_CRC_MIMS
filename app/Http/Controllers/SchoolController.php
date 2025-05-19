@@ -313,7 +313,41 @@ class SchoolController extends Controller
     //new code on 2025/03/27 
     public function getSchoolByDistrictId($id)
     {
-        $schools = DB::table('school as s')->where('s.district_id', $id)->get();
-        return response()->json($schools);
+        $userBranchId = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
+        // new code 2025/05/05 {
+        $institutes = DB::table('branch_hei as inst')
+            ->where('inst.branch_id', $userBranchId)
+            ->select(
+                'inst.bhei_id as id',
+                'inst.institute_kh as name'
+            )
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'type' => 'institute'
+                ];
+            });
+    
+        $schools = DB::table('school as s')
+            ->where('s.district_id', $id)
+            ->select(
+                's.school_id as id',
+                's.school_name as name'
+            )
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'type' => 'school'
+                ];
+            });
+    
+        $combined = $schools->merge($institutes)->values();
+        // new code 2025/05/05 }
+        return response()->json($combined);
     }
+    
 }

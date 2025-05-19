@@ -131,7 +131,6 @@ Route::middleware('auth')->group(function () use ($appC) {
 
     Route::get('/institute', "{$appC}\\InstituteController@index1")->name('institute');
     Route::get('/institute/{id}', "{$appC}\\InstituteController@get");
-    Route::get('/generate-report/{id}', "{$appC}\\InstituteController@generateReport");
     // Create village
     Route::get('/branch/{id}/village/create', "{$appC}\\VillageController@create")->name('village.create');
     Route::post('/branch/{id}/village/store', "{$appC}\\VillageController@store")->name('village.store');
@@ -175,7 +174,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/listschool', "{$appC}\\ExpireController@getListSchool")->name('listschool');
     Route::get('/listschool/{id}', "{$appC}\\ExpireController@index");
     Route::get('/list-institute', "{$appC}\\ExpireController@getListInstitute")->name('list-institute');
-    Route::get('/list-institute/{id}', "{$appC}\\ExpireController@getListSchoolByDistrict");
+    Route::get('/list-institute/{id}', "{$appC}\\ExpireController@getListSchoolByInstituteId");
     Route::get('/listschool/{did}', "{$appC}\\ExpireController@Lujs");
     //Route::get('/instituteexpire', "{$appC}\\ExpireController@index1")->name('institute_ex');
 
@@ -188,6 +187,10 @@ Route::middleware('auth')->group(function () use ($appC) {
 
     // PDF Controller detail-form
     Route::get('/generate-detail-form/{id}', "{$appC}\\PdfController@exportPdfDetailForm");
+
+    //new code for pdf 2025/05/07 generate pdf for all members by institute
+    Route::post('/generate-members', "{$appC}\\PdfController@generateMembers");
+    Route::post('/generate-members-request', "{$appC}\\PdfController@generateMembersRequestForm");
 });
 
 
