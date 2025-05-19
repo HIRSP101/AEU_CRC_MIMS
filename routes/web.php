@@ -99,6 +99,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branch_report', "{$appC}\\BranchController@index")->name('branch.report.exclude');
     Route::get('/branch_report/{id}', "{$appC}\\ReportController@branch_report_exclude")->name('branch.report.exclude');
     Route::get('/list_branches', "{$appC}\\ReportController@showListBranch")->name('list_branches');
+    Route::get('/member_report_all_branch', "{$appC}\\ReportController@reportOption3")->name('member.report.all.branch');
 
     // option page
     //Route::get('/member/option/{id}', "{$appC}\\MemberController@getMemberOption")->name('member.option');
