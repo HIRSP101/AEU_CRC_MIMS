@@ -52,11 +52,11 @@
                     <!-- Table Body -->
                     <tbody>
                         @php
-                            $grouped = $member_report_all_branch->groupBy('branch_id');
+                            $grouped = $branch_and_count_member->groupBy('branch_id');
                             $i = 1;
                         @endphp
 
-                        @foreach ($grouped as $districtId => $schools)
+                        @foreach ($grouped as $branchId => $schools)
                             @php 
                                 $rowSpan = $schools->count(); 
                             @endphp
@@ -70,47 +70,44 @@
 
                                     <td colspan="2" class="border border-gray-700 font-normal font-battambang p-2">{{ $school->branch_kh }}</td>
 
-                                    {{-- Other columns --}}
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">b</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">c</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">
-                                        d
-                                    </td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">e</td>
+                                    @php
+                                        $schoolTypes = $school_types_per_branch[$school->branch_id] ?? null;
+                                        $universities = $universities_per_branch[$school->branch_id]->total_university ?? 0;
 
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">f</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">g</td>
+                                        $secondary = $schoolTypes->total_secondary_school ?? 0;
+                                        $high = $schoolTypes->total_high_school ?? 0;
+                                    @endphp
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $secondary + $high + $universities }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $secondary }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $high }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $universities }}</td>
 
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">h</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2">i</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school->total_mem_advisor }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school->total_mem_fem_advisor }}</td>
+
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school->total_mem }}</td>
+                                    <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school->total_mem_fem }}</td>
                                 </tr>
                             @endforeach
                         @endforeach
 
                         <tr class="bg-gray-100">
-                            <td colspan="2" class="border border-gray-700 p-2 font-semibold font-battambang">សរុប</td>
-                            <td class="border border-gray-700 font-battambang p-2 font-semibold">
-                                {{ $branchWhole->total_schools }}
-                            </td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
-                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td colspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">សរុប</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school_types_per_branch->sum('total_secondary_school') + $school_types_per_branch->sum('total_high_school') + $universities_per_branch->sum('total_university') }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school_types_per_branch->sum('total_secondary_school') }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school_types_per_branch->sum('total_high_school') }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2"> {{ $universities_per_branch->sum('total_university') }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2"> {{ $branchWhole->total_mem_advisor }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $branchWhole->total_mem_fem_advisor }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2"> {{ $branchWhole->total_mem }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2"> {{ $branchWhole->total_mem_fem }}</td>
                         </tr>
                     </tbody>
-
                 </table>
-                <p class="font-battambang font-medium text-center mt-2">រៀបចំដោយ៖ ការិយាល័យអភិវឌ្ឍន៍ នៃនាយកដ្ឋានធនធានមនុស្ស
-                    កក្រក</p>
             </div>
 
         </div>
 @endsection
-    {{-- var data = @json($reports); --}}
     @push('JS')
         <script type="module">
 

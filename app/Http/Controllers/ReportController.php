@@ -99,44 +99,57 @@ class ReportController extends Controller
 
     public function reportOption3()
     {
-        $member_report_all_branch = DB::table('district as d')
+
+        $branch_and_count_member = DB::table('branch as b')
+            ->leftJoin('school as s', 's.branch_id', '=', 'b.branch_id')
+            ->leftJoin('district as v', function ($join) {
+                $join->on('v.district_id', '=', 's.district_id')
+                    ->on('v.branch_id', '=', 's.branch_id');
+            })
+            ->leftJoin('member_education_background as meb', function ($join) {
+                $join->on('meb.school_id', '=', 's.school_id')
+                    ->on('meb.branch_id', '=', 's.branch_id');
+            })
+            ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mrd.member_id', '=', 'mpd.member_id')
             ->select(
                 'b.branch_id',
                 'b.branch_kh',
-                's.school_id',
-                's.school_name',
-                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem"),
-                DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' AND mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem_fem"),
-
-                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) as total_mem_advisor"),
-                DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' AND mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) as total_mem_fem_advisor"),
+                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) AS total_mem"),
+                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.gender = 'ស្រី' THEN meb.member_id END) AS total_mem_fem"),
+                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) AS total_mem_advisor"),
+                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.member_type = 'សមាជិកា យុវជន' AND mpd.gender = 'ស្រី' THEN meb.member_id END) AS total_mem_fem_advisor"),
             )
-            ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
-            ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
-            ->leftJoin('member_education_background as meb', function ($join) {
-                $join->on('meb.school_id', '=', 's.school_id')
-                    ->on('meb.branch_id', '=', 'b.branch_id');
-            })
-            ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
-            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->groupBy('d.district_id', 'd.district_name', 's.school_id', 's.school_name')
-            ->orderBy('d.district_name')
+            ->groupBy('b.branch_id', 'b.branch_kh')
             ->get();
 
-        $totalSchools = DB::table('school as s')
-            ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
-            // ->where('b.branch_id', '!=', '28')
-            ->distinct()
-            ->count('school_id');
+        $school_types_per_branch = DB::table('school as s')
+            ->select(
+                's.branch_id',
+                DB::raw("SUM(CASE WHEN s.type = 'អនុវិទ្យាល័យ' THEN 1 ELSE 0 END) as total_secondary_school"),
+                DB::raw("SUM(CASE WHEN s.type = 'វិទ្យាល័យ' THEN 1 ELSE 0 END) as total_high_school")
+            )
+            ->groupBy('s.branch_id')
+            ->get()
+            ->keyBy('branch_id');
+
+        $universities_per_branch = DB::table('branch_hei as hei')
+            ->select('hei.branch_id', DB::raw('COUNT(*) as total_university'))
+            ->where('hei.institute_type', 'សាកលវិទ្យាល័យ')
+            ->groupBy('hei.branch_id')
+            ->get()
+            ->keyBy('branch_id');
+
 
         return view('report.partials.report-option3', [
-            'member_report_all_branch' => $member_report_all_branch,
+            'branch_and_count_member' => $branch_and_count_member,
+            'school_types_per_branch' => $school_types_per_branch,
+            'universities_per_branch' => $universities_per_branch,
             'branchWhole' => (object)[
-                'total_schools' => $totalSchools,
-                'total_mem' => $member_report_all_branch->sum('total_mem'),
-                'total_mem_fem' => $member_report_all_branch->sum('total_mem_fem'),
-                'total_mem_advisor' => $member_report_all_branch->sum('total_mem_advisor'),
-                'total_mem_fem_advisor' => $member_report_all_branch->sum('total_mem_fem_advisor'),
+                'total_mem' => $branch_and_count_member->sum('total_mem'),
+                'total_mem_fem' => $branch_and_count_member->sum('total_mem_fem'),
+                'total_mem_advisor' => $branch_and_count_member->sum('total_mem_advisor'),
+                'total_mem_fem_advisor' => $branch_and_count_member->sum('total_mem_fem_advisor'),
             ],
         ]);
     }
