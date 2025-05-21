@@ -90,7 +90,19 @@
                                 </tr>
                             @endforeach
                         @endforeach
-
+                        
+                        <tr>
+                            <td colspan="2" class="border border-gray-700 p-2 font-battambang">26</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">គ្រឹះស្ថានឧត្តមសិក្សា</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">0</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2"> {{ $universities_per_branch->sum('total_university') }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2">{{ $total_member_all_university->sum('total_mem_advisor')}}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2"> {{ $total_member_all_university->sum('total_mem_fem_advisor') }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2"> {{ $total_member_all_university->sum('total_mem') }}</td>
+                            <td class="border border-gray-700 font-normal font-battambang p-2"> {{ $total_member_all_university->sum('total_mem_fem')}}</td>
+                        </tr>
                         <tr class="bg-gray-100">
                             <td colspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">សរុប</td>
                             <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school_types_per_branch->sum('total_secondary_school') + $school_types_per_branch->sum('total_high_school') + $universities_per_branch->sum('total_university') }}</td>
@@ -105,7 +117,6 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
 @endsection
     @push('JS')
