@@ -112,6 +112,10 @@ class ReportController extends Controller
             })
             ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
             ->leftJoin('member_registration_detail as mrd', 'mrd.member_id', '=', 'mpd.member_id')
+            ->leftJoin('branch_hei as hei', function ($join) {
+                $join->on('hei.bhei_id', '=', 'meb.branchhei_id')
+                    ->on('hei.branch_id', '=', 'b.branch_id');
+            })
             ->select(
                 'b.branch_id',
                 'b.branch_kh',
@@ -120,6 +124,7 @@ class ReportController extends Controller
                 DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) AS total_mem_advisor"),
                 DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.member_type = 'សមាជិកា យុវជន' AND mpd.gender = 'ស្រី' THEN meb.member_id END) AS total_mem_fem_advisor"),
             )
+            ->where('b.branch_id', '<', '28')
             ->groupBy('b.branch_id', 'b.branch_kh')
             ->get();
 
@@ -134,22 +139,60 @@ class ReportController extends Controller
             ->keyBy('branch_id');
 
         $universities_per_branch = DB::table('branch_hei as hei')
-            ->select('hei.branch_id', DB::raw('COUNT(*) as total_university'))
+            ->select(
+                'hei.branch_id',
+                DB::raw('COUNT(*) as total_university'),
+            )
             ->where('hei.institute_type', 'សាកលវិទ្យាល័យ')
             ->groupBy('hei.branch_id')
             ->get()
             ->keyBy('branch_id');
+
+        $total_member_all_university = DB::table('branch_hei as hei')
+            ->select(
+                'hei.institute_kh',
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិក យុវជន' 
+            THEN meb.member_id END) AS total_mem"),
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិក យុវជន' 
+            AND mpd.gender = 'ស្រី' 
+            THEN meb.member_id END) AS total_mem_fem"),
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិកា យុវជន' 
+            THEN meb.member_id END) AS total_mem_advisor"),
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិកា យុវជន' 
+            AND mpd.gender = 'ស្រី' 
+            THEN meb.member_id END) AS total_mem_fem_advisor")
+            )
+            ->leftJoin('member_education_background as meb', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mrd.member_id', '=', 'mpd.member_id')
+            ->groupBy('hei.institute_kh')
+            ->get();
 
 
         return view('report.partials.report-option3', [
             'branch_and_count_member' => $branch_and_count_member,
             'school_types_per_branch' => $school_types_per_branch,
             'universities_per_branch' => $universities_per_branch,
+            'total_member_all_university' => $total_member_all_university,
             'branchWhole' => (object)[
                 'total_mem' => $branch_and_count_member->sum('total_mem'),
                 'total_mem_fem' => $branch_and_count_member->sum('total_mem_fem'),
                 'total_mem_advisor' => $branch_and_count_member->sum('total_mem_advisor'),
                 'total_mem_fem_advisor' => $branch_and_count_member->sum('total_mem_fem_advisor'),
+            ],
+            'member_all_university' => (object)[
+                'total_mem' => $total_member_all_university->sum('total_mem'),
+                'total_mem_fem' => $total_member_all_university->sum('total_mem_fem'),
+                'total_mem_advisor' => $total_member_all_university->sum('total_mem_advisor'),
+                'total_mem_fem_advisor' => $total_member_all_university->sum('total_mem_fem_advisor'),
             ],
         ]);
     }
@@ -217,31 +260,143 @@ class ReportController extends Controller
     }
     public function branchheiprivate()
     {
-        $branchesreport = $this->branchhei()
-            ->where('hei.type', '=', 'ឯកជន')
-            ->groupBy('hei.institute_kh', 'hei.bhei_id')
-            ->orderBy('hei.bhei_id', 'asc')
-            ->get();
-        return view('report.partials.private-university', compact('branchesreport'));
-    }
+        // $branchesreport = $this->branchhei()
+        //     ->where('hei.type', '=', 'ឯកជន')
+        //     ->groupBy('hei.institute_kh', 'hei.bhei_id')
+        //     ->orderBy('hei.bhei_id', 'asc')
+        //     ->get();
+        //  return view('report.partials.private-university', compact('branchesreport'));
 
+
+        $branchhei_private = DB::table('branch_hei as hei')
+            ->select(
+                'hei.institute_kh',
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិក យុវជន' 
+            THEN meb.member_id END) AS total_mem"),
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិក យុវជន' 
+            AND mpd.gender = 'ស្រី' 
+            THEN meb.member_id END) AS total_mem_fem"),
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិកា យុវជន' 
+            THEN meb.member_id END) AS total_mem_advisor"),
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិកា យុវជន' 
+            AND mpd.gender = 'ស្រី' 
+            THEN meb.member_id END) AS total_mem_fem_advisor")
+            )
+            ->leftJoin('member_education_background as meb', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mrd.member_id', '=', 'mpd.member_id')
+            ->where('hei.type', '=', 'ឯកជន')
+            ->groupBy('hei.institute_kh')
+            ->get();
+        return view('report.partials.private-university', [
+            'branchhei_private' => $branchhei_private,
+            'branchWhole' => (object)[
+                'total_mem' => $branchhei_private->sum('total_mem'),
+                'total_mem_fem' => $branchhei_private->sum('total_mem_fem'),
+                'total_mem_advisor' => $branchhei_private->sum('total_mem_advisor'),
+                'total_mem_fem_advisor' => $branchhei_private->sum('total_mem_fem_advisor'),
+            ],
+        ]);
+    }
     public function branchheipublic()
     {
-        $branchesreport = $this->branchhei()
+        // $branchesreport = $this->branchhei()
+        //     ->where('hei.type', '=', 'សាធារណះ')
+        //     ->groupBy('hei.institute_kh', 'hei.bhei_id')
+        //     ->orderBy('hei.bhei_id', 'asc')
+        //     ->get();
+        // return view('report.partials.public-university', compact('branchesreport'));
+
+        $branchhei_public = DB::table('branch_hei as hei')
+            ->select(
+                'hei.institute_kh',
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិក យុវជន' 
+            THEN meb.member_id END) AS total_mem"),
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិក យុវជន' 
+            AND mpd.gender = 'ស្រី' 
+            THEN meb.member_id END) AS total_mem_fem"),
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិកា យុវជន' 
+            THEN meb.member_id END) AS total_mem_advisor"),
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិកា យុវជន' 
+            AND mpd.gender = 'ស្រី' 
+            THEN meb.member_id END) AS total_mem_fem_advisor")
+            )
+            ->leftJoin('member_education_background as meb', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mrd.member_id', '=', 'mpd.member_id')
             ->where('hei.type', '=', 'សាធារណះ')
-            ->groupBy('hei.institute_kh', 'hei.bhei_id')
-            ->orderBy('hei.bhei_id', 'asc')
+            ->groupBy('hei.institute_kh')
             ->get();
-        return view('report.partials.public-university', compact('branchesreport'));
+        return view('report.partials.public-university', [
+            'branchhei_public' => $branchhei_public,
+            'branchWhole' => (object)[
+                'total_mem' => $branchhei_public->sum('total_mem'),
+                'total_mem_fem' => $branchhei_public->sum('total_mem_fem'),
+                'total_mem_advisor' => $branchhei_public->sum('total_mem_advisor'),
+                'total_mem_fem_advisor' => $branchhei_public->sum('total_mem_fem_advisor'),
+            ],
+        ]);
     }
 
     public function branchhei_all()
     {
-        $branchesreport = $this->branchhei()
-            ->groupBy('hei.institute_kh', 'hei.bhei_id')
-            ->orderBy('hei.bhei_id', 'asc')
+        // $branchesreport = $this->branchhei()
+        //     ->groupBy('hei.institute_kh', 'hei.bhei_id')
+        //     ->orderBy('hei.bhei_id', 'asc')
+        //     ->get();
+
+        $branchhei = DB::table('branch_hei as hei')
+            ->select(
+                'hei.institute_kh',
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិក យុវជន' 
+            THEN meb.member_id END) AS total_mem"),
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិក យុវជន' 
+            AND mpd.gender = 'ស្រី' 
+            THEN meb.member_id END) AS total_mem_fem"),
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិកា យុវជន' 
+            THEN meb.member_id END) AS total_mem_advisor"),
+                DB::raw("COUNT(CASE 
+            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            AND mpd.member_type = 'សមាជិកា យុវជន' 
+            AND mpd.gender = 'ស្រី' 
+            THEN meb.member_id END) AS total_mem_fem_advisor")
+            )
+            ->leftJoin('member_education_background as meb', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mrd.member_id', '=', 'mpd.member_id')
+            ->groupBy('hei.institute_kh')
             ->get();
-        return view('report.partials.total-university', compact('branchesreport'));
+        return view('report.partials.total-university', [
+            'branchhei' => $branchhei,
+            'branchWhole' => (object)[
+                'total_mem' => $branchhei->sum('total_mem'),
+                'total_mem_fem' => $branchhei->sum('total_mem_fem'),
+                'total_mem_advisor' => $branchhei->sum('total_mem_advisor'),
+                'total_mem_fem_advisor' => $branchhei->sum('total_mem_fem_advisor'),
+            ],
+        ]);
     }
 
 
