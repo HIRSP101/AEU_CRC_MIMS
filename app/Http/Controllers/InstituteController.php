@@ -59,7 +59,7 @@ class InstituteController extends Controller
             ->leftJoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
             ->leftJoin('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
             ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
-            ->leftJoin('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
+            ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
             ->where('meb.branchhei_id', '=', $instituteId)
             ->where('hei.institute_type', '=', 'សាកលវិទ្យាល័យ')
             ->whereRaw('mrd.registration_date > NOW() - INTERVAL 4 YEAR');

@@ -24,7 +24,6 @@
                     </div>
                 </div>
             </div>
-
             <h2 class="text-[15px] font-khmer text-blue-600">១-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន (Personal Detail)</h2>
             <div class="font-battambang my-3 text-[14px]">
                 @include('member_detail.partials.detail')

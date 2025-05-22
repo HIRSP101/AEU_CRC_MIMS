@@ -30,22 +30,30 @@ class PdfController extends Controller
         }
 
         // Start chunking the query
-        DB::table('member_personal_detail as mpd')
-            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-            ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
-            ->join('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
-            ->join('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
-            ->join('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
-            ->where('meb.branchhei_id', $instituteId)
+        $member = DB::table('member_personal_detail as mpd')
+            ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
+            ->leftJoin('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
+            ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
+            ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftJoin('branch as b', 'b.branch_id', '=', 'meb.branch_id')
+            ->where('hei.bhei_id', $instituteId)
             ->whereIn('mpd.member_id', $memberIds)
-            ->select(
+            ->select([
                 'mpd.member_id',
+                'mpd.member_image',
                 'mpd.member_code',
                 'mpd.name_kh',
                 'mpd.name_en',
                 'mpd.gender',
                 'mpd.date_of_birth',
+                'b.branch_name',
+                'b.branch_kh',
+                'mpd.member_type',
+                's.school_name',
+                'hei.institute_kh',
                 'meb.education_level',
                 'meb.acadmedic_year',
                 'mrd.registration_date',
@@ -54,20 +62,22 @@ class PdfController extends Controller
                 'mpd.phone_number',
                 'mpd.email',
                 'mpd.shirt_size',
-                'mpob.village',
-                'mpob.commune_sangkat',
-                'mpob.district_khan',
-                'mpob.provience_city',
-                'mcad.home_no',
-                'mcad.street_no',
-                'mcad.village as village_current',
-                'mcad.commune_sangkat as commune_sangkat_current',
-                'mcad.district_khan as district_khan_current',
-                'mcad.provience_city as provience_city_current',
+                'mpa.village',
+                'mpa.commune_sangkat',
+                'mpa.district_khan',
+                'mpa.provience_city',
+                'mca.home_no',
+                'mca.street_no',
+                'mca.village as village_current',
+                'mca.commune_sangkat as commune_sangkat_current',
+                'mca.district_khan as district_khan_current',
+                'mca.provience_city as provience_city_current',
                 'meb.acadmedic_year',
                 'meb.language',
                 'meb.major',
                 'meb.institute_id',
+                'meb.misc_skill',
+                'meb.computer_skill',
                 'mpd.facebook',
                 'mgd.father_name',
                 'mgd.father_dob',
@@ -78,8 +88,7 @@ class PdfController extends Controller
                 'mgd.mother_current_address',
                 'mgd.mother_occupation',
                 'mgd.guardian_phone',
-            )
-            ->orderBy('mpd.member_id')
+            ])->orderBy('mpd.member_id')
             ->chunk($chunkSize, function ($members) use ($tempDir, $institution, &$chunkCounter) {
 
                 if ($members->isEmpty())

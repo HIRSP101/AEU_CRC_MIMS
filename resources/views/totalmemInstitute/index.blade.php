@@ -187,7 +187,6 @@
                 handleTotalmemInstitute(array);
                 if (array.length > 0) {
                     exportToExcel(@json($current_branch), @json($total_mem_detail));
-
                 }
                 $("#export_pdf").on("click", async () => {
                     $("#downloadoption").toggle(500);
@@ -214,9 +213,9 @@
                                 institute_id: instituteId.split('/')[2],
                                 member_ids: memberIds
                             }),
-                            // xhrFields: {
-                            //     responseType: 'blob' // Ensures the response is treated as a binary file
-                            // },
+                            xhrFields: {
+                                responseType: 'blob' // Ensures the response is treated as a binary file
+                            },
                             success: function (response) {
                                 $("#loadingSpinner").show();
                                 $("#textload").hide();
@@ -233,12 +232,12 @@
                                     $("#ok").hide();
                                 });
                                 console.log(response);
-                                // var blob = new Blob([response], { type: 'application/zip' });
-                                // var url = URL.createObjectURL(blob);
-                                // var link = document.createElement('a');
-                                // link.href = url;
-                                // link.download = `សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន_យុវជន_កក្រកប្រចាំ.zip`;
-                                // link.click();
+                                var blob = new Blob([response], { type: 'application/zip' });
+                                var url = URL.createObjectURL(blob);
+                                var link = document.createElement('a');
+                                link.href = url;
+                                link.download = `សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន_យុវជន_កក្រកប្រចាំ.zip`;
+                                link.click();
                             },
                             error: function (xhr, status, error) {
                                 $("#loadingSpinner").hide();

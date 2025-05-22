@@ -11,11 +11,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="{{ asset('build/assets/app.css') }}" rel="stylesheet">
     <script src="{{ asset('build/assets/app.js') }}"></script>
-    <script src="{{ asset('js/exportToPdf.js') }}"></script>
-    <script src="{{asset("js/vfs_fonts.min.js")}}"></script>
-    <script src="{{asset("js/pdfmake.min.js")}}"></script>
-    <script src="{{ asset('js/jszip.min.js') }}"></script>
-    <script src="{{ asset('js/FileSaver.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/jszip.min.js') }}"></script>
+    <script src="{{ asset('js/FileSaver.min.js') }}"></script> -->
     <link rel="icon" type="image/x-icon" href="{{URL::asset('images/Logo_of_Cambodian_Red_Cross.svg')}}">
     @stack('CSS')
 </head>
