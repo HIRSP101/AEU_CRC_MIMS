@@ -6,11 +6,11 @@
 @section('Content')
     <?php
     $i = 0;
-                                                                                                ?>
+    ?>
     <div class="bg-white mt-2 mx-2 px-3 shadow-lg h-max-full rounded-lg">
-        <h1 class="text-center font-khmer my-2 text-lg text-blue-800 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា បណ្តាញយុវជន
+        <h1 class="text-center font-khmer my-2 text-lg text-blue-800 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
             ទីប្រឹក្សាយុវជន នឹងយុវជន</h1>
-        <h1 class="text-center font-khmer my-2 text-lg text-blue-800">នៃសាខាកាកបាទក្រហមកម្ពុជា ២៥ រាជធានី ខេត្ត</h1>
+        <h1 class="text-center font-khmer my-2 text-lg text-blue-800">នៃកាកបាទក្រហមកម្ពុជា ប្រចាំគ្រឹះស្ថានឧត្តមសិក្សា</h1>
         <h2 class="text-center font-khmer mb-2 text-lg text-blue-800">បច្ចុប្បន្នភាពឆ្នាំ២០២៤</h2>
         <div class="flex justify-between items-center mt-5">
             <div>

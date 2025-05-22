@@ -400,6 +400,17 @@ class ReportController extends Controller
     }
 
 
+    public function branchReport()
+    {
+        $total_mem_branches = $this->totalmem_branches()
+            ->where('b.branch_id', '<', '28')
+            ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image')
+            ->get();
+
+        $title = 'បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំសាខានីមួយៗ';
+
+        return view('report.partials.list_branch', compact('total_mem_branches', 'title'));
+    }
     public function showListBranch()
     {
         $total_mem_branches = $this->totalmem_branches()
@@ -407,7 +418,9 @@ class ReportController extends Controller
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image')
             ->get();
 
-        return view('report.partials.list_branch', compact('total_mem_branches'));
+        $title = 'តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជនប្រចាំសាខានីមួយៗ';
+
+        return view('report.partials.list_branch', compact('total_mem_branches', 'title'));
     }
 
     public function totalmem_branches()

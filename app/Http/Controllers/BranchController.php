@@ -34,8 +34,9 @@ class BranchController extends Controller
             ->where('b.branch_id', '<', '28')
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image')
             ->get();
+        $title = 'សាខា​កាកបាទក្រហម ២៥ រាជធានី ខេត្ត';
 
-        return view('branch.index', compact('total_mem_branches'));
+        return view('branch.index', compact('total_mem_branches', 'title'));
     }
 
     public function branch_hei()
