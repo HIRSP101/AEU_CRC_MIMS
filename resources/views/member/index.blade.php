@@ -9,7 +9,7 @@
                 <div class="col-span-5 flex flex-col items-center justify-center mb-10 ml-24">
                     <img class="w-[125px] h-[125px] mb-3" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}"
                         alt="">
-                    <h1 class="mb-1 text-[18px]">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុffgfgfវជនកាកបាទក្រហមកម្ពុជា</h1>
+                    <h1 class="mb-1 text-[18px]">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
                     <h1 class="text-[18px]">Cambodian Red Cross Youth Individual Information</h1>
                 </div>
                 <div class="">

@@ -8,7 +8,7 @@
     @endphp
     <div class="p-4 shadow">
         <div class="bg-white rounded-md h-screen">
-            <h1 class="text-xl font-battambang font-semibold text-gray-800 text-center py-5">របាយការណ៍</h1>
+            <h1 class="text-2xl font-khmer font-semibold text-gray-800 text-center py-5">របាយការណ៍</h1>
             {{-- card list of all reports --}}
             @if(auth()->user()->hasRole('user'))
                 <div class="py-1 px-5">
@@ -20,7 +20,7 @@
                 </div>
             @else
                 <div class="py-1 px-5">
-                    <a href="{{ route('branch') }}"
+                    <a href="{{ route('branch-report') }}"
                         class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
                         <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
                             បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំសាខានីមួយៗ</p>
