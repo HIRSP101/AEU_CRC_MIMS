@@ -36,21 +36,21 @@ $firstEle_total = $firstEle->total_mem;
                     <div class="mt-4 flex justify-center">
                         <table class="table font-battambang leading-10 font-medium">
                             <tbody>
-                                @foreach($total_mem_branches as $total_mem_branch)
-                                    <tr>
-                                        @if($i <= 5)
-                                            <td class="px-4 text-xl">{{$i++ . '.'}}</td>
-                                            <td class="text-xl">{{str_replace("ខេត្ត", "", $total_mem_branch->branch_kh)}}</td>
-                                            {{-- <td class="px-1 text-base">{{translate($total_mem_branch->total_mem)}} នាក់
-                                            </td> --}}
-                                        @endif
+                                @foreach($total_mem_branches as $key => $total_mem_branch)
+                                    <tr class="{{ $key >= 5 ? 'hidden extra-branch' : '' }}">
+
+                                        <td class="px-4 text-xl">{{ ($key + 1) . '.'}}</td>
+                                        <td class="text-xl">{{str_replace("ខេត្ត", "", $total_mem_branch->branch_kh)}}</td>
+                                        <td class="px-10 text-base">{{ $total_mem_branch->total_mem }} នាក់
+                                        </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                     <span class="flex justify-end mt-3 p-3">
-                        <a href="#"
+                        <button id="toggleBranchBtn"
                             class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
                     </span>
                 </div>
@@ -58,3 +58,21 @@ $firstEle_total = $firstEle->total_mem;
         </div>
     </div>
 </div>
+@push('JS')
+    <script>
+        document.getElementById('toggleBranchBtn').addEventListener('click', function () {
+            const extraRows = document.querySelectorAll('.extra-branch');
+            const isHidden = extraRows[0]?.classList.contains('hidden');
+
+            extraRows.forEach(row => {
+                if (isHidden) {
+                    row.classList.remove('hidden');
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+
+            this.textContent = isHidden ? 'ត្រឡប់' : 'មើលបន្ថែម';
+        });
+    </script>
+@endpush
