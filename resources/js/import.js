@@ -96,10 +96,12 @@ $(document).ready(function () {
         if (val.startsWith("school_")) {
             let schoolId = val.replace("school_", "");
             school_id = schoolId;
+            institute_id = null;
             console.log("Selected school ID:", schoolId);
         } else if (val.startsWith("institute_")) {
             let instituteId = val.replace("institute_", "");
             institute_id = instituteId;
+            school_id = null;
             console.log("Selected institute ID:", instituteId);
         }
         // school_id = sId;

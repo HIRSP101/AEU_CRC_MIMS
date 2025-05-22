@@ -16,7 +16,7 @@
         <div class="relative w-[600px] h-[450px] bg-cover bg-center"
             style="background-image: url('{{ asset('images/users/card2.jpg') }}');">
             <p class="profile absolute top-[50px] left-[50px] text-black text-sm">
-                {{$member->image}}
+                {{$member->member_image}}
             </p>
             <p class="name-kh absolute top-[50px] left-[300px] text-black text-sm font-bold font-siemreap">
                 {{$member->name_kh}}

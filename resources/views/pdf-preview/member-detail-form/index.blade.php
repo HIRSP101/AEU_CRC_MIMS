@@ -5,11 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Report</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&family=Nunito:wght@700&display=swap"
-        rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&family=Khmer&family=Moul&family=Siemreap&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
@@ -171,21 +169,21 @@
                         - ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនជាតិកាយរឹទ្ធិកម្ពុជា (Scout Youth Recruitment Date) ៖
                         <span>...........................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[470px] font-bold"> {{$member->registration_date}}</span>
+                    <span class="absolute top-[-3px] left-[470px] font-bold"></span>
                 </div>
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">
                         - ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជន ស.ស.យ​.ក (UYFC Recruitment Date) ៖
                         <span>............................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[400px] font-bold"> {{$member->registration_date}}</span>
+                    <span class="absolute top-[-3px] left-[400px] font-bold"></span>
                 </div>
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">
                         - ថ្ងៃ ខែ ឆ្នាំ ចូលជាអង្គការចាត់តាំងយុវជនផ្សេងៗ (Other NGos Recruitment Date) ៖
                         <span>............................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[480px] font-bold"> {{$member->registration_date}}</span>
+                    <span class="absolute top-[-3px] left-[480px] font-bold"> </span>
                 </div>
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">
@@ -198,7 +196,7 @@
                         - ឈ្មោះសាលារៀន ឬសាកលវិទ្យាល័យ (Name of School or University) ៖
                         <span>............................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[440px] font-bold"> {{$member->institute_id}}</span>
+                    <span class="absolute top-[-3px] left-[440px] font-bold"> {{$member->institute_kh ?? $member->school_name}}</span>
                 </div>
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">

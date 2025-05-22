@@ -54,7 +54,7 @@ class CreateMemberService
             "branch_id" => $data['branch_id'] ?? null,
             "member_type" => $data["type"] ?? null,
         ]);
-        $this->createRelatedData($member, $data);
+        $this->createRelatedData($member, data: $data);
 
         return $member;
     }

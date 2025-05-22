@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <h2 class="text-[15px] font-khmer text-blue-600" style="font-family: 'Moul'">១-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន
+            <h2 class="text-[15px] font-khmer text-blue-600">១-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន
                 (Personal Detail)</h2>
             <div class="my-3 text-[14px]" style="font-family: 'Battambang'">
                 <div class="flex flex-wrap mx-3 my-3 gap-1">
@@ -222,7 +222,7 @@
                     </div>
                 </div>
             </div>
-            <h2 class="text-[15px] font-khmer text-blue-600" style="font-family: 'Moul'">
+            <h2 class="text-[15px] font-khmer text-blue-600">
                 ២-វគ្គបណ្ដុះបណ្ដាលដែលទទួលបានកន្លងមក (Training Skill)</h2>
             <div class="text-[14px]" style="font-family: 'Battambang'">
                 <div class="flex flex-wrap mx-3 my-3 gap-1">
@@ -248,7 +248,7 @@
                     </div>
                 </div>
             </div>
-            <h2 class="text-[15px] font-khmer text-blue-600" style="font-family: 'Moul'">៣-ព័ត៌មានគ្រួសារ (Family
+            <h2 class="text-[15px] font-khmer text-blue-600" >៣-ព័ត៌មានគ្រួសារ (Family
                 Information)</h2>
             <div class="text-[14px]" style="font-family: 'Battambang'">
                 <div class="flex flex-wrap mx-3 my-3 gap-1">

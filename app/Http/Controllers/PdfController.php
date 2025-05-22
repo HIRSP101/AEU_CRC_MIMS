@@ -39,6 +39,46 @@ class PdfController extends Controller
             ->join('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
             ->where('meb.branchhei_id', $instituteId)
             ->whereIn('mpd.member_id', $memberIds)
+            ->select(
+                'mpd.member_id',
+                'mpd.member_code',
+                'mpd.name_kh',
+                'mpd.name_en',
+                'mpd.gender',
+                'mpd.date_of_birth',
+                'meb.education_level',
+                'meb.acadmedic_year',
+                'mrd.registration_date',
+                'mrd.expiration_date',
+                'mpd.full_current_address',
+                'mpd.phone_number',
+                'mpd.email',
+                'mpd.shirt_size',
+                'mpob.village',
+                'mpob.commune_sangkat',
+                'mpob.district_khan',
+                'mpob.provience_city',
+                'mcad.home_no',
+                'mcad.street_no',
+                'mcad.village as village_current',
+                'mcad.commune_sangkat as commune_sangkat_current',
+                'mcad.district_khan as district_khan_current',
+                'mcad.provience_city as provience_city_current',
+                'meb.acadmedic_year',
+                'meb.language',
+                'meb.major',
+                'meb.institute_id',
+                'mpd.facebook',
+                'mgd.father_name',
+                'mgd.father_dob',
+                'mgd.father_current_address',
+                'mgd.father_occupation',
+                'mgd.mother_name',
+                'mgd.mother_dob',
+                'mgd.mother_current_address',
+                'mgd.mother_occupation',
+                'mgd.guardian_phone',
+            )
             ->orderBy('mpd.member_id')
             ->chunk($chunkSize, function ($members) use ($tempDir, $institution, &$chunkCounter) {
 
@@ -175,13 +215,14 @@ class PdfController extends Controller
         ini_set('memory_limit', '512M'); // Set memory limit to 512MB
         ini_set('max_execution_time', '300');
         $member = DB::table('member_personal_detail as mpd')
-            ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
-            ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-            ->join('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
-            ->join('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
-            ->join('school as s', 'meb.school_id', '=', 's.school_id')
-            ->join('branch as b', 'b.branch_id', '=', 'meb.branch_id')
+            ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
+            ->leftJoin('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
+            ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
+            ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftJoin('branch as b', 'b.branch_id', '=', 'meb.branch_id')
             ->where('mpd.member_id', $id)
             ->select([
                 'mpd.member_id',
@@ -194,6 +235,7 @@ class PdfController extends Controller
                 'b.branch_kh',
                 'mpd.member_type',
                 's.school_name',
+                'hei.institute_kh',
                 'meb.education_level',
                 'meb.acadmedic_year',
                 'mrd.registration_date',

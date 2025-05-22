@@ -1,4 +1,4 @@
-<div class="mx-[25%] bg-white px-8 py-8 mt-5 mb-5 hidden" id="request-form">
+<div class=" mx-[20%] bg-white px-8 py-8 mt-5 mb-5 hidden" id="request-form">
     <div class="head mt-2">
         <h3 class="font-khmer text-[16px] text-gray-900">សាខាកាកបាទក្រហមកម្ពុជា</h3>
         <h3 class="font-khmer mx-12 text-[16px] text-gray-900">រាជធានី ខេត្ត</h3>
@@ -23,7 +23,7 @@
     <div class="content1 mt-5 font-battambang text-gray-900 text-[16px]">
         <p class="ml-9">
             លោក/កញ្ញា <span class="font-bold">{{$member->name_kh ?? '........'}}</span> ភេទ <span
-                class="font-bold">{{$member->gender ?? '......'}}</span> ជនជាតិខ្មែរ សញ្ជាតិខ្មែរ ថ្ងៃខែឆ្នាំកំណើត
+                class="font-bold">{{$member->gender ?? '......'}}</span> ជនជាតិខ្មែរ  សញ្ជាតិខ្មែរ ថ្ងៃខែឆ្នាំកំណើត
             {{$member->date_of_birth ?? '............'}}
         </p>
         <p class="mt-2">
