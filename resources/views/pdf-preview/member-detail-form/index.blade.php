@@ -195,7 +195,7 @@
                         - ឈ្មោះសាលារៀន ឬសាកលវិទ្យាល័យ (Name of School or University) ៖
                         <span>............................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[440px] font-bold"> {{$member->institute_kh}}</span>
+                    <span class="absolute top-[-3px] left-[440px] font-bold"> {{$member->institute_kh }}</span>
                 </div>
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">

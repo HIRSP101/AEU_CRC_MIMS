@@ -31,13 +31,14 @@ class PdfController extends Controller
 
         // Start chunking the query
         DB::table('member_personal_detail as mpd')
-            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-            ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
-            ->join('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
-            ->join('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
-            ->join('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
-            ->where('meb.branchhei_id', $instituteId)
+            ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+            ->leftJoin('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
+            ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
+            ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
+            ->where('hei.bhei_id', $instituteId)
             ->whereIn('mpd.member_id', $memberIds)
             ->select(
                 'mpd.member_id',
@@ -67,7 +68,8 @@ class PdfController extends Controller
                 'meb.acadmedic_year',
                 'meb.language',
                 'meb.major',
-                'meb.institute_id',
+                'hei.institute_kh',
+                's.school_name',
                 'mpd.facebook',
                 'mgd.father_name',
                 'mgd.father_dob',
