@@ -66,16 +66,16 @@
             ul.empty();
             data.forEach((item) => {
                 ul.append(`
-                                <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                                    <a href="/branch/${item.branch_id}/village/${item.village}/school">
-                                        ${item.village}
-                                    </a>
-                                    <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
-                                        <span class="text-xs siemreap-regular">ស.ម <strong>${item.total_mem} នាក់</strong></span>
-                                        <span class="text-xs siemreap-regular">${item.total_institutes} អនុសាខា</span>
-                                    </div>
-                                </li>
-                            `)
+                                    <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
+                                        <a href="/branch/${item.branch_id}/village/${item.village}/school">
+                                            ${item.village}
+                                        </a>
+                                        <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
+                                            <span class="text-xs siemreap-regular">ស.ម <strong>${item.total_mem} នាក់</strong></span>
+                                            <span class="text-xs siemreap-regular">${item.total_institutes} អនុសាខា</span>
+                                        </div>
+                                    </li>
+                                `)
             })
         }
     </script>

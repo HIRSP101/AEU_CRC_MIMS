@@ -124,15 +124,27 @@ class SchoolController extends Controller
 
     public function create($branchId, $villageId)
     {
-        $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
-        $branch = DB::table('branch')->where('branch_id', $branchId)->first();
         $village = DB::table('district')->where('district_id', $villageId)->first();
-        $branches = DB::table('branch')
-            ->where('branch_id', $branchId)
-            ->get();
+        $branch = DB::table('branch')->where('branch_id', $branchId)->first();
         $villages = DB::table('district')->where('branch_id', $branchId)->get();
 
-        return view('school.create-school', compact('branch', 'village', 'branches', 'villages'));
+        if (auth()->user()->hasRole('user')) {
+            $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
+            $branches = DB::table('branch')
+                ->where('branch_id', $branchId)
+                ->get();
+
+            $schools = DB::table('school as s')
+                ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
+                ->where('s.branch_id', $branchId)
+                ->get();
+        } else {
+            $branches = DB::table('branch')->get();
+            $schools = DB::table('school as s')
+                ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
+                ->get();
+        }
+        return view('school.create-school', compact('branch', 'village', 'branches', 'villages', 'schools'));
     }
     public function store(SchoolRequest $request, CreateSchoolService $service)
     {
@@ -149,18 +161,24 @@ class SchoolController extends Controller
     // School 2
     public function create2()
     {
-        $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
-        $village = DB::table('district')->get();
-        $branches = DB::table('branch')
-            ->where('branch_id', $user)
-            ->get();
-        $villages = DB::table('district')->get();
-
-        $schools = DB::table('school as s')
-            ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
-            ->get();
-
-        return view('school.create-school2', compact('village', 'branches', 'villages', 'schools'));
+        if (auth()->user()->hasRole('user')) {
+            $branchId = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
+            $villages = DB::table('district')->where('branch_id', $branchId)->get();
+            $branches = DB::table('branch')
+                ->where('branch_id', $branchId)
+                ->get();
+            $schools = DB::table('school as s')
+                ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
+                ->where('s.branch_id', $branchId)
+                ->get();
+        } else {
+            $branches = DB::table('branch')->get();
+            $villages = DB::table('district')->get();
+            $schools = DB::table('school as s')
+                ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
+                ->get();
+        }
+        return view('school.create-school2', compact('branches', 'villages', 'schools'));
     }
 
     public function store2(SchoolRequest $request, CreateSchoolService $service)

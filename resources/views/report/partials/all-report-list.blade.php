@@ -3,18 +3,30 @@
 @endpush
 
 @section('Content')
-
+    @php
+        $userBranchId = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_id');
+    @endphp
     <div class="p-4 shadow">
         <div class="bg-white rounded-md h-screen">
-            <h1 class="text-xl font-battambang font-semibold text-gray-800 text-center py-5">របាយការណ៍</h1>
+            <h1 class="text-2xl font-khmer font-semibold text-gray-800 text-center py-5">របាយការណ៍</h1>
             {{-- card list of all reports --}}
-            <div class="py-1 px-5">
-                <a href="{{ route('branch') }}"
-                    class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                    <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                        បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំសាខានីមួយៗ</p>
-                </a>
-            </div>
+            @if(auth()->user()->hasRole('user'))
+                <div class="py-1 px-5">
+                    <a href="/branch/{{ $userBranchId }}/village"
+                        class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                        <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
+                            បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំសាខានីមួយៗ</p>
+                    </a>
+                </div>
+            @else
+                <div class="py-1 px-5">
+                    <a href="{{ route('branch-report') }}"
+                        class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                        <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
+                            បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំសាខានីមួយៗ</p>
+                    </a>
+                </div>
+            @endif
             @if(auth()->user()->hasRole('admin'))
                 <div class="py-1 px-5">
                     {{-- <a href="{{ route('branch.report.exclude') }}"
@@ -28,8 +40,16 @@
                     {{-- <a href="{{ route('total.member.university') }}" --}} <a href="{{ route('list_branches') }}"
                         class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
                         <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                            តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា នឹងយុវជន ២៥រាជធានី/ខេត្ត
-                            និងគ្រឹះស្ថានឧត្តមសិក្សា</p>
+                            តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជនប្រចាំសាខានីមួយៗ </p>
+                    </a>
+                </div>
+                <div class="py-1 px-5">
+                    <a href="{{ route('member.report.all.branch') }}"
+                        class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                        <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
+                            តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជន២៥រាជធានី/ខេត្ត​​
+                            និងគ្រឹះស្ថានឧត្តមសិក្សា
+                        </p>
                     </a>
                 </div>
 

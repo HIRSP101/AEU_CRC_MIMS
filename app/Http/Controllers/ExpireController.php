@@ -128,40 +128,40 @@ class ExpireController extends Controller
         return view('totalmemInstitute_ex.index', compact('total_mem'));
     }
 
-    public function checkExpiredMembers()
-    {
-        $count = DB::table('member_personal_detail as mpd')
-            ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
-            ->leftJoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
-            ->leftJoin('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
-            ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
-            ->leftJoin('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
-            ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
-            ->where('mrd.registration_date', '<=', now()->subYears(6))
-            ->whereIn('s.type', ['អនុវិទ្យាល័យ', 'វិទ្យាល័យ'])
-            ->count();
-        return response()->json(['count' => $count]);
-    }
+    // public function checkExpiredMembers()
+    // {
+    //     $count = DB::table('member_personal_detail as mpd')
+    //         ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+    //         ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+    //         ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+    //         ->leftJoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
+    //         ->leftJoin('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
+    //         ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
+    //         ->leftJoin('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
+    //         ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
+    //         ->where('mrd.registration_date', '<=', now()->subYears(6))
+    //         ->whereIn('s.type', ['អនុវិទ្យាល័យ', 'វិទ្យាល័យ'])
+    //         ->count();
+    //     return response()->json(['count' => $count]);
+    // }
 
-    public function checkExpiredMemberInstitute()
-    {
-        $count = DB::table('member_personal_detail as mpd')
-            ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
-            ->leftJoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
-            ->leftJoin('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
-            ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
-            //->leftJoin('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
-            ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
-            ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
-            ->where('hei.institute_type', '=', 'សាកលវិទ្យាល័យ')
-            ->whereRaw('mrd.registration_date <= NOW() - INTERVAL 4 YEAR')
-            ->count();
-        return response()->json(['count' => $count]);
-    }
+    // public function checkExpiredMemberInstitute()
+    // {
+    //     $count = DB::table('member_personal_detail as mpd')
+    //         ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+    //         ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+    //         ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+    //         ->leftJoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
+    //         ->leftJoin('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
+    //         ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
+    //         //->leftJoin('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
+    //         ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+    //         ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
+    //         ->where('hei.institute_type', '=', 'សាកលវិទ្យាល័យ')
+    //         ->whereRaw('mrd.registration_date <= NOW() - INTERVAL 4 YEAR')
+    //         ->count();
+    //     return response()->json(['count' => $count]);
+    // }
 
     public function getListSchool()
     {

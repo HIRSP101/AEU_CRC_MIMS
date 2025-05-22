@@ -22,38 +22,78 @@ class VillageController extends Controller
     }
     public function index($branchId)
     {
-        $branch = DB::table('branch')->where('branch_id', $branchId)->select('branch_kh')->first();
+        if (auth()->user()->hasRole('user')) {
+            $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
+            $branches = DB::table('branch')
+                ->where('branch_id', $user)
+                ->get();
 
-        $data = DB::table('district as d')
-            ->select(
-                'd.district_id',
-                'd.district_name',
-                DB::raw('COUNT(DISTINCT s.school_id) as total_schools'),
-                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
-                //DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
+            $branch = DB::table('branch')->where('branch_id', $branchId)->select('branch_kh')->first();
+            $data = DB::table('district as d')
+                ->select(
+                    'd.district_id',
+                    'd.district_name',
+                    DB::raw('COUNT(DISTINCT s.school_id) as total_schools'),
+                    DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
+                    //DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
 
-            )
-            ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
-            ->leftJoin('member_education_background as meb', function ($join) use ($branchId) {
-                $join->on('meb.school_id', '=', 's.school_id')->where('meb.branch_id', '=', DB::raw($branchId));
-            })
-            ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
-            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->where('d.branch_id', $branchId)
-            ->groupBy('d.district_id', 'd.district_name')
-            ->get();
+                )
+                ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
+                ->leftJoin('member_education_background as meb', function ($join) use ($branchId) {
+                    $join->on('meb.school_id', '=', 's.school_id')->where('meb.branch_id', '=', DB::raw($branchId));
+                })
+                ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+                ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+                ->where('d.branch_id', $branchId)
+                ->groupBy('d.district_id', 'd.district_name')
+                ->get();
 
-        $branchTotals = (object) [
-            'total_schools' => $data->sum('total_schools'),
-            'total_mem' => $data->sum('total_mem'),
-        ];
-        //dd($branchTotals);
-        return view('village.index', [
-            'villages' => $data,
-            'branchId' => $branchId,
-            'branch' => $branch,
-            'branchWhole' => $branchTotals,
-        ]);
+            $branchTotals = (object) [
+                'total_schools' => $data->sum('total_schools'),
+                'total_mem' => $data->sum('total_mem'),
+            ];
+            return view('village.index', [
+                'villages' => $data,
+                'branchId' => $branchId,
+                'branch' => $branch,
+                'branches' => $branches,
+                'user' => $user,
+                'branchWhole' => $branchTotals,
+            ]);
+        } else {
+
+            $branch = DB::table('branch')->where('branch_id', $branchId)->select('branch_kh')->first();
+
+            $data = DB::table('district as d')
+                ->select(
+                    'd.district_id',
+                    'd.district_name',
+                    DB::raw('COUNT(DISTINCT s.school_id) as total_schools'),
+                    DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
+                    //DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
+
+                )
+                ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
+                ->leftJoin('member_education_background as meb', function ($join) use ($branchId) {
+                    $join->on('meb.school_id', '=', 's.school_id')->where('meb.branch_id', '=', DB::raw($branchId));
+                })
+                ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+                ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+                ->where('d.branch_id', $branchId)
+                ->groupBy('d.district_id', 'd.district_name')
+                ->get();
+
+            $branchTotals = (object) [
+                'total_schools' => $data->sum('total_schools'),
+                'total_mem' => $data->sum('total_mem'),
+            ];
+            return view('village.index', [
+                'villages' => $data,
+                'branchId' => $branchId,
+                'branch' => $branch,
+                'branchWhole' => $branchTotals,
+            ]);
+        }
     }
     public function get($branchId, $villageId)
     {
@@ -64,7 +104,23 @@ class VillageController extends Controller
     public function create($branchId)
     {
         $branch = branch::findOrFail($branchId);
-        return view('village.create-village', compact('branch'));
+        if (auth()->user()->hasRole('user')) {
+            $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
+            $branches = DB::table('branch')
+                ->where('branch_id', $user)
+                ->get();
+            $districts = DB::table('district as d')
+                ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')
+                ->where('d.branch_id', $user)
+                ->get();
+        } else {
+            $branch = branch::findOrFail($branchId);
+            $branches = DB::table('branch')->get();
+            $districts = DB::table('district as d')
+                ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')->get();
+        }
+
+        return view('village.create-village', compact('branch', 'branches', 'districts'));
     }
 
     public function store(VillageRequest $request, CreateDistrictService $service)
@@ -81,13 +137,25 @@ class VillageController extends Controller
     public function create2()
     {
         $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
-        $branches = DB::table('branch')
-            ->where('branch_id', $user)
-            ->get();
 
-        $districts = DB::table('district as d')
-            ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')
-            ->get();
+        if (auth()->user()->hasRole('user')) {
+            $branches = DB::table('branch')
+                ->where('branch_id', $user)
+                ->get();
+
+            $districts = DB::table('district as d')
+                ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')
+                ->where('d.branch_id', $user)
+                ->get();
+        } else {
+            $branches = DB::table('branch')
+                ->where('branch_id', $user)
+                ->get();
+
+            $districts = DB::table('district as d')
+                ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')
+                ->get();
+        }
         return view('village.create-village2', compact('branches', 'districts'));
     }
     public function store2(VillageRequest $request, CreateDistrictService $service)
