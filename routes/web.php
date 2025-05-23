@@ -190,8 +190,12 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/generate-detail-form/{id}', "{$appC}\\PdfController@exportPdfDetailForm");
 
     //new code for pdf 2025/05/07 generate pdf for all members by institute
-    Route::post('/generate-members', "{$appC}\\PdfController@generateMembers");
-    Route::post('/generate-members-request', "{$appC}\\PdfController@generateMembersRequestForm");
+    Route::post('/gen-members-inst', "{$appC}\\PdfController@generateMembersByInstitute");
+    Route::post('/gen-members-request-inst', "{$appC}\\PdfController@generateMembersRequestFormByInstitute");
+    // new code for pdf 2025/05/23 generate pdf for all members by school
+    Route::post('/gen-members-sch', "{$appC}\\PdfController@generateMembersBySchool");
+    Route::post('/gen-members-request-sch', "{$appC}\\PdfController@generateMembersRequestFormBySchool");
+
 });
 
 

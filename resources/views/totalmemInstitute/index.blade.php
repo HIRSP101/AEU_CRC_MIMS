@@ -208,7 +208,7 @@ $institute_kh = $institution->institute_kh;
                             }
                         });
                         $.ajax({
-                            url: '/generate-members',
+                            url: '/gen-members-inst',
                             method: 'POST',
                             contentType: 'application/json',
                             data: JSON.stringify({
@@ -265,7 +265,7 @@ $institute_kh = $institution->institute_kh;
                             }
                         });
                         $.ajax({
-                            url: '/generate-members-request',
+                            url: '/gen-members-request-inst',
                             method: 'POST',
                             contentType: 'application/json',
                             data: JSON.stringify({
