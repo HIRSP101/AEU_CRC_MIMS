@@ -5,12 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Report</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&family=Khmer&family=Moul&family=Siemreap&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&family=Khmer&family=Moul&family=Siemreap&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-
+@php
+    use App\Helpers\DateTimeFormat; 
+@endphp
 <body>
     <div class="px-12 " id="source-html">
         <div class="grid grid-cols-6 ">
@@ -34,7 +38,8 @@
             </div>
         </div>
 
-        <h2 class="text-[15px] font-khmer text-blue-600" style="font-family: 'Moul'">១-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន<span style="font-family: 'Arail'"> (Personal Detail)</span></h2>
+        <h2 class="text-[15px] font-khmer text-blue-600" style="font-family: 'Moul'">១-ព័ត៌មានលម្អិតផ្ទាល់ខ្លួន <span
+                style="font-family: 'Arail'">(Personal Detail)</span></h2>
         <div class="my-3 text-[14px]" style="font-family: 'Battambang'">
             <div class="flex flex-wrap mx-3 my-3 gap-1">
                 <div class=" flex w-full md:w-1/3 md:mb-0 relative">
@@ -46,7 +51,7 @@
 
                 <div class="flex w-full md:w-1/2 md:mb-0 relative">
                     <h3 class="px-2">
-                        អក្សរឡាតាំង <span> ......................................</span>
+                        អក្សរឡាតាំង <span> ...............................................</span>
                     </h3>
                     <span class="absolute top-[-3px] left-[90px] font-bold">{{$member->name_en ?? ""}}</span>
                 </div>
@@ -54,15 +59,15 @@
 
                 <div class="flex w-full md:w-[80px] md:mb-0 relative">
                     <h3 class="px-2">
-                        ភេទ <span>......</span>
+                        ភេទ <span>...........</span>
                     </h3>
                     <span class="absolute top-[-3px] left-[35px] font-bold">{{$member->gender ?? ""}}</span>
                 </div>
                 <div class="flex w-full md:w-1/2 md:mb-0 relative">
                     <h3 class="px-2">
-                        - ថ្ងៃទី ខែ ឆ្នាំកំណើត (Date of Birth) : <span>...........................</span>
+                        - ថ្ងៃទី ខែ ឆ្នាំកំណើត (Date of Birth) : <span>...............................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[230px] font-bold"> {{$member->date_of_birth ?? ""}}</span>
+                    <span class="absolute top-[-3px] left-[230px] font-bold"> {{DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->date_of_birth) ?? ""}}</span>
                 </div>
                 <div class="flex flex-wrap w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">
@@ -140,7 +145,7 @@
                         <span>............................</span>
                     </h3>
                     <span class="absolute top-[-3px] left-[370px] font-bold">
-                        {{$member->acadmedic_year ?? ""}}</span>
+                        {{DateTimeFormat::convertEnglishToKhmerNumbers($member->acadmedic_year) ?? ""}}</span>
                 </div>
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">
@@ -161,28 +166,28 @@
                         - ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនកាកបាទក្រហមកម្ពុជា (RCY Recruitment Date) ៖
                         <span>...........................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[430px] font-bold"> {{$member->registration_date}}</span>
+                    <span class="absolute top-[-3px] left-[430px] font-bold"> {{DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->registration_date)}}</span>
                 </div>
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">
                         - ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនជាតិកាយរឹទ្ធិកម្ពុជា (Scout Youth Recruitment Date) ៖
                         <span>...........................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[470px] font-bold"></span>
+                    <span class="absolute top-[-3px] left-[470px] font-bold"> {{$member->registration_date}}</span>
                 </div>
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">
                         - ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជន ស.ស.យ​.ក (UYFC Recruitment Date) ៖
                         <span>............................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[400px] font-bold"></span>
+                    <span class="absolute top-[-3px] left-[400px] font-bold"> {{$member->registration_date}}</span>
                 </div>
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">
                         - ថ្ងៃ ខែ ឆ្នាំ ចូលជាអង្គការចាត់តាំងយុវជនផ្សេងៗ (Other NGos Recruitment Date) ៖
                         <span>............................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[480px] font-bold"> </span>
+                    <span class="absolute top-[-3px] left-[480px] font-bold"> {{$member->registration_date}}</span>
                 </div>
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">
@@ -193,9 +198,9 @@
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">
                         - ឈ្មោះសាលារៀន ឬសាកលវិទ្យាល័យ (Name of School or University) ៖
-                        <span>............................</span>
+                        <span>..................................................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[440px] font-bold"> {{$member->institute_kh }}</span>
+                    <span class="absolute top-[-3px] left-[440px] font-bold"> {{$member->institute_kh}}</span>
                 </div>
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">
@@ -205,13 +210,13 @@
                 </div>
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">
-                        - លេខទូរសព្ទទំនាក់ទំនង (Phone Number) ៖ <span>.........................</span>
+                        - លេខទូរសព្ទទំនាក់ទំនង (Phone Number) ៖ <span>........................................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[270px] font-bold"> {{$member->phone_number}}</span>
+                    <span class="absolute top-[-3px] left-[270px] font-bold"> {{DateTimeFormat::convertEnglishToKhmerNumbers($member->phone_number)}}</span>
                 </div>
                 <div class="flex w-full md:w-full  md:mb-0 relative">
                     <h3 class="px-2">
-                        - អ៊ីម៉ែល និងហ្វេសប៊ុក (E-mail and Facebook) ៖ <span>..............................</span>
+                        - អ៊ីម៉ែល និងហ្វេសប៊ុក (E-mail and Facebook) ៖ <span>........................................................................</span>
                     </h3>
                     <span class="absolute top-[-3px] left-[300px] font-bold"> {{$member->email}}
                         {{$member->facebook}}</span>
@@ -232,18 +237,20 @@
                     <h3 class="px-2">
                         - ជំនាញកុំព្យូទ័រ(Computer Skill) ៖<span>........................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[220px] font-bold">
-                        {{$member->computer_skill}}</span>
+                    {{-- <span class="absolute top-[-3px] left-[220px] font-bold">
+                        {{$member_edu->computer_skill}}</span> --}}
                 </div>
                 <div class="flex w-full md:w-full md:mb-0 relative">
                     <h3 class="px-2">
                         - ជំនាញផ្សេងៗ (Other Skill) ៖ <span>.........................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[200px] font-bold"> {{$member->misc_skill}}</span>
+                    {{-- <span class="absolute top-[-3px] left-[200px] font-bold"> {{$member_edu->misc_skill}}</span>
+                    --}}
                 </div>
             </div>
         </div>
-        <h2 class="text-[15px] font-khmer text-blue-600" style="font-family: 'Moul'">៣-ព័ត៌មានគ្រួសារ <span style="font-family: 'Arail'"> (Family Information)</span></h2>
+        <h2 class="text-[15px] font-khmer text-blue-600" style="font-family: 'Moul'">៣-ព័ត៌មានគ្រួសារ <span
+                style="font-family: 'Arail'">(Family Information)</span></h2>
         <div class="text-[14px]" style="font-family: 'Battambang'">
             <div class="flex flex-wrap mx-3 my-3 gap-1">
                 <div class="flex w-full md:w-1/2 md:mb-0 relative">
@@ -289,11 +296,12 @@
                         - លេខទូរសព្ទអាណាព្យាបាល (Protector Number)
                         ៖<span>........................................</span>
                     </h3>
-                    <span class="absolute top-[-3px] left-[310px] font-bold"> {{$member->guardian_phone}}</span>
+                    <span class="absolute top-[-3px] left-[310px] font-bold"> {{DateTimeFormat::convertEnglishToKhmerNumbers($member->guardian_phone)}}</span>
                 </div>
             </div>
         </div>
-        <h2 class="text-[15px] font-khmer text-blue-600" style="font-family: 'Moul'">៤-កិច្ចសន្យា<span style="font-family: 'Arail'"> (Contract)</span></h2>
+        <h2 class="text-[15px] font-khmer text-blue-600" style="font-family: 'Moul'">៤-កិច្ចសន្យា <span
+                style="font-family: 'Arail'">(Contract)</span></h2>
         <div class="mb-8 mt-4 text-[14px]" style="font-family: 'Battambang'">
             <h3>&nbsp;&nbsp;&nbsp;&nbsp; ខ្ញុំបាទ/នាងខ្ញុំ សូមបញ្ញាក់ថា រាល់ព័ត៌មានដែលបានរៀបរាប់ជូនខាងលើ
                 ពិតជាត្រឹមត្រូវពិតប្រាកដមែន
@@ -302,4 +310,5 @@
         </div>
     </div>
 </body>
+
 </html>

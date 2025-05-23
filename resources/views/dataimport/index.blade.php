@@ -5,14 +5,37 @@
 ?>
 @section('Content')
 <div class="p-4">
+    <div id="loadingSpinner" class="fixed top-0 left-0 z-50 w-screen h-screen bg-gray-300 bg-opacity-50 h-full hidden">
+        <p id="textload" class="hidden textload text-center font-siemreap">សូមរងចាំ...</p>
+        <p id="textsucc" class="hidden textload text-center font-siemreap">បញ្ចូលជោគជ័យ</p>
+        <div id="spinner" class="spinner hidden"></div>
+        <div id="tick" class="hidden text-center text-green-500 text-6xl">✔</div>
+        <div class="flex justify-center items-center mt-2">
+            <button id="ok" class="hidden w-32 text-center bg-green-500 text-white px-4 py-2 rounded">OK</button>
+        </div>
+    </div>
+    <div id="SheetSelectAlert" class="fixed top-0 left-0 z-50 w-screen h-screen bg-gray-300 bg-opacity-50 h-full hidden">
+        <p id="textsuccAlert" class="hidden textload text-center font-siemreap">សូមជ្រើសរើសទិន្នន័យ</p>
+        <div id="tickAlert" class="hidden text-center text-green-500 text-6xl">!</div>
+        <div class="flex justify-center items-center mt-2">
+            <button id="okAlert" class="hidden w-32 text-center bg-green-500 text-white px-4 py-2 rounded">OK</button>
+        </div>
+    </div>
+    <div id="SheetSelectAlertIfAlready" class="fixed top-0 left-0 z-50 w-screen h-screen bg-gray-300 bg-opacity-50 h-full hidden">
+        <p id="textsuccAlertIfAlready" class="hidden textload text-center font-siemreap">ទិន្នន័យនេះត្រូវបានបញ្ចូលរួចរាល់សូមជ្រើសរើសទិន្នន័យផ្សេងទៀត</p>
+        <div id="tickAlertIfAlready" class="hidden text-center text-green-500 text-6xl">!</div>
+        <div class="flex justify-center items-center mt-2">
+            <button id="okAlertIfAlready" class="hidden w-32 text-center bg-green-500 text-white px-4 py-2 rounded">OK</button>
+        </div>
+    </div>
     <div class="flex flex-row gap-4">
         <!-- First Select Option -->
         <div class="flex-1">
             <label for="branch_name"
                 class="font-semibold font-siemreap block text-lg font-medium text-gray-700 mb-1">ខេត្ត/រាជធានី</label>
-            <input 
+            <input
                 class=" w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "
-                 type="text" disabled id="branch_name">
+                type="text" disabled id="branch_name">
         </div>
         <div class="flex-1">
             <label for="district-select"

@@ -184,13 +184,13 @@ class PdfController extends Controller
     public function exportPdfRequestForm($id)
     {
         $member = DB::table('member_personal_detail as mpd')
-            ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
-            ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-            ->join('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
-            ->join('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
-            ->join('school as s', 'meb.school_id', '=', 's.school_id')
-            ->join('branch as b', 'b.branch_id', '=', 'meb.branch_id')
+            ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
+            ->leftJoin('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
+            ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
+            ->leftJoin('branch as b', 'b.branch_id', '=', 'meb.branch_id')
             ->where('mpd.member_id', $id)
             ->select(
                 'mpd.*',

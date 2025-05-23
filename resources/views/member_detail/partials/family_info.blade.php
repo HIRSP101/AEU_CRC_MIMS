@@ -1,3 +1,6 @@
+@php
+    use App\Helpers\DateTimeFormat; 
+@endphp
 <div class="flex flex-wrap mx-3 my-3 gap-1">
     <div class="flex w-full md:w-1/2 md:mb-0 relative">
         <h3 class="px-2">
@@ -42,6 +45,6 @@
         <h3 class="px-2">
             - លេខទូរសព្ទអាណាព្យាបាល (Protector Number) ៖<span>............................................</span>
         </h3>
-        <span class="absolute top-[-3px] left-[310px] font-bold"> {{$member->guardian_phone}}</span>
+        <span class="absolute top-[-3px] left-[310px] font-bold"> {{DateTimeFormat::convertEnglishToKhmerNumbers($member->guardian_phone)}}</span>
     </div>
 </div>
