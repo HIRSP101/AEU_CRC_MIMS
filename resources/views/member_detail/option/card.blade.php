@@ -1,4 +1,5 @@
 @php
+    use App\Helpers\DateTimeFormat;
     $address_parts = explode(' ', $member->full_current_address ?? "");
     $current_address_all = trim(($address_parts[1] ?? "") . " " . ($address_parts[2] ?? "") . " " . ($address_parts[3] ?? ""));
 @endphp
@@ -28,7 +29,7 @@
                 {{$member->name_en}}
             </p>
             <p class="dob absolute top-[105px] left-[300px] text-black text-sm font-bold font-siemreap">
-                {{$member->date_of_birth}}
+                {{DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->date_of_birth)}}
             </p>
             <p class="address absolute top-[132px] left-[300px] text-black text-sm font-bold font-siemreap">
                 {{-- {{$member->full_current_address}} --}}

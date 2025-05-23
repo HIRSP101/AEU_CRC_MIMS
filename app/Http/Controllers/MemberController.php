@@ -53,6 +53,7 @@ class MemberController extends Controller
             ->leftJoin('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
             ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
             ->leftJoin('branch_hei as bh', 'meb.branchhei_id', '=', 'bh.bhei_id')
+            ->leftJoin('branch as b', 'meb.branch_id', '=', 'b.branch_id')
             ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
             ->where('mpd.member_id', $id)
             ->select(
@@ -70,6 +71,7 @@ class MemberController extends Controller
                 'mpa.provience_city as pob_province',
                 'mpa.commune_sangkat as pob_commune',
                 'meb.*',
+                'b.branch_kh',
                 's.school_name',
                 'bh.institute_kh'
             )

@@ -67,6 +67,8 @@ class PdfController extends Controller
                 'mcad.provience_city as provience_city_current',
                 'meb.acadmedic_year',
                 'meb.language',
+                'meb.misc_skill',
+                'meb.computer_skill',
                 'meb.major',
                 'hei.institute_kh',
                 's.school_name',
@@ -129,25 +131,31 @@ class PdfController extends Controller
         ini_set('memory_limit', '512M'); // Set memory limit to 512MB
         ini_set('max_execution_time', '300');
         DB::table('member_personal_detail as mpd')
-            ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
-            ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-            ->join('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
-            ->join('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
-            ->join('school as s', 'meb.school_id', '=', 's.school_id')
-            ->join('branch as b', 'b.branch_id', '=', 'meb.branch_id')
+            ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
+            ->leftJoin('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
+            ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
+            ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftJoin('branch as b', 'b.branch_id', '=', 'meb.branch_id')
             ->whereIn('mpd.member_id', $memberIds)
             ->select(
                 'mpd.*',
-                'mgd.*',
+                'mca.village as current_village',
+                'mca.commune_sangkat as current_commune',
+                'mca.district_khan as current_district',
+                'mca.provience_city as current_province',
+                'mca.home_no',
+                'mca.street_no',
                 'mrd.*',
-                'meb.*',
-                'mca.*',
-                'mpa.*',
                 's.school_name',
+                'hei.institute_kh',
                 'b.branch_kh'
             )
             ->orderBy('mpd.member_id')
+            // ->get();
+            // return response()->json($data);
             ->chunk($chunkSize, function ($members) use ($tempDir, $institution, &$chunkCounter) {
 
                 if ($members->isEmpty())
@@ -190,16 +198,20 @@ class PdfController extends Controller
             ->leftJoin('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
             ->leftJoin('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
             ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
+            ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
             ->leftJoin('branch as b', 'b.branch_id', '=', 'meb.branch_id')
             ->where('mpd.member_id', $id)
             ->select(
                 'mpd.*',
-                'mgd.*',
+                'mca.village as current_village',
+                'mca.commune_sangkat as current_commune',
+                'mca.district_khan as current_district',
+                'mca.provience_city as current_province',
+                'mca.home_no',
+                'mca.street_no',
                 'mrd.*',
-                'meb.*',
-                'mca.*',
-                'mpa.*',
                 's.school_name',
+                'hei.institute_kh',
                 'b.branch_kh'
             )
             ->first();
@@ -258,6 +270,8 @@ class PdfController extends Controller
                 'mca.provience_city as provience_city_current',
                 'meb.acadmedic_year',
                 'meb.language',
+                'meb.misc_skill',
+                'meb.computer_skill',
                 'meb.major',
                 'meb.institute_id',
                 'mpd.facebook',

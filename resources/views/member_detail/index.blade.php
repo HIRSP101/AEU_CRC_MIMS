@@ -12,7 +12,7 @@
         <button id="ok" class="hidden w-32 text-center bg-green-500 text-white px-4 py-2 rounded">OK</button>
     </div>
 </div>
-<div class="w-[210mm] h-[330mm] m-5 bg-white shadow-lg mx-auto" id="source-html">
+<div class="w-[210mm] h-auto m-5 bg-white shadow-lg mx-auto" id="source-html">
     <div class="px-12">
         <div class="grid grid-cols-6 ">
             <div class="col-span-5 flex flex-col items-center justify-center mb-5 ml-24 mt-6">

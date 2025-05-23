@@ -291,7 +291,7 @@ $institute_kh = $institution->institute_kh;
                                     $("#tick").hide();
                                     $("#ok").hide();
                                 });
-
+                                console.log(response);
                                 var blob = new Blob([response], { type: 'application/zip' });
                                 var url = URL.createObjectURL(blob);
                                 var link = document.createElement('a');
