@@ -140,7 +140,7 @@
                         <h3 class="">
                             <span>..............................................</span>
                         </h3>
-                        <span class="absolute top-[-3px] left-[0px] font-bold">{{$member->institute_kh ?? ""}}</span>
+                        <span class="absolute top-[-3px] left-[0px] font-bold">{{$member->institute_kh ?? $member->school_name}}</span>
                     </div>
                     <div>
                         <h3 class="">

@@ -238,7 +238,7 @@ $institute_kh = $institution->institute_kh;
                                 var url = URL.createObjectURL(blob);
                                 var link = document.createElement('a');
                                 link.href = url;
-                                link.download = `សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន_យុវជន_កក្រកប្រចាំ.zip`;
+                                link.download = `សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន_យុវជន_កក្រកប្រចាំ_{{$institute_kh}}.zip`;
                                 link.click();
                             },
                             error: function (xhr, status, error) {
@@ -296,7 +296,7 @@ $institute_kh = $institution->institute_kh;
                                 var url = URL.createObjectURL(blob);
                                 var link = document.createElement('a');
                                 link.href = url;
-                                link.download = `សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន_យុវជន_កក្រកប្រចាំ.zip`;
+                                link.download = `វិញ្ញាបនបត្ររដ្ឋបាល_យុវជន_កក្រកប្រចាំ_{{$institute_kh}}.zip`;
                                 link.click();
                             },
                             error: function (xhr, status, error) {
