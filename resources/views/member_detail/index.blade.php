@@ -94,7 +94,6 @@
                 $("#card").removeClass('hidden');
                 $("#request-form").addClass('hidden');
                 $("#source-html").addClass('hidden');
-
             })
         })
     </script>
