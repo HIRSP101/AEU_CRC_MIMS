@@ -184,10 +184,10 @@ Route::middleware('auth')->group(function () use ($appC) {
     //Route::get('/check-expired-members-institute', "{$appC}\\ExpireController@checkExpiredMemberInstitute")->name('checkExpiredMemberInstitute');
 
     // PDF COntroller request-form
-    Route::get('/generate-request-form/{id}', "{$appC}\\PdfController@exportPdfRequestForm");
+    Route::post('/generate-request-form/{id}', "{$appC}\\PdfController@exportPdfRequestForm");
 
     // PDF Controller detail-form
-    Route::get('/generate-detail-form/{id}', "{$appC}\\PdfController@exportPdfDetailForm");
+    Route::post('/generate-detail-form/{id}', "{$appC}\\PdfController@exportPdfDetailForm");
 
     //new code for pdf 2025/05/07 generate pdf for all members by institute
     Route::post('/gen-members-inst', "{$appC}\\PdfController@generateMembersByInstitute");
