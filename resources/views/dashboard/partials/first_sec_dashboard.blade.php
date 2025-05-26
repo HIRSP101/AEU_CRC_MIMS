@@ -39,11 +39,11 @@ $firstEle_total = $firstEle->total_mem;
                                 @foreach($total_mem_branches as $key => $total_mem_branch)
                                     <tr class="{{ $key >= 5 ? 'hidden extra-branch' : '' }}">
 
-                                        <td class="px-4 text-xl">{{ ($key + 1) . '.'}}</td>
-                                        <td class="text-xl">{{str_replace("ខេត្ត", "", $total_mem_branch->branch_kh)}}</td>
-                                        <td class="px-10 text-base">{{ $total_mem_branch->total_mem }} នាក់
+                                        <td class="px-2 text-xl">{{ ($key + 1) . '.'}}</td>
+                                        <td class="text-xl pr-20">{{str_replace("ខេត្ត", "", $total_mem_branch->branch_kh)}}
                                         </td>
-
+                                        <td class="text-base pl-[40px] text-end">{{ $total_mem_branch->total_mem }} នាក់
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -64,6 +64,7 @@ $firstEle_total = $firstEle->total_mem;
             const extraRows = document.querySelectorAll('.extra-branch');
             const isHidden = extraRows[0]?.classList.contains('hidden');
 
+            console.log("hdfghjhgfdfg")
             extraRows.forEach(row => {
                 if (isHidden) {
                     row.classList.remove('hidden');
