@@ -56,6 +56,12 @@
                                 alt="add--v1" />
                             <span> បញ្ជូលតាម Form</span>
                         </a>
+                        <a href="{{ route('link-member') }}"
+                            class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
+                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+                                alt="add--v1" />
+                            <span> បញ្ជូលតាម Link</span>
+                        </a>
                     </div>
                     <a href="" id="subModule-create"
                         class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">

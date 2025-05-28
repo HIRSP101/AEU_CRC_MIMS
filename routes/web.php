@@ -196,6 +196,9 @@ Route::middleware('auth')->group(function () use ($appC) {
     // new code for pdf 2025/05/23 generate pdf for all members by school
     Route::post('/gen-members-sch', "{$appC}\\PdfController@generateMembersBySchool");
     Route::post('/gen-members-request-sch', "{$appC}\\PdfController@generateMembersRequestFormBySchool");
+    Route::get('/link-member', "{$appC}\\LinkController@linkMember")->name('link-member');
+    Route::get('/create-link', "{$appC}\\LinkController@createLink")->name('create-link');
+    Route::get('/link-report', "{$appC}\\LinkController@linkReport")->name('link-report');
 });
 
 
