@@ -96,10 +96,12 @@ $(document).ready(function () {
         if (val.startsWith("school_")) {
             let schoolId = val.replace("school_", "");
             school_id = schoolId;
+            institute_id = null;
             console.log("Selected school ID:", schoolId);
         } else if (val.startsWith("institute_")) {
             let instituteId = val.replace("institute_", "");
             institute_id = instituteId;
+            school_id = null;
             console.log("Selected institute ID:", instituteId);
         }
         // school_id = sId;
@@ -116,7 +118,7 @@ $(document).ready(function () {
         colValues = {};
         sheetObj = {};
         activeSheet = "";
-        
+
     });
     $("#dropzone-file").on("change", async function () {
         columnNames = [];
@@ -126,7 +128,7 @@ $(document).ready(function () {
         sheetObj = {};
         activeSheet = "";
         importedSheets = {};
-        $("#sheetImport").prop("disabled", false); 
+        $("#sheetImport").prop("disabled", false);
         const fileInput = $("#dropzone-file")[0];
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
@@ -265,12 +267,30 @@ $(document).ready(function () {
 
     $("#sheetImport").on("click", function () {
         if (!activeSheet || !sheetObj[activeSheet]) {
-            alert("No active sheet selected!");
+            $("#SheetSelectAlert").show();
+            $("#textsuccAlert").show();
+            $("#tickAlert").show();
+            $("#okAlert").show();
+            $("#okAlert").on("click", function () {
+                $("#SheetSelectAlert").hide();
+                $("#textsuccAlert").hide();
+                $("#tickAlert").hide();
+                $("#okAlert").hide();
+            });
             return;
         }
         // new code 2025/05/05 insert control avoid reinsert
         if (importedSheets[activeSheet]) {
-            alert("This sheet has already been imported. Please select a different sheet.");
+            $("#SheetSelectAlertIfAlready").show();
+            $("#textsuccAlertIfAlready").show();
+            $("#tickAlertIfAlready").show();
+            $("#okAlertIfAlready").show();
+            $("#okAlertIfAlready").on("click", function () {
+                $("#SheetSelectAlertIfAlready").hide();
+                $("#textsuccAlertIfAlready").hide();
+                $("#tickAlertIfAlready").hide();
+                $("#okAlertIfAlready").hide();
+            });
             return;
         }
         let memberData = Object.values(sheetObj[activeSheet]);
@@ -290,6 +310,12 @@ $(document).ready(function () {
         },
     });
     function insertMember(member) {
+        $("#loadingSpinner").show();
+        $("#textload").show();
+        $("#spinner").show();
+        $("#textsucc").hide();
+        $("#tick").hide();
+        $("#ok").hide();
         $.ajax({
             url: "/importmember",
             method: "POST",
@@ -298,7 +324,20 @@ $(document).ready(function () {
             success: function (response) {
                 // Mark this sheet as imported
                 importedSheets[activeSheet] = true;
-                alert("ជោគជ័យ");
+                $("#loadingSpinner").show();
+                $("#textload").hide();
+                $("#spinner").hide();
+                $("#textsucc").show();
+                $("#tick").show();
+                $("#ok").show();
+                $("#ok").on("click", function () {
+                    $("#loadingSpinner").hide();
+                    $("#textload").hide();
+                    $("#spinner").hide();
+                    $("#textsucc").hide();
+                    $("#tick").hide();
+                    $("#ok").hide();
+                });
                 console.log("Success:", response);
             },
             error: function (xhr) {

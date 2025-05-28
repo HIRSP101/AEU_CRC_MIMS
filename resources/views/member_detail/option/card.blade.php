@@ -1,4 +1,5 @@
 @php
+    use App\Helpers\DateTimeFormat;
     $address_parts = explode(' ', $member->full_current_address ?? "");
     $current_address_all = trim(($address_parts[1] ?? "") . " " . ($address_parts[2] ?? "") . " " . ($address_parts[3] ?? ""));
 @endphp
@@ -16,7 +17,7 @@
         <div class="relative w-[600px] h-[450px] bg-cover bg-center"
             style="background-image: url('{{ asset('images/users/card2.jpg') }}');">
             <p class="profile absolute top-[50px] left-[50px] text-black text-sm">
-                {{$member->image}}
+                {{$member->member_image}}
             </p>
             <p class="name-kh absolute top-[50px] left-[300px] text-black text-sm font-bold font-siemreap">
                 {{$member->name_kh}}
@@ -28,7 +29,7 @@
                 {{$member->name_en}}
             </p>
             <p class="dob absolute top-[105px] left-[300px] text-black text-sm font-bold font-siemreap">
-                {{$member->date_of_birth}}
+                {{DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->date_of_birth)}}
             </p>
             <p class="address absolute top-[132px] left-[300px] text-black text-sm font-bold font-siemreap">
                 {{-- {{$member->full_current_address}} --}}

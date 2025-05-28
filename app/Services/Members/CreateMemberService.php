@@ -9,6 +9,7 @@ use DateTimeZone;
 use DB;
 use Illuminate\Http\UploadedFile;
 use Carbon\Carbon;
+use App\Helpers\DateTimeFormat;
 
 class CreateMemberService
 {
@@ -49,12 +50,12 @@ class CreateMemberService
             "nationality" => $data['nationality'] ?? "ខ្មែរ",
             "date_of_birth" => $data['date_of_birth'] ?? null,
             "full_current_address" => $data['full_current_address'] ?? null,
-            "phone_number" => $this->convertKhmerToEnglishNumbers($data['phone_number']) ?? null,
+            "phone_number" => DateTimeFormat::convertKhmerToEnglishNumbers($data['phone_number']) ?? null,
             "shirt_size" => $data['shirt_size'] ?? null,
             "branch_id" => $data['branch_id'] ?? null,
             "member_type" => $data["type"] ?? null,
         ]);
-        $this->createRelatedData($member, $data);
+        $this->createRelatedData($member, data: $data);
 
         return $member;
     }
@@ -80,7 +81,7 @@ class CreateMemberService
 
     private function calculateExpirationDate($registrationDate, $educationLevel)
     {
-        $edulevelAfterSplit = $this->spittingEducationLevel($educationLevel);
+        $edulevelAfterSplit = DateTimeFormat::spittingEducationLevel($educationLevel);
         $registrationDate = new \DateTime($registrationDate);
 
         $highSchoolMaxGrade = 12;
@@ -137,7 +138,7 @@ class CreateMemberService
 
         $member->member_education_background()->create([
             'institute_id' => $data['institute_id'] ?? null,
-            'acadmedic_year' => $data['acadmedic_year'] ?? null,
+            'acadmedic_year' => DateTimeFormat::convertKhmerToEnglishNumbers($data['acadmedic_year']) ?? null,
             'major' => $data['major'] ?? null,
             'batch' => $data['batch'] ?? null,
             'shift' => $data['shift'] ?? null,
@@ -162,7 +163,7 @@ class CreateMemberService
             'mother_dob' => $data['mother_dob'] ?? null,
             'mother_occupation' => $data['mother_occupation'] ?? null,
             'mother_current_address' => $data['mother_current_address'] ?? null,
-            'guardian_phone' => $this->convertKhmerToEnglishNumbers($data['guardian_phone']) ?? null
+            'guardian_phone' => DateTimeFormat::convertKhmerToEnglishNumbers($data['guardian_phone']) ?? null
         ]);
     }
 
@@ -182,36 +183,4 @@ class CreateMemberService
     {
         return date('Y-m-d', strtotime(str_replace('/', '-', $date)));
     }
-    function convertKhmerToEnglishNumbers($str)
-    {
-        if (!$str)
-            return $str;
-        $khmerNumbers = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
-        $englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
-        return str_replace($khmerNumbers, $englishNumbers, $str);
-    }
-
-    function spittingEducationLevel($educationLevel)
-    {
-        if (!$educationLevel) return null;
-        $khmerNumbers = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
-        $englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-        $educationLevel = str_replace($khmerNumbers, $englishNumbers, $educationLevel);
-    
-
-        preg_match('/\d+/', $educationLevel, $matches);
-        $levelNumber = isset($matches[0]) ? intval($matches[0]) : null;
-    
-        if (!$levelNumber) return null;
-
-        if (str_contains($educationLevel, 'ថ្នាក់ទី')) {
-            return $levelNumber;
-        } elseif (str_contains($educationLevel, 'ឆ្នាំទី')) {
-            return $levelNumber;
-        }
-        return null;
-    }
-    
-
 }
