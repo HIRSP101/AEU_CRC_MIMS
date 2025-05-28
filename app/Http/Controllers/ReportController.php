@@ -406,10 +406,11 @@ class ReportController extends Controller
             ->where('b.branch_id', '<', '28')
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image')
             ->get();
+        // dd($total_mem_branches);
 
         $title = 'បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំសាខានីមួយៗ';
 
-        return view('report.partials.list_branch', compact('total_mem_branches', 'title'));
+        return view('branch.index', compact('total_mem_branches', 'title'));
     }
     public function showListBranch()
     {

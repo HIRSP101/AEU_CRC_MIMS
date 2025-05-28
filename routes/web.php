@@ -86,6 +86,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/importmember', "{$appC}\\MemberController@importMember");
     Route::post('/createmember', "{$appC}\\MemberController@insertMember");
     Route::get('/branch', "{$appC}\\BranchController@index")->name('branch');
+    Route::get('/report-branch', "{$appC}\\ReportController@branchReport")->name('branch-report');
     Route::get('/branchhei', "{$appC}\\BranchController@branch_hei")->name('branchhei');
     Route::get('/branchheiprivate', "{$appC}\\ReportController@branchheiprivate");
     Route::get('/allbranches', "{$appC}\\ReportController@branches_hei_report");
@@ -94,7 +95,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branch_report/{id}', "{$appC}\\ReportController@branch_report_exclude")->name('branch.report.exclude');
     Route::get('/list_branches', "{$appC}\\ReportController@showListBranch")->name('list_branches');
     Route::get('/member_report_all_branch', "{$appC}\\ReportController@reportOption3")->name('member.report.all.branch');
-    Route::get('/branch-report', "{$appC}\\ReportController@branchReport")->name('branch-report');
+    // Route::get('/branch-report', "{$appC}\\ReportController@branchReport")->name('branch-report');
 
     // option page
     //Route::get('/member/option/{id}', "{$appC}\\MemberController@getMemberOption")->name('member.option');
@@ -195,7 +196,6 @@ Route::middleware('auth')->group(function () use ($appC) {
     // new code for pdf 2025/05/23 generate pdf for all members by school
     Route::post('/gen-members-sch', "{$appC}\\PdfController@generateMembersBySchool");
     Route::post('/gen-members-request-sch', "{$appC}\\PdfController@generateMembersRequestFormBySchool");
-
 });
 
 
