@@ -223,7 +223,7 @@ class SchoolController extends Controller
     }
     public function deleteSchool(Request $request)
     {
-        $this->deleteService->deleteSchool($request->id);
+        $this->deleteService->deleteSchool($request->arr[0]);
         return response()->json(['message' => 'School deleted successfully']);
     }
     public function editSchool($id)
@@ -329,7 +329,7 @@ class SchoolController extends Controller
                     'type' => 'institute'
                 ];
             });
-    
+
         $schools = DB::table('school as s')
             ->where('s.district_id', $id)
             ->select(
@@ -344,10 +344,9 @@ class SchoolController extends Controller
                     'type' => 'school'
                 ];
             });
-    
+
         $combined = $schools->merge($institutes)->values();
         // new code 2025/05/05 }
         return response()->json($combined);
     }
-    
 }
