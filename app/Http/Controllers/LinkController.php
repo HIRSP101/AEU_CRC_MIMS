@@ -18,4 +18,8 @@ class LinkController extends Controller
     {
         return view('links.link-report');
     }
+    public function linkDetail()
+    {
+        return view('links.dbl-click');
+    }
 }

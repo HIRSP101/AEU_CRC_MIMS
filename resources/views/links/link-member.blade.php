@@ -6,13 +6,11 @@
 
     <div class="bg-white mt-2 mx-3 shadow-lg">
         <div class="flex justify-between items-center mb-4 mt-14 px-4">
-            <!-- Search Bar -->
             <div class="tab_filter_container flex items-center space-x-2">
                 <a href="{{ route('link-report') }}"
                     class="bg-blue-500 text-white px-4 py-2 rounded font-battambang">របាយការណ៍</a>
             </div>
 
-            <!-- Buttons Group -->
             <div class="flex items-center space-x-3">
                 <a href="{{ route('create-link') }}" id="delete"
                     class="bg-green-500 text-white px-4 py-2 rounded font-battambang">បង្កើត

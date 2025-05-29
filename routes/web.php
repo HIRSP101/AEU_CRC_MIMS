@@ -199,6 +199,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/link-member', "{$appC}\\LinkController@linkMember")->name('link-member');
     Route::get('/create-link', "{$appC}\\LinkController@createLink")->name('create-link');
     Route::get('/link-report', "{$appC}\\LinkController@linkReport")->name('link-report');
+    Route::get('/link-detail', "{$appC}\\LinkController@linkDetail")->name('link-detail');
 });
 
 
