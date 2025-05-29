@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -86,7 +87,6 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/importmember', "{$appC}\\MemberController@importMember");
     Route::post('/createmember', "{$appC}\\MemberController@insertMember");
     Route::get('/branch', "{$appC}\\BranchController@index")->name('branch');
-    Route::get('/report-branch', "{$appC}\\ReportController@branchReport")->name('branch-report');
     Route::get('/branchhei', "{$appC}\\BranchController@branch_hei")->name('branchhei');
     Route::get('/branchheiprivate', "{$appC}\\ReportController@branchheiprivate");
     Route::get('/allbranches', "{$appC}\\ReportController@branches_hei_report");
@@ -95,7 +95,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/branch_report/{id}', "{$appC}\\ReportController@branch_report_exclude")->name('branch.report.exclude');
     Route::get('/list_branches', "{$appC}\\ReportController@showListBranch")->name('list_branches');
     Route::get('/member_report_all_branch', "{$appC}\\ReportController@reportOption3")->name('member.report.all.branch');
-    // Route::get('/branch-report', "{$appC}\\ReportController@branchReport")->name('branch-report');
+    Route::get('/branch-report', "{$appC}\\ReportController@branchReport")->name('branch-report');
 
     // option page
     //Route::get('/member/option/{id}', "{$appC}\\MemberController@getMemberOption")->name('member.option');
@@ -200,10 +200,11 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/create-link', "{$appC}\\LinkController@createLink")->name('create-link');
     Route::get('/link-report', "{$appC}\\LinkController@linkReport")->name('link-report');
     Route::get('/link-detail', "{$appC}\\LinkController@linkDetail")->name('link-detail');
+    Route::post('/create-link', "{$appC}\\LinkController@linkStore")->name('create-link.store');
 });
-
-
-
+// new route code for member form submit with token without auth 2025/05/29
+Route::get('/form/{token}', [FormController::class, 'index']);
+Route::post('/form/submit/{token}', [FormController::class, 'submit']);
 
 
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");
