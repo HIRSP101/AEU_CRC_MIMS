@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('member_registration_detail', function (Blueprint $table) {
             $table->bigIncrements('mrd_id')->primary();
-            $table->int('member_id');
+            $table->integer('member_id');
             $table->date('registration_date');
             $table->date('expiration_date', 50);
+            $table->boolean('approved')->default(false);
+            $table->integer('form_submits_id')->nullable();
             $table->timestamp();
         });
     }
@@ -26,5 +28,6 @@ return new class extends Migration
     public function down(): void
     {
         //
+        Schema::dropIfExists('member_registration_detail');
     }
 };

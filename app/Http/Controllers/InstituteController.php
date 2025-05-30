@@ -62,7 +62,8 @@ class InstituteController extends Controller
             ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
             ->where('meb.branchhei_id', '=', $instituteId)
             ->where('hei.institute_type', '=', 'សាកលវិទ្យាល័យ')
-            ->whereRaw('mrd.registration_date > NOW() - INTERVAL 4 YEAR');
+            ->whereRaw('mrd.registration_date > NOW() - INTERVAL 4 YEAR')
+            ->where('mrd.approved', '=', 1);
         $total_mem = (clone $baseQuery)
             ->select([
                 'mpd.member_id',

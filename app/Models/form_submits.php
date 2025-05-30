@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class user_form_tokens extends Model
+class form_submits extends Model
 {
     protected $connection = "mysql";
-    protected $table = "user_form_tokens";
+    protected $table = "form_submits";
     protected $primaryKey = "id";
 
     protected $fillable = [
-        'user_id',
+        'created_by',
         'token',
         'starts_at',
         'expires_at',

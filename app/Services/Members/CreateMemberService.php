@@ -76,6 +76,8 @@ class CreateMemberService
         $member->member_registration_detail()->create([
             'registration_date' => isset($data['registration_date']) ? $this->convertDate($data['registration_date']) : null,
             'expiration_date' => $this->calculateExpirationDate($data['registration_date'], $data['education_level']) ?? null,
+            'approved' => $data['approved'] ?? 1,
+            'form_submits_id' => $data['form_submits_id'] ?? null,
         ]);
     }
 
