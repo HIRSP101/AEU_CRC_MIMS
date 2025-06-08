@@ -37,6 +37,7 @@ class ExpireController extends Controller
             ->whereIn('s.type', ['អនុវិទ្យាល័យ', 'វិទ្យាល័យ'])
             ->where('meb.school_id', $schoolId)
             ->whereRaw('mrd.registration_date <= NOW() - INTERVAL 6 YEAR')
+            ->where('mrd.approved', '=', 1)
             //->where('meb.branch_id', '=', $user)
             ->select([
                 'mpd.member_id',
@@ -87,7 +88,8 @@ class ExpireController extends Controller
             ->leftJoin('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
             ->where('hei.institute_type', '=', 'សាកលវិទ្យាល័យ')
             ->where('meb.branchhei_id', '=', $instituteId)
-            ->whereRaw('mrd.registration_date <= NOW() - INTERVAL 4 YEAR');
+            ->whereRaw('mrd.registration_date <= NOW() - INTERVAL 4 YEAR')
+            ->where('mrd.approved', '=', 1);
         $total_mem = (clone $baseQuery)
             ->select([
                 'mpd.member_id',
@@ -222,7 +224,7 @@ class ExpireController extends Controller
             ->get();
     }
 
-    public function getListSchoolByInstituteId( $id)
+    public function getListSchoolByInstituteId($id)
     {
         $institution = branch_hei::find($id)->select('institute_kh')->findOrFail($id);
         $baseQuery = DB::table('member_personal_detail as mpd')
@@ -276,5 +278,4 @@ class ExpireController extends Controller
             ->get();
         return view('totalmemInstitute.index', compact('total_mem', 'institution'));
     }
-    
 }

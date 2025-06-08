@@ -66,6 +66,7 @@ class SchoolController extends Controller
             ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
             ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
             ->whereRaw('mrd.registration_date > NOW() - INTERVAL 6 YEAR')
+            ->where('mrd.approved', '=', 1)
             ->select([
                 'mpd.member_id',
                 'mpd.member_code',
