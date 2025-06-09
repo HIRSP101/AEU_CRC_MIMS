@@ -1,7 +1,6 @@
-<div id="sidebar" class="top-0 left-0 border shadow bg-white w-64">
+<div id="sidebar" class="top-0 left-0 border shadow bg-white">
     <div class="flex flex-col flex-1 overflow-y-auto">
         <nav class="flex-1 px-2 py-4">
-
             <a class="flex justify-center items-center" href="{{ route('dashboard') }}">
                 <img class="logo w-20" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}">
             </a>

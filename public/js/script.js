@@ -27,6 +27,7 @@ var closeSidebar = document.getElementById('closeSidebar');
 
 openSidebar.addEventListener('click', () => {
     sidebar.classList.remove('-translate-x-full');
+    
 });
 
 closeSidebar.addEventListener('click', () => {
