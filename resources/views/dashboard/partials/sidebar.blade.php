@@ -1,8 +1,8 @@
-<div id="sidebar" class="top-0 left-0 border shadow bg-white">
+<div id="sidebar" class="top-0 left-0 border shadow bg-white transition-all duration-300 ease-in-out w-60">
     <div class="flex flex-col flex-1 overflow-y-auto">
         <nav class="flex-1 px-2 py-4">
             <a class="flex justify-center items-center" href="{{ route('dashboard') }}">
-                <img class="logo w-20" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}">
+                <img class="logo transition-all duration-300 ease-in-out w-20 " src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}">
             </a>
             <div class="mt-10">
                 @if(auth()->user()->hasRole('admin'))
@@ -10,7 +10,7 @@
                         class="flex items-center font-siemreap px-4 py-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                         <img width="23" height="23"
                             src="https://img.icons8.com/external-glyph-zulfa-mahendra/48/external-building-nature-and-ecology-2-glyph-zulfa-mahendra-3.png"
-                            alt="external-building-nature-and-ecology-2-glyph-zulfa-mahendra-3" />
+                            alt="external-building-nature-and-  ecology-2-glyph-zulfa-mahendra-3" />
                         <span class="module-content ml-2">
                             សាខា
                         </span>
