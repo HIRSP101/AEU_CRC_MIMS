@@ -1,19 +1,18 @@
 import ajaxtoRoute from "./genericCalltoRoute.js";
 import setuppagination from "./pagination.js";
-export function handleTotalmem(array, ExcelObj) {
+export function totalmemlinkcontroll(array, ExcelObj) {
     const attr_arr = [
         "member_id",
         "name_kh",
         "gender",
         "date_of_birth",
-        "school_name",
+        "institute_kh",
         "member_type",
         "education_level",
         "registration_date",
     ];
 
     setuppagination(array, attr_arr, "update-member");
-
     $(".table table tbody").on("click", ".hoverablebranch", function (e) {
         if ($(e.target).closest("td").hasClass("action")) {
             return;
@@ -27,6 +26,7 @@ export function handleTotalmem(array, ExcelObj) {
         console.log(userId);
         window.location.href = `/member/${userId}`;
     });
+
 
     $("#delete").on("click", function (e) {
         e.preventDefault();
@@ -59,5 +59,34 @@ export function handleTotalmem(array, ExcelObj) {
         if (confirmDelete) {
             ajaxtoRoute("POST", "/deletemember", [userId]);
         }
+    });
+    $("#btn_ok").on("click", function () {
+        const memberIds = window.getCurrentPageMemberIds();
+        $.ajax({
+            type: "POST",
+            url: "/memberapprove",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                arr: memberIds,
+            }),
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                console.log(response.status);
+                if (response.status === 200) {
+                    const confirmDelete = confirm(
+                        "សមាជិកត្រូវបានយល់ព្រមដោយជោគជ័យ។"
+                    );
+                    if (confirmDelete) {
+                        location.reload();
+                    }
+                }
+
+            },
+            error: function (error) {
+                console.error(error);
+            },
+        });
     });
 }

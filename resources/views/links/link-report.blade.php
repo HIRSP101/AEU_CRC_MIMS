@@ -95,7 +95,7 @@
     $("#tableLinkBody").on("dblclick", ".link-row", function (e) {
             e.preventDefault();
             const linkId = $(this).data('id');
-            window.location.href = `/link-detail/${linkId}`;
+            window.location.href = `/link-detail-approved/${linkId}`;
         });
     
 </script>

@@ -199,11 +199,13 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/link-member', "{$appC}\\LinkController@linkMember")->name('link-member');
     Route::get('/create-link', "{$appC}\\LinkController@createLink")->name('create-link');
     Route::get('/link-report', "{$appC}\\LinkController@linkReport")->name('link-report');
-    Route::get('/link-detail/{linkId}', "{$appC}\\LinkController@linkDetail")->name('link-detail');
+    Route::get('/link-detail/{linkId}', "{$appC}\\LinkController@linkDetail_watting_for_approve")->name('link-detail');
+    Route::get('/link-detail-approved/{linkId}', "{$appC}\\LinkController@linkDetail_approved");
     Route::post('/create-link', "{$appC}\\LinkController@linkStore")->name('create-link.store');
     Route::delete('/link-delete', "{$appC}\\LinkController@linkDelete")->name('link-delete');
     Route::get('/link-report/{linkId}/edit', "{$appC}\\LinkController@linkEdit");
     Route::post('/link-report/update', "{$appC}\\LinkController@linkUpdate")->name('link-member.update');
+    Route::post('/memberapprove', "{$appC}\\LinkController@memberApprove")->name('memberapprove');
 });
 // new route code for member form submit with token without auth 2025/05/29
 Route::get('/form/{token}', [FormController::class, 'index']);

@@ -38,20 +38,6 @@
                     </tr>
                 </thead>
                 <tbody id="tableLinkBody" class="text-gray-600 text-sm font-light">
-                    <!-- <tr id="tableLinkRow" class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="py-3 pl-5 text-left whitespace-nowrap">
-                                1
-                            </td>
-                            <td class="py-3 pl-20 text-center">
-                                2025
-                            </td>
-                            <td class="py-3 text-left pl-36">
-                                *************************
-                            </td>
-                            <td class="py-3 text-center">
-                                <button class="bg-red-500 text-white px-4 py-2 rounded">លុប</button>
-                            </td>
-                        </tr> -->
                 </tbody>
             </table>
         </div>
@@ -65,7 +51,7 @@
             if (linkByUserId.length > 0) {
                 linkByUserId.forEach((link, index) => {
                     $('#tableLinkBody').append(`
-                                            <tr class="border-b border-gray-200 hover:bg-gray-100 text-center" >
+                                            <tr data-id="${link.id}"  class="border-b border-gray-200 hover:bg-gray-100 text-center link-row" >
                                                 <td class="py-3">${index + 1}</td>
                                                 <td class="py-3">${link.academic_year}</td>
                                                 <td class="py-3">
@@ -119,5 +105,10 @@
                     console.error("Failed to copy link:", err);
                 });
             });
+             $("#tableLinkBody").on("dblclick", ".link-row", function (e) {
+            e.preventDefault();
+            const linkId = $(this).data('id');
+            window.location.href = `/link-detail/${linkId}`;
+        });
     </script>
 @endpush

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\form_submits;
+use App\Models\member_registration_detail;
 use DB;
 use Illuminate\Http\Request;
 use Str;
@@ -59,8 +60,9 @@ class LinkController extends Controller
             ->get();
         return view('links.link-report', compact('linkByUserId'));
     }
-    public function linkDetail($linkId)
+    public function linkDetail_watting_for_approve($linkId)
     {
+        $approved = 0;
         $baseQuery = DB::table('member_personal_detail as mpd')
             ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
             ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
@@ -111,7 +113,62 @@ class LinkController extends Controller
             ])
             ->distinct()
             ->get();
-        return view('links.dbl-click', compact('total_mem'));
+        return view('links.dbl-click', compact('total_mem','approved'));
+    }
+     public function linkDetail_approved($linkId)
+    {
+        $approved = 1;
+        $baseQuery = DB::table('member_personal_detail as mpd')
+            ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+            ->leftJoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
+            ->leftJoin('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
+            ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
+            ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftJoin('form_submits as fsm', 'fsm.id', '=', 'mrd.form_submits_id')
+            ->whereRaw('mrd.registration_date > NOW() - INTERVAL 4 YEAR')
+            ->where('mrd.form_submits_id',  $linkId)
+            ->where('mrd.approved', '=', 1);
+        $total_mem = (clone $baseQuery)
+            ->select([
+                'fsm.academic_year',
+                'mpd.member_id',
+                'mpd.member_code',
+                'mpd.name_kh',
+                'mpd.name_en',
+                'mpd.gender',
+                'mpd.date_of_birth',
+                // 'meb.institute_id',
+                'hei.institute_kh',
+                'hei.institute_type',
+                'branch.branch_name',
+                'mpd.member_type',
+                'meb.education_level',
+                'meb.acadmedic_year',
+                'mrd.registration_date',
+                'mrd.expiration_date',
+                'mpd.full_current_address',
+                'mpd.phone_number',
+                'mgd.guardian_phone',
+                'mpd.email',
+                'mpd.shirt_size',
+                'mpob.village',
+                'mpob.commune_sangkat',
+                'mpob.district_khan',
+                'mpob.provience_city',
+                'mpob.home_no',
+                'mpob.street_no',
+                'mcad.home_no as home_no_current',
+                'mcad.street_no as street_no_current',
+                'mcad.village  as village_current',
+                'mcad.commune_sangkat as commune_sangkat_current',
+                'mcad.district_khan as district_khan_current',
+                'mcad.provience_city as provience_city_current',
+            ])
+            ->distinct()
+            ->get();
+        return view('links.dbl-click', compact('total_mem','approved'));
     }
     public function linkDelete()
     {
@@ -142,6 +199,16 @@ class LinkController extends Controller
             'message' => 'Link ត្រូវបានកែប្រែដោយជោគជ័យ',
             'status' => 200,
             'data' => $tokenEntry->token,
+        ]);
+    }
+
+    public function memberApprove (Request $request)
+    {
+        $member = member_registration_detail::whereIn('member_id', $request->arr)
+        ->update(['approved' => 1]);
+        return response()->json([
+            'message' => 'Member approved successfully',
+            'status' => 200,
         ]);
     }
 }
