@@ -3,7 +3,7 @@
         ទំហំអាវ
     </label>
     <select name="t_shirt" id="shirt_size"
-    class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white">
+        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white">
         <option value="">---</option>
         <option value="S">S</option>
         <option value="M">M</option>
@@ -17,7 +17,7 @@
         ភាសាបរទេស
     </label>
     <input
-         class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
         name="language" id="language" type="text">
 </div>
 <div class="md:flex-1 w-1/2  px-3 mb-6 md:mb-0">
@@ -35,15 +35,39 @@
             ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនកក្របាទក្រហម
         </label>
         <input
-             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="recruitment_date" id="recruitment_date" type="date" required>
+    </div>
+    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 mb-2" for="recruitment_date">
+            ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនកាយរឹទ្ធិកម្ពុជា
+        </label>
+        <input
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+            name="recruitment_date" id="recruitment_date" type="date">
+    </div>
+    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 mb-2" for="recruitment_date">
+            ថ្ងៃ ខែ ឆ្នាំ ចូលជា ស.ស.យ.ក
+        </label>
+        <input
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+            name="recruitment_date" id="recruitment_date" type="date">
+    </div>
+    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 mb-2" for="recruitment_date">
+            ថ្ងៃ ខែ ឆ្នាំ ចូលជាអង្គការចាត់តាំងផ្សេងៗ
+        </label>
+        <input
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+            name="recruitment_date" id="recruitment_date" type="date">
     </div>
     <div class="md:flex-1 w-full  px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="branch_name">
             ឈ្មោះសាលារៀន ឬសាកលវិទ្យាល័យ
         </label>
         <input
-             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="branch_name" id="branch_name" list="branchname_list" type="text" required>
         <datalist name="branchname_list" id="branchname_list">
             @foreach ($branchhei as $key => $val)
@@ -66,7 +90,7 @@
             ជំនាញកុំព្យូទ័រ
         </label>
         <input
-             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="computer_skill" id="computer_skill" type="text" required>
     </div>
     <div class="md:flex-1 w-full  px-3 mb-6 md:mb-0">
@@ -74,7 +98,7 @@
             វគ្គបណ្តុះបណ្តាលដែលទទួលបាន
         </label>
         <input
-             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="training_received" id="training_received" type="text" required>
     </div>
     <div class="md:flex-1 w-full px-3 mb-6 md:mb-0 " id="this_is_fucked_up">
@@ -82,7 +106,7 @@
             ជំនាញផ្សេងៗ
         </label>
         <input
-             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="misc_skill" id="misc_skill" type="text" required>
     </div>
 </div>
@@ -91,9 +115,12 @@
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="member_type">
             ប្រភេទសាមាជិក
         </label>
-        <input
-             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="member_type" id="member_type" type="text" required>
+        <select name="member_type" id="member_type"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white">
+            <option value="">-------------------</option>
+            <option value="សមាជិកា យុវជន">សមាជិកា យុវជន</option>
+            <option value="សមាជិក យុវជន">សមាជិក យុវជន</option>
+        </select>
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="member_status">
@@ -118,7 +145,7 @@
             អ៊ីម៉ែល
         </label>
         <input
-             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="memberemail" id="memberemail" type="text">
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -126,7 +153,7 @@
             ហ្វេសប៊ុក
         </label>
         <input
-             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="facebook" id="facebook" type="text">
     </div>
 </div>

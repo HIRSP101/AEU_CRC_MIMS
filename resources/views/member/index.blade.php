@@ -100,11 +100,15 @@
                     "guardian_phone": $("input#guardian_number").val(),
                     "education_level": $("#education_level").val(),
                     "training_received": $("#training_received").val(),
-                    "type": $("input#type").val(),
                     "language": $("input#language").val(),
                     "computer_skill": "",
                     "misc_skill": "",
-                    "registration_date": $("input#recruitment_date").val()
+                    "registration_date": $("input#recruitment_date").val(),
+                    "scout_youth_registration_date": $("input#scout_youth_registration_date").val(),
+                    "uyfc_registration_date": $("input#uyfc_registration_date").val(),
+                    "other_ngos_registration_date": $("input#other_ngos_registration_date").val(),
+                    "member_type": $("select#member_type").val(),
+                    "member_status": $("input#member_status").val(),
                 }
             }
 
@@ -116,6 +120,7 @@
             // $("#loading-overlay").show();
             insertMember(formData);
         })
+        
 
         function insertMember(member) {
             $.ajax({

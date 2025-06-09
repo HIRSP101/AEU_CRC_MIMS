@@ -150,7 +150,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/get-district', "{$appC}\\VillageController@getDistrict");
     Route::get('/get-district/{id}', "{$appC}\\VillageController@getDistrictByBranchId");
     // new code get district by user login
-    Route::get('/getDistrictByUserLogin', "{$appC}\\VillageController@getDistrictByUserLogin")->name('getDistrictByUserLogin');
+    Route::get('/getDistrictByUserLogin/{id}', "{$appC}\\VillageController@getDistrictByUserLogin")->name('getDistrictByUserLogin');
     Route::post('/deletedistrict', "{$appC}\\VillageController@deleteDistrict");
     Route::get('/update-district/{id}', "{$appC}\\VillageController@editDistrict")->name('update-district');
     Route::post('/update-district/{id}', "{$appC}\\VillageController@updateDistrict")->name('updatedistrict');

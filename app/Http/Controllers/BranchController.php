@@ -153,6 +153,11 @@ class BranchController extends Controller
     //new code 2025/03/27 get branch by user when user login
     public function getBranchByUser()
     {
+        if (auth()->user()->hasRole('admin')){
+            $branch = DB::table('branch')
+            ->get();
+        return response()->json($branch);
+        }
         $branch = DB::table('branch')
             ->leftJoin('branch_bindding_user', 'branch.branch_id', '=', 'branch_bindding_user.branch_id')
             ->where('user_id', auth()->user()->id)

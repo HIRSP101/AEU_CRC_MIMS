@@ -33,7 +33,8 @@ class CreateMemberService
             "facebook" => $data['facebook'] ?? null,
             "shirt_size" => $data['shirt_size'] ?? null,
             "branch_id" => $data['branch_id'] ?? null,
-            "member_type" => $data["type"] ?? null,
+            "member_type" => $data["member_type"] ?? null,
+            "member_status" => $data["member_status"] ?? null,
         ]);
         $this->createRelatedData($member, $data);
 
@@ -53,7 +54,8 @@ class CreateMemberService
             "phone_number" => DateTimeFormat::convertKhmerToEnglishNumbers($data['phone_number']) ?? null,
             "shirt_size" => $data['shirt_size'] ?? null,
             "branch_id" => $data['branch_id'] ?? null,
-            "member_type" => $data["type"] ?? null,
+            "member_type" => $data["member_type"] ?? null,
+            "member_status" => $data["member_status"] ?? null,
         ]);
         $this->createRelatedData($member, data: $data);
 
@@ -78,6 +80,9 @@ class CreateMemberService
             'expiration_date' => $this->calculateExpirationDate($data['registration_date'], $data['education_level']) ?? null,
             'approved' => $data['approved'] ?? 1,
             'form_submits_id' => $data['form_submits_id'] ?? null,
+            'scout_youth_registration_date'=> $data['scout_youth_registration_date'] ?? null,
+            'uyfc_registration_date' => $data['uyfc_registration_date'] ?? null,
+            'other_ngos_registration_date' => $data['other_ngos_registration_date'] ?? null,
         ]);
     }
 

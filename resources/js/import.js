@@ -46,7 +46,7 @@ var khDict = {
     ថ្ងៃខែឆ្នាំកំណើត: "date_of_birth",
     ទីកន្លែងកំណើត: "pob_provience_city",
     គ្រឹះស្ថានសិក្សា: "institute_id",
-    តួនាទី: "type",
+    តួនាទី: "member_type",
     កម្រិតសិក្សា: "education_level",
     ទទួលបានវគ្គបណ្ដុះបណ្ដាល: "training_received",
     ពិការភាព: "member_status",
@@ -74,8 +74,21 @@ $(document).ready(function () {
         url: "/getBranchByUser",
         data: {},
         success: function (data) {
+            console.log(data);
+            var selectList = $("#branch_name");
+            selectList.empty();
+            selectList.append(
+                `<option value="">--------------------------------</option>`
+            );
+            $.each(data, function (index, item) {
+                selectList.append(
+                    $("<option>", {
+                        value: item.branch_id,
+                        text: item.branch_kh,
+                    })
+                );
+            });
             $("#branch_name").val(data[0].branch_kh);
-
         },
         failure: function (response) {
             alert(response.responseText);
@@ -83,6 +96,11 @@ $(document).ready(function () {
         error: function (response) {
             alert(response.responseText);
         },
+    });
+
+    $("#branch_name").on("change", function () {
+        var branchId = $("#branch_name").val();
+        getDistrctKhan(branchId);
     });
 
     //select Change event on district and school
@@ -445,11 +463,11 @@ $(document).ready(function () {
     }
 
     // get district and khan automatically when user login by Id join to userbind
-    function getDistrctKhan() {
+    function getDistrctKhan(id) {
         return new Promise((resolve, reject) => {
             $.ajax({
                 type: "GET",
-                url: "/getDistrictByUserLogin",
+                url: `/getDistrictByUserLogin/${id}`,
                 data: {},
                 success: function (data) {
                     console.log(data);
