@@ -31,6 +31,7 @@ class ExpireController extends Controller
         $query = DB::table('member_personal_detail as mpd')
             ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
             ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
             ->leftJoin('branch as b', 'meb.branch_id', '=', 'b.branch_id')
             ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
             ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
@@ -56,6 +57,7 @@ class ExpireController extends Controller
                 'mrd.expiration_date',
                 'mpd.full_current_address',
                 'mpd.phone_number',
+                'mgd.guardian_phone',
                 'mpd.email',
                 'mpd.shirt_size',
             ]);

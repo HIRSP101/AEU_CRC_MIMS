@@ -62,6 +62,7 @@ class SchoolController extends Controller
         $query = DB::table('member_personal_detail as mpd')
             ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
             ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
             ->leftJoin('branch as b', 'meb.branch_id', '=', 'b.branch_id')
             ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
             ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
@@ -86,6 +87,7 @@ class SchoolController extends Controller
                 'mpd.phone_number',
                 'mpd.email',
                 'mpd.shirt_size',
+                'mgd.guardian_phone'
             ]);
 
         if ($branchId) {
