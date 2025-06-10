@@ -228,6 +228,7 @@ class ExpireController extends Controller
 
     public function getListSchoolByInstituteId($id)
     {
+        $title = "បញ្ជីតារាងទិន្នន័យផុតកំណត់យុវជន និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា";
         $institution = branch_hei::find($id)->select('institute_kh')->findOrFail($id);
         $baseQuery = DB::table('member_personal_detail as mpd')
             ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
@@ -278,6 +279,6 @@ class ExpireController extends Controller
             ])
             ->distinct()
             ->get();
-        return view('totalmemInstitute.index', compact('total_mem', 'institution'));
+        return view('totalmemInstitute.index', compact('total_mem', 'institution','title'));
     }
 }

@@ -77,8 +77,7 @@
             </div>
         </div>
         <div class="bg-white mt-2 mx-3 shadow-lg">
-            <h1 class="text-center font-siemreap my-2 font-bold text-2xl"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន
-                និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
+            <h1 class="text-center font-siemreap my-2 font-bold text-2xl"> {{$title}} </h1>
             <h2 class="text-center font-siemreap mb-2 text-2xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា {{$institute_kh}} </h2>
             <div class="flex justify-between items-center mb-4 mt-14 px-4">
                 <!-- Search Bar -->
