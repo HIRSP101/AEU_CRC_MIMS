@@ -119,11 +119,12 @@
         </div>
 @endsection
     @push('JS')
+        @vite(['resources/js/exportToExcelOptionThree.js'])
         <script type="module">
-
+             var data = @json($branch_and_count_member);
             console.log(data);
             $("#export_excel").on("click", async () => {
-                exportToExcel_branch(data);
+                exportToExcelOptionThree(data);
             });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

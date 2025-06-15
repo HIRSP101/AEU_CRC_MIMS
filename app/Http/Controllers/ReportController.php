@@ -176,7 +176,6 @@ class ReportController extends Controller
             ->groupBy('hei.institute_kh')
             ->get();
 
-
         return view('report.partials.report-option3', [
             'branch_and_count_member' => $branch_and_count_member,
             'school_types_per_branch' => $school_types_per_branch,
