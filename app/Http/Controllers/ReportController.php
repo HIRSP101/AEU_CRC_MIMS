@@ -296,6 +296,7 @@ class ReportController extends Controller
             ->where('hei.type', '=', 'ឯកជន')
             ->groupBy('hei.institute_kh')
             ->get();
+
         return view('report.partials.private-university', [
             'branchhei_private' => $branchhei_private,
             'branchWhole' => (object)[
