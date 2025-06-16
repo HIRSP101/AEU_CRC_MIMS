@@ -3,9 +3,9 @@
         {{-- HEADER --}}
         <div class="grid grid-cols-1 md:grid-cols-6">
             <div class="col-span-1 md:col-span-5 flex flex-col items-center justify-center sm:ml-[14vw]">
-                <img class="hidden sm:block w-32 h-32  " src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}"
+                <img class="w-32 h-32  " src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}"
                     alt="CRC Logo">
-                <h1 class=" text-center text-lg font-semibold">
+                <h1 class=" text-center text-lg font-semibold mt-5">
                     ព័ត៌មានផ្ទាល់ខ្លួន
                 </h1>
                 <h2 class=" text-center text-base">
