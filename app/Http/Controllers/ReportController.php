@@ -176,16 +176,36 @@ class ReportController extends Controller
             ->groupBy('hei.institute_kh')
             ->get();
 
+        $combined_data = $branch_and_count_member->map(function ($branch) use ($school_types_per_branch, $universities_per_branch) {
+            $branch_id = $branch->branch_id;
+
+            $school = $school_types_per_branch[$branch_id] ?? (object)[
+                'total_secondary_school' => 0,
+                'total_high_school' => 0,
+            ];
+
+            $university = $universities_per_branch[$branch_id] ?? (object)[
+                'total_university' => 0,
+            ];
+
+            return (object)[
+                ...get_object_vars($branch),
+                'secondary_school' => $school->total_secondary_school,
+                'high_school' => $school->total_high_school,
+                'university' => $university->total_university,
+            ];
+        });
+
         return view('report.partials.report-option3', [
-            'branch_and_count_member' => $branch_and_count_member,
+            'branch_and_count_member' => $combined_data,
             'school_types_per_branch' => $school_types_per_branch,
             'universities_per_branch' => $universities_per_branch,
             'total_member_all_university' => $total_member_all_university,
             'branchWhole' => (object)[
-                'total_mem' => $branch_and_count_member->sum('total_mem'),
-                'total_mem_fem' => $branch_and_count_member->sum('total_mem_fem'),
-                'total_mem_advisor' => $branch_and_count_member->sum('total_mem_advisor'),
-                'total_mem_fem_advisor' => $branch_and_count_member->sum('total_mem_fem_advisor'),
+                'total_mem' => $combined_data->sum('total_mem'),
+                'total_mem_fem' => $combined_data->sum('total_mem_fem'),
+                'total_mem_advisor' => $combined_data->sum('total_mem_advisor'),
+                'total_mem_fem_advisor' => $combined_data->sum('total_mem_fem_advisor'),
             ],
             'member_all_university' => (object)[
                 'total_mem' => $total_member_all_university->sum('total_mem'),

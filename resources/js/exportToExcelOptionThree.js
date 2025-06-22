@@ -72,27 +72,56 @@ export const createWorksheet = (workbook) => {
     return worksheet;
 };
 
-// Function to populate data rows
 export const populateTable = (worksheet, data) => {
+    let total_secondary = 0;
+    let total_high = 0;
+    let total_university = 0;
+    let total_mem_advisor = 0;
+    let total_mem_fem_advisor = 0;
+    let total_mem = 0;
+    let total_mem_fem = 0;
+
     data.forEach((item, index) => {
-        const rowNumber = index + 3; // Start from the third row
+        const rowNumber = index + 3;
         const row = worksheet.getRow(rowNumber);
 
-        // Map data to cells
-        row.getCell(1).value = index + 1; // ល.រ (Row number)
-        row.getCell(2).value = item.branch_kh; // Branch name
-        row.getCell(3).value = item.total_ms + item.total_hs; // Total (MS + HS)
-        row.getCell(4).value = item.total_ms; // Total MS
-        row.getCell(5).value = item.total_hs; // Total HS
-        row.getCell(6).value = 0; // Placeholder (always 0)
-        row.getCell(7).value = item.total_ls; // Total LS
-        row.getCell(8).value = item.total_ls_wm; // Female LS
-        row.getCell(9).value = item.total_mem; // Total MEM
-        row.getCell(10).value = item.total_wm; // Female MEM
+        const secondary_school = parseInt(item.secondary_school ?? 0);
+        const high_school = parseInt(item.high_school ?? 0);
+        const university = parseInt(item.university ?? 0);
 
-        // Apply body styles
-        row.eachCell((cell) => {
-            console.log(cell);
+        const total_all_school_type =
+            secondary_school + high_school + university;
+
+        const mem_advisor = parseInt(item.total_mem_advisor ?? 0);
+        const mem_fem_advisor = parseInt(item.total_mem_fem_advisor ?? 0);
+        const mem = parseInt(item.total_mem ?? 0);
+        const mem_fem = parseInt(item.total_mem_fem ?? 0);
+
+        // Accumulate totals
+        total_secondary += secondary_school;
+        total_high += high_school;
+        total_university += university;
+        total_mem_advisor += mem_advisor;
+        total_mem_fem_advisor += mem_fem_advisor;
+        total_mem += mem;
+        total_mem_fem += mem_fem;
+
+        const rowData = [
+            index + 1,
+            item.branch_kh ?? "",
+            total_all_school_type,
+            secondary_school,
+            high_school,
+            university,
+            mem_advisor,
+            mem_fem_advisor,
+            mem,
+            mem_fem,
+        ];
+
+        rowData.forEach((value, i) => {
+            const cell = row.getCell(i + 1);
+            cell.value = value;
             cell.font = EXCEL_CONFIG.fonts.body;
             cell.alignment = { vertical: "middle", horizontal: "center" };
             cell.border = {
@@ -102,6 +131,43 @@ export const populateTable = (worksheet, data) => {
                 right: { style: "thin" },
             };
         });
+    });
+
+    // Add total row
+    const totalRowIndex = data.length + 3;
+    const totalRow = worksheet.getRow(totalRowIndex);
+    const total_all_school_type =
+        total_secondary + total_high + total_university;
+
+    const totalData = [
+        "", // Empty cell for "ល.រ"
+        "សរុប", // Label
+        total_all_school_type,
+        total_secondary,
+        total_high,
+        total_university,
+        total_mem_advisor,
+        total_mem_fem_advisor,
+        total_mem,
+        total_mem_fem,
+    ];
+
+    totalData.forEach((value, i) => {
+        const cell = totalRow.getCell(i + 1);
+        cell.value = value;
+        cell.font = EXCEL_CONFIG.fonts.body;
+        cell.alignment = { vertical: "middle", horizontal: "center" };
+        cell.border = {
+            top: { style: "thin" },
+            bottom: { style: "thin" },
+            left: { style: "thin" },
+            right: { style: "thin" },
+        };
+        cell.fill = {
+            type: "pattern",
+            pattern: "solid",
+            fgColor: { argb: "FFECECEC" }, // light gray background
+        };
     });
 };
 
@@ -126,3 +192,4 @@ export default function exportToExcelOptionThree(branchData) {
             console.error("Error creating Excel file:", error);
         });
 }
+window.exportToExcelOptionThree = exportToExcelOptionThree;

@@ -121,8 +121,9 @@
     @push('JS')
         @vite(['resources/js/exportToExcelOptionThree.js'])
         <script type="module">
-             var data = @json($branch_and_count_member);
+            var data = @json($branch_and_count_member);
             console.log(data);
+            
             $("#export_excel").on("click", async () => {
                 exportToExcelOptionThree(data);
             });
