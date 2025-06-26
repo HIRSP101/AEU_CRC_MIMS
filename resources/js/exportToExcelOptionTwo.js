@@ -82,8 +82,8 @@ export const createWorksheet = (workbook) => {
     worksheet.getCell("G1").value = "យុវជន";
     worksheet.getCell("G2").value = "សរុប";
     worksheet.getCell("H2").value = "ស្រី";
-    worksheet.getCell("G3").value = "A";
-    worksheet.getCell("H3").value = "B";
+    // worksheet.getCell("G3").value = totalMem;
+    // worksheet.getCell("H3").value = totalMemFem;
 
     // ពិការភាព
     worksheet.mergeCells("I1:J1");
@@ -98,8 +98,8 @@ export const createWorksheet = (workbook) => {
     worksheet.getCell("K1").value = "ទីប្រឹក្សា";
     worksheet.getCell("K2").value = "សរុប";
     worksheet.getCell("L2").value = "ស្រី";
-    worksheet.getCell("K3").value = "E";
-    worksheet.getCell("L3").value = "F";
+    // worksheet.getCell("K3").value = totalMemAdvisor;
+    // worksheet.getCell("L3").value = totalMemFemAdvisor;
 
     // ពិការភាព (second)
     worksheet.mergeCells("M1:N1");
@@ -123,81 +123,227 @@ export const createWorksheet = (workbook) => {
 
     // Adjust columns array length to match added columns Q, R, S, T as needed if you want to add data there
 
-    // --- Style all header rows ---
+    const skipFillCells = new Set([
+        "E3",
+        "F3", // មាន / អត់
+        "G3", // value A, B
+        "H3",
+        "I3",
+        "J3", // value C, D
+        "K3", // value E, F
+        "L3",
+        "M3",
+        "N3", // value G, H
+        "O3",
+        "P3", // ស្រីសរុប / ប្រុស (ទទួលវគ្គ)
+        "Q3",
+        "R3", // ស្រីសរុប / ប្រុស (ឯកសណ្ឋាន)
+    ]);
+
     for (let r = 1; r <= 3; r++) {
         const row = worksheet.getRow(r);
         row.height = 30;
-        row.eachCell((cell) => {
+        row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+            const cellRef = `${worksheet.getColumn(colNumber).letter}${r}`;
             cell.font = font;
             cell.border = border;
             cell.alignment = alignCenter;
-            cell.fill = {
-                type: "pattern",
-                pattern: "solid",
-                fgColor: { argb: "FFECECEC" }, // Light gray background
-            };
+
+            if (!skipFillCells.has(cellRef)) {
+                cell.fill = {
+                    type: "pattern",
+                    pattern: "solid",
+                    fgColor: { argb: "FFECECEC" },
+                };
+            }
         });
     }
 
     return worksheet;
 };
 
-export const populateTable = (worksheet) => {
-    const startRow = 4;
+export const addTotalsToHeader = (worksheet, totals) => {
+    const border = {
+        top: { style: "thin" },
+        bottom: { style: "thin" },
+        left: { style: "thin" },
+        right: { style: "thin" },
+    };
 
-    const sampleData = [
-        [
-            1, // ល.រ
-            "ភ្នំពេញ", // ក្រុង/ស្រុក
-            3, // ចំនួនគ្រឹះស្ថានសិក្សា
-            "វិទ្យាល័យ អាកាស", // ឈ្មោះគ្រឹះស្ថានសិក្សា
-            0, // មានបណ្ដាញ - មាន
-            0, // មានបណ្ដាញ - អត់
-            10, // យុវជន សរុប
-            4, // យុវជន ស្រី
-            2, // ពិការភាព សរុប
-            1, // ពិការភាព ស្រី
-            3, // ទីប្រឹក្សា សរុប
-            2, // ទីប្រឹក្សា ស្រី
-            1, // ពិការភាព (second) សរុប
-            1, // ពិការភាព (second) ស្រី
-            5, // ចំនួនយុវជនទទួលវគ្គ (ស្រីសរុប)
-            6, // ចំនួនយុវជនទទួលវគ្គ (ប្រុស)
-            4, // ចំនួនយុវជនបានទទួលឯកសណ្ឋាន (ស្រីសរុប)
-            3, // ចំនួនយុវជនបានទទួលឯកសណ្ឋាន (ប្រុស)
-        ],
-    ];
+    ["G3", "H3", "K3", "L3"].forEach((cellRef) => {
+        const cell = worksheet.getCell(cellRef);
+        cell.font = { bold: true };
+        cell.alignment = { horizontal: "center", vertical: "middle" };
+        cell.border = border;
+    });
+    worksheet.getCell("G3").value = totals.totalMem;
+    worksheet.getCell("H3").value = totals.totalMemFem;
+    worksheet.getCell("K3").value = totals.totalMemAdvisor;
+    worksheet.getCell("L3").value = totals.totalMemFemAdvisor;
+};
 
-    sampleData.forEach((rowData, index) => {
-        const rowNumber = index + startRow;
-        const row = worksheet.getRow(rowNumber);
+export const populateTable = (worksheet, data) => {
+    let currentRow = 4;
+    let serialNumber = 1;
 
-        rowData.forEach((value, colIndex) => {
-            const cell = row.getCell(colIndex + 1);
-            cell.value = value;
-            cell.font = EXCEL_CONFIG.fonts.body;
-            cell.alignment = {
-                vertical: "middle",
-                horizontal: "center",
-                wrapText: true,
-            };
-            cell.border = {
-                top: { style: "thin" },
-                bottom: { style: "thin" },
-                left: { style: "thin" },
-                right: { style: "thin" },
-            };
+    // Initialize totals
+    let totalSchools = 0;
+    let totalMem = 0;
+    let totalMemFem = 0;
+    let totalMemAdvisor = 0;
+    let totalMemFemAdvisor = 0;
+
+    data.forEach((district) => {
+        const schools = district.schools || [district];
+        const rowSpan = schools.length;
+        totalSchools += rowSpan;
+
+        schools.forEach((school, index) => {
+            const row = worksheet.getRow(currentRow);
+
+            // Update totals
+            totalMem += school.total_mem || 0;
+            totalMemFem += school.total_mem_fem || 0;
+            totalMemAdvisor += school.total_mem_advisor || 0;
+            totalMemFemAdvisor += school.total_mem_fem_advisor || 0;
+
+            const rowData = [
+                serialNumber,
+                district.district_name,
+                rowSpan,
+                school.school_name,
+                0,
+                0, // មានបណ្ដាញ
+                school.total_mem || 0,
+                school.total_mem_fem || 0,
+                0,
+                0, // ពិការភាព
+                school.total_mem_advisor || 0,
+                school.total_mem_fem_advisor || 0,
+                0,
+                0, // ពិការភាព 2
+                0,
+                0, // ទទួលវគ្គ
+                0,
+                0, // ឯកសណ្ឋាន
+            ];
+
+            rowData.forEach((value, colIndex) => {
+                const cell = row.getCell(colIndex + 1);
+                cell.value = value;
+                cell.font = EXCEL_CONFIG.fonts.body;
+                cell.alignment = {
+                    vertical: "middle",
+                    horizontal: "center",
+                    wrapText: true,
+                };
+                cell.border = {
+                    top: { style: "thin" },
+                    bottom: { style: "thin" },
+                    left: { style: "thin" },
+                    right: { style: "thin" },
+                };
+            });
+
+            row.height = 25;
+            currentRow++;
         });
 
-        row.height = 25;
+        const startMergeRow = currentRow - rowSpan;
+        const endMergeRow = currentRow - 1;
+        if (rowSpan > 1) {
+            worksheet.mergeCells(`A${startMergeRow}:A${endMergeRow}`);
+            worksheet.mergeCells(`B${startMergeRow}:B${endMergeRow}`);
+            worksheet.mergeCells(`C${startMergeRow}:C${endMergeRow}`);
+        }
+
+        serialNumber++;
     });
+
+    // Add Summary Row
+    const totalRow = worksheet.getRow(currentRow);
+    const totalRowData = [
+        "សរុប", // A (merged with B)
+        "", // B (merged)
+        totalSchools, // C
+        0,
+        0,
+        0, // D, E
+        totalMem, // F
+        totalMemFem, // G
+        0,
+        0, // H, I
+        totalMemAdvisor, // J
+        totalMemFemAdvisor, // K
+        0,
+        0, // L, M
+        0,
+        0, // N, O
+        0,
+        0,
+    ];
+
+    totalRowData.forEach((value, colIndex) => {
+        const cell = totalRow.getCell(colIndex + 1);
+        cell.value = value;
+        cell.font = { ...EXCEL_CONFIG.fonts.body, bold: true };
+        cell.alignment = {
+            vertical: "middle",
+            horizontal: "center",
+            wrapText: true,
+        };
+        cell.border = {
+            top: { style: "thin" },
+            bottom: { style: "thin" },
+            left: { style: "thin" },
+            right: { style: "thin" },
+        };
+        if (colIndex === 1) {
+            cell.fill = {
+                type: "pattern",
+                pattern: "solid",
+                fgColor: { argb: "FFECECEC" },
+            };
+        }
+    });
+
+    // Merge A + B for total row label
+    worksheet.mergeCells(`A${currentRow}:B${currentRow}`);
+
+    totalRow.height = 28;
+
+    return {
+        totalSchools,
+        totalMem,
+        totalMemFem,
+        totalMemAdvisor,
+        totalMemFemAdvisor,
+    };
 };
 
 // Main function to export Excel
-export default function exportToExcelOptionTwo(branchData) {
+export default function exportToExcelOptionTwo(data) {
     const workbook = new ExcelJS.Workbook();
     const worksheet = createWorksheet(workbook);
-    populateTable(worksheet, branchData);
+
+    function groupByDistrict(data) {
+        const districtMap = {};
+        data.forEach((item) => {
+            const districtName = item.district_name;
+            if (!districtMap[districtName]) {
+                districtMap[districtName] = {
+                    district_name: districtName,
+                    schools: [],
+                };
+            }
+            districtMap[districtName].schools.push(item);
+        });
+        return Object.values(districtMap);
+    }
+
+    const groupedData = groupByDistrict(data);
+    const totals = populateTable(worksheet, groupedData);
+    addTotalsToHeader(worksheet, totals);
 
     workbook.xlsx
         .writeBuffer()
