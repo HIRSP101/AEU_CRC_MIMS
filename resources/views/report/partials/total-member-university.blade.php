@@ -175,11 +175,13 @@
 @endsection
     {{-- var data = @json($reports); --}}
     @push('JS')
+        @vite(['resources/js/exportToExcelOptionTwo.js'])
         <script type="module">
-
+            var data = @json($district);
             console.log(data);
+            
             $("#export_excel").on("click", async () => {
-                exportToExcel_branch(data);
+                exportToExcelOptionTwo(data);
             });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

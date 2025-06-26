@@ -27,25 +27,6 @@ class ReportController extends Controller
 
     public function branchesHeiReport($branchId)
     {
-
-        // $branchesReport = $this->branches()
-        //     // ->with(['branchhei '])
-        //     ->select('branch.branch_kh', 'branch.branch_id')
-        //     ->where('branch.branch_id', '!=', '28')
-        //     ->groupBy('branch.branch_kh', 'branch.branch_id')
-        //     ->orderBy('branch.branch_id', 'asc')
-        //     ->get();
-
-        // $branchHeiReport = $this->branchhei()
-        //     ->select('hei.institute_kh', 'hei.bhei_id', 'hei.branch_id',)
-        //     ->groupBy('hei.institute_kh', 'hei.bhei_id', 'hei.branch_id',)
-        //     ->orderBy('hei.bhei_id', 'asc')
-        //     ->get();
-
-        // $branchesReports = $branchesReport->merge($branchHeiReport);
-        // $groupedReports = $branchesReports->groupBy('branch_kh');
-        // return view('report.partials.total-member-university', compact('groupedReports'));
-
         $branch = DB::table('branch')->where('branch_id', $branchId)->select('branch_kh')->first();
 
         $district = DB::table('district as d')
