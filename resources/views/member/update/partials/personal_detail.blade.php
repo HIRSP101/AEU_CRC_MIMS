@@ -6,7 +6,7 @@
             </h1>
         </label>
         <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="name_kh" id="name_kh" type="text" placeholder="ឈ្មោះជាភាសាខ្មែរ" required
             value="{{$member->name_kh}}">
     </div>
@@ -17,7 +17,7 @@
             </h1>
         </label>
         <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="name_en" id="name_en" type="text" placeholder="ឈ្មោះជាភាសាអង់គ្លេស" required
             value="{{$member->name_en}}">
     </div>
@@ -26,7 +26,7 @@
             ភេទ
         </label>
         <select name="gender" id="gender"
-            class="w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ">
+           class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white">
             @if ($member->gender == 'ប្រុស')
                 <option value="{{$member->gender}}">{{$member->gender}}</option>
                 <option value="">---</option>
@@ -50,7 +50,7 @@
             សញ្ជាតិ
         </label>
         <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="nationality" id="nationality" type="text" required value="{{$member->nationality}}">
     </div>
     <div class="w-1/2 md:w-44 ">
@@ -58,7 +58,7 @@
             រូបភាព
         </label>
         <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
             name="image" type="file" select="image/*" id="image">
     </div>
 </div>

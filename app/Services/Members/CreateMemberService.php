@@ -57,7 +57,7 @@ class CreateMemberService
             "member_type" => $data["member_type"] ?? null,
             "member_status" => $data["member_status"] ?? null,
         ]);
-        $this->createRelatedData($member, data: $data);
+        $this->createRelatedData($member,  $data);
 
         return $member;
     }
@@ -82,7 +82,7 @@ class CreateMemberService
             'form_submits_id' => $data['form_submits_id'] ?? null,
             'scout_youth_registration_date'=> $data['scout_youth_registration_date'] ?? null,
             'uyfc_registration_date' => $data['uyfc_registration_date'] ?? null,
-            'other_ngos_registration_date' => $data['other_ngos_registration_date'] ?? null,
+            'other_ngos_registration_date' => $data['other_ngos_registration_date'] ?? null
         ]);
     }
 

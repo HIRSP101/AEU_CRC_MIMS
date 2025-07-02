@@ -1,48 +1,15 @@
-@extends('layouts.templates.att.master')
+@extends('member_input_form.partials.header')
 @push('CSS')
 @endpush
 
 @section('Content')
-<div class="p-4 bg-gray-100 font-battambang my-3">
-    <div class="p-4 bg-white shadow-md rounded-lg">
-        <div class="grid grid-cols-6 ">
-            <div class="col-span-5 flex flex-col items-center justify-center mb-10 ml-24">
-                <img class="w-[125px] h-[125px] mb-3" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}"
-                    alt="">
-                <h1 class="mb-1 text-[18px]">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
-                <h1 class="text-[18px]">Cambodian Red Cross Youth Individual Information</h1>
-            </div>
-            <div class="">
-                <img class="image w-28 h-32 bg-red-300 border rounded-sm"
-                    src="{{ asset('images/members/default-profile.jpg') }}" alt="img">
-            </div>
-        </div>
-
-        @csrf
-        @include('member.components.partials.personal_detail')
-        <hr>
-        @include('member.components.partials.pob')
-        <hr>
-        @include('member.components.partials.current_address')
-        <hr>
-        @include('member.components.partials.personal_training')
-        <hr>
-        @include('member.components.partials.guardian')
-        <div class="flex justify-end gap-3 font-battambang text-white">
-            <a class="border-solid bg-red-500 py-2 font-medium px-4 rounded-md hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300"
-                id="clear_btn">លុប</a>
-            <button
-                class="border-solid bg-green-500 px-4 font-medium py-2 rounded-md hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300"
-                type="submit" id="submit_btn">យល់ព្រម
-            </button>
-        </div>
-    </div>
-
+@include('member_input_form.partials.member_form')
 </div>
 @endsection
 
 @push('JS')
     <script>
+        // var token = @json($token);
         $("#image").on('change', function (e) {
             e.preventDefault();
             var file = e.target.files;
@@ -53,8 +20,31 @@
             e.preventDefault();
             $("input").val("");
         })
+        $("#personal_btn").click(function (e) {
+            e.preventDefault();
+            $("#section1").addClass('hidden');
+            $("#section2").removeClass('hidden');
+        })
+        $("#section2_back").click(function (e) {
+            e.preventDefault();
+            $("#section2").addClass('hidden');
+            $("#section1").removeClass('hidden');
+        })
+        $("#training_btn").click(function (e) {
+            e.preventDefault();
+            $("#section2").addClass('hidden');
+            $("#section3").removeClass('hidden');
+        })
+        $("#section3_back").click(function (e) {
+            e.preventDefault();
+            $("#section3").addClass('hidden');
+            $("#section2").removeClass('hidden');
+        })
+
+
         $("#submit_btn").click(function (e) {
             e.preventDefault();
+            var formData = new FormData();
             const selectedVal = $("input#branch_name").val();
             const selectedOption = $("#branchname_list option").filter(function () {
                 return $(this).val() === selectedVal;
@@ -70,9 +60,9 @@
             } else if (dataId.startsWith('school_')) {
                 school_id = dataId.replace('school_', '');
             }
-            var formData = new FormData();
             var memberObj = {
                 0: {
+                    // "member_id": window.location.href.split("/")[4],
                     "name_kh": $("input#name_kh").val(),
                     "name_en": $("input#name_en").val(),
                     "gender": $("select#gender").val(),
@@ -87,7 +77,7 @@
                     "pob_village": $("input#village").val(),
                     "pob_commune_sangkat": $("input#commune").val(),
                     "pob_district_khan": $("input#district").val(),
-                    "branch_id": $("#proviencelist option").filter(function () {
+                    "branch_id": $("#proviencelist2 option").filter(function () {
                         return $(this).val() == $("input#current_provience").val();
                     }).data('id') || null,
                     "branchhei_id": branchhei_id,
@@ -120,24 +110,24 @@
                     "other_ngos_registration_date": $("input#other_ngos_registration_date").val(),
                     "member_type": $("select#member_type").val(),
                     "member_status": $("input#member_status").val(),
-                    "acadmedic_year": null
+                    "approved": 0,
+                    "token": @json($token)
                 }
             }
 
             formData.append('image', $("#image")[0].files[0]);
             console.log(memberObj);
             formData.append('members', JSON.stringify(memberObj));
-
             console.log(formData);
-            // $("#loading-overlay").show();
+            console.log(@json($token));
+            //  $("#loading-overlay").show();
             insertMember(formData);
         })
-
 
         function insertMember(member) {
             $.ajax({
                 type: 'POST',
-                url: '/createmember',
+                url: `/member-rigistration`,
                 data: member,
                 contentType: false,
                 processData: false,
@@ -145,11 +135,10 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (response) {
-                    console.log(response.message);
-                    //   $("#loading-overlay").hide();
-                    alert(response.message);
+                    console.log(response);
                 },
                 error: function (error) {
+                    // $("#loading-overlay").hide();
                     console.error(error);
                 }
             })

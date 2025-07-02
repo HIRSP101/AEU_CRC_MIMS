@@ -208,8 +208,8 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/memberapprove', "{$appC}\\LinkController@memberApprove")->name('memberapprove');
 });
 // new route code for member form submit with token without auth 2025/05/29
-Route::get('/form/{token}', [FormController::class, 'index']);
-Route::post('/form/submit/{token}', [FormController::class, 'submit']);
+Route::get('/member-rigistration/{token}', "{$appC}\\FormController@Index");
+Route::post('/member-rigistration', "{$appC}\\FormController@submitForm");
 
 
 Route::get('/test_db_connection', "{$appC}\\testdbconnection@testConnection");
