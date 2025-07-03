@@ -14,7 +14,6 @@
         <h2 class="text-center font-khmer mb-2 text-lg text-blue-800">បច្ចុប្បន្នភាពឆ្នាំ២០២៤</h2>
         <div class="flex justify-between items-center mt-5">
             <div>
-                <button id="export_pdf" class="bg-gray-500 text-white mt-2 px-4 py-2 rounded">Export PDF</button>
                 <button id="export_excel" class="bg-[#31bf7d] text-white px-4 py-2 rounded">Export Excel</button>
             </div>
             <div class="flex justify-end items-center">
@@ -176,11 +175,13 @@
 @endsection
     {{-- var data = @json($reports); --}}
     @push('JS')
+        @vite(['resources/js/exportToExcelOptionTwo.js'])
         <script type="module">
-
+            var data = @json($district);
             console.log(data);
+            
             $("#export_excel").on("click", async () => {
-                exportToExcel_branch(data);
+                exportToExcelOptionTwo(data);
             });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

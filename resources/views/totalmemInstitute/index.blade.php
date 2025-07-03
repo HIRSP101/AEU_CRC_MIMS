@@ -9,7 +9,7 @@
     $total_mem_detail = "";
     $member_pob = "";
     $institute_kh = $institution->institute_kh;
-                                                                                                                                            ?>
+                                                                                                                                                ?>
     @if(count($total_mem) > 0)
         <?php
             $current_branch = explode(' ', $total_mem[0]->full_current_address)[3] ?? "";
@@ -57,7 +57,7 @@
 
                 );
             }
-                                                                                                                                                                                                                                                                                                                            ?>
+                                                                                                                                                                                                                                                                                                                                    ?>
         <div id="loadingSpinner" class="fixed top-0 left-0 z-50 w-screen h-screen bg-gray-300 bg-opacity-50 h-full hidden">
             <p id="textload" class="hidden textload text-center font-siemreap">សូមរងចាំ...</p>
             <p id="textsucc" class="hidden textload text-center font-siemreap">ទាញយកជោគជ័យ</p>
@@ -77,7 +77,7 @@
             </div>
         </div>
         <div class="bg-white mt-2 mx-3 shadow-lg">
-            <h1 class="text-center font-siemreap my-2 font-bold text-2xl"> {{$title}} </h1>
+            <h1 class="text-center font-siemreap my-5 font-bold text-2xl"> {{$title}} </h1>
             <h2 class="text-center font-siemreap mb-2 text-2xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា {{$institute_kh}} </h2>
             <div class="flex justify-between items-center mb-4 mt-14 px-4">
                 <!-- Search Bar -->
