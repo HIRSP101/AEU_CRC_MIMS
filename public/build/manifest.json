@@ -4,12 +4,12 @@
     "name": "axios"
   },
   "resources/css/app.css": {
-    "file": "assets/app-PqU9o5_a.css",
+    "file": "assets/app-DXDulb03.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-Do0wJ1ms.js",
+    "file": "assets/app-B41Ylqy3.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -18,7 +18,7 @@
       "resources/js/exportToExcel.js"
     ],
     "css": [
-      "assets/app-BAa5L0sJ.css"
+      "assets/app-CUqNpdiI.css"
     ]
   },
   "resources/js/bootstrap.js": {
