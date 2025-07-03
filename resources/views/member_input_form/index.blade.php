@@ -4,12 +4,20 @@
 
 @section('Content')
 @include('member_input_form.partials.member_form')
+  <div id="loadingSpinner" class="fixed top-0 left-0 z-50 w-screen h-screen bg-gray-300 bg-opacity-50 h-full hidden">
+        <p id="textload" class="hidden textload text-center font-siemreap">សូមរងចាំ...</p>
+        <p id="textsucc" class="hidden textload text-center font-siemreap">បញ្ចូលជោគជ័យ</p>
+        <div id="spinner" class="spinner hidden"></div>
+        <div id="tick" class="hidden text-center text-green-500 text-6xl">✔</div>
+        <div class="flex justify-center items-center mt-2">
+            <button id="ok" class="hidden w-32 text-center bg-green-500 text-white px-4 py-2 rounded">OK</button>
+        </div>
+    </div>
 </div>
 @endsection
 
 @push('JS')
     <script>
-        // var token = @json($token);
         $("#image").on('change', function (e) {
             e.preventDefault();
             var file = e.target.files;
@@ -21,17 +29,90 @@
             $("input").val("");
         })
         $("#personal_btn").click(function (e) {
+
             e.preventDefault();
+
+            const requiredFields = [
+                'name_kh',
+                'name_en',
+                'gender',
+                'nationality',
+                'village',
+                'commune',
+                'district',
+                'province',
+                'dateofbirth'
+            ];
+            let allValid = true;
+            requiredFields.forEach(id => {
+                const input = document.getElementById(id);
+                if (!input || input.value.trim() === "") {
+                    allValid = false;
+                    input.classList.add("border-red-500");
+                } else {
+                    input.classList.remove("border-red-500");
+                }
+            });
+
+            if (!allValid) {
+                alert("សូមបំពេញព័ត៌មានដែលត្រូវបានទាមទារ។"); // Please fill in the required information.
+                return;
+            }
             $("#section1").addClass('hidden');
             $("#section2").removeClass('hidden');
         })
         $("#section2_back").click(function (e) {
             e.preventDefault();
+
+            const requiredFields = [
+                'recruitment_date',
+                'branch_name',
+                'phone_number',
+
+            ];
+            let allValid = true;
+            requiredFields.forEach(id => {
+                const input = document.getElementById(id);
+                if (!input || input.value.trim() === "") {
+                    allValid = false;
+                    input.classList.add("border-red-500");
+                } else {
+                    input.classList.remove("border-red-500");
+                }
+            });
+
+            if (!allValid) {
+                alert("សូមបំពេញព័ត៌មានដែលត្រូវបានទាមទារ។"); // Please fill in the required information.
+                return;
+            }
+
             $("#section2").addClass('hidden');
             $("#section1").removeClass('hidden');
         })
         $("#training_btn").click(function (e) {
             e.preventDefault();
+
+            const requiredFields = [
+                'recruitment_date',
+                'branch_name',
+                'phone_number',
+            ];
+            let allValid = true;
+            requiredFields.forEach(id => {
+                const input = document.getElementById(id);
+                if (!input || input.value.trim() === "") {
+                    allValid = false;
+                    input.classList.add("border-red-500");
+                } else {
+                    input.classList.remove("border-red-500");
+                }
+            });
+
+            if (!allValid) {
+                alert("សូមបំពេញព័ត៌មានដែលត្រូវបានទាមទារ។"); // Please fill in the required information.
+                return;
+            }
+
             $("#section2").addClass('hidden');
             $("#section3").removeClass('hidden');
         })
@@ -44,6 +125,32 @@
 
         $("#submit_btn").click(function (e) {
             e.preventDefault();
+             const requiredFields = [
+                'father_name',
+                'guardian_number',
+                'mother_name',
+            ];
+            let allValid = true;
+            requiredFields.forEach(id => {
+                const input = document.getElementById(id);
+                if (!input || input.value.trim() === "") {
+                    allValid = false;
+                    input.classList.add("border-red-500");
+                } else {
+                    input.classList.remove("border-red-500");
+                }
+            });
+
+            if (!allValid) {
+                alert("សូមបំពេញព័ត៌មានដែលត្រូវបានទាមទារ។"); // Please fill in the required information.
+                return;
+            }
+             $("#loadingSpinner").show();
+                        $("#textload").show();
+                        $("#spinner").show();
+                        $("#textsucc").hide();
+                        $("#tick").hide();
+                        $("#ok").hide();
             var formData = new FormData();
             const selectedVal = $("input#branch_name").val();
             const selectedOption = $("#branchname_list option").filter(function () {
@@ -116,11 +223,8 @@
             }
 
             formData.append('image', $("#image")[0].files[0]);
-            console.log(memberObj);
             formData.append('members', JSON.stringify(memberObj));
             console.log(formData);
-            console.log(@json($token));
-            //  $("#loading-overlay").show();
             insertMember(formData);
         })
 
@@ -136,9 +240,22 @@
                 },
                 success: function (response) {
                     console.log(response);
+                      $("#loadingSpinner").show();
+                                $("#textload").hide();
+                                $("#spinner").hide();
+                                $("#textsucc").show();
+                                $("#tick").show();
+                                $("#ok").show();
+                                $("#ok").on("click", function () {
+                                    $("#loadingSpinner").hide();
+                                    $("#textload").hide();
+                                    $("#spinner").hide();
+                                    $("#textsucc").hide();
+                                    $("#tick").hide();
+                                    $("#ok").hide();
+                                });
                 },
                 error: function (error) {
-                    // $("#loading-overlay").hide();
                     console.error(error);
                 }
             })
