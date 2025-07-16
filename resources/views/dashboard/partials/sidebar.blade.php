@@ -96,6 +96,7 @@
                             របាយការណ៍
                         </span>
                     </a>
+                    
 
                     <a href="" id="subModule-expire"
                         class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
@@ -170,7 +171,7 @@
                             <span> បញ្ជូលតាម Link</span>
                         </a>
                     </div>
-                    <a href="" id="subModule-create"
+                    <a href="#" id="subModule-create"
                         class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                         <img width="23" height="23"
                             src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
@@ -229,20 +230,23 @@
     </div>
 </div>
 @push("JS")
-    <script>
-        $("#subModule-add").click((e) => {
+<script>
+    $(document).ready(function () {
+        $("#subModule-add").off("click").on("click", function (e) {
             e.preventDefault();
-            $("#dropdown-add").toggleClass('hidden', 500);
+            console.log("add");
+            $("#dropdown-add").toggle(500);
         });
 
-        $("#subModule-create").click((e) => {
+        $("#subModule-create").off("click").on("click", function (e) {
             e.preventDefault();
-            $("#dropdown-create").toggleClass('hidden', 500);
+            $("#dropdown-create").toggle(500);
         });
 
-        $("#subModule-expire").click((e) => {
+        $("#subModule-expire").off("click").on("click", function (e) {
             e.preventDefault();
-            $("#dropdown-expire").toggleClass('hidden', 500);
-        })
-    </script>
+            $("#dropdown-expire").toggle(500);
+        });
+    });
+</script>
 @endpush

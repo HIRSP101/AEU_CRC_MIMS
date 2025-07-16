@@ -14,13 +14,13 @@ class UpdateMemberService
         $member = member_personal_detail::findOrFail($memberId);
 
         // Handle image upload if a new image is provided
-        $imagePath = $this->handleImageUpload($data, $image, $memberId) ?? $member->image;
+        $imagePath = $this->handleImageUpload($data, $image, $memberId) ?? $member->member_image;
         // Update member personal details
         $member->update([
             "name_kh" => $data[0]['name_kh'] ?? $member->name_kh,
             "name_en" => $data[0]['name_en'] ?? $member->name_en,
             "gender" => $data[0]['gender'] ?? $member->gender,
-            "image" => $imagePath,
+            "member_image" => $imagePath,
             "nationality" => $data[0]['nationality'] ?? $member->nationality,
             "date_of_birth" => isset($data[0]['date_of_birth']) ? $this->convertDate($data[0]['date_of_birth']) : $member->date_of_birth,
             "full_current_address" => $data[0]['full_current_address'] ?? $member->full_current_address,
@@ -122,7 +122,7 @@ class UpdateMemberService
             return null;
         }
 
-        $imageName = 'mem-' . str_replace(' ', '', $data[0]["name_en"] . ($currentMemberId + 1)) . '.' . $image->extension();
+        $imageName = 'mem-' . str_replace(' ', '', $data[0]["name_en"] . ($currentMemberId)) . '.' . $image->extension();
         $image->move(public_path('images/members'), $imageName);
 
         return "images/members/$imageName";

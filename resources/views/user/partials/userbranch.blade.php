@@ -3,7 +3,7 @@
     <td class="py-3 px-6 text-left whitespace-nowrap">
         <div class="flex items-center">
             <div class="mr-2">
-                <img class="w-6 h-6 rounded-full" src="{{asset("{$branch_user->branch->image}")}}"/>
+                <img class="w-6 h-6 rounded-full" src="{{asset("{$branch_user->branch->branch_image}")}}"/>
             </div>
             <span class="font-medium">{{$branch_user->branch->branch_name ?? ""}}</span>
         </div>

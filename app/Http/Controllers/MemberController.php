@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\ImportProgress;
-use App\Models\Branch;
+use App\Models\branch;
 use App\Models\branch_hei;
 use App\Models\member_personal_detail;
 use App\Http\Requests\MemberRequest;
@@ -162,6 +162,7 @@ class MemberController extends Controller
     //new code 2025/03/27 import excel data into create member service
     public function importMember(Request $request): JsonResponse
     {
+         ini_set('max_execution_time', 120);
         try {
             DB::beginTransaction();
 

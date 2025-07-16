@@ -7,6 +7,7 @@ use App\Models\school;
 use Spatie\Browsershot\Browsershot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\LaravelPdf\Facades\Pdf;
 use ZipArchive;
 
 class PdfController extends Controller
@@ -92,8 +93,9 @@ class PdfController extends Controller
 
                 $pdfFilePath = $tempDir . "សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន_យុវជន_កក្រក_ប្រចាំ_{$institution->institute_kh}{$chunkCounter}.pdf";
 
-                $html = view('pdf-preview.multimember-detail-form.index', compact('members'))->render();
-                Browsershot::html($html)->format('A4')->savePdf($pdfFilePath);
+                Pdf::view('pdf-preview.multimember-detail-form.index', compact('members'))
+                    ->format('a4')
+                    ->save($pdfFilePath);
 
                 $chunkCounter++;
             });
@@ -164,8 +166,9 @@ class PdfController extends Controller
 
                 $pdfFilePath = $tempDir . "វិញ្ញាបនបត្ររដ្ឋបាលប្រចាំ_យុវជន_កក្រក_ប្រចាំ_{$institution->institute_kh}{$chunkCounter}.pdf";
 
-                $html = view('pdf-preview.multimember-request-form.index', compact('members'))->render();
-                Browsershot::html($html)->format('A4')->savePdf($pdfFilePath);
+                Pdf::view('pdf-preview.multimember-request-form.index', compact('members'))
+                    ->format('a4')
+                    ->save($pdfFilePath);
 
                 $chunkCounter++;
             });
@@ -218,10 +221,13 @@ class PdfController extends Controller
             ->first();
         // return response()->json($member);
         $tempDir = storage_path('app/reports/');
+
         $pdfFilePath = $tempDir . "សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន.pdf";
 
-        $html = view('pdf-preview.request-form-preview.index', compact('member'))->render();
-        Browsershot::html($html)->format('A4')->savePdf($pdfFilePath);
+        Pdf::view('pdf-preview.request-form-preview.index', compact('member'))
+            ->format('a4')
+            ->save($pdfFilePath);
+
         return response()->download($pdfFilePath)->deleteFileAfterSend(true);  // Automatically delete after download
 
     }
@@ -289,13 +295,17 @@ class PdfController extends Controller
             ->first();
         // return response()->json($member);
         $tempDir = storage_path('app/reports/');
+
         if (!file_exists($tempDir)) {
             mkdir($tempDir, 0777, true);
         }
+
         $pdfFilePath = $tempDir . "សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន.pdf";
 
-        $html = view('pdf-preview.member-detail-form.index', compact('member'))->render();
-        Browsershot::html($html)->format('A4')->savePdf($pdfFilePath);
+        Pdf::view('pdf-preview.member-detail-form.index', compact('member'))
+            ->format('a4')
+            ->save($pdfFilePath);
+
         return response()->download($pdfFilePath)->deleteFileAfterSend(true);
     }
     // 2025/05/23 new function to export PDF generate members detail form by School
@@ -380,8 +390,9 @@ class PdfController extends Controller
 
                 $pdfFilePath = $tempDir . "សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន_យុវជន_កក្រក_ប្រចាំ_{$school->school_name}{$chunkCounter}.pdf";
 
-                $html = view('pdf-preview.multimember-detail-form.index', compact('members'))->render();
-                Browsershot::html($html)->format('A4')->savePdf($pdfFilePath);
+                Pdf::view('pdf-preview.multimember-detail-form.index', compact('members'))
+                    ->format('a4')
+                    ->save($pdfFilePath);
 
                 $chunkCounter++;
             });
@@ -452,8 +463,9 @@ class PdfController extends Controller
 
                 $pdfFilePath = $tempDir . "វិញ្ញាបនបត្ររដ្ឋបាលប្រចាំ_យុវជន_កក្រក_ប្រចាំ_{$school->school_name}{$chunkCounter}.pdf";
 
-                $html = view('pdf-preview.multimember-request-form.index', compact('members'))->render();
-                Browsershot::html($html)->format('A4')->savePdf($pdfFilePath);
+                Pdf::view('pdf-preview.multimember-request-form.index', compact('members'))
+                    ->format('a4')
+                    ->save($pdfFilePath);
 
                 $chunkCounter++;
             });
