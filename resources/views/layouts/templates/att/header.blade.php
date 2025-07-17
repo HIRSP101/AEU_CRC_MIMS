@@ -13,6 +13,8 @@
     <script src="{{ asset('build/assets/app.js') }}"></script>
     <!-- <script src="{{ asset('js/jszip.min.js') }}"></script>
     <script src="{{ asset('js/FileSaver.min.js') }}"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <link rel="icon" type="image/x-icon" href="{{URL::asset('images/Logo_of_Cambodian_Red_Cross.svg')}}">
     @stack('CSS')
 </head>

@@ -17,7 +17,7 @@
 @endphp
 
 <body>
-    <div class="px-12 " id="source-html">
+    <div class="px-12">
         <div class="grid grid-cols-6 ">
             <div class="col-span-5 flex flex-col items-center justify-center mb-5 ml-24 mt-6">
                 <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path($member->member_image ?? 'images/crc.png'))) }}"

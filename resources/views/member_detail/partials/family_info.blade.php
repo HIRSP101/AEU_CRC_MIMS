@@ -1,7 +1,7 @@
 @php
     use App\Helpers\DateTimeFormat;
 @endphp
-<div class="flex flex-wrap mx-3 my-3 ">
+<div class="flex flex-wrap mx-3 my-2 ">
     <div class="flex w-full md:w-1/2 md:mb-0 relative">
         <h3 class="px-2">
             - ឈ្មោះឪពុក(Father Name) ៖<span>..........................................</span>

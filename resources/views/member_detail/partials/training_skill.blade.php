@@ -1,4 +1,4 @@
-<div class="flex flex-wrap mx-3 my-3 gap-1">
+<div class="flex flex-wrap mx-3 my-2 gap-1">
     <div class="flex w-full md:w-full md:mb-0 relative">
         <h3 class="px-2">
             - ជំនាញភាសាបរទេស(Language Skill) ៖<span>..............................................................................................................................</span>

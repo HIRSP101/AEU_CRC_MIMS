@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\branch_hei;
 use App\Models\school;
-use Spatie\Browsershot\Browsershot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Spatie\LaravelPdf\Facades\Pdf;
 use ZipArchive;
 
 class PdfController extends Controller
@@ -293,20 +291,9 @@ class PdfController extends Controller
                 'mgd.guardian_phone',
             ])
             ->first();
-        // return response()->json($member);
-        $tempDir = storage_path('app/reports/');
 
-        if (!file_exists($tempDir)) {
-            mkdir($tempDir, 0777, true);
-        }
+        return view('pdf-preview.member-detail-form.index', compact('member'));
 
-        $pdfFilePath = $tempDir . "សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន.pdf";
-
-        Pdf::view('pdf-preview.member-detail-form.index', compact('member'))
-            ->format('a4')
-            ->save($pdfFilePath);
-
-        return response()->download($pdfFilePath)->deleteFileAfterSend(true);
     }
     // 2025/05/23 new function to export PDF generate members detail form by School
     public function generateMembersBySchool(Request $request)
