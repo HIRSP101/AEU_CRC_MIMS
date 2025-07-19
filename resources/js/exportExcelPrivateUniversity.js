@@ -39,7 +39,8 @@ export const addTitle = (worksheet, branchName) => {
     // Add main title
     worksheet.mergeCells("A1:M1");
     const mainTitle = worksheet.getCell("A1");
-    mainTitle.value = "ឯកសារយោងសំរាប់ការបញ្ជាក់ព័ត៌មាននៃការសិក្សា និងការងារ";
+    mainTitle.value =
+        "បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា";
     mainTitle.font = EXCEL_CONFIG.fonts.header;
     mainTitle.alignment = { horizontal: "center" };
 
@@ -99,43 +100,43 @@ export const applyStyles = (worksheet, dataLength) => {
     }
 };
 
-export const addFooter = (worksheet, totalStudents, femaleStu, rowNumber) => {
-    // Add total count
-    worksheet.mergeCells(`A${rowNumber}:I${rowNumber}`);
-    const totalCell = worksheet.getCell(`A${rowNumber}`);
-    totalCell.value = `បញ្ចប់បញ្ជីត្រឹមចំនួន ${totalStudents} នាក់ (ស្រី ${femaleStu} នាក់)`;
-    totalCell.font = EXCEL_CONFIG.fonts.body;
-    totalCell.alignment = { vertical: "middle", horizontal: "left" };
+// export const addFooter = (worksheet, totalStudents, femaleStu, rowNumber) => {
+//     // Add total count
+//     worksheet.mergeCells(`A${rowNumber}:I${rowNumber}`);
+//     const totalCell = worksheet.getCell(`A${rowNumber}`);
+//     totalCell.value = `បញ្ចប់បញ្ជីត្រឹមចំនួន ${totalStudents} នាក់ (ស្រី ${femaleStu} នាក់)`;
+//     totalCell.font = EXCEL_CONFIG.fonts.body;
+//     totalCell.alignment = { vertical: "middle", horizontal: "left" };
 
-    // Add date
-    worksheet.mergeCells(`J${rowNumber}:M${rowNumber}`);
-    const dateCell = worksheet.getCell(`J${rowNumber}`);
-    dateCell.value = "រាជធានីភ្នំពេញ ថ្ងៃទី x  ខែ xx  ឆ្នាំ xxxx";
-    dateCell.font = EXCEL_CONFIG.fonts.body;
-    dateCell.alignment = { vertical: "middle", horizontal: "center" };
+//     // Add date
+//     worksheet.mergeCells(`J${rowNumber}:M${rowNumber}`);
+//     const dateCell = worksheet.getCell(`J${rowNumber}`);
+//     dateCell.value = "រាជធានីភ្នំពេញ ថ្ងៃទី x  ខែ xx  ឆ្នាំ xxxx";
+//     dateCell.font = EXCEL_CONFIG.fonts.body;
+//     dateCell.alignment = { vertical: "middle", horizontal: "center" };
 
-    // Add signature line
-    worksheet.mergeCells(`J${rowNumber + 1}:M${rowNumber + 1}`);
-    const signatureCell = worksheet.getCell(`J${rowNumber + 1}`);
-    signatureCell.value = "អ្នកធ្វើតារាង";
-    signatureCell.font = EXCEL_CONFIG.fonts.body;
-    signatureCell.alignment = { vertical: "middle", horizontal: "center" };
-};
+//     // Add signature line
+//     worksheet.mergeCells(`J${rowNumber + 1}:M${rowNumber + 1}`);
+//     const signatureCell = worksheet.getCell(`J${rowNumber + 1}`);
+//     signatureCell.value = "អ្នកធ្វើតារាង";
+//     signatureCell.font = EXCEL_CONFIG.fonts.body;
+//     signatureCell.alignment = { vertical: "middle", horizontal: "center" };
+// };
 
-export const addDateSignature = (worksheet, rowNumber) => {
-    worksheet.mergeCells(`J${rowNumber}:M${rowNumber}`);
-    const dateCell = worksheet.getCell(`J${rowNumber}`);
-    dateCell.value = "រាជធានីភ្នំពេញ ថ្ងៃទី x  ខែ xx  ឆ្នាំ xxxx";
-    dateCell.font = EXCEL_CONFIG.fonts.body;
-    dateCell.alignment = { vertical: "middle", horizontal: "center" };
+// export const addDateSignature = (worksheet, rowNumber) => {
+//     worksheet.mergeCells(`J${rowNumber}:M${rowNumber}`);
+//     const dateCell = worksheet.getCell(`J${rowNumber}`);
+//     dateCell.value = "រាជធានីភ្នំពេញ ថ្ងៃទី x  ខែ xx  ឆ្នាំ xxxx";
+//     dateCell.font = EXCEL_CONFIG.fonts.body;
+//     dateCell.alignment = { vertical: "middle", horizontal: "center" };
 
-    // Add signature line
-    worksheet.mergeCells(`J${rowNumber + 1}:M${rowNumber + 1}`);
-    const signatureCell = worksheet.getCell(`J${rowNumber + 1}`);
-    signatureCell.value = "អ្នកធ្វើតារាង";
-    signatureCell.font = EXCEL_CONFIG.fonts.body;
-    signatureCell.alignment = { vertical: "middle", horizontal: "center" };
-};
+//     // Add signature line
+//     worksheet.mergeCells(`J${rowNumber + 1}:M${rowNumber + 1}`);
+//     const signatureCell = worksheet.getCell(`J${rowNumber + 1}`);
+//     signatureCell.value = "អ្នកធ្វើតារាង";
+//     signatureCell.font = EXCEL_CONFIG.fonts.body;
+//     signatureCell.alignment = { vertical: "middle", horizontal: "center" };
+// };
 
 export const downloadExcel = async (workbook) => {
     try {
@@ -172,12 +173,12 @@ export default function exportToExcel(
             addTitle(worksheet, current_branch);
             createTable(worksheet, total_memberFormat);
             applyStyles(worksheet, total_member.length);
-            addFooter(
-                worksheet,
-                total_stu,
-                total_stu_fem,
-                total_member.length + 4
-            );
+            // addFooter(
+            //     worksheet,
+            //     total_stu,
+            //     total_stu_fem,
+            //     total_member.length + 4
+            // );
 
             await downloadExcel(workbook);
         } catch (error) {

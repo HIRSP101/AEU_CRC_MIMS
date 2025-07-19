@@ -102,7 +102,7 @@ class InstituteController extends Controller
             ])
             ->distinct()
             ->get();
-        return view('totalmemInstitute.index', compact('total_mem', 'institution',"title"));
+        return view('totalmemInstitute.index', compact('total_mem', 'institution', "title"));
     }
     public function generateReport($id)
     {
