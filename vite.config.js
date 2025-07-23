@@ -15,6 +15,7 @@ export default defineConfig({
                 "resources/js/bootstrap.js",
                 "resources/js/exportToExcelOptionThree.js",
                 "resources/js/exportToExcelOptionTwo.js",
+                "resources/js/exportExcelPrivateUniversity.js",
             ],
             refresh: true,
         }),

@@ -6,7 +6,7 @@
 @section('Content')
     <?php
     $i = 0;
-                ?>
+                                                                            ?>
 
     <div class="bg-white mt-2 mx-2 px-3 shadow-lg h-max-full rounded-lg">
         <h1 class="text-center font-khmer my-2 text-lg text-blue-800 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
@@ -100,12 +100,12 @@
 @endsection
 
 @push('JS')
-    @vite(['resources/js/exportToExcel_branch.js'])
+    @vite(['resources/js/exportExcelPrivateUniversity.js'])
     <script type="module">
         var data = @json($branchhei_private);
         console.log(data);
         $("#export_excel").on("click", async () => {
-            exportToExcel_branch(data);
+            exportExcelPrivateUniversity(data);
         });
     </script>
 

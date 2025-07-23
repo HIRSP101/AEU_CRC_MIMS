@@ -3,18 +3,22 @@ import ExcelJS from "exceljs";
 // Configuration object for columns and fonts
 const EXCEL_CONFIG = {
     columnDefinitions: [
-        { name: "ល.រ", width: 20 }, // Row number
-        { name: "សាខា កក្រក", width: 30 }, // Branch name
-        { name: "សរុប (បណ្តាញ)", width: 20 }, // Total (MS + HS)
-        { name: "អនុ.វិ", width: 20 }, // Total MS
-        { name: "វិទ្យាល័យ", width: 20 }, // Total HS
-        { name: "ខត្តមសិក្សា", width: 20 }, // Placeholder for future use (always 0)
-        { name: "សរុប (ទីប្រឹក្សា)", width: 20 }, // Total LS
-        { name: "ស្រី (ទីប្រឹក្សា)", width: 20 }, // Female LS
-        { name: "សរុប (យុវជន)", width: 20 }, // Total MEM
-        { name: "ស្រី (យុវជន)", width: 20 }, // Female MEM
+        { name: "ល.រ", width: 20 },
+        { name: "សាខា កក្រក", width: 30 },
+        { name: "សរុប (បណ្តាញ)", width: 20 },
+        { name: "អនុ.វិ", width: 20 },
+        { name: "វិទ្យាល័យ", width: 20 },
+        { name: "ខត្តមសិក្សា", width: 20 },
+        { name: "សរុប (ទីប្រឹក្សា)", width: 20 },
+        { name: "ស្រី (ទីប្រឹក្សា)", width: 20 },
+        { name: "សរុប (យុវជន)", width: 20 },
+        { name: "ស្រី (យុវជន)", width: 20 },
     ],
     fonts: {
+        title: {
+            name: "Khmer OS Muol Light",
+            size: 14,
+        },
         header: {
             name: "Khmer OS Muol Light",
             size: 10,
@@ -30,22 +34,41 @@ const EXCEL_CONFIG = {
 export const createWorksheet = (workbook) => {
     const worksheet = workbook.addWorksheet("សរុបចំណូល ២០២៤");
 
-    // Set up the merged cells to match the table structure
-    worksheet.mergeCells("C1:F1"); // Columns for "បណ្តាញយុវជនគ្រឹះស្ថានសិក្សា ២០២៤"
-    worksheet.mergeCells("G1:H1"); // Columns for "ទីប្រឹក្សា ២០២៤"
-    worksheet.mergeCells("I1:J1"); // Columns for "យុវជន ២០២៤"
-    worksheet.mergeCells("B1:B2");
-    worksheet.mergeCells("A1:A2");
+    // Set column widths
+    EXCEL_CONFIG.columnDefinitions.forEach((col, index) => {
+        worksheet.getColumn(index + 1).width = col.width;
+    });
 
-    // Add the headers
-    const headerRow1 = worksheet.getRow(1);
+    // ==== Title Section ====
+    const titleText = `តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា ទីប្រឹក្សាយុវជន នឹងយុវជន
+នៃកាកបាទក្រហមកម្ពុជា ២៥ រាជធានី/ខេត្ត និងគ្រឹះស្ថានឧត្តមសិក្សា
+បច្ចុប្បន្នភាពឆ្នាំ២០២៤`;
+
+    worksheet.mergeCells("A1:J3");
+    const titleCell = worksheet.getCell("A1");
+    titleCell.value = titleText;
+    titleCell.font = EXCEL_CONFIG.fonts.title;
+    titleCell.alignment = {
+        vertical: "middle",
+        horizontal: "center",
+        wrapText: true,
+    };
+
+    // ==== Header Section ====
+    worksheet.mergeCells("C4:F4");
+    worksheet.mergeCells("G4:H4");
+    worksheet.mergeCells("I4:J4");
+    worksheet.mergeCells("B4:B5");
+    worksheet.mergeCells("A4:A5");
+
+    const headerRow1 = worksheet.getRow(4);
     headerRow1.getCell(1).value = "ល.រ";
     headerRow1.getCell(2).value = "សាខា កក្រក";
     headerRow1.getCell(3).value = "បណ្តាញយុវជនគ្រឹះស្ថានសិក្សា ២០២៤";
     headerRow1.getCell(7).value = "ទីប្រឹក្សា ២០២៤";
     headerRow1.getCell(9).value = "យុវជន ២០២៤";
 
-    const headerRow2 = worksheet.getRow(2);
+    const headerRow2 = worksheet.getRow(5);
     headerRow2.getCell(3).value = "សរុប";
     headerRow2.getCell(4).value = "អនុ.វិ";
     headerRow2.getCell(5).value = "វិទ្យាល័យ";
@@ -55,12 +78,10 @@ export const createWorksheet = (workbook) => {
     headerRow2.getCell(9).value = "សរុប";
     headerRow2.getCell(10).value = "ស្រី";
 
-    // Apply styles for headers
     [headerRow1, headerRow2].forEach((row) => {
         row.eachCell((cell) => {
             cell.font = EXCEL_CONFIG.fonts.header;
-            (cell.width = 50),
-                (cell.alignment = { vertical: "middle", horizontal: "center" });
+            cell.alignment = { vertical: "middle", horizontal: "center" };
             cell.border = {
                 top: { style: "thin" },
                 bottom: { style: "thin" },
@@ -69,6 +90,7 @@ export const createWorksheet = (workbook) => {
             };
         });
     });
+
     return worksheet;
 };
 
@@ -82,7 +104,7 @@ export const populateTable = (worksheet, data) => {
     let total_mem_fem = 0;
 
     data.forEach((item, index) => {
-        const rowNumber = index + 3;
+        const rowNumber = index + 6;
         const row = worksheet.getRow(rowNumber);
 
         const secondary_school = parseInt(item.secondary_school ?? 0);
@@ -91,13 +113,11 @@ export const populateTable = (worksheet, data) => {
 
         const total_all_school_type =
             secondary_school + high_school + university;
-
         const mem_advisor = parseInt(item.total_mem_advisor ?? 0);
         const mem_fem_advisor = parseInt(item.total_mem_fem_advisor ?? 0);
         const mem = parseInt(item.total_mem ?? 0);
         const mem_fem = parseInt(item.total_mem_fem ?? 0);
 
-        // Accumulate totals
         total_secondary += secondary_school;
         total_high += high_school;
         total_university += university;
@@ -134,14 +154,14 @@ export const populateTable = (worksheet, data) => {
     });
 
     // Add total row
-    const totalRowIndex = data.length + 3;
+    const totalRowIndex = data.length + 6;
     const totalRow = worksheet.getRow(totalRowIndex);
     const total_all_school_type =
         total_secondary + total_high + total_university;
 
     const totalData = [
-        "", // Empty cell for "ល.រ"
-        "សរុប", // Label
+        "",
+        "សរុប",
         total_all_school_type,
         total_secondary,
         total_high,
@@ -166,7 +186,7 @@ export const populateTable = (worksheet, data) => {
         cell.fill = {
             type: "pattern",
             pattern: "solid",
-            fgColor: { argb: "FFECECEC" }, // light gray background
+            fgColor: { argb: "FFECECEC" },
         };
     });
 };

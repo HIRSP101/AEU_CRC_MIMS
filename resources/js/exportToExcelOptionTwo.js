@@ -42,112 +42,113 @@ export const createWorksheet = (workbook) => {
         width: col.width,
     }));
 
-    const font = EXCEL_CONFIG.fonts.header;
-    const border = {
-        top: { style: "thin" },
-        left: { style: "thin" },
-        bottom: { style: "thin" },
-        right: { style: "thin" },
+    const title = `តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា ទីប្រឹក្សាយុវជន និងយុវជន 
+    នៃកាកបាទក្រហមកម្ពុជា​ប្រចាំ​​ខេត្ត​ 
+    បច្ចុប្បន្នភាពឆ្នាំ២០២៤`;
+
+    worksheet.mergeCells("A1:R1");
+    const titleCell = worksheet.getCell("A1");
+    titleCell.value = title;
+    titleCell.font = {
+        name: "Khmer OS Muol Light",
+        size: 14,
+        bold: true,
     };
-    const alignCenter = {
-        vertical: "middle",
+    titleCell.alignment = {
         horizontal: "center",
+        vertical: "middle",
         wrapText: true,
     };
+    titleCell.height = 40;
 
-    // --- MERGE COLUMNS WITH 5 ROWS ---
-    worksheet.mergeCells("A1:A3"); // ល.រ
-    worksheet.getCell("A1").value = "ល.រ";
+    // Push down everything else by 1 row
+    const shift = (cellRef) => {
+        const match = cellRef.match(/^([A-Z]+)(\d+)$/);
+        if (!match) return cellRef;
+        const col = match[1];
+        const row = parseInt(match[2], 10);
+        return `${col}${row + 1}`;
+    };
 
-    worksheet.mergeCells("B1:B3"); // ក្រុង/ស្រុក
-    worksheet.getCell("B1").value = "ក្រុង/ស្រុក";
+    // All existing mergedCells/values should shift by 1 row
+    // For example: "A1:A3" → "A2:A4", etc.
+    const mergeAndSet = (range, value) => {
+        const shifted = range.split(":").map(shift).join(":");
+        worksheet.mergeCells(shifted);
+        worksheet.getCell(shift(range.split(":")[0])).value = value;
+    };
 
-    worksheet.mergeCells("C1:C3"); // ចំនួនគ្រឹះស្ថានសិក្សា
-    worksheet.getCell("C1").value = "ចំនួនគ្រឹះស្ថានសិក្សា";
+    mergeAndSet("A1:A3", "ល.រ");
+    mergeAndSet("B1:B3", "ក្រុង/ស្រុក");
+    mergeAndSet("C1:C3", "ចំនួនគ្រឹះស្ថានសិក្សា");
+    mergeAndSet("D1:D3", "ឈ្មោះគ្រឹះស្ថានសិក្សា");
 
-    worksheet.mergeCells("D1:D3"); // ឈ្មោះគ្រឹះស្ថានសិក្សា
-    worksheet.getCell("D1").value = "ឈ្មោះគ្រឹះស្ថានសិក្សា";
+    mergeAndSet("E1:F1", "មានបណ្ដាញ");
+    mergeAndSet("E2:F2", "យុវជន កក្រក");
+    worksheet.getCell("E4").value = "មាន";
+    worksheet.getCell("F4").value = "អត់";
 
-    // --- MERGE 2 ROWS (ROW 1-2) ---
-    // មានបណ្ដាញ
-    worksheet.mergeCells("E1:F1");
-    worksheet.getCell("E1").value = "មានបណ្ដាញ";
-    worksheet.mergeCells("E2:F2");
-    worksheet.getCell("E2").value = "យុវជន កក្រក";
-    worksheet.getCell("E3").value = "មាន";
-    worksheet.getCell("F3").value = "អត់";
+    mergeAndSet("G1:H1", "យុវជន");
+    worksheet.getCell("G3").value = "សរុប";
+    worksheet.getCell("H3").value = "ស្រី";
 
-    // យុវជន
-    worksheet.mergeCells("G1:H1");
-    worksheet.getCell("G1").value = "យុវជន";
-    worksheet.getCell("G2").value = "សរុប";
-    worksheet.getCell("H2").value = "ស្រី";
-    // worksheet.getCell("G3").value = totalMem;
-    // worksheet.getCell("H3").value = totalMemFem;
+    mergeAndSet("I1:J1", "ពិការភាព");
+    worksheet.getCell("I3").value = "សរុប";
+    worksheet.getCell("J3").value = "ស្រី";
+    worksheet.getCell("I4").value = "C";
+    worksheet.getCell("J4").value = "D";
 
-    // ពិការភាព
-    worksheet.mergeCells("I1:J1");
-    worksheet.getCell("I1").value = "ពិការភាព";
-    worksheet.getCell("I2").value = "សរុប";
-    worksheet.getCell("J2").value = "ស្រី";
-    worksheet.getCell("I3").value = "C";
-    worksheet.getCell("J3").value = "D";
+    mergeAndSet("K1:L1", "ទីប្រឹក្សា");
+    worksheet.getCell("K3").value = "សរុប";
+    worksheet.getCell("L3").value = "ស្រី";
 
-    // ទីប្រឹក្សា
-    worksheet.mergeCells("K1:L1");
-    worksheet.getCell("K1").value = "ទីប្រឹក្សា";
-    worksheet.getCell("K2").value = "សរុប";
-    worksheet.getCell("L2").value = "ស្រី";
-    // worksheet.getCell("K3").value = totalMemAdvisor;
-    // worksheet.getCell("L3").value = totalMemFemAdvisor;
+    mergeAndSet("M1:N1", "ពិការភាព");
+    worksheet.getCell("M3").value = "សរុប";
+    worksheet.getCell("N3").value = "ស្រី";
+    worksheet.getCell("M4").value = "G";
+    worksheet.getCell("N4").value = "H";
 
-    // ពិការភាព (second)
-    worksheet.mergeCells("M1:N1");
-    worksheet.getCell("M1").value = "ពិការភាព";
-    worksheet.getCell("M2").value = "សរុប";
-    worksheet.getCell("N2").value = "ស្រី";
-    worksheet.getCell("M3").value = "G";
-    worksheet.getCell("N3").value = "H";
+    mergeAndSet("O1:P2", "ចំនួនយុវជនទទួលវគ្គ បណ្ដុះបណ្ដាល មូលដ្ឋាន");
+    worksheet.getCell("O4").value = "ស្រីសរុប";
+    worksheet.getCell("P4").value = "ប្រុស";
 
-    // ចំនួនយុវជនទទួលវគ្គ បណ្ដុះបណ្ដាល មូលដ្ឋាន
-    worksheet.mergeCells("O1:P2");
-    worksheet.getCell("O1").value = "ចំនួនយុវជនទទួលវគ្គ បណ្ដុះបណ្ដាល មូលដ្ឋាន";
-    worksheet.getCell("O3").value = "ស្រីសរុប";
-    worksheet.getCell("P3").value = "ប្រុស";
-
-    // ចំនួនយុវជនបានទទួល ឯកសណ្ឋាន
-    worksheet.mergeCells("Q1:R2");
-    worksheet.getCell("Q1").value = "ចំនួនយុវជនបានទទួល ឯកសណ្ឋាន";
-    worksheet.getCell("Q3").value = "ស្រីសរុប";
-    worksheet.getCell("R3").value = "ប្រុស";
-
-    // Adjust columns array length to match added columns Q, R, S, T as needed if you want to add data there
-
+    mergeAndSet("Q1:R2", "ចំនួនយុវជនបានទទួល ឯកសណ្ឋាន");
+    worksheet.getCell("Q4").value = "ស្រីសរុប";
+    worksheet.getCell("R4").value = "ប្រុស";
     const skipFillCells = new Set([
-        "E3",
-        "F3", // មាន / អត់
-        "G3", // value A, B
-        "H3",
-        "I3",
-        "J3", // value C, D
-        "K3", // value E, F
-        "L3",
-        "M3",
-        "N3", // value G, H
-        "O3",
-        "P3", // ស្រីសរុប / ប្រុស (ទទួលវគ្គ)
-        "Q3",
-        "R3", // ស្រីសរុប / ប្រុស (ឯកសណ្ឋាន)
+        "E4",
+        "F4",
+        "G4",
+        "H4",
+        "I4",
+        "J4",
+        "K4",
+        "L4",
+        "M4",
+        "N4",
+        "O4",
+        "P4",
+        "Q4",
+        "R4",
     ]);
 
-    for (let r = 1; r <= 3; r++) {
+    for (let r = 2; r <= 4; r++) {
         const row = worksheet.getRow(r);
         row.height = 30;
         row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
             const cellRef = `${worksheet.getColumn(colNumber).letter}${r}`;
-            cell.font = font;
-            cell.border = border;
-            cell.alignment = alignCenter;
+            cell.font = EXCEL_CONFIG.fonts.header;
+            cell.border = {
+                top: { style: "thin" },
+                left: { style: "thin" },
+                bottom: { style: "thin" },
+                right: { style: "thin" },
+            };
+            cell.alignment = {
+                vertical: "middle",
+                horizontal: "center",
+                wrapText: true,
+            };
 
             if (!skipFillCells.has(cellRef)) {
                 cell.fill = {
@@ -183,7 +184,7 @@ export const addTotalsToHeader = (worksheet, totals) => {
 };
 
 export const populateTable = (worksheet, data) => {
-    let currentRow = 4;
+    let currentRow = 5;
     let serialNumber = 1;
 
     // Initialize totals

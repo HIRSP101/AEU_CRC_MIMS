@@ -97,12 +97,12 @@
 @endsection
 
     @push('JS')
-        @vite(['resources/js/exportToExcel_branch.js'])
+        @vite(['resources/js/exportToExcel.js'])
         <script type="module">
             var data = @json($branchhei_public);
             console.log(data);
             $("#export_excel").on("click", async () => {
-                exportToExcel_branch(data);
+                exportToExcel(data);
             });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

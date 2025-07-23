@@ -18,6 +18,11 @@ const EXCEL_CONFIG = {
         { name: "ទំហំអាវ", width: 10 },
     ],
     fonts: {
+        title: {
+            name: "Khmer OS Muol Light",
+            size: 12,
+            bold: true,
+        },
         header: {
             name: "Khmer OS Muol Light",
             size: 10,
@@ -32,157 +37,146 @@ const EXCEL_CONFIG = {
 // Helper functions
 export const createWorksheet = (workbook, branchName) => {
     const worksheet = workbook.addWorksheet(branchName);
-    return worksheet;
-};
+    // Set column widths
+    worksheet.columns = [
+        { width: 10 },
+        { width: 30 },
+        { width: 20 },
+        { width: 20 },
+        { width: 20 },
+        { width: 20 },
+        { width: 20 },
+        { width: 20 },
+        { width: 20 },
+    ];
+    const title = `តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា ទីប្រឹក្សាយុវជន និងយុវជន
+        នៃកាកបាទក្រហមកម្ពុជា ប្រចាំគ្រឹះស្ថានឧត្តមសិក្សា​​(ឯកជន) 
+        បច្ចុប្បន្នភាពឆ្នាំ២០២៤`;
+    worksheet.mergeCells("A1:I1");
+    const titleCell = worksheet.getCell("A1");
+    titleCell.value = title;
+    titleCell.font = EXCEL_CONFIG.fonts.title;
+    titleCell.alignment = {
+        vertical: "middle",
+        horizontal: "center",
+        wrapText: true,
+    };
 
-export const addTitle = (worksheet, branchName) => {
-    // Add main title
-    worksheet.mergeCells("A1:M1");
-    const mainTitle = worksheet.getCell("A1");
-    mainTitle.value =
-        "បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា";
-    mainTitle.font = EXCEL_CONFIG.fonts.header;
-    mainTitle.alignment = { horizontal: "center" };
+    worksheet.getRow(1).height = 40; // Optional: Adjust row height for readability
 
-    // Add branch name
-    worksheet.mergeCells("A2:M2");
-    const branchTitle = worksheet.getCell("A2");
-    branchTitle.value = `សាខាកាកបាទក្រហមកម្ពុជា ${branchName}`;
-    branchTitle.font = EXCEL_CONFIG.fonts.header;
-    branchTitle.alignment = { horizontal: "center" };
-};
+    // Header rows now start at row 2
+    worksheet.mergeCells("A2:A3"); // ល.រ
+    worksheet.mergeCells("B2:E3"); // គ្រឹះស្ថានឧត្តមសិក្សា
+    worksheet.mergeCells("F2:G2"); // ទីប្រឹក្សា
+    worksheet.mergeCells("H2:I2"); // យុវជន
 
-export const createTable = (worksheet, data) => {
-    worksheet.addTable({
-        name: "MyTable",
-        ref: "A3",
-        headerRow: true,
-        style: {
-            theme: "",
-            showRowStripes: false,
-        },
-        columns: EXCEL_CONFIG.columnDefinitions.map((col) => ({
-            name: col.name,
-        })),
-        rows: data,
-    });
-};
+    const headerRow1 = worksheet.getRow(2);
+    headerRow1.getCell(1).value = "ល.រ";
+    headerRow1.getCell(2).value = "គ្រឹះស្ថានឧត្តមសិក្សា";
+    headerRow1.getCell(6).value = "បច្ចុប្បន្នភាពទីប្រឹក្សា";
+    headerRow1.getCell(8).value = "បច្ចុប្បន្នភាពយុវជន";
 
-export const applyStyles = (worksheet, dataLength) => {
-    // Set column widths and alignment
-    worksheet.columns = EXCEL_CONFIG.columnDefinitions.map((col) => ({
-        width: col.width,
-        alignment: { vertical: "middle", horizontal: "center" },
-    }));
+    const headerRow2 = worksheet.getRow(3);
+    headerRow2.getCell(6).value = "សរុប";
+    headerRow2.getCell(7).value = "ស្រី";
+    headerRow2.getCell(8).value = "សរុប";
+    headerRow2.getCell(9).value = "ស្រី";
 
-    // Style header row
-    const headerRow = worksheet.getRow(3);
-    headerRow.eachCell((cell) => {
-        cell.fill = null;
-        cell.font = EXCEL_CONFIG.fonts.header;
-        cell.alignment = { vertical: "middle", horizontal: "center" };
-    });
-
-    // Apply borders and body font
-    for (let i = 3; i <= dataLength + 3; i++) {
-        const row = worksheet.getRow(i);
-        row.eachCell({ includeEmpty: true }, (cell) => {
+    [headerRow1, headerRow2].forEach((row) => {
+        row.eachCell((cell) => {
+            cell.font = EXCEL_CONFIG.fonts.header;
+            cell.alignment = { vertical: "middle", horizontal: "center" };
             cell.border = {
                 top: { style: "thin" },
-                left: { style: "thin" },
                 bottom: { style: "thin" },
+                left: { style: "thin" },
                 right: { style: "thin" },
             };
-            if (i > 3) {
-                cell.font = EXCEL_CONFIG.fonts.body;
-            }
         });
-    }
-};
-
-// export const addFooter = (worksheet, totalStudents, femaleStu, rowNumber) => {
-//     // Add total count
-//     worksheet.mergeCells(`A${rowNumber}:I${rowNumber}`);
-//     const totalCell = worksheet.getCell(`A${rowNumber}`);
-//     totalCell.value = `បញ្ចប់បញ្ជីត្រឹមចំនួន ${totalStudents} នាក់ (ស្រី ${femaleStu} នាក់)`;
-//     totalCell.font = EXCEL_CONFIG.fonts.body;
-//     totalCell.alignment = { vertical: "middle", horizontal: "left" };
-
-//     // Add date
-//     worksheet.mergeCells(`J${rowNumber}:M${rowNumber}`);
-//     const dateCell = worksheet.getCell(`J${rowNumber}`);
-//     dateCell.value = "រាជធានីភ្នំពេញ ថ្ងៃទី x  ខែ xx  ឆ្នាំ xxxx";
-//     dateCell.font = EXCEL_CONFIG.fonts.body;
-//     dateCell.alignment = { vertical: "middle", horizontal: "center" };
-
-//     // Add signature line
-//     worksheet.mergeCells(`J${rowNumber + 1}:M${rowNumber + 1}`);
-//     const signatureCell = worksheet.getCell(`J${rowNumber + 1}`);
-//     signatureCell.value = "អ្នកធ្វើតារាង";
-//     signatureCell.font = EXCEL_CONFIG.fonts.body;
-//     signatureCell.alignment = { vertical: "middle", horizontal: "center" };
-// };
-
-// export const addDateSignature = (worksheet, rowNumber) => {
-//     worksheet.mergeCells(`J${rowNumber}:M${rowNumber}`);
-//     const dateCell = worksheet.getCell(`J${rowNumber}`);
-//     dateCell.value = "រាជធានីភ្នំពេញ ថ្ងៃទី x  ខែ xx  ឆ្នាំ xxxx";
-//     dateCell.font = EXCEL_CONFIG.fonts.body;
-//     dateCell.alignment = { vertical: "middle", horizontal: "center" };
-
-//     // Add signature line
-//     worksheet.mergeCells(`J${rowNumber + 1}:M${rowNumber + 1}`);
-//     const signatureCell = worksheet.getCell(`J${rowNumber + 1}`);
-//     signatureCell.value = "អ្នកធ្វើតារាង";
-//     signatureCell.font = EXCEL_CONFIG.fonts.body;
-//     signatureCell.alignment = { vertical: "middle", horizontal: "center" };
-// };
-
-export const downloadExcel = async (workbook) => {
-    try {
-        const buffer = await workbook.xlsx.writeBuffer();
-        const blob = new Blob([buffer], {
-            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "បញ្ជីសាខាកាកបាទក្រហមកម្ពុជា.xlsx";
-        link.click();
-    } catch (error) {
-        console.error("Error creating Excel file:", error);
-        throw error;
-    }
-};
-
-export default function exportToExcel(
-    current_branch,
-    total_member,
-    total_stu,
-    total_stu_fem
-) {
-    $("#export_excel").on("click", async () => {
-        try {
-            console.log("Hello World!!!");
-            const total_memberFormat = total_member.map((arr) =>
-                arr.slice(0, 13)
-            );
-            console.log(total_member.map((arr) => arr.slice(0, 13)));
-            const workbook = new ExcelJS.Workbook();
-            const worksheet = createWorksheet(workbook, current_branch);
-
-            addTitle(worksheet, current_branch);
-            createTable(worksheet, total_memberFormat);
-            applyStyles(worksheet, total_member.length);
-            // addFooter(
-            //     worksheet,
-            //     total_stu,
-            //     total_stu_fem,
-            //     total_member.length + 4
-            // );
-
-            await downloadExcel(workbook);
-        } catch (error) {
-            console.error("Error in export process:", error);
-        }
     });
+    return worksheet;
+};
+// Function to populate data rows
+export const populateTable = (worksheet, data) => {
+    let totalAdvisor = 0;
+    let totalAdvisorFemale = 0;
+    let totalYouth = 0;
+    let totalYouthFemale = 0;
+
+    data.forEach((item, index) => {
+        const rowNumber = index + 4; // Start after title + 2 header rows
+        const row = worksheet.getRow(rowNumber);
+
+        row.getCell(1).value = index + 1;
+        row.getCell(2).value = item.institute_kh;
+
+        worksheet.mergeCells(`B${rowNumber}:E${rowNumber}`);
+
+        row.getCell(6).value = item.total_mem_advisor;
+        row.getCell(7).value = item.total_mem_fem_advisor;
+        row.getCell(8).value = item.total_mem;
+        row.getCell(9).value = item.total_mem_fem;
+
+        totalAdvisor += item.total_mem_advisor || 0;
+        totalAdvisorFemale += item.total_mem_fem_advisor || 0;
+        totalYouth += item.total_mem || 0;
+        totalYouthFemale += item.total_mem_fem || 0;
+
+        row.eachCell((cell) => {
+            cell.font = EXCEL_CONFIG.fonts.body;
+            cell.alignment = { vertical: "middle", horizontal: "center" };
+            cell.border = {
+                top: { style: "thin" },
+                bottom: { style: "thin" },
+                left: { style: "thin" },
+                right: { style: "thin" },
+            };
+        });
+    });
+
+    // Add summary (total) row
+    const totalRowIndex = data.length + 4;
+    const totalRow = worksheet.getRow(totalRowIndex);
+
+    totalRow.getCell(1).value = "";
+    totalRow.getCell(2).value = "សរុប";
+    worksheet.mergeCells(`B${totalRowIndex}:E${totalRowIndex}`);
+
+    totalRow.getCell(6).value = totalAdvisor;
+    totalRow.getCell(7).value = totalAdvisorFemale;
+    totalRow.getCell(8).value = totalYouth;
+    totalRow.getCell(9).value = totalYouthFemale;
+
+    totalRow.eachCell((cell) => {
+        cell.font = { bold: true, ...EXCEL_CONFIG.fonts.body };
+        cell.alignment = { vertical: "middle", horizontal: "center" };
+        cell.border = {
+            top: { style: "thin" },
+            bottom: { style: "thin" },
+            left: { style: "thin" },
+            right: { style: "thin" },
+        };
+    });
+};
+// Main function to export Excel
+export default function exportExcelPrivateUniversity(branchData) {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = createWorksheet(workbook);
+    populateTable(worksheet, branchData);
+
+    workbook.xlsx
+        .writeBuffer()
+        .then((buffer) => {
+            const blob = new Blob([buffer], {
+                type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "branches_report.xlsx";
+            link.click();
+        })
+        .catch((error) => {
+            console.error("Error creating Excel file:", error);
+        });
 }
+window.exportExcelPrivateUniversity = exportExcelPrivateUniversity; // Expose function globally if needed

@@ -3,7 +3,7 @@ import ExcelJS from "exceljs";
 // Configuration object for columns and fonts
 const EXCEL_CONFIG = {
     columnDefinitions: [
-        { name: "ល.រ", width: 20 }, // Row number
+        { name: "ល.រ", width: 20 },
         { name: "សាខា កក្រក", width: 30 },
         { name: "សរុប (ទីប្រឹក្សា)", width: 20 },
         { name: "ស្រី (ទីប្រឹក្សា)", width: 20 },
@@ -11,6 +11,11 @@ const EXCEL_CONFIG = {
         { name: "ស្រី (យុវជន)", width: 20 },
     ],
     fonts: {
+        title: {
+            name: "Khmer OS Muol Light",
+            size: 12,
+            bold: true,
+        },
         header: {
             name: "Khmer OS Muol Light",
             size: 10,
@@ -26,18 +31,48 @@ const EXCEL_CONFIG = {
 export const createWorksheet = (workbook) => {
     const worksheet = workbook.addWorksheet("សរុបចំណូល ២០២៤");
 
-    worksheet.mergeCells("A1:A2"); // ល.រ
-    worksheet.mergeCells("B1:E2"); // គ្រឹះស្ថានឧត្តមសិក្សា
-    worksheet.mergeCells("F1:G1"); // ទីប្រឹក្សា
-    worksheet.mergeCells("H1:I1"); // យុវជន
+    // Set column widths
+    worksheet.columns = [
+        { width: 10 },
+        { width: 30 },
+        { width: 20 },
+        { width: 20 },
+        { width: 20 },
+        { width: 20 },
+        { width: 20 },
+        { width: 20 },
+        { width: 20 },
+    ];
 
-    const headerRow1 = worksheet.getRow(1);
+    // Add title row (Row 1)
+    const title = `តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា ទីប្រឹក្សាយុវជន នឹងយុវជន 
+        នៃកាកបាទក្រហមកម្ពុជាប្រចាំគ្រឹះស្ថានឧត្តមសិក្សា
+        បច្ចុប្បន្នភាពឆ្នាំ២០២៤`;
+    worksheet.mergeCells("A1:I1");
+    const titleCell = worksheet.getCell("A1");
+    titleCell.value = title;
+    titleCell.font = EXCEL_CONFIG.fonts.title;
+    titleCell.alignment = {
+        vertical: "middle",
+        horizontal: "center",
+        wrapText: true,
+    };
+
+    worksheet.getRow(1).height = 40; // Optional: Adjust row height for readability
+
+    // Header rows now start at row 2
+    worksheet.mergeCells("A2:A3"); // ល.រ
+    worksheet.mergeCells("B2:E3"); // គ្រឹះស្ថានឧត្តមសិក្សា
+    worksheet.mergeCells("F2:G2"); // ទីប្រឹក្សា
+    worksheet.mergeCells("H2:I2"); // យុវជន
+
+    const headerRow1 = worksheet.getRow(2);
     headerRow1.getCell(1).value = "ល.រ";
     headerRow1.getCell(2).value = "គ្រឹះស្ថានឧត្តមសិក្សា";
     headerRow1.getCell(6).value = "បច្ចុប្បន្នភាពទីប្រឹក្សា";
     headerRow1.getCell(8).value = "បច្ចុប្បន្នភាពយុវជន";
 
-    const headerRow2 = worksheet.getRow(2);
+    const headerRow2 = worksheet.getRow(3);
     headerRow2.getCell(6).value = "សរុប";
     headerRow2.getCell(7).value = "ស្រី";
     headerRow2.getCell(8).value = "សរុប";
@@ -67,13 +102,12 @@ export const populateTable = (worksheet, data) => {
     let totalYouthFemale = 0;
 
     data.forEach((item, index) => {
-        const rowNumber = index + 3;
+        const rowNumber = index + 4; // Start after title + 2 header rows
         const row = worksheet.getRow(rowNumber);
 
-        row.getCell(1).value = index + 1; // ល.រ
-        row.getCell(2).value = item.institute_kh; // Institute name
+        row.getCell(1).value = index + 1;
+        row.getCell(2).value = item.institute_kh;
 
-        // Merge B:E (columns 2–5)
         worksheet.mergeCells(`B${rowNumber}:E${rowNumber}`);
 
         row.getCell(6).value = item.total_mem_advisor;
@@ -81,7 +115,6 @@ export const populateTable = (worksheet, data) => {
         row.getCell(8).value = item.total_mem;
         row.getCell(9).value = item.total_mem_fem;
 
-        // Add to totals
         totalAdvisor += item.total_mem_advisor || 0;
         totalAdvisorFemale += item.total_mem_fem_advisor || 0;
         totalYouth += item.total_mem || 0;
@@ -100,12 +133,12 @@ export const populateTable = (worksheet, data) => {
     });
 
     // Add summary (total) row
-    const totalRowIndex = data.length + 3;
+    const totalRowIndex = data.length + 4;
     const totalRow = worksheet.getRow(totalRowIndex);
 
-    totalRow.getCell(1).value = ""; // No index
+    totalRow.getCell(1).value = "";
     totalRow.getCell(2).value = "សរុប";
-    worksheet.mergeCells(`B${totalRowIndex}:E${totalRowIndex}`); // Merge B:E for "សរុប"
+    worksheet.mergeCells(`B${totalRowIndex}:E${totalRowIndex}`);
 
     totalRow.getCell(6).value = totalAdvisor;
     totalRow.getCell(7).value = totalAdvisorFemale;
@@ -113,7 +146,7 @@ export const populateTable = (worksheet, data) => {
     totalRow.getCell(9).value = totalYouthFemale;
 
     totalRow.eachCell((cell) => {
-        cell.font = EXCEL_CONFIG.fonts.body;
+        cell.font = { bold: true, ...EXCEL_CONFIG.fonts.body };
         cell.alignment = { vertical: "middle", horizontal: "center" };
         cell.border = {
             top: { style: "thin" },
@@ -121,7 +154,6 @@ export const populateTable = (worksheet, data) => {
             left: { style: "thin" },
             right: { style: "thin" },
         };
-        cell.font = { bold: true, ...EXCEL_CONFIG.fonts.body };
     });
 };
 
