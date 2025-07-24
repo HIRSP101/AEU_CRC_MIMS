@@ -16,6 +16,7 @@ export default defineConfig({
                 "resources/js/exportToExcelOptionThree.js",
                 "resources/js/exportToExcelOptionTwo.js",
                 "resources/js/exportExcelPrivateUniversity.js",
+                "resources/js/exportToExcelPublic.js",
             ],
             refresh: true,
         }),
