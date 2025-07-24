@@ -256,6 +256,8 @@
                                 });
                 },
                 error: function (error) {
+                    $("#loadingSpinner").hide();
+                    alert(error);
                     console.error(error);
                 }
             })

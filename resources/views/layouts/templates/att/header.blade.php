@@ -46,7 +46,7 @@
                 <div class="flex items-center pr-4">
                     <button id="dropdownToggle"
                         class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
-                        <img class="inline-block size-[38px] rounded-full" src="{{ auth()->user()->image ?? '' }}"
+                        <img class="inline-block size-[38px] rounded-full" src="{{auth()->user()->image ?? '' }}"
                             alt="Avatar">
                     </button>
                 </div>
