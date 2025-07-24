@@ -1,7 +1,7 @@
 @php
     use App\Helpers\DateTimeFormat; 
 @endphp
-<div class="flex flex-wrap mx-3 my-3 gap-1">
+<div class="flex flex-wrap mx-3 my-2 gap-1">
     <div class=" flex ml-2 w-full md:w-1/3 md:mb-0 relative">
         <h3 class="">
             - ឈ្មោះ <span>.............................................</span>

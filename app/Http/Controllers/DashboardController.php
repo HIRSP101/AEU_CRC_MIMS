@@ -17,9 +17,9 @@ class DashboardController extends Controller
         $user = Auth::user();
         $authName = $user->name;
         $authEmail = $user->email;
-        $total_mem_branches = DB::table('member_personal_detail as mpd')
-            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
-            ->join('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
+        $total_mem_branches = DB::table('branch')
+            ->leftJoin('member_education_background as meb', 'branch.branch_id', '=', 'meb.branch_id')
+            ->leftJoin('member_personal_detail as mpd', 'meb.member_id', '=', 'mpd.member_id')
             ->select(
                 'branch.branch_id',
                 'branch.branch_kh',
@@ -27,10 +27,10 @@ class DashboardController extends Controller
                 DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' THEN mpd.member_id END) AS total_wm"),
                 DB::raw("COUNT(mpd.member_id) AS total_mem")
             )
-            ->groupBy('branch.branch_id', 'branch.branch_kh')
+            ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image')
             ->orderBy('total_mem', 'desc')
             ->get();
-        //dd($total_mem_branches);
+        // dd($total_mem_branches->branch_kh);
         //    dd($branches->branch_);
         return view('dashboard.index', compact('branches', 'authName', 'authEmail', 'total_mem_branches'));
     }

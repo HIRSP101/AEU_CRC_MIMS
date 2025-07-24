@@ -58,26 +58,6 @@
                 );
             }
                                                                                                                                                                                         ?>
-        <div id="loadingSpinner" class="fixed top-0 left-0 z-50 w-screen h-screen bg-gray-300 bg-opacity-50 h-full hidden">
-            <p id="textload" class="hidden textload text-center font-siemreap">សូមរងចាំ...</p>
-            <p id="textsucc" class="hidden textload text-center font-siemreap">ទាញយកជោគជ័យ</p>
-            <div id="spinner" class="spinner hidden"></div>
-            <div id="tick" class="hidden text-center text-green-500 text-6xl">✔</div>
-            <div class="flex justify-center items-center mt-2">
-                <button id="ok" class="hidden w-32 text-center bg-green-500 text-white px-4 py-2 rounded">OK</button>
-            </div>
-        </div>
-
-        <div id="downloadoption" class="fixed top-[50%] left-[50%] w-auto h-auto z-50 bg-gray-300 bg-opacity-50 p-5 hidden ">
-            <div class="flex flex-col  justify-center items-center ">
-                <button id="downloadop1"
-                    class=" w-[350px] text-center bg-green-500 text-white p-5 mb-2 hover:bg-green-600   rounded">ទាញយកសាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន</button>
-                <button id="downloadop2"
-                    class=" w-[350px] text-center bg-green-500 text-white p-5 mb-2 hover:bg-green-600 rounded">ទាញយកបណ្ណសម្គាល់ខ្លួន</button>
-                <button id="downloadop3"
-                    class="  w-[350px] text-center bg-green-500 text-white p-5 mb-2 hover:bg-green-600 rounded">ទាញយកសំណើសុំផ្ទេរជីវភាព</button>
-            </div>
-        </div>
         <div class="bg-white mt-2 mx-3 shadow-lg">
             <h1 class="text-center font-siemreap my-5 font-bold text-2xl"> បញ្ជីតារាងទិន្នន័យផុតកំណត់យុវជន
                 និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
@@ -121,7 +101,6 @@
                         </div>
                     </div>
                     <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
-                    <button id="export_pdf" class="bg-green-500 text-white px-4 py-2 rounded">Export PDF</button>
                     <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
                 </div>
             </div>
@@ -190,124 +169,6 @@
                 if (array.length > 0) {
                     exportToExcel(@json($current_branch), @json($total_mem_detail));
                 }
-                $("#export_pdf").on("click", async () => {
-                    $("#downloadoption").toggle(500);
-                    $('#downloadop1').on('click', () => {
-                        const memberIds = window.getCurrentPageMemberIds();
-                        var instituteId = window.location.pathname;
-                        $("#downloadoption").hide();
-                        $("#loadingSpinner").show();
-                        $("#textload").show();
-                        $("#spinner").show();
-                        $("#textsucc").hide();
-                        $("#tick").hide();
-                        $("#ok").hide();
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $.ajax({
-                            url: '/gen-members-inst',
-                            method: 'POST',
-                            contentType: 'application/json',
-                            data: JSON.stringify({
-                                institute_id: instituteId.split('/')[2],
-                                member_ids: memberIds
-                            }),
-                            xhrFields: {
-                                responseType: 'blob' // Ensures the response is treated as a binary file
-                            },
-                            success: function (response) {
-                                $("#loadingSpinner").show();
-                                $("#textload").hide();
-                                $("#spinner").hide();
-                                $("#textsucc").show();
-                                $("#tick").show();
-                                $("#ok").show();
-                                $("#ok").on("click", function () {
-                                    $("#loadingSpinner").hide();
-                                    $("#textload").hide();
-                                    $("#spinner").hide();
-                                    $("#textsucc").hide();
-                                    $("#tick").hide();
-                                    $("#ok").hide();
-                                });
-                                console.log(response);
-                                var blob = new Blob([response], { type: 'application/zip' });
-                                var url = URL.createObjectURL(blob);
-                                var link = document.createElement('a');
-                                link.href = url;
-                                link.download = `សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន_យុវជន_កក្រកប្រចាំ.zip`;
-                                link.click();
-                            },
-                            error: function (xhr, status, error) {
-                                $("#loadingSpinner").hide();
-                                console.error("Error generating report:", error);
-                            }
-                        });
-
-                    });
-
-                    $('#downloadop3').on('click', () => {
-                        const memberIds = window.getCurrentPageMemberIds();
-                        var instituteId = window.location.pathname;
-                        $("#downloadoption").hide();
-                        $("#loadingSpinner").show();
-                        $("#textload").show();
-                        $("#spinner").show();
-                        $("#textsucc").hide();
-                        $("#tick").hide();
-                        $("#ok").hide();
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $.ajax({
-                            url: '/gen-members-request-inst',
-                            method: 'POST',
-                            contentType: 'application/json',
-                            data: JSON.stringify({
-                                institute_id: instituteId.split('/')[2],
-                                member_ids: memberIds
-                            }),
-                            xhrFields: {
-                                responseType: 'blob' // Ensures the response is treated as a binary file
-                            },
-                            success: function (response) {
-                                $("#loadingSpinner").show();
-                                $("#textload").hide();
-                                $("#spinner").hide();
-                                $("#textsucc").show();
-                                $("#tick").show();
-                                $("#ok").show();
-
-                                $("#ok").on("click", function () {
-                                    $("#loadingSpinner").hide();
-                                    $("#textload").hide();
-                                    $("#spinner").hide();
-                                    $("#textsucc").hide();
-                                    $("#tick").hide();
-                                    $("#ok").hide();
-                                });
-                                console.log(response);
-                                var blob = new Blob([response], { type: 'application/zip' });
-                                var url = URL.createObjectURL(blob);
-                                var link = document.createElement('a');
-                                link.href = url;
-                                link.download = `សាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន_យុវជន_កក្រកប្រចាំ.zip`;
-                                link.click();
-                            },
-                            error: function (xhr, status, error) {
-                                $("#loadingSpinner").hide();
-                                console.error("Error generating report:", error);
-                            }
-                        });
-                    });
-
-                });
-
             });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

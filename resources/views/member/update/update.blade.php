@@ -4,6 +4,7 @@
 
 @section('Content')
 <div class="p-4 bg-gray-100 font-battambang my-3">
+    @include('loading_view')
     <div class="p-4 bg-white shadow-md rounded-lg">
         <div class="grid grid-cols-6 ">
             <div class="col-span-5 flex flex-col items-center justify-center mb-10 ml-24">
@@ -135,6 +136,12 @@
                 updateMember(memberId, formData);
             })
             function updateMember(member_id, member) {
+                $("#loadingSpinner").show();
+                $("#textload").show();
+                $("#spinner").show();
+                $("#textsucc").hide();
+                $("#tick").hide();
+                $("#ok").hide();    
                 const membersJSON = member.get('members');
                 const membersObj = JSON.parse(membersJSON);
 
@@ -148,11 +155,26 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     },
                     success: function (response) {
-                        console.log(response.message);
-                        console.log(response.data);
-                        alert(response.message);
+                        $("#loadingSpinner").show();
+                        $("#textload").hide();
+                        $("#spinner").hide();
+                        $("#textsucc").show();
+                        $("#tick").show();
+                        $("#ok").show();
+                        $("#ok").on("click", function () {
+                            $("#loadingSpinner").hide();
+                            $("#textload").hide();
+                            $("#spinner").hide();
+                            $("#textsucc").hide();
+                            $("#tick").hide();
+                            $("#ok").hide();
+                        });
+                        // console.log(response.message);
+                        // console.log(response.data);
+                        // alert(response.message);
                     },
                     error: function (error) {
+                         $("#loadingSpinner").hide();
                         console.error(error);
                     }
                 });

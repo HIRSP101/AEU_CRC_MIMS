@@ -21,34 +21,6 @@ return [
     'convert_entities' => true,
 
     'options' => [
-
-        'default_font' => 'khmer', // Set the Khmer font as default
-
-        'font_family' => [
-            'sans-serif' => [
-                'normal' => 'DejaVuSans.ttf',
-                'bold' => 'DejaVuSans-Bold.ttf',
-                'italic' => 'DejaVuSans-Oblique.ttf',
-                'bold_italic' => 'DejaVuSans-BoldOblique.ttf',
-            ],
-            'khmer' => [ // Define Khmer fonts properly
-                'normal' => storage_path('fonts/NotoSansKhmer-Regular.ttf'), // Regular font
-                'bold' => storage_path('fonts/Battambang-Bold.ttf'), // Bold font
-                'italic' => storage_path('fonts/NotoSansKhmer-Italic.ttf'), // Optional
-                'bold_italic' => storage_path('fonts/NotoSansKhmer-BoldItalic.ttf'), // Optional
-            ],
-            'khmerOsMoulLight' => [
-                'normal' => storage_path('fonts/KhmerOSMoulLight.ttf'),
-                'bold' => storage_path('fonts/KhmerOSMoulLight.ttf'),
-                'italic' => storage_path('fonts/KhmerOSMoulLight.ttf'),
-            ],
-            'khmerosbattambang' => [
-                'normal' => storage_path('fonts/KhmerOSBattambang-Regular.ttf'),
-                'bold' => storage_path('fonts/KhmerOSBattambang-Regular.ttf'),
-                'italic' => storage_path('fonts/KhmerOSBattambang-Regular.ttf'),
-            ],
-        ],
-
         /**
          * The location of the DOMPDF font directory
          *

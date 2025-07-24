@@ -25,7 +25,7 @@
     $yearOfExpire = $expireDate[2];
 @endphp
 
-<body style="padding: 60px">
+<body>
     <div class="head">
         <h3 class="font-khmer text-[16px] text-gray-900" style="font-family: 'Moul'">សាខាកាកបាទក្រហមកម្ពុជា</h3>
         <h3 class="font-khmer mx-12 text-[16px] text-gray-900" style="font-family: 'Moul'">រាជធានី ខេត្ត</h3>
@@ -47,7 +47,7 @@
             សូមបញ្ជាក់ថា
         </h3>
     </div>
-    <div class="content1 mt-5 font-battambang text-gray-900 text-[18px]" style="font-family: 'Battambang'" >
+    <div class="content1 mt-5 font-battambang text-gray-900 text-[18px]" style="font-family: 'Battambang'">
         <div class="flex ml-9 md:mb-0 relative">
             <div>
                 <h3 class="">
@@ -131,7 +131,8 @@
                 <h3 class="">
                     <span>..............................................</span>
                 </h3>
-                <span class="absolute top-[-3px] left-[0px] font-bold">{{$member->institute_kh ?? $member->school_name}}</span>
+                <span
+                    class="absolute top-[-3px] left-[0px] font-bold">{{$member->institute_kh ?? $member->school_name}}</span>
             </div>
             <div>
                 <h3 class="">

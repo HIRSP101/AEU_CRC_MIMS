@@ -34,7 +34,6 @@
             $monthOfExpire = $expireDate[1];
             $yearOfExpire = $expireDate[2];
         @endphp
-        <div style="padding: 60px">
             <div class="head">
                 <h3 class="font-khmer text-[16px] text-gray-900" style="font-family: 'Moul'">សាខាកាកបាទក្រហមកម្ពុជា</h3>
                 <h3 class="font-khmer mx-12 text-[16px] text-gray-900" style="font-family: 'Moul'">រាជធានី ខេត្ត</h3>
@@ -210,7 +209,6 @@
                 <p>- ឯកសារ កាលប្បវត្តិ</p>
             </div>
             <div class="page-break"></div>
-        </div>
     @endforeach
 </body>
 

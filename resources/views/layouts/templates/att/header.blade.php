@@ -11,8 +11,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="{{ asset('build/assets/app.css') }}" rel="stylesheet">
     <script src="{{ asset('build/assets/app.js') }}"></script>
-    <!-- <script src="{{ asset('js/jszip.min.js') }}"></script>
-    <script src="{{ asset('js/FileSaver.min.js') }}"></script> -->
+    <script src="{{asset('js/html2pdf.js')}}"></script>
     <link rel="icon" type="image/x-icon" href="{{URL::asset('images/Logo_of_Cambodian_Red_Cross.svg')}}">
     @stack('CSS')
 </head>
@@ -47,7 +46,7 @@
                 <div class="flex items-center pr-4">
                     <button id="dropdownToggle"
                         class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
-                        <img class="inline-block size-[38px] rounded-full" src="{{ auth()->user()->image ?? '' }}"
+                        <img class="inline-block size-[38px] rounded-full" src="{{auth()->user()->image ?? '' }}"
                             alt="Avatar">
                     </button>
                 </div>

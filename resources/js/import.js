@@ -359,6 +359,7 @@ $(document).ready(function () {
                 console.log("Success:", response);
             },
             error: function (xhr) {
+                $("#loadingSpinner").hide();
                 console.error("Error:", xhr.responseText);
             },
         });

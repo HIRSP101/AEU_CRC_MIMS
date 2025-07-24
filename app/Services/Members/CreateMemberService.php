@@ -57,7 +57,7 @@ class CreateMemberService
             "member_type" => $data["member_type"] ?? null,
             "member_status" => $data["member_status"] ?? null,
         ]);
-        $this->createRelatedData($member,  $data);
+        $this->createRelatedData($member, $data);
 
         return $member;
     }
@@ -70,7 +70,7 @@ class CreateMemberService
         $this->createCurrentAddress($member, $data);
         $this->createPobAddress($member, $data);
         $this->createEducationBackground($member, $data, $branch, $branchhei);
-        $this->createGuardianDetail( $member, $data);
+        $this->createGuardianDetail($member, $data);
     }
 
     private function createRegistrationDetails(member_personal_detail $member, array $data): void
@@ -80,7 +80,7 @@ class CreateMemberService
             'expiration_date' => $this->calculateExpirationDate($data['registration_date'], $data['education_level']) ?? null,
             'approved' => $data['approved'] ?? 1,
             'form_submits_id' => $data['form_submits_id'] ?? null,
-            'scout_youth_registration_date'=> $data['scout_youth_registration_date'] ?? null,
+            'scout_youth_registration_date' => $data['scout_youth_registration_date'] ?? null,
             'uyfc_registration_date' => $data['uyfc_registration_date'] ?? null,
             'other_ngos_registration_date' => $data['other_ngos_registration_date'] ?? null
         ]);
@@ -139,9 +139,9 @@ class CreateMemberService
     private function createEducationBackground(member_personal_detail $member, array $data, $branch, $branchhei): void
     {
         $branch = DB::table('branch')
-        ->leftJoin('branch_bindding_user', 'branch.branch_id', '=', 'branch_bindding_user.branch_id')
-        ->where('user_id', auth()->user()->id)
-        ->get();
+            ->leftJoin('branch_bindding_user', 'branch.branch_id', '=', 'branch_bindding_user.branch_id')
+            ->where('user_id', auth()->user()->id)
+            ->get();
 
         $member->member_education_background()->create([
             'institute_id' => $data['institute_id'] ?? null,
@@ -176,16 +176,16 @@ class CreateMemberService
 
     private function handleImageUpload(?array $data, ?UploadedFile $image, int $currentMemberId): ?string
     {
-        if (!$image || !isset($data[0]['name_en'])) {
+        if (!$image || !isset($data['name_en'])) {
             return null;
         }
 
-        $imageName = 'mem-' . str_replace(' ', '', $data[0]["name_en"] . ($currentMemberId + 1)) . '.' . $image->extension();
+        $imageName = 'mem-' . str_replace(' ', '', $data["name_en"] . ($currentMemberId + 1)) . '.' . $image->extension();
         $image->move(public_path('images/members'), $imageName);
 
         return "images/members/$imageName";
     }
-    
+
     private function convertDate($date)
     {
         return date('Y-m-d', strtotime(str_replace('/', '-', $date)));
