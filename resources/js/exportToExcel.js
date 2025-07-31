@@ -35,19 +35,17 @@ export const createWorksheet = (workbook, branchName) => {
     return worksheet;
 };
 
-export const addTitle = (worksheet, branchName) => {
+export const addTitle = (worksheet, branchName, school_name) => {
     // Add main title
     worksheet.mergeCells("A1:M1");
     const mainTitle = worksheet.getCell("A1");
-    mainTitle.value =
-        "បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជាសាខាកាកបាទក្រហមកម្ពុជាវិទ្យាល័យ";
+    mainTitle.value = `បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំ ${school_name}`;
     mainTitle.font = EXCEL_CONFIG.fonts.header;
     mainTitle.alignment = { horizontal: "center" };
 
     // Add branch name
     worksheet.mergeCells("A2:M2");
     const branchTitle = worksheet.getCell("A2");
-    branchTitle.value = `សាខាកាកបាទក្រហមកម្ពុជា ${branchName}`;
     branchTitle.font = EXCEL_CONFIG.fonts.header;
     branchTitle.alignment = { horizontal: "center" };
 };
@@ -104,6 +102,7 @@ export const addFooter = (worksheet, totalStudents, femaleStu, rowNumber) => {
     // Add total count
     worksheet.mergeCells(`A${rowNumber}:I${rowNumber}`);
     const totalCell = worksheet.getCell(`A${rowNumber}`);
+    totalCell.value = `សរុបចំនួន ${totalStudents} នាក់ (ស្រី ${femaleStu} នាក់)`;
     totalCell.font = EXCEL_CONFIG.fonts.body;
     totalCell.alignment = { vertical: "middle", horizontal: "left" };
 
@@ -155,7 +154,8 @@ export default function exportToExcel(
     current_branch,
     total_member,
     total_stu,
-    total_stu_fem
+    total_stu_fem,
+    school_name
 ) {
     $("#export_excel").on("click", async () => {
         try {
@@ -167,7 +167,7 @@ export default function exportToExcel(
             const workbook = new ExcelJS.Workbook();
             const worksheet = createWorksheet(workbook, current_branch);
 
-            addTitle(worksheet, current_branch);
+            addTitle(worksheet, current_branch, school_name);
             createTable(worksheet, total_memberFormat);
             applyStyles(worksheet, total_member.length);
             addFooter(

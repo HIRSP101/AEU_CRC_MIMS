@@ -115,13 +115,17 @@ class SchoolController extends Controller
         }
 
         $data = $query->get();
+        $totalStu = $data->count();
+        $femaleStu = $data->where('gender', 'ស្រី')->count();
         //dd($data);
         return view('totalmemSchool.index', [
             'data' => $data,
             'branchId' => $branchId,
             'villageId' => $villageId,
             'schoolId' => $schoolId,
-            'currentSchool' => $currentSchool
+            'currentSchool' => $currentSchool,
+            'totalStu' => $totalStu,
+            'femaleStu' => $femaleStu,
         ]);
     }
 

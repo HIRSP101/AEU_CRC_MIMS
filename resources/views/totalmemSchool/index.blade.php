@@ -8,7 +8,7 @@
     $current_branch = "";
     $total_mem_detail = [];
     $school_name = $currentSchool?->school_name;
-                                                        ?>
+                                                                                    ?>
     @if(isset($data) && count($data) > 0)
         <?php
             $current_branch = explode(' ', $data[0]->full_current_address)[3] ?? "";
@@ -30,7 +30,7 @@
                 ];
             }
 
-                                                                                    ?>
+                                                                                                                                            ?>
         <div class="bg-white mt-2 mx-3 shadow-lg">
             <h1 class="text-center font-siemreap my-5 font-bold text-2xl"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន
                 និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
@@ -142,23 +142,31 @@
             </div>
         @endif
 @endsection
-
     @push('JS')
-        <script type="module">
-            import { handleTotalmem } from "{{ asset('js/handleTotalmem.js') }}";
+        @if ($currentSchool)
+            <script type="module">
+                import { handleTotalmem } from "{{ asset('js/handleTotalmem.js') }}";
 
-            document.addEventListener('DOMContentLoaded', function () {
-                var array = @json($data);
-                console.log(@json($data));
-                console.log({{$schoolId}});
-                handleTotalmem(array);
-                console.log("arrays", array);
-                if (array.length > 0) {
-                    exportToExcel(@json($current_branch), @json($total_mem_detail)
-                        , @json($data)
-                        , @json($data));
-                }
-            });
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var array = @json($data);
+                    const schoolName = @json($currentSchool->school_name);
+                    handleTotalmem(array);
+
+                    console.log("arrays", array);
+
+                    if (array.length > 0) {
+                        exportToExcel(
+                            @json($current_branch),
+                            @json($total_mem_detail),
+                                    // @json($data),
+                                    // @json($data),
+                                            {{ $totalStu }},
+                                            {{ $femaleStu }},
+                            schoolName
+                        );
+                    }
+                });
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        @endif
     @endpush
