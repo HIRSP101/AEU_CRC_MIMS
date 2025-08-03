@@ -80,6 +80,7 @@ class ReportController extends Controller
 
     public function reportOption3()
     {
+        $year = request('year', now()->year);
 
         $branch_and_count_member = DB::table('branch as b')
             ->leftJoin('school as s', 's.branch_id', '=', 'b.branch_id')
@@ -100,10 +101,10 @@ class ReportController extends Controller
             ->select(
                 'b.branch_id',
                 'b.branch_kh',
-                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) AS total_mem"),
-                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.gender = 'ស្រី' THEN meb.member_id END) AS total_mem_fem"),
-                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) AS total_mem_advisor"),
-                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.member_type = 'សមាជិកា យុវជន' AND mpd.gender = 'ស្រី' THEN meb.member_id END) AS total_mem_fem_advisor"),
+                DB::raw("COUNT(CASE WHEN YEAR(mrd.registration_date) = $year THEN meb.member_id END) AS total_mem"),
+                DB::raw("COUNT(CASE WHEN YEAR(mrd.registration_date) = $year AND mpd.gender = 'ស្រី' THEN meb.member_id END) AS total_mem_fem"),
+                DB::raw("COUNT(CASE WHEN YEAR(mrd.registration_date) = $year AND mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) AS total_mem_advisor"),
+                DB::raw("COUNT(CASE WHEN YEAR(mrd.registration_date) = $year AND mpd.member_type = 'សមាជិកា យុវជន' AND mpd.gender = 'ស្រី' THEN meb.member_id END) AS total_mem_fem_advisor"),
             )
             ->where('b.branch_id', '<', '28')
             ->groupBy('b.branch_id', 'b.branch_kh')
@@ -182,6 +183,7 @@ class ReportController extends Controller
             'school_types_per_branch' => $school_types_per_branch,
             'universities_per_branch' => $universities_per_branch,
             'total_member_all_university' => $total_member_all_university,
+            'selectedYear' => $year,
             'branchWhole' => (object)[
                 'total_mem' => $combined_data->sum('total_mem'),
                 'total_mem_fem' => $combined_data->sum('total_mem_fem'),
@@ -267,25 +269,25 @@ class ReportController extends Controller
         //     ->get();
         //  return view('report.partials.private-university', compact('branchesreport'));
 
-
+        $year = request('year', now()->year);
         $branchhei_private = DB::table('branch_hei as hei')
             ->select(
                 'hei.institute_kh',
                 DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            WHEN YEAR(mrd.registration_date) = $year 
             AND mpd.member_type = 'សមាជិក យុវជន' 
             THEN meb.member_id END) AS total_mem"),
                 DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            WHEN YEAR(mrd.registration_date) = $year 
             AND mpd.member_type = 'សមាជិក យុវជន' 
             AND mpd.gender = 'ស្រី' 
             THEN meb.member_id END) AS total_mem_fem"),
                 DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            WHEN YEAR(mrd.registration_date) = $year
             AND mpd.member_type = 'សមាជិកា យុវជន' 
             THEN meb.member_id END) AS total_mem_advisor"),
                 DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            WHEN YEAR(mrd.registration_date) = $year 
             AND mpd.member_type = 'សមាជិកា យុវជន' 
             AND mpd.gender = 'ស្រី' 
             THEN meb.member_id END) AS total_mem_fem_advisor")
@@ -299,6 +301,7 @@ class ReportController extends Controller
 
         return view('report.partials.private-university', [
             'branchhei_private' => $branchhei_private,
+            'selectedYear' => $year,
             'branchWhole' => (object)[
                 'total_mem' => $branchhei_private->sum('total_mem'),
                 'total_mem_fem' => $branchhei_private->sum('total_mem_fem'),
@@ -316,24 +319,25 @@ class ReportController extends Controller
         //     ->get();
         // return view('report.partials.public-university', compact('branchesreport'));
 
+        $year = request('year', now()->year);
         $branchhei_public = DB::table('branch_hei as hei')
             ->select(
                 'hei.institute_kh',
                 DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            WHEN YEAR(mrd.registration_date) = $year 
             AND mpd.member_type = 'សមាជិក យុវជន' 
             THEN meb.member_id END) AS total_mem"),
                 DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            WHEN YEAR(mrd.registration_date) = $year 
             AND mpd.member_type = 'សមាជិក យុវជន' 
             AND mpd.gender = 'ស្រី' 
             THEN meb.member_id END) AS total_mem_fem"),
                 DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            WHEN YEAR(mrd.registration_date) = $year 
             AND mpd.member_type = 'សមាជិកា យុវជន' 
             THEN meb.member_id END) AS total_mem_advisor"),
                 DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            WHEN YEAR(mrd.registration_date) = $year 
             AND mpd.member_type = 'សមាជិកា យុវជន' 
             AND mpd.gender = 'ស្រី' 
             THEN meb.member_id END) AS total_mem_fem_advisor")
@@ -346,6 +350,7 @@ class ReportController extends Controller
             ->get();
         return view('report.partials.public-university', [
             'branchhei_public' => $branchhei_public,
+            'selectedYear' => $year,
             'branchWhole' => (object)[
                 'total_mem' => $branchhei_public->sum('total_mem'),
                 'total_mem_fem' => $branchhei_public->sum('total_mem_fem'),
@@ -357,29 +362,25 @@ class ReportController extends Controller
 
     public function branchhei_all()
     {
-        // $branchesreport = $this->branchhei()
-        //     ->groupBy('hei.institute_kh', 'hei.bhei_id')
-        //     ->orderBy('hei.bhei_id', 'asc')
-        //     ->get();
-
+        $year = request('year', now()->year);
         $branchhei = DB::table('branch_hei as hei')
             ->select(
                 'hei.institute_kh',
                 DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            WHEN YEAR(mrd.registration_date) = $year 
             AND mpd.member_type = 'សមាជិក យុវជន' 
             THEN meb.member_id END) AS total_mem"),
                 DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            WHEN YEAR(mrd.registration_date) = $year 
             AND mpd.member_type = 'សមាជិក យុវជន' 
             AND mpd.gender = 'ស្រី' 
             THEN meb.member_id END) AS total_mem_fem"),
                 DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            WHEN YEAR(mrd.registration_date) = $year 
             AND mpd.member_type = 'សមាជិកា យុវជន' 
             THEN meb.member_id END) AS total_mem_advisor"),
                 DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
+            WHEN YEAR(mrd.registration_date) = $year 
             AND mpd.member_type = 'សមាជិកា យុវជន' 
             AND mpd.gender = 'ស្រី' 
             THEN meb.member_id END) AS total_mem_fem_advisor")
@@ -391,6 +392,7 @@ class ReportController extends Controller
             ->get();
         return view('report.partials.total-university', [
             'branchhei' => $branchhei,
+            'selectedYear' => $year,
             'branchWhole' => (object)[
                 'total_mem' => $branchhei->sum('total_mem'),
                 'total_mem_fem' => $branchhei->sum('total_mem_fem'),
