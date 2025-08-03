@@ -27,6 +27,8 @@ class ReportController extends Controller
 
     public function branchesHeiReport($branchId)
     {
+        $year = request('year', now()->year);
+
         $branch = DB::table('branch')->where('branch_id', $branchId)->select('branch_kh')->first();
 
         $district = DB::table('district as d')
@@ -35,11 +37,11 @@ class ReportController extends Controller
                 'd.district_name',
                 's.school_id',
                 's.school_name',
-                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem"),
-                DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' AND mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem_fem"),
+                DB::raw("COUNT(CASE WHEN YEAR(mrd.registration_date) = $year THEN meb.member_id END) as total_mem"),
+                DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' AND YEAR(mrd.registration_date) = $year THEN meb.member_id END) as total_mem_fem"),
 
-                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) as total_mem_advisor"),
-                DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' AND mrd.registration_date > NOW() - INTERVAL 6 YEAR AND mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) as total_mem_fem_advisor"),
+                DB::raw("COUNT(CASE WHEN YEAR(mrd.registration_date) = $year AND mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) as total_mem_advisor"),
+                DB::raw("COUNT(CASE WHEN mpd.gender = 'ស្រី' AND YEAR(mrd.registration_date) = $year AND mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) as total_mem_fem_advisor"),
             )
             ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
             ->leftJoin('member_education_background as meb', function ($join) use ($branchId) {
@@ -67,6 +69,7 @@ class ReportController extends Controller
             'district' => $district,
             'branchId' => $branchId,
             'branch' => $branch,
+            'selectedYear' => $year,
             // 'branchWhole' => $branchTotals,
             'branchWhole' => (object)[
                 'total_schools' => $totalSchools,

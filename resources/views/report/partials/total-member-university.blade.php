@@ -11,14 +11,21 @@
         <h1 class="text-center font-khmer my-2 text-lg text-blue-800 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
             ទីប្រឹក្សាយុវជន និងយុវជន</h1>
         <h1 class="text-center font-khmer my-2 text-lg text-blue-800">នៃកាកបាទក្រហមកម្ពុជា​ ប្រចាំ​​ ខេត្ត​ </h1>
-        <h2 class="text-center font-khmer mb-2 text-lg text-blue-800">បច្ចុប្បន្នភាពឆ្នាំ២០២៤</h2>
+        <h2 class="text-center font-khmer mb-2 text-lg text-blue-800">បច្ចុប្បន្នភាពឆ្នាំ {{ $selectedYear }}</h2>
         <div class="flex justify-between items-center mt-5">
             <div>
                 <button id="export_excel" class="bg-[#31bf7d] text-white px-4 py-2 rounded">Export Excel</button>
             </div>
             <div class="flex justify-end items-center">
-                <input id="datepicker" class="border-2 border-gray-400 rounded-xl px-3 py-2 w-64" type="text"
-                    placeholder="Filter by date">
+               <form method="GET" action="{{ route('total.member.university', ['id' => $branchId]) }}" class="flex items-center gap-2">
+                    <select name="year" class="border-2 border-gray-400 rounded-xl px-7 py-2">
+                        @for ($y = now()->year; $y >= 2015; $y--)
+                            <option value="{{ $y }}" {{ request('year') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                        @endfor
+                    </select>
+                    <button type="submit"
+                        class="bg-blue-600 font-siemreap text-sm text-white px-4 py-2 rounded">ស្វែងរក</button>
+                </form>
             </div>
         </div>
 
