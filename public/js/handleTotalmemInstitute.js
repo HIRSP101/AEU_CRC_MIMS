@@ -1,6 +1,7 @@
 import ajaxtoRoute from "./genericCalltoRoute.js";
 import setuppagination from "./pagination.js";
 export function handleTotalmemInstitute(array, ExcelObj) {
+    console.log("handleTotalmemInstitute called");
     const attr_arr = [
         "member_id",
         "name_kh",

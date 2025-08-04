@@ -9,7 +9,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-BEC6XTqk.js",
+    "file": "assets/app-DNxCc_8W.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -30,6 +30,15 @@
       "_axios-BimPEqV4.js"
     ]
   },
+  "resources/js/exportExcelPrivateUniversity.js": {
+    "file": "assets/exportExcelPrivateUniversity-CP7p1niy.js",
+    "name": "exportExcelPrivateUniversity",
+    "src": "resources/js/exportExcelPrivateUniversity.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/exportToExcel.js"
+    ]
+  },
   "resources/js/exportToExcel.js": {
     "file": "assets/exportToExcel-DeJInSqA.js",
     "name": "exportToExcel",
@@ -37,7 +46,7 @@
     "isEntry": true
   },
   "resources/js/exportToExcelOptionThree.js": {
-    "file": "assets/exportToExcelOptionThree-Db5xjbZq.js",
+    "file": "assets/exportToExcelOptionThree-_Iy05mMG.js",
     "name": "exportToExcelOptionThree",
     "src": "resources/js/exportToExcelOptionThree.js",
     "isEntry": true,
@@ -46,9 +55,18 @@
     ]
   },
   "resources/js/exportToExcelOptionTwo.js": {
-    "file": "assets/exportToExcelOptionTwo-DQbl3zqs.js",
+    "file": "assets/exportToExcelOptionTwo-DFrC8RE2.js",
     "name": "exportToExcelOptionTwo",
     "src": "resources/js/exportToExcelOptionTwo.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/exportToExcel.js"
+    ]
+  },
+  "resources/js/exportToExcelPublic.js": {
+    "file": "assets/exportToExcelPublic-ChasZuV_.js",
+    "name": "exportToExcelPublic",
+    "src": "resources/js/exportToExcelPublic.js",
     "isEntry": true,
     "imports": [
       "resources/js/exportToExcel.js"
@@ -64,7 +82,7 @@
     ]
   },
   "resources/js/import.js": {
-    "file": "assets/import-BNUENQH0.js",
+    "file": "assets/import-DHIyDa5p.js",
     "name": "import",
     "src": "resources/js/import.js",
     "isEntry": true,

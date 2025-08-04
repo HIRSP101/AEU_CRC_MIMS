@@ -9,7 +9,7 @@
     $total_mem_detail = "";
     $member_pob = "";
     $institute_kh = $institution->institute_kh;
-                                                                                                                                                                                                                            ?>
+                                                                                                                                                                                                                                ?>
     @if(count($total_mem) > 0)
         <?php
             $current_branch = explode(' ', $total_mem[0]->full_current_address)[3] ?? "";
@@ -57,16 +57,16 @@
 
                 );
             }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ?>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ?>
         <!-- @include('loading_view') -->
         <!-- <div id="downloadoption" class="fixed top-[50%] left-[50%] w-auto h-auto z-50 bg-gray-300 bg-opacity-50 p-5 hidden ">
-                                                                                                                                                                <div class="flex flex-col  justify-center items-center ">
-                                                                                                                                                                    <button id="downloadop1"
-                                                                                                                                                                        class=" w-[350px] text-center bg-green-500 text-white p-5 mb-2 hover:bg-green-600   rounded">ទាញយកសាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន</button>
-                                                                                                                                                                    <button id="downloadop3"
-                                                                                                                                                                        class="  w-[350px] text-center bg-green-500 text-white p-5 mb-2 hover:bg-green-600 rounded">ទាញយកសំណើសុំផ្ទេរជីវភាព</button>
-                                                                                                                                                                </div>
-                                                                                                                                                            </div> -->
+                                                                                                                                                                        <div class="flex flex-col  justify-center items-center ">
+                                                                                                                                                                            <button id="downloadop1"
+                                                                                                                                                                                class=" w-[350px] text-center bg-green-500 text-white p-5 mb-2 hover:bg-green-600   rounded">ទាញយកសាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន</button>
+                                                                                                                                                                            <button id="downloadop3"
+                                                                                                                                                                                class="  w-[350px] text-center bg-green-500 text-white p-5 mb-2 hover:bg-green-600 rounded">ទាញយកសំណើសុំផ្ទេរជីវភាព</button>
+                                                                                                                                                                        </div>
+                                                                                                                                                                    </div> -->
         <div class="bg-white mt-2 mx-3 shadow-lg">
             <h1 class="text-center font-siemreap my-5 font-bold text-2xl"> {{$title}} </h1>
             <h2 class="text-center font-siemreap mb-2 text-2xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា {{$institute_kh}} </h2>
@@ -181,11 +181,12 @@
                     exportToExcel(
                         @json($current_branch),
                         @json($total_mem_detail),
-                            {{ $totalStu }},
-                            {{ $femaleStu }},
+                                {{ $totalStu }},
+                                {{ $femaleStu }},
                         institute_kh);
                 }
             });
+        </script>
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endpush

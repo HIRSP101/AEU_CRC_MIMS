@@ -43,13 +43,19 @@ class RegisteredUserController extends Controller
             'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
         ]);
 
-        $imageName = $request->hasFile('image') ? '\u-' . users::latest()->first()->id + 1 . '.' . $request->image->extension() : "";
-        $request->image->move(public_path('images\users'), $imageName);
+        if ($request->hasFile('image')) {
+            $imageName = 'u-' . (users::latest()->first()->id + 1) . '.' . $request->image->extension();
+            $request->image->move(public_path('images/users'), $imageName);
+            $imagePath = 'images/users/' . $imageName;
+        } else {
+            $imagePath = 'images/users/default-profile.png';
+        }
+
         $user = users::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'image' => "images\users" . $imageName
+            'image' => $imagePath
         ]);
 
         $bbu = branch_bindding_user::create([

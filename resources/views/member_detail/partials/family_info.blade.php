@@ -12,7 +12,7 @@
         <h3 class="px-2">
             &ensp; ថ្ងៃខែឆ្នាំកំណើត ៖<span>.................................................................</span>
         </h3>
-        <span class="absolute top-[-3px] left-[130px] font-bold"> {{$member->father_dob}}</span>
+        <span class="absolute top-[-3px] left-[130px] font-bold">  {{DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->father_dob)}}</span>
     </div>
     <div class="flex w-full md:w-full md:mb-0 relative">
         <h3 class="px-2">
@@ -31,7 +31,7 @@
         <h3 class="px-2">
             &ensp; ថ្ងៃខែឆ្នាំកំណើត ៖<span>.................................................................</span>
         </h3>
-        <span class="absolute top-[-3px] left-[130px] font-bold"> {{$member->mother_dob}}</span>
+        <span class="absolute top-[-3px] left-[130px] font-bold"> {{DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->mother_dob)}}</span>
     </div>
     <div class="flex w-full md:w-full md:mb-0 relative">
         <h3 class="px-2">

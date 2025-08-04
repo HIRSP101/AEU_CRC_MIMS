@@ -67,6 +67,7 @@ var khDict = {
 $(document).ready(function () {
     var school_id = null;
     var institute_id = null;
+    var branch_id = null;
     //start up code goes here
     getDistrctKhan();
     $.ajax({
@@ -89,6 +90,7 @@ $(document).ready(function () {
                 );
             });
             $("#branch_name").val(data[0].branch_kh);
+            branch_id = data[0].branch_id;
         },
         failure: function (response) {
             alert(response.responseText);
@@ -99,8 +101,8 @@ $(document).ready(function () {
     });
 
     $("#branch_name").on("change", function () {
-        var branchId = $("#branch_name").val();
-        getDistrctKhan(branchId);
+        branch_id = $("#branch_name").val();
+        getDistrctKhan(branch_id);
     });
 
     //select Change event on district and school
@@ -316,7 +318,8 @@ $(document).ready(function () {
             ...member,
             school_id: school_id,
             institute_id: institute_id,
-            branchhei_id: institute_id
+            branchhei_id: institute_id,
+            branch_id: branch_id
         }));
 
         console.log("memberData=>", memberData);
