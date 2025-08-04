@@ -6,7 +6,7 @@
 @section('Content')
     <?php
     $i = 0;
-                ?>
+                    ?>
     <div class="bg-white mt-2 mx-2 px-3 shadow-lg h-max-full rounded-lg">
         <h1 class="text-center font-khmer my-2 text-lg text-blue-800 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
             ទីប្រឹក្សាយុវជន នឹងយុវជន</h1>
@@ -18,7 +18,7 @@
             </div>
             <div class="flex justify-end items-center">
                 <form method="GET" action="{{ route('total.university') }}" class="flex items-center gap-2">
-                    <select name="year" class="border-2 border-gray-400 rounded-xl px-7 py-2">
+                    <select name="year" class="border-2 border-gray-400 rounded-xl px-7 py-2 text-sm">
                         @for ($y = now()->year; $y >= 2015; $y--)
                             <option value="{{ $y }}" {{ request('year') == $y ? 'selected' : '' }}>{{ $y }}</option>
                         @endfor
