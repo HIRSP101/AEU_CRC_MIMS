@@ -4,7 +4,7 @@
 
 @section('Content')
 @if(count($total_mem) > 0)
-    <div class="bg-white mt-3 mx-3 shadow-lg">
+    <div class="bg-white m-5 shadow-lg rounded-lg">
         <h1 class="text-center mt-7 font-siemreap my-2 font-bold text-2xl"> បញ្ជីរាយនាមសមាជិកចុះឈ្មោះថ្មី ក្នុងឆ្នាំសិក្សា
             {{$total_mem[0]->academic_year}} 
             @if (!$approved)

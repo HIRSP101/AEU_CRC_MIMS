@@ -117,33 +117,33 @@
             - ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនកាកបាទក្រហមកម្ពុជា (RCY Recruitment Date) ៖
             <span>........................................................................</span>
         </h3>
-        <span class="absolute top-[-3px] left-[430px] font-bold"> {{DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->registration_date)}}</span>
+        <span class="absolute top-[-3px] left-[430px] font-bold"> {{DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->registration_date) ?? ""}}</span>
     </div>
     <div class="flex w-full md:w-full md:mb-0 relative">
         <h3 class="px-2">
             - ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជនជាតិកាយរឹទ្ធិកម្ពុជា (Scout Youth Recruitment Date) ៖
             <span>.............................................................</span>
         </h3>
-        <span class="absolute top-[-3px] left-[470px] font-bold"></span>
+        <span class="absolute top-[-3px] left-[470px] font-bold"> {{DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->scout_youth_registration_date) ?? ""}}</span>
     </div>
     <div class="flex w-full md:w-full md:mb-0 relative">
         <h3 class="px-2">
             - ថ្ងៃ ខែ ឆ្នាំ ចូលជាយុវជន ស.ស.យ​.ក (UYFC Recruitment Date) ៖ <span>..................................................................................</span>
         </h3>
-        <span class="absolute top-[-3px] left-[400px] font-bold"></span>
+        <span class="absolute top-[-3px] left-[400px] font-bold"> {{DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->uyfc_registration_date)?? ""}}</span>
     </div>
     <div class="flex w-full md:w-full md:mb-0 relative">
         <h3 class="px-2">
             - ថ្ងៃ ខែ ឆ្នាំ ចូលជាអង្គការចាត់តាំងយុវជនផ្សេងៗ (Other NGos Recruitment Date) ៖
             <span>.........................................................</span>
         </h3>
-        <span class="absolute top-[-3px] left-[480px] font-bold"></span>
+        <span class="absolute top-[-3px] left-[480px] font-bold"> {{DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->other_ngos_registration_date) ?? ""}}</span>
     </div>
     <div class="flex w-full md:w-full md:mb-0 relative">
         <h3 class="px-2">
             - វគ្គបណ្ដុះបណ្ដាលទទួលបាន ៖ <span>...................................................................................................................................................</span>
         </h3>
-        <span class="absolute top-[-3px] left-[180px] font-bold"> {{$member->misc_skill}}</span>
+        <span class="absolute top-[-3px] left-[180px] font-bold"> {{$member->training_received}}</span>
     </div>
     <div class="flex w-full md:w-full md:mb-0 relative">
         <h3 class="px-2">

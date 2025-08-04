@@ -3,18 +3,16 @@
 @endpush
 
 @section('Content')
-@include('member_input_form.partials.member_form')
+@include('member_input_form.partials.update_form')
 @include('loading_view')
 @include('succed_view')
 @endsection
 
 @push('JS')
     <script>
-
-        var memberId = null;
-
         $("#succedView").hide();
-        $("#memberForm").show();
+        $("#updateForm").show();
+
         $("#image").on('change', function (e) {
             e.preventDefault();
             var file = e.target.files;
@@ -98,6 +96,7 @@
 
 
         $("#submit_btn").click(function (e) {
+            var memberId = $("input#member_id").val();
             e.preventDefault();
             const requiredFields = [
                 'father_name',
@@ -143,7 +142,6 @@
             }
             var memberObj = {
                 0: {
-                    // "member_id": window.location.href.split("/")[4],
                     "name_kh": $("input#name_kh").val(),
                     "name_en": $("input#name_en").val(),
                     "gender": $("select#gender").val(),
@@ -154,8 +152,7 @@
                     "facebook": $("input#facebook").val(),
                     "email": $("input#memberemail").val(),
                     "shirt_size": $("select#shirt_size").val(),
-                    "pob_home_no": $("input#housenumber").val(),
-                    "pob_street_no": $("input#street").val(),
+                    "home_no": $("input#housenumber").val(),
                     "pob_village": $("input#village").val(),
                     "pob_commune_sangkat": $("input#commune").val(),
                     "pob_district_khan": $("input#district").val(),
@@ -164,8 +161,6 @@
                     }).data('id') || null,
                     "branchhei_id": branchhei_id,
                     "pob_provience_city": $("input#province").val(),
-                    "home_no": $("input#current_housenumber").val(),
-                    "street_no": $("input#current_street").val(),
                     "village": $("input#current_village").val(),
                     "commune_sangkat": $("input#current_commune").val(),
                     "district_khan": $("input#current_district").val(),
@@ -184,7 +179,7 @@
                     "mother_current_address": $("input#mother_current_address").val(),
                     "guardian_phone": $("input#guardian_number").val(),
                     "education_level": $("#education_level").val(),
-                    "training_received": $("#training_received").val(),
+                    "training_received": $("input#training_received").val(),
                     "language": $("input#language").val(),
                     "computer_skill": $("input#computer_skill").val(),
                     "misc_skill": $("input#misc_skill").val(),
@@ -195,28 +190,37 @@
                     "member_type": $("select#member_type").val(),
                     "member_status": $("input#member_status").val(),
                     "approved": 0,
-                    "token": @json($token)
+                    "token": @json($member->token)
                 }
             }
 
             formData.append('image', $("#image")[0].files[0]);
             formData.append('members', JSON.stringify(memberObj));
             console.log(formData);
-            insertMember(formData);
+            updateMember(memberId, formData);
         })
 
-        function insertMember(member) {
+        function updateMember(member_id, member) {
+            $("#loadingSpinner").show();
+            $("#textload").show();
+            $("#spinner").show();
+            $("#textsucc").hide();
+            $("#tick").hide();
+            $("#ok").hide();
+            const membersJSON = member.get('members');
+            const membersObj = JSON.parse(membersJSON);
+
             $.ajax({
                 type: 'POST',
-                url: `/member-registration`,
+                url: `/update-member/${member_id}`,
                 data: member,
                 contentType: false,
                 processData: false,
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
                 success: function (response) {
-                    memberId = response.data;
+                     memberId = response.data.member_id;
                     $("#loadingSpinner").show();
                     $("#textload").hide();
                     $("#spinner").hide();
@@ -231,15 +235,14 @@
                         $("#tick").hide();
                         $("#ok").hide();
                         $("#succedView").show();
-                        $("#memberForm").hide();
+                        $("#updateForm").hide();
                     });
                 },
                 error: function (error) {
                     $("#loadingSpinner").hide();
-                    // alert(error);
                     console.error(error);
                 }
-            })
+            });
         }
 
         function previewImage(files) {
@@ -254,10 +257,10 @@
                 }
             });
         }
-
-        $("#previewMember").click(function (e) {
+          $("#previewMember").click(function (e) {
             e.preventDefault();
-            window.open(`${window.location.origin}/member-reg-detail/${memberId}`,"_self");  
+            console.log(memberId);
+            window.open(`${window.location.origin}/member-reg-detail/${memberId}`,'_self');  
         });
     </script>
 @endpush

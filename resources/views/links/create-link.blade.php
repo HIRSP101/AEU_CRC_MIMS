@@ -4,12 +4,12 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 @endpush
 @php
-use Carbon\Carbon;
+    use Carbon\Carbon;
 @endphp
 @section('Content')
-<div class="p-4 bg-gray-100 font-battambang my-3">
+<div class="m-5 bg-gray-100 font-battambang">
     @if ($title == 'បង្កើត Link')
-        <div class="p-4 bg-white shadow-md rounded-lg">
+        <div class="p-5 bg-white shadow-md rounded-lg">
             <div class="grid grid-cols-6 ">
                 <div class="col-span-5 flex flex-col items-center justify-center mb-10 ml-44">
                     <h1 class="mb-1 text-[18px] font-khmer mt-9">{{$title}}</h1>
@@ -111,16 +111,15 @@ use Carbon\Carbon;
                             success: function (response) {
                                 if (response.status === 200) {
                                     alert(response.message);
-                                    const link = `${window.location.origin}/member-rigistration/${response.token}`;
+                                    const link = `${window.location.origin}/member-registration/${response.token}`;
                                     $("#link-generate").removeClass("hidden");
                                     $("#link-generated").val(link);
                                 }
+                                else if (response.status === 409) {
+                                    alert(response.message);
+                                }
                             },
                             error: function (xhr, status, error) {
-                                if (xhr.responseJSON.message.includes("form_submits.form_submits_academic_year_unique")) {
-                                    alert("Link សម្រាប់ឆ្នាំសិក្សានេះ មានរួចហើយ។ សូមបង្កើត Link សម្រាប់ឆ្នាំសិក្សាថ្មី។");
-                                    return;
-                                }
                                 console.error(error);
                             }
                         })
@@ -139,63 +138,61 @@ use Carbon\Carbon;
             </script>
         @endpush
     @else
-            <div class="p-4 bg-white shadow-md rounded-lg">
-                <div class="grid grid-cols-6 ">
-                    <div class="col-span-5 flex flex-col items-center justify-center mb-10 ml-44">
-                        <h1 class="mb-1 text-[18px] font-khmer mt-9">{{$title}}</h1>
-                    </div>
-                </div>
-
-                @csrf
-                <div class="flex flex-wrap -mx-3 mt-3 mb-6">
-                    <div class="w-full md:w-1/3 px-3">
-                        <label class="block uppercase tracking-wide text-gray-700  mb-2">
-                            ឆ្នាំសិក្សា
-                        </label>
-                        <select id="year" name="year" disabled
-                            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white">
-                            <option value="{{$tokenEntry->academic_year}}">{{$tokenEntry->academic_year}} </option>
-                        </select>
-                    </div>
-                    <div class="w-full md:w-1/3 px-3">
-                        <label class="block uppercase tracking-wide text-gray-700  mb-2">
-                            ថ្ងៃចាប់ផ្តើមទទួលពាក្យ
-                        </label>
-                        <input id="startDate"
-                            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-                            type="date" required value="{{ Carbon::parse($tokenEntry->starts_at)->format('Y-m-d') }}"
->
-                    </div>
-                    <div class="w-full md:w-1/3 px-3">
-                        <label class="block uppercase tracking-wide text-gray-700  mb-2">
-                            ថ្ងៃឈប់ទទួលពាក្យ
-                        </label>
-                        <input id="endDate"
-                            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-                            type="date" required value="{{ Carbon::parse($tokenEntry->expires_at)->format('Y-m-d') }}"
->
-                    </div>
-                </div>
-                <div class="flex justify-center">
-                    <button id="update-link" class="bg-green-500 text-white px-10 py-2 rounded font-battambang">កែប្រែ
-                    </button>
-                </div>
-                <div class="grid grid-cols-3 hidden" id="link-generate">
-                    <div class="w-full col-span-2 px-3">
-                        <input type="text" id="link-generated"
-                            class="mt-10 pl-5 appearance-none block w-full text-sm bg-gray-200 text-gray-700 border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-                            value="" readonly>
-                    </div>
-                    <div class="w-full">
-                        <button id="copy_btn"
-                            class="bg-gray-500 text-white px-7 mt-10 py-2 rounded font-battambang">Copy</button>
-                    </div>
-                    <div class="mt-7 ml-4">
-                        <a href="{{ route('link-member') }}"
-                            class="bg-gray-500 text-white px-7 py-2 rounded font-battambang">Back</a>
-                    </div>
+        <div class="p-5 bg-white shadow-md rounded-lg">
+            <div class="grid grid-cols-6 ">
+                <div class="col-span-5 flex flex-col items-center justify-center mb-10 ml-44">
+                    <h1 class="mb-1 text-[18px] font-khmer mt-9">{{$title}}</h1>
                 </div>
             </div>
+
+            @csrf
+            <div class="flex flex-wrap -mx-3 mt-3 mb-6">
+                <div class="w-full md:w-1/3 px-3">
+                    <label class="block uppercase tracking-wide text-gray-700  mb-2">
+                        ឆ្នាំសិក្សា
+                    </label>
+                    <select id="year" name="year" disabled
+                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white">
+                        <option value="{{$tokenEntry->academic_year}}">{{$tokenEntry->academic_year}} </option>
+                    </select>
+                </div>
+                <div class="w-full md:w-1/3 px-3">
+                    <label class="block uppercase tracking-wide text-gray-700  mb-2">
+                        ថ្ងៃចាប់ផ្តើមទទួលពាក្យ
+                    </label>
+                    <input id="startDate"
+                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+                        type="date" required value="{{ Carbon::parse($tokenEntry->starts_at)->format('Y-m-d') }}">
+                </div>
+                <div class="w-full md:w-1/3 px-3">
+                    <label class="block uppercase tracking-wide text-gray-700  mb-2">
+                        ថ្ងៃឈប់ទទួលពាក្យ
+                    </label>
+                    <input id="endDate"
+                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+                        type="date" required value="{{ Carbon::parse($tokenEntry->expires_at)->format('Y-m-d') }}">
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <button id="update-link" class="bg-green-500 text-white px-10 py-2 rounded font-battambang">កែប្រែ
+                </button>
+            </div>
+            <div class="grid grid-cols-3 hidden" id="link-generate">
+                <div class="w-full col-span-2 px-3">
+                    <input type="text" id="link-generated"
+                        class="mt-10 pl-5 appearance-none block w-full text-sm bg-gray-200 text-gray-700 border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+                        value="" readonly>
+                </div>
+                <div class="w-full">
+                    <button id="copy_btn"
+                        class="bg-gray-500 text-white px-7 mt-10 py-2 rounded font-battambang">Copy</button>
+                </div>
+                <div class="mt-7 ml-4">
+                    <a href="{{ route('link-member') }}"
+                        class="bg-gray-500 text-white px-7 py-2 rounded font-battambang">Back</a>
+                </div>
+            </div>
+        </div>
         @endsection
         @push('JS')
             <script>
@@ -220,9 +217,9 @@ use Carbon\Carbon;
                             url: "{{ route('link-member.update') }}",
                             type: "POST",
                             data: {
-                                id : "{{ $tokenEntry->id }}",
+                                id: "{{ $tokenEntry->id }}",
                                 starts_at,
-                                expires_at, 
+                                expires_at,
                             },
                             headers: {
                                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

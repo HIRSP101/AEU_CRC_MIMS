@@ -80,9 +80,9 @@ class CreateMemberService
             'expiration_date' => $this->calculateExpirationDate($data['registration_date'], $data['education_level']) ?? null,
             'approved' => $data['approved'] ?? 1,
             'form_submits_id' => $data['form_submits_id'] ?? null,
-            'scout_youth_registration_date' => $data['scout_youth_registration_date'] ?? null,
-            'uyfc_registration_date' => $data['uyfc_registration_date'] ?? null,
-            'other_ngos_registration_date' => $data['other_ngos_registration_date'] ?? null
+            'scout_youth_registration_date' => !empty($data['scout_youth_registration_date']) ? $data['scout_youth_registration_date'] : null,
+            'uyfc_registration_date' => !empty($data['uyfc_registration_date']) ? $data['uyfc_registration_date'] : null,
+            'other_ngos_registration_date' => !empty($data['other_ngos_registration_date']) ? $data['other_ngos_registration_date'] : null
         ]);
     }
 
@@ -138,11 +138,6 @@ class CreateMemberService
 
     private function createEducationBackground(member_personal_detail $member, array $data, $branch, $branchhei): void
     {
-        $branch = DB::table('branch')
-            ->leftJoin('branch_bindding_user', 'branch.branch_id', '=', 'branch_bindding_user.branch_id')
-            ->where('user_id', auth()->user()->id)
-            ->get();
-
         $member->member_education_background()->create([
             'institute_id' => $data['institute_id'] ?? null,
             'acadmedic_year' => DateTimeFormat::convertKhmerToEnglishNumbers($data['acadmedic_year']) ?? null,
@@ -152,7 +147,7 @@ class CreateMemberService
             'language' => $data['language'] ?? null,
             'computer_skill' => $data['computer_skill'] ?? null,
             'misc_skill' => $data['misc_skill'] ?? null,
-            'branch_id' => $branch[0]->branch_id ?? null,
+            'branch_id' => $data["branch_id"] ?? null,
             'branchhei_id' => $data["branchhei_id"] ?? null,
             'training_received' => $data["training_received"] ?? null,
             'education_level' => $data["education_level"] ?? null,

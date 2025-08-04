@@ -79,12 +79,13 @@
                     "gender": $("select#gender").val(),
                     "nationality": $("input#nationality").val(),
                     "date_of_birth": $("input#dateofbirth").val(),
-                    "full_current_address": `${$("input#housenumber").val()}, ${$("input#street").val()}, ${$("input#current_village").val()}, ${$("input#current_commune").val()}, ${$("input#current_district").val()}, ${$("input#current_provience").val()}`,
+                    "full_current_address": `${$("input#current_housenumber").val()}, ${$("input#current_street").val()}, ${$("input#current_village").val()}, ${$("input#current_commune").val()}, ${$("input#current_district").val()}, ${$("input#current_provience").val()}`,
                     "phone_number": $("input#phone_number").val(),
                     "facebook": $("input#facebook").val(),
                     "email": $("input#memberemail").val(),
                     "shirt_size": $("select#shirt_size").val(),
-                    "home_no": $("input#housenumber").val(),
+                    "pob_home_no": null,
+                    "pob_street_no": null,
                     "pob_village": $("input#village").val(),
                     "pob_commune_sangkat": $("input#commune").val(),
                     "pob_district_khan": $("input#district").val(),
@@ -93,6 +94,8 @@
                     }).data('id') || null,
                     "branchhei_id": branchhei_id,
                     "pob_provience_city": $("input#provience").val(),
+                    "home_no": $("input#current_housenumber").val(),
+                    "street_no": $("input#current_street").val(),
                     "village": $("input#current_village").val(),
                     "commune_sangkat": $("input#current_commune").val(),
                     "district_khan": $("input#current_district").val(),
@@ -113,8 +116,8 @@
                     "education_level": $("#education_level").val(),
                     "training_received": $("#training_received").val(),
                     "language": $("input#language").val(),
-                    "computer_skill": "",
-                    "misc_skill": "",
+                    "computer_skill": $("input#computer_skill").val(),
+                    "misc_skill": $("input#misc_skill").val(),
                     "registration_date": $("input#recruitment_date").val(),
                     "scout_youth_registration_date": $("input#scout_youth_registration_date").val(),
                     "uyfc_registration_date": $("input#uyfc_registration_date").val(),
@@ -165,13 +168,15 @@
                         $("#textsucc").hide();
                         $("#tick").hide();
                         $("#ok").hide();
+                        $("input").val("");
+                        $("img.image").attr('src', '{{ asset('images/members/default-profile.jpg') }}');
                     });
                     // console.log(response.message);
                     // //   $("#loading-overlay").hide();
                     // alert(response.message);
                 },
                 error: function (error) {
-                     $("#loadingSpinner").hide();
+                    $("#loadingSpinner").hide();
                     console.error(error);
                 }
             })

@@ -38,7 +38,7 @@
         ជំនាញផ្ទាល់ខ្លួន
     </label>
     <input
-            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
         id="major" type="text" value="{{$member->major}}">
 </div>
 </div>
@@ -49,8 +49,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="recruitment_date" id="recruitment_date" type="date" required
-            value="{{$member->registration_date}}">
+            name="recruitment_date" id="recruitment_date" type="date" required value="{{$member->registration_date}}">
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="scout_youth_registration_date">
@@ -97,10 +96,39 @@
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="education_level">
             កម្រិតវរប្បធម៌ថ្នាក់ ឬឆ្នាំទី
         </label>
-        <input
-            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="education_level" id="education_level" type="text" required
-            value="{{$member->education_level}}">
+        <select
+            class="w-full bg-gray-50 text-gray-700 border border-red-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            name="education_level" id="education_level" required>
+            @if ($member->education_level == null)
+                    <option value="">-----</option>
+                    <option value="ថ្នាក់ទី6">ថ្នាក់ទី៦</option>
+                    <option value="ថ្នាក់ទី7">ថ្នាក់ទី៧</option>
+                    <option value="ថ្នាក់ទី8">ថ្នាក់ទី៨</option>
+                    <option value="ថ្នាក់ទី9">ថ្នាក់ទី៩</option>
+                    <option value="ថ្នាក់ទី10">ថ្នាក់ទី១០</option>
+                    <option value="ថ្នាក់ទី11">ថ្នាក់ទី១១</option>
+                    <option value="ថ្នាក់ទី12">ថ្នាក់ទី១២</option>
+                    <option value="ឆ្នាំទី1">ឆ្នាំទី១</option>
+                    <option value="ឆ្នាំទី2">ឆ្នាំទី២</option>
+                    <option value="ឆ្នាំទី3">ឆ្នាំទី៣</option>
+                    <option value="ឆ្នាំទី4">ឆ្នាំទី៤</option>
+                </select>
+            @elseif($member->education_level != null)
+                <option value="{{$member->education_level}}">{{$member->education_level}}</option>
+                <option value="">-----</option>
+                <option value="ថ្នាក់ទី6">ថ្នាក់ទី៦</option>
+                <option value="ថ្នាក់ទី7">ថ្នាក់ទី៧</option>
+                <option value="ថ្នាក់ទី8">ថ្នាក់ទី៨</option>
+                <option value="ថ្នាក់ទី9">ថ្នាក់ទី៩</option>
+                <option value="ថ្នាក់ទី10">ថ្នាក់ទី១០</option>
+                <option value="ថ្នាក់ទី11">ថ្នាក់ទី១១</option>
+                <option value="ថ្នាក់ទី12">ថ្នាក់ទី១២</option>
+                <option value="ឆ្នាំទី1">ឆ្នាំទី១</option>
+                <option value="ឆ្នាំទី2">ឆ្នាំទី២</option>
+                <option value="ឆ្នាំទី3">ឆ្នាំទី៣</option>
+                <option value="ឆ្នាំទី4">ឆ្នាំទី៤</option>
+                </select>
+            @endif
     </div>
 </div>
 <div class=" flex flex-wrap -mx-3 mb-2">
@@ -110,8 +138,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="computer_skill" id="computer_skill" type="text" required
-            value="{{$member->computer_skill}}">
+            name="computer_skill" id="computer_skill" type="text" required value="{{$member->computer_skill}}">
     </div>
     <div class="md:flex-1 w-full  px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="training_received">
@@ -119,8 +146,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="training_received" id="training_received" type="text" required
-            value="{{$member->training_received}}">
+            name="training_received" id="training_received" type="text" required value="{{$member->training_received}}">
     </div>
     <div class="md:flex-1 w-full px-3 mb-6 md:mb-0 " id="this_is_fucked_up">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="misc_skill">
@@ -128,8 +154,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="misc_skill" id="misc_skill" type="text" required
-            value="{{$member->misc_skill}}">
+            name="misc_skill" id="misc_skill" type="text" required value="{{$member->misc_skill}}">
     </div>
 </div>
 <div class="flex flex-wrap -mx-3 mb-2">
@@ -137,9 +162,20 @@
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="member_type">
             ប្រភេទសាមាជិក
         </label>
-        <input
-            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="member_type" id="member_type" type="text" required value="{{$member->member_type}}">
+        <select name="member_type" id="member_type"
+            class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white">
+            @if ($member->member_type == null)
+                <option value="">-------------------</option>
+                <option value="សមាជិកា យុវជន">សមាជិកា យុវជន</option>
+                <option value="សមាជិក យុវជន">សមាជិក យុវជន</option>
+            @elseif($member->member_type != null)
+                <option value="{{$member->member_type}}">{{$member->member_type}}</option>
+                <option value="">-------------------</option>
+                <option value="សមាជិកា យុវជន">សមាជិកា យុវជន</option>
+                <option value="សមាជិក យុវជន">សមាជិក យុវជន</option>
+            @endif
+
+        </select>
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="member_status">
@@ -147,7 +183,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="member_status" id="member_status" type="text">
+            name="member_status" id="member_status" type="text" value="{{$member->member_status}}">
     </div>
 </div>
 <div class="flex flex-wrap -mx-3 mb-2 ">

@@ -1,4 +1,4 @@
-<div id="user_form_inner" class="absolute origin-center left-0 right-0 top-4 overflow-scroll z-50 hidden">
+<div id="user_form_inner" class="absolute origin-center left-0 right-0 top-5 hidden">
     <div
         class=" max-w-2xl mx-4 sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto mt-16 bg-white shadow-xl rounded-lg text-gray-900 ">
         <h1 id="form_header_text" class="mt-2 text-4xl font-bold text-center">User Creation Form</h1>

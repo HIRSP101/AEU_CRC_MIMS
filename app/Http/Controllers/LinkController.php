@@ -12,16 +12,44 @@ class LinkController extends Controller
 {
     public function linkMember()
     {
-        $branch_id = DB::table('branch')
-            ->leftJoin('branch_bindding_user', 'branch.branch_id', '=', 'branch_bindding_user.branch_id')
-            ->where('user_id', auth()->user()->id)
-            ->get();
-        $linkByUserId = DB::table('branch_bindding_user as bh')
-            ->Join('form_submits', 'bh.user_id', '=', 'form_submits.created_by')
-            ->where('bh.branch_id', $branch_id[0]->branch_id)
-            ->select('form_submits.*', 'bh.user_id', 'bh.branch_id')
-            ->get();
-        return view('links.link-member', compact('linkByUserId'));
+        if (auth()->user()->hasRole('admin')) {
+            $link = DB::table('form_submits as fs')
+                ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
+                ->join('branch as b', 'bbu.branch_id', '=', 'b.branch_id')
+                ->select(
+                    'fs.id',
+                    'fs.token',
+                    'fs.starts_at',
+                    'fs.expires_at',
+                    'fs.academic_year',
+                    'fs.created_at',
+                    'b.branch_kh'
+                )
+                ->orderBy('b.branch_kh')
+                ->orderBy('fs.created_at', 'desc')
+                ->get()
+                ->groupBy('branch_kh');
+            return view('links.link-member', compact('link', ));
+        } elseif (auth()->user()->hasRole('user')) {
+            $link = DB::table('form_submits as fs')
+                ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
+                ->join('branch as b', 'bbu.branch_id', '=', 'b.branch_id')
+                ->select(
+                    'fs.id',
+                    'fs.token',
+                    'fs.starts_at',
+                    'fs.expires_at',
+                    'fs.academic_year',
+                    'fs.created_at',
+                    'b.branch_kh'
+                )
+                ->where('bbu.user_id', auth()->user()->id)
+                ->orderBy('b.branch_kh')
+                ->orderBy('fs.created_at', 'desc')
+                ->get()
+                ->groupBy('branch_kh');
+            return view('links.link-member', compact('link'));
+        }
     }
     public function createLink()
     {
@@ -30,6 +58,19 @@ class LinkController extends Controller
     }
     public function linkStore(Request $request)
     {
+        $userId = auth()->user()->id;
+
+        $existing = form_submits::where('created_by', $userId)
+            ->where('academic_year', $request->academic_year)
+            ->first();
+
+        if ($existing) {
+            return response()->json([
+                'message' => 'Link សម្រាប់ឆ្នាំសិក្សានេះ មានរួចហើយ។ សូមបង្កើត Link សម្រាប់ឆ្នាំសិក្សាថ្មី។',
+                'status' => 409,
+            ]);
+        }
+
         auth()->user()->setRememberToken(Str::random(200));
         form_submits::create([
             'created_by' => auth()->user()->id,
@@ -49,16 +90,44 @@ class LinkController extends Controller
     }
     public function linkReport()
     {
-        $branch_id = DB::table('branch')
-            ->leftJoin('branch_bindding_user', 'branch.branch_id', '=', 'branch_bindding_user.branch_id')
-            ->where('user_id', auth()->user()->id)
-            ->get();
-        $linkByUserId = DB::table('branch_bindding_user as bh')
-            ->Join('form_submits', 'bh.user_id', '=', 'form_submits.created_by')
-            ->where('bh.branch_id', $branch_id[0]->branch_id)
-            ->select('form_submits.*', 'bh.user_id', 'bh.branch_id')
-            ->get();
-        return view('links.link-report', compact('linkByUserId'));
+        if (auth()->user()->hasRole('admin')) {
+            $link = DB::table('form_submits as fs')
+                ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
+                ->join('branch as b', 'bbu.branch_id', '=', 'b.branch_id')
+                ->select(
+                    'fs.id',
+                    'fs.token',
+                    'fs.starts_at',
+                    'fs.expires_at',
+                    'fs.academic_year',
+                    'fs.created_at',
+                    'b.branch_kh'
+                )
+                ->orderBy('b.branch_kh')
+                ->orderBy('fs.created_at', 'desc')
+                ->get()
+                ->groupBy('branch_kh');
+            return view('links.link-report', compact('link'));
+        } elseif (auth()->user()->hasRole('user')) {
+            $link = DB::table('form_submits as fs')
+                ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
+                ->join('branch as b', 'bbu.branch_id', '=', 'b.branch_id')
+                ->select(
+                    'fs.id',
+                    'fs.token',
+                    'fs.starts_at',
+                    'fs.expires_at',
+                    'fs.academic_year',
+                    'fs.created_at',
+                    'b.branch_kh'
+                )
+                ->where('bbu.user_id', auth()->user()->id)
+                ->orderBy('b.branch_kh')
+                ->orderBy('fs.created_at', 'desc')
+                ->get()
+                ->groupBy('branch_kh');
+            return view('links.link-report', compact('link'));
+        }
     }
     public function linkDetail_watting_for_approve($linkId)
     {
@@ -71,9 +140,10 @@ class LinkController extends Controller
             ->leftJoin('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
             ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
             ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
             ->leftJoin('form_submits as fsm', 'fsm.id', '=', 'mrd.form_submits_id')
             ->whereRaw('mrd.registration_date > NOW() - INTERVAL 4 YEAR')
-            ->where('mrd.form_submits_id',  $linkId)
+            ->where('mrd.form_submits_id', $linkId)
             ->where('mrd.approved', '=', 0);
         $total_mem = (clone $baseQuery)
             ->select([
@@ -88,6 +158,7 @@ class LinkController extends Controller
                 'hei.institute_kh',
                 'hei.institute_type',
                 'branch.branch_name',
+                's.school_name',
                 'mpd.member_type',
                 'meb.education_level',
                 'meb.acadmedic_year',
@@ -113,9 +184,9 @@ class LinkController extends Controller
             ])
             ->distinct()
             ->get();
-        return view('links.dbl-click', compact('total_mem','approved'));
+        return view('links.dbl-click', compact('total_mem', 'approved'));
     }
-     public function linkDetail_approved($linkId)
+    public function linkDetail_approved($linkId)
     {
         $approved = 1;
         $baseQuery = DB::table('member_personal_detail as mpd')
@@ -126,9 +197,10 @@ class LinkController extends Controller
             ->leftJoin('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
             ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
             ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
             ->leftJoin('form_submits as fsm', 'fsm.id', '=', 'mrd.form_submits_id')
             ->whereRaw('mrd.registration_date > NOW() - INTERVAL 4 YEAR')
-            ->where('mrd.form_submits_id',  $linkId)
+            ->where('mrd.form_submits_id', $linkId)
             ->where('mrd.approved', '=', 1);
         $total_mem = (clone $baseQuery)
             ->select([
@@ -142,6 +214,7 @@ class LinkController extends Controller
                 // 'meb.institute_id',
                 'hei.institute_kh',
                 'hei.institute_type',
+                's.school_name',
                 'branch.branch_name',
                 'mpd.member_type',
                 'meb.education_level',
@@ -168,7 +241,7 @@ class LinkController extends Controller
             ])
             ->distinct()
             ->get();
-        return view('links.dbl-click', compact('total_mem','approved'));
+        return view('links.dbl-click', compact('total_mem', 'approved'));
     }
     public function linkDelete()
     {
@@ -202,10 +275,10 @@ class LinkController extends Controller
         ]);
     }
 
-    public function memberApprove (Request $request)
+    public function memberApprove(Request $request)
     {
         $member = member_registration_detail::whereIn('member_id', $request->arr)
-        ->update(['approved' => 1]);
+            ->update(['approved' => 1]);
         return response()->json([
             'message' => 'Member approved successfully',
             'status' => 200,

@@ -4,7 +4,7 @@
     <div aria-label="header" class="flex space-x-4 items-center p-4">
       <div aria-label="avatar" class="flex mr-auto items-center space-x-4">
         <img
-          src="{{auth()->user()->image ?? ""}}"
+          src="{{asset(auth()->user()->image) ?? ""}}"
           class="w-16 h-16 shrink-0 rounded-full"
         />
         <div class="space-y-2 flex flex-col flex-1 truncate">

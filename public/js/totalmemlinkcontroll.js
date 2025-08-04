@@ -1,6 +1,7 @@
 import ajaxtoRoute from "./genericCalltoRoute.js";
 import setuppagination from "./pagination.js";
 export function totalmemlinkcontroll(array, ExcelObj) {
+
     const attr_arr = [
         "member_id",
         "name_kh",
@@ -12,7 +13,24 @@ export function totalmemlinkcontroll(array, ExcelObj) {
         "registration_date",
     ];
 
-    setuppagination(array, attr_arr, "update-member");
+    const attr_arr_scholl = [
+        "member_id",
+        "name_kh",
+        "gender",
+        "date_of_birth",
+        "school_name",
+        "member_type",
+        "education_level",
+        "registration_date",
+    ];
+
+    if (array[0].institute_kh != null) {
+        setuppagination(array, attr_arr, "update-member");
+    }
+    else {
+        setuppagination(array, attr_arr_scholl, "update-member");
+    }
+
     $(".table table tbody").on("click", ".hoverablebranch", function (e) {
         if ($(e.target).closest("td").hasClass("action")) {
             return;

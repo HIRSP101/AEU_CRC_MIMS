@@ -2,6 +2,7 @@
 
 namespace App\Services\Members;
 
+use App\Helpers\DateTimeFormat;
 use App\Models\member_personal_detail;
 use Illuminate\Http\UploadedFile;
 use Carbon\Carbon;
@@ -56,8 +57,44 @@ class UpdateMemberService
     {
         $member->member_registration_detail()->update([
             'registration_date' => isset($data[0]['registration_date']) ? $this->convertDate($data[0]['registration_date']) : $member->member_registration_detail->registration_date,
-            'expiration_date' => $data[0]['expiration_date'] ?? $member->member_registration_detail->expiration_date,
+            'expiration_date' => $this->calculateExpirationDate($data[0]['registration_date'], $data[0]['education_level']) ?? $member->member_registration_detail->expiration_date,
+            'approved' => $data[0]['approved'] ?? 1,
+            'form_submits_id' => $data[0]['form_submits_id'] ?? $member->member_registration_detail->form_submits_id,
+            'scout_youth_registration_date' => !empty($data[0]['scout_youth_registration_date'])
+                ? $data[0]['scout_youth_registration_date']
+                : null,
+
+            'uyfc_registration_date' => !empty($data[0]['uyfc_registration_date'])
+                ? $data[0]['uyfc_registration_date']
+                : null,
+
+            'other_ngos_registration_date' => !empty($data[0]['other_ngos_registration_date'])
+                ? $data[0]['other_ngos_registration_date']
+                : null,
         ]);
+    }
+
+    private function calculateExpirationDate($registrationDate, $educationLevel)
+    {
+        $edulevelAfterSplit = DateTimeFormat::spittingEducationLevel($educationLevel);
+        $registrationDate = new \DateTime($registrationDate);
+
+        $highSchoolMaxGrade = 12;
+        $universityMaxYear = 4;
+
+        if ($edulevelAfterSplit >= 7 && $edulevelAfterSplit <= $highSchoolMaxGrade) {
+            $remainingYears = $highSchoolMaxGrade - $edulevelAfterSplit;
+        } elseif ($edulevelAfterSplit >= 1 && $edulevelAfterSplit <= $universityMaxYear) {
+            $remainingYears = $universityMaxYear - ($edulevelAfterSplit - 1);
+        } else {
+
+            return null;
+        }
+
+
+        $registrationDate->modify("+$remainingYears years");
+
+        return $registrationDate->format('Y-m-d');
     }
 
     // Similarly, add update methods for each related entity:
@@ -98,6 +135,7 @@ class UpdateMemberService
             'language' => $data[0]['language'] ?? $member->member_education_background->language,
             'computer_skill' => $data[0]['computer_skill'] ?? $member->member_education_background->computer_skill,
             'misc_skill' => $data[0]['misc_skill'] ?? $member->member_education_background->misc_skill,
+            'education_level' => $data[0]["education_level"] ?? $member->member_education_background->education_level,
             'training_received' => $data[0]['training_received'] ?? $member->member_education_background->training_received,
         ]);
     }

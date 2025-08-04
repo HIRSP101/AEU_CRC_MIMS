@@ -2,20 +2,20 @@
 <hr>
 <div class="flex flex-wrap -mx-3 mt-3 mb-6">
     <div class="w-1/4 md:w-40 px-3">
-        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="housenumber">
+        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_housenumber">
             ផ្ទះលេខ
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="housenumber" id="housenumber" type="text" value="{{$member->current_house_number}}">
+            name="housenumber" id="current_housenumber" type="text" value="{{$member->current_house_number}}">
     </div>
     <div class="w-1/4 md:w-40 px-3">
-        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="street">
+        <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_street">
             ផ្លូវ
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="street" id="street" type="text" value="{{$member->current_street}}">
+            name="street" id="current_street" type="text" value="{{$member->current_street}}">
     </div>
     <div class="flex-1 w-1/4 md:w-1/4 px-3">
         <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_village">
