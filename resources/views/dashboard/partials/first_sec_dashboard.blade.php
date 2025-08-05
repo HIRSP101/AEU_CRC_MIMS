@@ -9,10 +9,10 @@ $firstEle_total = $firstEle->total_mem;
     <div class="">
         <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 ">
             <div class="p-4 rounded-xl shadow-md px-3 mb-3 border">
-                <h1 class="text-blue-900 text-2xl font-khmer">សួស្តី
+                <h1 class="text-blue-600 text-2xl font-koulen">សួស្តី
                     {{explode(' ', string: auth()->user()->name)[1] ?? auth()->user()->name}}
                 </h1>
-                <h3 class="text-blue-900 text-xl font-battambang mt-3.5">សូមសា្វគមន៍មកកាន់ប្រព័ន្ធគ្រប់គ្រងទិន្នន័យ​
+                <h3 class="text-blue-600 text-xl font-battambang mt-3.5">សូមសា្វគមន៍មកកាន់ប្រព័ន្ធគ្រប់គ្រងទិន្នន័យ​
                     សមាជិកយុវជន ក.ក្រ.ក</h3>
                 <div class="grid justify-items-end my-3 opacity-5 hover:opacity-100">
                 </div>
@@ -31,7 +31,7 @@ $firstEle_total = $firstEle->total_mem;
                     </div>
                 </div>
                 <div class="p-2 bg-white border rounded-xl shadow-lg sm:w-[50%] md:w-[50%] ">
-                    <h2 class="text-blue-700 text-xl font-khmer mt-4 text-center">ទីស្នាក់ការដែលមានសមាជិកចុះឈ្មោះថ្មី
+                    <h2 class="text-blue-700 text-2xl font-koulen mt-4 text-center">ទីស្នាក់ការដែលមានសមាជិកចុះឈ្មោះថ្មី
                     </h2>
                     <div class="mt-4 flex justify-center">
                         <table class="table font-battambang leading-10 font-medium">

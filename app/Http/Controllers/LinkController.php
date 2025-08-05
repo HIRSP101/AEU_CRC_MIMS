@@ -12,6 +12,7 @@ class LinkController extends Controller
 {
     public function linkMember()
     {
+        $title = "បញ្ចូលសមាជិកតាមរយះតំណរភ្ជាប់";
         if (auth()->user()->hasRole('admin')) {
             $link = DB::table('form_submits as fs')
                 ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
@@ -29,7 +30,7 @@ class LinkController extends Controller
                 ->orderBy('fs.created_at', 'desc')
                 ->get()
                 ->groupBy('branch_kh');
-            return view('links.link-member', compact('link', ));
+            return view('links.link-member', compact('link', 'title'));
         } elseif (auth()->user()->hasRole('user')) {
             $link = DB::table('form_submits as fs')
                 ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
@@ -48,7 +49,7 @@ class LinkController extends Controller
                 ->orderBy('fs.created_at', 'desc')
                 ->get()
                 ->groupBy('branch_kh');
-            return view('links.link-member', compact('link'));
+            return view('links.link-member', compact('link','title'));
         }
     }
     public function createLink()
@@ -90,6 +91,7 @@ class LinkController extends Controller
     }
     public function linkReport()
     {
+        $title = "ការគ្រប់គ្រងតំណរភ្ជាប់";
         if (auth()->user()->hasRole('admin')) {
             $link = DB::table('form_submits as fs')
                 ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
@@ -107,7 +109,7 @@ class LinkController extends Controller
                 ->orderBy('fs.created_at', 'desc')
                 ->get()
                 ->groupBy('branch_kh');
-            return view('links.link-report', compact('link'));
+            return view('links.link-report', compact('link','title'));
         } elseif (auth()->user()->hasRole('user')) {
             $link = DB::table('form_submits as fs')
                 ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
@@ -126,7 +128,7 @@ class LinkController extends Controller
                 ->orderBy('fs.created_at', 'desc')
                 ->get()
                 ->groupBy('branch_kh');
-            return view('links.link-report', compact('link'));
+            return view('links.link-report', compact('link','title'));
         }
     }
     public function linkDetail_watting_for_approve($linkId)

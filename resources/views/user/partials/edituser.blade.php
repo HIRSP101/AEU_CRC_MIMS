@@ -1,7 +1,7 @@
 <div id="edit_form" class="absolute origin-center left-0 right-0 top-4 overflow-scroll z-50 hidden">
     <div
         class=" max-w-2xl mx-4 sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto mt-16 bg-white shadow-xl rounded-lg text-gray-900 ">
-        <h1 class="mt-2 text-4xl font-bold text-center">User Edit Form</h1>
+        <h1 class="mt-2 text-4xl font-bold text-center">កែប្រែអ្នកប្រើប្រាស់</h1>    
         <ul class="py-1 mt-2 text-gray-700 flex items-center justify-around">
             <form method="POST" id="user_form_form" action="{{ route('register.store') }}" enctype="multipart/form-data">
                 @csrf

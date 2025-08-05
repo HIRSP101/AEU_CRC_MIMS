@@ -1,28 +1,27 @@
 @foreach($userb->branch_bindding_user as $branch_user)
 <tr class="border-b border-gray-200 hover:bg-gray-100">
-    <td class="py-3 px-6 text-left whitespace-nowrap">
+    <td class="py-3 px-5 text-left whitespace-nowrap">
         <div class="flex items-center">
-            <div class="mr-2">
-                <img class="w-6 h-6 rounded-full" src="{{asset("{$branch_user->branch->branch_image}")}}"/>
+            <div class="mr-5">
+                <img class="w-10 h-10 rounded-lg" src="{{asset("{$branch_user->branch->branch_image}")}}"/>
             </div>
             <span class="font-medium">{{$branch_user->branch->branch_name ?? ""}}</span>
         </div>
     </td>
-    <td class="py-3 px-6 text-left">
+    <td class="py-3 px-5 text-left">
         <div class="flex items-center">
             <div class="mr-2">
-                <img class="w-6 h-6 rounded-full" src="{{asset("{$userb?->image}")}}"/>
+                <img class="w-10 h-10 rounded-lg" src="{{asset("{$userb?->image}")}}"/>
             </div>
             <span>{{$userb->name ?? ""}}</span>
         </div>
     </td>
-    <td class="py-3 px-6 text-left">
+    <td class="py-3 px-5 text-left">
         <div class="flex items-center">
-
             <span>{{$userb->roles[0]->name ?? ""}}</span>
         </div>
     </td>
-    <td class="py-3 px-6 text-center">
+    <td class="py-3 px-5 text-center">
         @if($userb->permissions)
                 @foreach($userb->permissions as $permission)
                 <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{explode(' ' ,$permission->name)[0]}}</span>
@@ -34,7 +33,7 @@
         @endif
     </td>
 
-    <td class="py-3 px-6 text-center">
+    <td class="py-5 px-5 text-center">
         <div class="flex item-center justify-center">
             <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                 <a class="elude" data-id="{{$userb?->id}}" b-id="{{$branch_user->branch->branch_id}}">

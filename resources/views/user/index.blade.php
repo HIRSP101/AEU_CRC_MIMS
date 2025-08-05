@@ -16,32 +16,31 @@ foreach ($user_branch as $user_b) {
     ];
 }
     ?>
-<div class="bg-gray-100">
+<div class="bg-white rounded-lg m-5 p-5">
     @include('user.partials.createuser')
-    <div class="flex justify-between items-center w-full px-5 mt-5">
+    <div class="flex justify-between items-center w-full">
         <div class="w-full text-center">
-            <h1 class="text-2xl text-blue-700 mt-5 font-khmer">គ្រប់គ្រងអ្នកប្រើប្រាស់</h1>
-
+            <h1 class="text-2xl text-blue-600 font-koulen">គ្រប់គ្រងអ្នកប្រើប្រាស់</h1>
         </div>
-        <div class="absolute right-6">
+        <div class="absolute right-10">
             <a id="user_form_btn"><img src="{{ asset('images/icons/add-user.png') }}"
-                    class="w-auto h-auto bg-gray-300 py-1 px-1 rounded-full" /></a>
+                    class="w-auto h-auto bg-gray-300 py-1 px-1 rounded-lg" /></a>
         </div>
     </div>
-    <div class="flex items-center justify-center bg-gray-100 font-sans mx-5 m-4 overflow-hidden">
+    <div class="flex items-center justify-center mt-14 overflow-hidden">
         <div class="w-full">
-            <div class="bg-white shadow-md rounded my-6">
+            <div class="bg-white shadow-md rounded">
                 <table class="min-w-max w-full table-auto">
                     <thead>
-                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                            <th class="py-3 px-6 text-left">Branches</th>
-                            <th class="py-3 px-6 text-left">Users</th>
-                            <th class="py-3 px-6 text-left">Roles</th>
-                            <th class="py-3 px-6 text-center">Permission</th>
-                            <th class="py-3 px-6 text-center">Actions</th>
+                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal font-battambang text-xl ">
+                            <th class="py-3 px-5 text-left">សាខា</th>
+                            <th class="py-3 px-5 text-left">អ្នកប្រើប្រាស់</th>
+                            <th class="py-3 px-5 text-left">តួនាទី</th>
+                            <th class="py-3 px-5 text-center">សិទ្ធ</th>
+                            <th class="py-3 px-5 text-center">សកម្មភាព</th>
                         </tr>
                     </thead>
-                    <tbody class="text-gray-600 text-sm font-light">
+                    <tbody class="text-gray-600 text-sm font-siemreap">
                         @foreach ($user_branch as $userb)
                             @include('user.partials.userbranch')
                         @endforeach
@@ -64,7 +63,7 @@ foreach ($user_branch as $user_b) {
         });
         $("#user_form_btn").on("click", function () {
             $("#user_form_form_inner").attr('action', "{{ route('register.store') }}");
-            $("h1#form_header_text").text("User Create Form");
+            $("h1#form_header_text").text("បង្កើតអ្នកប្រើប្រាស់");
             $("div#profilepreview").removeClass('hidden');
             formcleanup();
             $("#user_form_inner").toggle('hidden');
@@ -88,7 +87,7 @@ foreach ($user_branch as $user_b) {
             var route = `{{ route('user.edit', ':id') }}`;
             route = route.replace(':id', $(this).attr('data-id'));
             $("#user_form_form_inner").attr('action', route);
-            $("h1#form_header_text").text("User Edit Form");
+            $("h1#form_header_text").text("កែប្រែអ្នកប្រើប្រាស់");
             $("div#profilepreview").addClass('hidden');
             $("#user_form_inner").toggle('hidden');
             formcleanup();

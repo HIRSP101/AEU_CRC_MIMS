@@ -41,6 +41,7 @@ class MemberController extends Controller
     }
     public function index(): View
     {
+        $title = "បញ្ចូលសមាជិកតាមរយះទម្រង់";
         $branches = Branch::all()->pluck('branch_kh', 'branch_id');
         $branchhei = branch_hei::all()->pluck('institute_kh', 'bhei_id');
         $school = school::all()->pluck('school_name', 'school_id');
@@ -48,7 +49,7 @@ class MemberController extends Controller
         $schoolPrefixed = $school->mapWithKeys(fn($value, $key) => ['school_' . $key => $value]);
 
         $institutions = $branchheiPrefixed->toArray() + $schoolPrefixed->toArray();
-        return view('member.index', compact('branches', 'institutions'));
+        return view('member.index', compact('branches', 'institutions','title'));
     }
     public function getMemberDetail($id): View
     {
@@ -205,7 +206,7 @@ class MemberController extends Controller
 
     public function getupdateMember(int $memberId)
     {
-
+        $title = "កែប្រែទិន្នន័យសមាជិក";
         $branches = Branch::all()->pluck('branch_kh', 'branch_id');
         $branchhei = branch_hei::all()->pluck('institute_kh', 'bhei_id');
         $school = school::all()->pluck('school_name', 'school_id');
@@ -247,7 +248,7 @@ class MemberController extends Controller
                 )
                 ->first();
             // dd($member);
-            return view('member.update.update', compact('member', 'branches', 'institutions'));
+            return view('member.update.update', compact('member', 'branches', 'institutions','title'));
         }
     }
     public function updateMember(int $memberId, MemberRequest $request): JsonResponse

@@ -14,7 +14,7 @@
             ?>
     <div class="flex justify-center items-center h-screen bg-gray-100">
         <div class="bg-white px-[10%] py-[5%] rounded-lg shadow-md w-[97%] h-[95%]">
-            <div class="text-center text-2xl font-bold mb-6 font-siemreap">
+            <div class="text-center text-2xl font-koulen mb-6 ">
                 <h1>បង្កើតស្រុក/ខណ្ឌ</h1>
             </div>
             <form action="{{ route('village.store', ['id' => $branch->branch_id]) }}" method="POST">

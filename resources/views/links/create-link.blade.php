@@ -12,7 +12,9 @@
         <div class="p-5 bg-white shadow-md rounded-lg">
             <div class="grid grid-cols-6 ">
                 <div class="col-span-5 flex flex-col items-center justify-center mb-10 ml-44">
-                    <h1 class="mb-1 text-[18px] font-khmer mt-9">{{$title}}</h1>
+                    <h1 class="text-2xl font-medium text-center font-koulen text-blue-600">
+                        {{ $title }}
+                    </h1>
                 </div>
             </div>
 

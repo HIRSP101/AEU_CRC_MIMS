@@ -3,43 +3,48 @@
 @endpush
 
 @section('Content')
-<div class="p-4 bg-gray-100 font-battambang my-3">
+<div class="bg-gray-100 font-battambang m-5">
     @include('loading_view')
-    <div class="p-4 bg-white shadow-md rounded-lg">
-        <div class="grid grid-cols-6 ">
-            <div class="col-span-5 flex flex-col items-center justify-center mb-10 ml-24">
-                <img class="w-[125px] h-[125px] mb-3" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}"
-                    alt="">
-                <h1 class="mb-1 text-[18px]">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
-                <h1 class="text-[18px]">Cambodian Red Cross Youth Individual Information</h1>
+    <div class="p-5 bg-white shadow-md rounded-lg">
+        <h1 class="text-2xl font-medium text-center font-koulen text-blue-600">
+            {{ $title }}
+        </h1>
+        <div class="mt-14">
+            <div class="grid grid-cols-6 ">
+                <div class="col-span-5 flex flex-col items-center justify-center mb-10 ml-44">
+                    <img class="w-[125px] h-[125px] mb-3" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}"
+                        alt="">
+                    <h1 class="mb-1 text-[18px]">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
+                    <h1 class="text-[18px]">Cambodian Red Cross Youth Individual Information</h1>
+                </div>
+                <div class="">
+                    @if ($member->member_image == null)
+                        <img class="image w-28 h-32 bg-red-300" src="" alt="">
+                    @endif
+                    @if ($member->member_image != null)
+                        <img class="image w-28 h-32 bg-red-300" src="{{asset($member->member_image)}}" alt="">
+                    @endif
+                </div>
             </div>
-            <div class="">
-                @if ($member->member_image == null)
-                    <img class="image w-28 h-32 bg-red-300" src="" alt="">
-                @endif
-                @if ($member->member_image != null)
-                    <img class="image w-28 h-32 bg-red-300" src="{{asset($member->member_image)}}" alt="">
-                @endif
+            @csrf
+            <input id="member_id" name="member_id" value="{{$member->member_id}}" hidden>
+            @include('member.update.partials.personal_detail')
+            <hr>
+            @include('member.update.partials.pob')
+            <hr>
+            @include('member.update.partials.current_address')
+            <hr>
+            @include('member.update.partials.personal_training')
+            <hr>
+            @include('member.update.partials.guardian')
+            <div class="flex justify-end">
+                <a class="border-solid m-2 border-2 bg-red-400 p-2 rounded-md hover:bg-red-500 active:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
+                    id="clear_btn">លុប</a>
+                <button
+                    class="border-solid m-2 border-2 bg-green-500 p-2 rounded-md hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300"
+                    type="submit" id="submit_btn">យល់ព្រម
+                </button>
             </div>
-        </div>
-        @csrf
-        <input id="member_id" name="member_id" value="{{$member->member_id}}" hidden>
-        @include('member.update.partials.personal_detail')
-        <hr>
-        @include('member.update.partials.pob')
-        <hr>
-        @include('member.update.partials.current_address')
-        <hr>
-        @include('member.update.partials.personal_training')
-        <hr>
-        @include('member.update.partials.guardian')
-        <div class="flex justify-end">
-            <a class="border-solid m-2 border-2 bg-red-400 p-2 rounded-md hover:bg-red-500 active:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
-                id="clear_btn">លុប</a>
-            <button
-                class="border-solid m-2 border-2 bg-green-500 p-2 rounded-md hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300"
-                type="submit" id="submit_btn">យល់ព្រម
-            </button>
         </div>
     </div>
     @endsection

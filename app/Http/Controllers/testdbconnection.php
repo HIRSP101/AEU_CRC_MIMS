@@ -37,6 +37,7 @@ class testdbconnection extends Controller
     }
     public function getMemberColumns()
     {
+        $title = "បញ្ចូលសមាជិកតាមរយះឯកសារ";
         $columnNames = DB::connection('mysql')
             ->select("select column_name from information_schema.columns where table_schema = DATABASE() and table_name in ('member_personal_detail', 'member_guardian_detail', 'member_registration_detail', 'member_engagement_detail', 'member_education_background') and column_name not like '%id' and column_name != 'registration_date_kh' and column_name != 'registration_date_en' and column_name != 'image'");
         // dd($columnNames);
@@ -46,7 +47,7 @@ class testdbconnection extends Controller
             $fieldNames[$columnName->COLUMN_NAME] = $columnName->COLUMN_NAME;
             //array_push($fieldNames,$columnName->Field);
         }
-        return view('dataimport.index', compact('fieldNames'));
+        return view('dataimport.index', compact('fieldNames','title'));
     }
 
     public function insertMember(Request $request)

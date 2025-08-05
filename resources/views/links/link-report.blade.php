@@ -5,8 +5,11 @@
 
 @section('Content')
 
-<div class="bg-white m-5 shadow-lg rounded-lg">
-    <div class="flex justify-between items-center mb-4 mt-14 px-4">
+<div class="bg-white m-5 p-5 shadow-lg rounded-lg">
+    <h1 class="text-2xl font-medium text-center font-koulen text-blue-600">
+        {{ $title }}
+    </h1>
+    <div class="flex justify-between items-center mb-4 mt-14 ">
         <div class="tab_filter_container flex items-center space-x-2">
             <a href="{{ route('link-member') }}"
                 class="bg-red-500 text-white px-4 py-2 rounded font-battambang">ត្រលប់ក្រោយ</a>
@@ -14,7 +17,7 @@
     </div>
     @if(count($link) > 0)
         @foreach ($link as $branch => $links)
-            <div class="m-5">
+            <div>
                 <h2 class="text-lg font-bold bg-gray-300 text-center font-battambang mt-5 py-3">{{ $branch }}</h2>
                 <table class="min-w-max w-full table-auto font-siemreap">
                     <thead>
@@ -45,7 +48,7 @@
         @endforeach
     @else
         <div class="flex flex-col items-center justify-center h-screen space-y-4">
-            <img src="../images/not.png" alt="No Data" width="150" height="150">
+            <img src={{asset('images/not.png')}} alt="No Data" width="150" height="150">
             <p class="font-siemreap">មិនមានទិន្នន័យគ្រប់គ្រង</p>
         </div>
     @endif

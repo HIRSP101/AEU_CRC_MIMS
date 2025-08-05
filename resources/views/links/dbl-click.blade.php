@@ -4,15 +4,16 @@
 
 @section('Content')
 @if(count($total_mem) > 0)
-    <div class="bg-white m-5 shadow-lg rounded-lg">
-        <h1 class="text-center mt-7 font-siemreap my-2 font-bold text-2xl"> បញ្ជីរាយនាមសមាជិកចុះឈ្មោះថ្មី ក្នុងឆ្នាំសិក្សា
-            {{$total_mem[0]->academic_year}} 
+    <div class="bg-white m-5 p-5 shadow-lg rounded-lg">
+        <h1 class="text-center font-koulen font-medium text-blue-600 text-2xl"> បញ្ជីរាយនាមសមាជិកចុះឈ្មោះថ្មី
+            ក្នុងឆ្នាំសិក្សា
+            {{$total_mem[0]->academic_year}}
             @if (!$approved)
-            (បណ្តោះអាសន្ន)
+                (បណ្តោះអាសន្ន)
             @endif
         </h1>
 
-        <div class="flex justify-between items-center mb-4 mt-14 px-4">
+        <div class="flex justify-between items-center mb-4 mt-14 ">
             <!-- Search Bar -->
             <div class="tab_filter_container flex items-center space-x-2">
                 <input type="text" id="tab_filter_text" class="border border-gray-300 px-2 py-2 rounded"
@@ -46,60 +47,57 @@
                 </div>
             </div>
         </div>
+        <div class="w-full overflow-scroll my-3 max-h-[760px] table">
+            <table class="min-w-max w-full table-auto font-siemreap" id="dataTable">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                        <th class="py-3 pl-5 text-left">
+                            ល.រ
+                        </th>
+                        <th class="py-3 text-center">
+                            គោត្តមនាម-នាម
+                        </th>
+                        <th class="py-3 text-center">
+                            ភេទ
+                        </th>
+                        <th class="py-3 text-center">
+                            ថ្ងៃខែឆ្នាំកំណើត
+                        </th>
+                        <th class="py-3 text-center">
+                            គ្រឹះស្ថានសិក្សា
+                        </th>
 
-        <div class="w-full overflow-scroll mx-3 my-3 max-h-[760px]">
-            <div class="w-full overflow-scroll my-3 max-h-[760px] table">
-                <table class="min-w-max w-full table-auto font-siemreap" id="dataTable">
-                    <thead>
-                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                            <th class="py-3 pl-5 text-left">
-                                ល.រ
-                            </th>
-                            <th class="py-3 text-center">
-                                គោត្តមនាម-នាម
-                            </th>
-                            <th class="py-3 text-center">
-                                ភេទ
-                            </th>
-                            <th class="py-3 text-center">
-                                ថ្ងៃខែឆ្នាំកំណើត
-                            </th>
-                            <th class="py-3 text-center">
-                                គ្រឹះស្ថានសិក្សា
-                            </th>
+                        <th class="py-3 text-center">
+                            តួនាទី
+                        </th>
 
-                            <th class="py-3 text-center">
-                                តួនាទី
-                            </th>
+                        <th class="py-3 text-center">
+                            កម្រិតសិក្សា
+                        </th>
 
-                            <th class="py-3 text-center">
-                                កម្រិតសិក្សា
-                            </th>
+                        <th class="py-3 text-center">
+                            ថ្ងៃចុះឈ្មោះ
+                        </th>
 
-                            <th class="py-3 text-center">
-                                ថ្ងៃចុះឈ្មោះ
-                            </th>
+                        <th class="py-3 text-center">
+                            action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm font-light">
 
-                            <th class="py-3 text-center">
-                                action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-gray-600 text-sm font-light">
-
-                    </tbody>
-                </table>
-                @if (!$approved)
-                    <div class="text-end mt-7">
-                        <button id="btn_ok" class="bg-blue-500 text-white px-4 py-2 rounded font-battambang">យល់ព្រម</button>
-                    </div>
-                @endif
-            </div>
+                </tbody>
+            </table>
+            @if (!$approved)
+                <div class="text-end mt-7">
+                    <button id="btn_ok" class="bg-blue-500 text-white px-4 py-2 rounded font-battambang">យល់ព្រម</button>
+                </div>
+            @endif
         </div>
     </div>
 @else
     <div class="flex flex-col items-center justify-center h-screen space-y-4">
-        <img src="../images/not.png" alt="No Data" width="150" height="150">
+        <img src={{asset('images/not.png')}} alt="No Data" width="150" height="150">
         <p class="font-siemreap">មិនមានទិន្នន័យគ្រប់គ្រង</p>
     </div>
 @endif

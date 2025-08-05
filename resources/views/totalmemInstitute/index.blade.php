@@ -57,25 +57,16 @@
 
                 );
             }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ?>
-        <!-- @include('loading_view') -->
-        <!-- <div id="downloadoption" class="fixed top-[50%] left-[50%] w-auto h-auto z-50 bg-gray-300 bg-opacity-50 p-5 hidden ">
-                                                                                                                                                                                        <div class="flex flex-col  justify-center items-center ">
-                                                                                                                                                                                            <button id="downloadop1"
-                                                                                                                                                                                                class=" w-[350px] text-center bg-green-500 text-white p-5 mb-2 hover:bg-green-600   rounded">ទាញយកសាលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន</button>
-                                                                                                                                                                                            <button id="downloadop3"
-                                                                                                                                                                                                class="  w-[350px] text-center bg-green-500 text-white p-5 mb-2 hover:bg-green-600 rounded">ទាញយកសំណើសុំផ្ទេរជីវភាព</button>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                    </div> -->
-        <div class="bg-white mt-2 mx-3 shadow-lg">
-            <h1 class="text-center font-siemreap my-5 font-bold text-2xl"> {{$title}} </h1>
-            <h2 class="text-center font-siemreap mb-2 text-2xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា {{$institute_kh}} </h2>
-            <div class="flex justify-between items-center mb-4 mt-14 px-4">
+            ?>
+        <div class="bg-white m-5 p-5 shadow-lg rounded-lg">
+            <h1 class="text-center font-koulen mb-5 text-blue-600 text-2xl"> {{$title}} </h1>
+            <h2 class="text-center font-koulen mb-5 text-blue-600 text-2xl"> សាខាកាកបាទក្រហមកម្ពុជា {{$institute_kh}} </h2>
+            <div class="flex justify-between items-center mt-14">
                 <!-- Search Bar -->
                 <div class="tab_filter_container flex items-center space-x-2">
-                    <input type="text" id="tab_filter_text" class="border border-gray-300 px-2 py-2 rounded"
+                    <input type="text" id="tab_filter_text" class="border border-gray-300 px-2 py-2 rounded-lg"
                         placeholder="Search...">
-                    <button id="tab_filter_btn" class="bg-blue-500 text-white px-4 py-2 rounded">Search</button>
+                    <button id="tab_filter_btn" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Search</button>
                 </div>
 
                 <!-- Buttons Group -->
@@ -113,9 +104,7 @@
                     <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
                 </div>
             </div>
-
-            <div class="w-full overflow-scroll mx-3 my-3 max-h-[760px]">
-                <div class="w-full overflow-scroll my-3 max-h-[760px] table">
+                <div class="w-full mt-5 max-h-[760px] table">
                     <table class="min-w-max w-full table-auto font-siemreap">
                         <thead>
                             <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -159,7 +148,6 @@
                         <span class="font-siemreap text-sm">Showing 1 to 10 of 60 entries</span>
                         <div class="px-7 py-15 bg-transparent cursor-pointer index_buttons"></div>
                     </div>
-                </div>
             </div>
     @else
             <div class="flex flex-col items-center justify-center h-screen space-y-4">

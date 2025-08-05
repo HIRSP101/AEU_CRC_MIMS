@@ -98,7 +98,7 @@
         </div>
 
         <div class="w-full p-2 mt-4">
-            <h1 class="text-center text-gray-800 font-khmer text-xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
+            <h1 class="text-center text-blue-600 font-koulen text-2xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
             <div class="bg-white shadow-md rounded my-6">
                 <table class="min-w-max w-full table-auto font-battambang">
                     <thead>

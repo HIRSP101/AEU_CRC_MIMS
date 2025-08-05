@@ -3,26 +3,25 @@
 @endpush
 
 @section('Content')
-    <div class="bg-[#fff] p-8 rounded-lg max-w-1000px m-5 shadow-md font-siemreap">
-
-        <h2 class="text-2xl font-bold text-center siemreap-regular my-2 pb-3 mb-10">គ្រឹះស្ថានសិក្សា
-            កាកបាទក្រហមកម្ពុជានៃស្រុក/ខណ្ឌ {{ $village->district_name }}</h2>
-        <div class="filter_institute flex justify-end space-x-2 mt-12 mb-5">
+    <div class="bg-[#fff] p-5 rounded-lg max-w-1000px m-5 shadow-md font-battambang">
+        <h1 class="text-2xl font-medium text-center font-koulen text-blue-600">គ្រឹះស្ថានសិក្សា
+            កាកបាទក្រហមកម្ពុជានៃស្រុក/ខណ្ឌ {{ $village->district_name }}</h1>
+        <div class="filter_institute flex justify-end space-x-2 mt-5 mb-5">
             <a href="{{ route('school.create', ['id' => $branchId, 'v_id' => $villageId]) }}"
-                class="bg-blue-500 text-white px-4 py-2 rounded">
+                class="bg-blue-500 text-white px-4 py-2 rounded-lg">
                 បង្កើតសាលារៀន​
             </a>
         </div>
         <ul>
             @foreach ($schools as $school)
-                <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
+                <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 hover:ring-indigo-200 hover:rounded-lg mb-5">
                     <a href="{{ url('/branch/' . $branchId . '/village/' . $villageId . '/school/' . $school->school_id) }}">
                         <div class="flex justify-between items-center">
                             <div class="flex items-center">
-                                <span class="text-lg siemreap-regular ml-4">{{ $school->school_name }}</span>
+                                <span class="text-lg font-battambang ml-5">{{ $school->school_name }}</span>
                             </div>
-                            <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
-                                <span class="text-xs siemreap-regular">
+                            <div class="grid grid-rows-2 m-5 place-items-end content-between gap-8">
+                                <span class="text-xs font-battambang">
                                     ស.ម <strong>{{ $school->total_mem ?? 0 }} នាក់</strong>
                                 </span>
                             </div>
@@ -56,7 +55,7 @@
                                         alt="Logo 1"
                                         class="ml-10 w-16 mr-8 rounded-full object-cover h-16"
                                         />
-                                        <span class="text-lg siemreap-regular">${item.institute_kh}</span>
+                                        <span class="text-lg font-battambang">${item.institute_kh}</span>
                                     </div>
                                 </div>
                             </a>
