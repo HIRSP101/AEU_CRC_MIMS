@@ -10,14 +10,9 @@
             {{ $title }}
         </h1>
         <div class="mt-14">
-            <div class="grid grid-cols-6 ">
-                <div class="col-span-5 flex flex-col items-center justify-center mb-10 ml-44">
-                    <img class="w-[125px] h-[125px] mb-3" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}"
-                        alt="">
-                    <h1 class="mb-1 text-[18px]">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
-                    <h1 class="text-[18px]">Cambodian Red Cross Youth Individual Information</h1>
-                </div>
-                <div class="">
+            <div class="relative flex justify-center items-start mb-3">
+                <img class="w-28 h-28" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}" alt="Red Cross Logo">
+                <div class="absolute right-0 top-0">
                     @if ($member->member_image == null)
                         <img class="image w-28 h-32 bg-red-300" src="" alt="">
                     @endif
