@@ -138,6 +138,7 @@ class VillageController extends Controller
     {
         $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
 
+        // if user has role 'user', get only their branch and districts
         if (auth()->user()->hasRole('user')) {
             $branches = DB::table('branch')
                 ->where('branch_id', $user)
@@ -147,10 +148,10 @@ class VillageController extends Controller
                 ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')
                 ->where('d.branch_id', $user)
                 ->get();
-        } else {
-            $branches = DB::table('branch')
-                ->where('branch_id', $user)
-                ->get();
+        }
+        // if admin, get all branches and districts
+        else {
+            $branches = DB::table('branch')->get();
 
             $districts = DB::table('district as d')
                 ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')

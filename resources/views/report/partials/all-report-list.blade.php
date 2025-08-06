@@ -5,6 +5,7 @@
 @section('Content')
     @php
         $userBranchId = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_id');
+        $branchName = \App\Models\branch::where('branch_id', $userBranchId)->value('branch_kh');
     @endphp
     <div class="p-4 shadow">
         <div class="bg-white rounded-md h-screen">
@@ -15,7 +16,14 @@
                     <a href="/branch/{{ $userBranchId }}/village"
                         class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
                         <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                            បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំសាខានីមួយៗ</p>
+                            បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំ {{ $branchName }}</p>
+                    </a>
+                </div>
+                <div class="py-1 px-5">
+                    <a href="{{ route('list_branches') }}"
+                        class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                        <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
+                            តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជនប្រចាំ {{ $branchName }} </p>
                     </a>
                 </div>
             @else

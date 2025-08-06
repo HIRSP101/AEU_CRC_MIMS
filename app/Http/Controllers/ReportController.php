@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\branch_bindding_user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Services\Reports\TotalsummarizedProvience;
@@ -420,12 +421,21 @@ class ReportController extends Controller
     }
     public function showListBranch()
     {
-        $total_mem_branches = $this->totalmem_branches()
-            ->where('b.branch_id', '<', '28')
-            ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image')
-            ->get();
-
-        $title = 'តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជនប្រចាំសាខានីមួយៗ';
+        if (auth()->user()->hasRole('user')) {
+            $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
+            $total_mem_branches = $this->totalmem_branches()
+                ->where('b.branch_id', '=', $user)
+                ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image')
+                ->get();
+            $branch = DB::table('branch')->where('branch_id', $user)->value('branch_kh');
+            $title = "តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជនប្រចាំសាខា {$branch}";
+        } else {
+            $total_mem_branches = $this->totalmem_branches()
+                ->where('b.branch_id', '<', '28')
+                ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image')
+                ->get();
+            $title = 'តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជនប្រចាំសាខានីមួយៗ';
+        }
 
         return view('report.partials.list_branch', compact('total_mem_branches', 'title'));
     }
