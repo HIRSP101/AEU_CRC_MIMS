@@ -23,4 +23,5 @@ class users extends Authenticatable
     {
         return $this->hasMany(branch_bindding_user::class, 'user_id', 'id');
     }
+
 }
