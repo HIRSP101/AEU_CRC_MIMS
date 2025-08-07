@@ -244,6 +244,11 @@
                         <option value="">-------------------</option>
                         <option value="សមាជិកា យុវជន">សមាជិកា យុវជន</option>
                         <option value="សមាជិក យុវជន">សមាជិក យុវជន</option>
+                        <option value="ទីប្រឹក្សា">ទីប្រឹក្សា</option>
+                        <option value="ប្រធានក្លឹប">ប្រធានក្លឹប</option>
+                        <option value="អនុ​ប្រធានក្លឹប">អនុ​ប្រធានក្លឹប</option>
+                        <option value="ប្រធានផ្នែក">ប្រធានផ្នែក</option>
+                        <option value="ប្រធានក្រុម">ប្រធានក្រុម</option>
                     </select>
                 </div>
                 <div class="w-full md:w-full md:mb-0">
@@ -303,21 +308,21 @@
                 ព័ត៍មានគ្រួសារ
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div  >
+                <div>
                     <label class="block uppercase text-gray-700 mb-1" for="father_name">
                         ឈ្មោះឪពុក
                     </label>
                     <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="father_name"
                         type="text" id="father_name" required>
                 </div>
-                <div  >
+                <div>
                     <label class="block uppercase text-gray-700 mb-1" for="father_dob">
                         ថ្ងៃ ខែ ឆ្នាំកំណើត
                     </label>
                     <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" id="father_dob"
                         name="father_dob" type="date" required>
                 </div>
-                <div  >
+                <div>
                     <label class="block uppercase text-gray-700 mb-1" for="father_occupation">
                         មុខរបរ
                     </label>
@@ -331,21 +336,21 @@
                     <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white"
                         name="father_current_address" id="father_current_address" type="text" required>
                 </div>
-                <div  >
+                <div>
                     <label class="block uppercase text-gray-700 mb-1" for="mother_name">
                         ឈ្មោះម្តាយ
                     </label>
                     <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="mother_name"
                         id="mother_name" type="text" required>
                 </div>
-                <div  >
+                <div>
                     <label class="block uppercase text-gray-700 mb-1" for="mother_dob">
                         ថ្ងៃ ខែ ឆ្នាំកំណើត
                     </label>
                     <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="mother_dob"
                         type="date" id="mother_dob" required>
                 </div>
-                <div  >
+                <div>
                     <label class="block uppercase text-gray-700 mb-1" for="mother_occupation">
                         មុខរបរ
                     </label>
@@ -359,7 +364,7 @@
                     <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white"
                         name="mother_current_address" type="text" id="mother_current_address" required>
                 </div>
-                <div >
+                <div>
                     <label class="block uppercase text-gray-700 mb-1" for="guardian_number">
                         លេខទូរសព្ទអាណាព្យាបាល
                     </label>

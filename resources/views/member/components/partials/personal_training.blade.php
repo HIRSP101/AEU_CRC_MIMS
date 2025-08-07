@@ -133,6 +133,11 @@
             <option value="">-------------------</option>
             <option value="សមាជិកា យុវជន">សមាជិកា យុវជន</option>
             <option value="សមាជិក យុវជន">សមាជិក យុវជន</option>
+            <option value="ទីប្រឹក្សា">ទីប្រឹក្សា</option>
+            <option value="ប្រធានក្លឹប">ប្រធានក្លឹប</option>
+            <option value="អនុ​ប្រធានក្លឹប">អនុ​ប្រធានក្លឹប</option>
+            <option value="ប្រធានផ្នែក">ប្រធានផ្នែក</option>
+            <option value="ប្រធានក្រុម">ប្រធានក្រុម</option>
         </select>
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">

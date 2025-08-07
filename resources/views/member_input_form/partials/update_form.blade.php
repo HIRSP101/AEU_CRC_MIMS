@@ -252,8 +252,7 @@
                     <label class="block uppercase text-gray-700 mb-1" for="training_received">
                         វគ្គបណ្តុះបណ្តាលដែលទទួលបាន
                     </label>
-                    <input
-                        class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white"
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white"
                         id="training_received" type="text" value="{{ $member->training_received ?? '' }}">
                 </div>
                 <div class="w-full md:w-full md:mb-0">
@@ -288,11 +287,21 @@
                             <option value="">-------------------</option>
                             <option value="សមាជិកា យុវជន">សមាជិកា យុវជន</option>
                             <option value="សមាជិក យុវជន">សមាជិក យុវជន</option>
+                            <option value="ទីប្រឹក្សា">ទីប្រឹក្សា</option>
+                            <option value="ប្រធានក្លឹប">ប្រធានក្លឹប</option>
+                            <option value="អនុ​ប្រធានក្លឹប">អនុ​ប្រធានក្លឹប</option>
+                            <option value="ប្រធានផ្នែក">ប្រធានផ្នែក</option>
+                            <option value="ប្រធានក្រុម">ប្រធានក្រុម</option>
                         @elseif($member->member_type != null)
                             <option value="{{$member->member_type}}">{{$member->member_type}}</option>
                             <option value="">-------------------</option>
                             <option value="សមាជិកា យុវជន">សមាជិកា យុវជន</option>
                             <option value="សមាជិក យុវជន">សមាជិក យុវជន</option>
+                            <option value="ទីប្រឹក្សា">ទីប្រឹក្សា</option>
+                            <option value="ប្រធានក្លឹប">ប្រធានក្លឹប</option>
+                            <option value="អនុ​ប្រធានក្លឹប">អនុ​ប្រធានក្លឹប</option>
+                            <option value="ប្រធានផ្នែក">ប្រធានផ្នែក</option>
+                            <option value="ប្រធានក្រុម">ប្រធានក្រុម</option>
                         @endif
 
                     </select>
@@ -301,26 +310,22 @@
                     <label class="block uppercase text-gray-700 mb-1" for="phone_number">
                         លេខទូរសព្ទទំនាក់ទំនង
                     </label>
-                    <input
-                        class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white"
-                        name="phone_number" id="phone_number" type="tel" required
-                        value="{{ $member->phone_number ?? '' }}">
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="phone_number"
+                        id="phone_number" type="tel" required value="{{ $member->phone_number ?? '' }}">
                 </div>
                 <div class="w-full md:w-full md:mb-0">
                     <label class="block uppercase text-gray-700 mb-1" for="memberemail">
                         អ៊ីម៉ែល
                     </label>
-                    <input
-                        class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white"
-                        name="memberemail" id="memberemail" type="text" value="{{ $member->email ?? '' }}">
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="memberemail"
+                        id="memberemail" type="text" value="{{ $member->email ?? '' }}">
                 </div>
                 <div class="w-full md:w-full md:mb-0">
-                    <label class="block uppercase text-gray-700 mb-1"for="facebook">
+                    <label class="block uppercase text-gray-700 mb-1" for="facebook">
                         ហ្វេសប៊ុក
                     </label>
-                    <input
-                        class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white"
-                        name="facebook" id="facebook" type="text" value="{{ $member->facebook ?? '' }}">
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="facebook"
+                        id="facebook" type="text" value="{{ $member->facebook ?? '' }}">
                 </div>
                 <div>
                     <label for="education_level" class="block uppercase text-gray-700 mb-1">កម្រិតវរប្បធម៌ថ្នាក់
