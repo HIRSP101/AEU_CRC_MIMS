@@ -13,7 +13,6 @@ class DashboardController extends Controller
     {
         // $branches = branch::select('branch_kh', 'branch_id');
         $branches = branch::select('branch_kh', 'branch_id', 'branch_image')->get();
-
         $user = Auth::user();
         $authName = $user->name;
         $authEmail = $user->email;
@@ -30,8 +29,6 @@ class DashboardController extends Controller
             ->groupBy('branch.branch_id', 'branch.branch_kh', 'branch.branch_image')
             ->orderBy('total_mem', 'desc')
             ->get();
-        // dd($total_mem_branches->branch_kh);
-        //    dd($branches->branch_);
         return view('dashboard.index', compact('branches', 'authName', 'authEmail', 'total_mem_branches'));
     }
 }

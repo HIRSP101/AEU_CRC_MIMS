@@ -1,5 +1,5 @@
 <div class="m-5 font-battambang">
-    <div class="p-4 bg-white shadow-md rounded-lg space-y-6" id="updateForm">
+    <div class="p-5 bg-white shadow-md rounded-lg space-y-6" id="updateForm">
         {{-- HEADER --}}
         <div class="grid grid-cols-1 md:grid-cols-6">
             <div class="col-span-1 md:col-span-5 flex flex-col items-center justify-center sm:ml-[14vw]">
@@ -73,7 +73,7 @@
             <hr>
 
             {{-- PLACE OF BIRTH --}}
-            <section class="space-y-4">
+            <section class="space-y-4 mt-5">
                 <h2 class="text-xl font-semibold">ទីកន្លែងកំណើត</h2>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
@@ -92,7 +92,7 @@
                             value="{{ $member->pob_district ?? '' }}"
                             class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white">
                     </div>
-                    <div>
+                    <div class="mb-6">
                         <label for="province" class="block uppercase text-gray-700 mb-1">ខេត្ត/រាជធានី</label>
                         <input id="province" name="province" list="proviencelist" type="text" required
                             value="{{ $member->pob_province ?? '' }}"
@@ -109,9 +109,9 @@
             <hr>
 
             {{-- CURRENT ADDRESS --}}
-            <section class="space-y-4">
+            <section class="space-y-4 mt-5">
                 <h2 class="text-xl font-semibold">អាសយដ្ឋានបច្ចុប្បន្ន</h2>
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
                         <label for="housenumber" class="block uppercase text-gray-700 mb-1">ផ្ទះលេខ</label>
                         <input id="housenumber" name="housenumber" type="text"
@@ -152,13 +152,13 @@
                             @endforeach
                         </datalist>
                     </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
                     <div>
-                        <label for="dateofbirth" class="block uppercase text-gray-700 mb-1">ថ្ងៃកំណើត</label>
-                        <input id="dateofbirth" name="dateofbirth" type="date" required
-                            value="{{ $member->date_of_birth ?? '' }}"
-                            class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white">
+                        <div>
+                            <label for="dateofbirth" class="block uppercase text-gray-700 mb-1">ថ្ងៃកំណើត</label>
+                            <input id="dateofbirth" name="dateofbirth" type="date" required
+                                value="{{ $member->date_of_birth ?? '' }}"
+                                class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white">
+                        </div>
                     </div>
                 </div>
                 {{-- FORM ACTIONS --}}
@@ -249,73 +249,83 @@
                     </datalist>
                 </div>
                 <div class="md:flex-1 w-full md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="training_received">
+                    <label class="block uppercase text-gray-700 mb-1" for="training_received">
                         វគ្គបណ្តុះបណ្តាលដែលទទួលបាន
                     </label>
-                    <input
-                        class="appearance-none block w-full bg-gray-50 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white"
                         id="training_received" type="text" value="{{ $member->training_received ?? '' }}">
                 </div>
                 <div class="w-full md:w-full md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="member_status">
+                    <label class="block uppercase text-gray-700 mb-1" for="member_status">
                         ពិការភាព
                     </label>
-                    <input
-                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-                        name="member_status" id="member_status" type="text" value="{{ $member->member_status ?? '' }}">
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="member_status"
+                        id="member_status" type="text" value="{{ $member->member_status ?? '' }}">
 
                 </div>
                 <div class="w-full md:w-full md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700" for="misc_skill">
-                        ជំនាញផ្សេងៗ
+                    <label class="block uppercase text-gray-700 mb-1" for="computer_skill">
+                        ជំនាញកំព្យូទ័រ
                     </label>
-                    <input
-                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-                        name="misc_skill" id="misc_skill" type="text" value="{{ $member->misc_skill ?? '' }}">
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="computer_skill"
+                        id="computer_skill" type="text" value="{{$member->computer_skill ?? ''}}">
                 </div>
                 <div class="w-full md:w-full md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="member_type">
+                    <label class="block uppercase text-gray-700 mb-1" for="misc_skill">
+                        ជំនាញផ្សេងៗ
+                    </label>
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="misc_skill"
+                        id="misc_skill" type="text" value="{{ $member->misc_skill ?? '' }}">
+                </div>
+                <div class="w-full md:w-full md:mb-0">
+                    <label class="block uppercase text-gray-700 mb-1" for="member_type">
                         ប្រភេទសាមាជិក
                     </label>
                     <select name="member_type" id="member_type"
-                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white">
+                        class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white">
                         @if ($member->member_type == null)
                             <option value="">-------------------</option>
                             <option value="សមាជិកា យុវជន">សមាជិកា យុវជន</option>
                             <option value="សមាជិក យុវជន">សមាជិក យុវជន</option>
+                            <option value="ទីប្រឹក្សា">ទីប្រឹក្សា</option>
+                            <option value="ប្រធានក្លឹប">ប្រធានក្លឹប</option>
+                            <option value="អនុ​ប្រធានក្លឹប">អនុ​ប្រធានក្លឹប</option>
+                            <option value="ប្រធានផ្នែក">ប្រធានផ្នែក</option>
+                            <option value="ប្រធានក្រុម">ប្រធានក្រុម</option>
                         @elseif($member->member_type != null)
                             <option value="{{$member->member_type}}">{{$member->member_type}}</option>
                             <option value="">-------------------</option>
                             <option value="សមាជិកា យុវជន">សមាជិកា យុវជន</option>
                             <option value="សមាជិក យុវជន">សមាជិក យុវជន</option>
+                            <option value="ទីប្រឹក្សា">ទីប្រឹក្សា</option>
+                            <option value="ប្រធានក្លឹប">ប្រធានក្លឹប</option>
+                            <option value="អនុ​ប្រធានក្លឹប">អនុ​ប្រធានក្លឹប</option>
+                            <option value="ប្រធានផ្នែក">ប្រធានផ្នែក</option>
+                            <option value="ប្រធានក្រុម">ប្រធានក្រុម</option>
                         @endif
 
                     </select>
                 </div>
                 <div class="w-full md:w-full md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="phone_number">
+                    <label class="block uppercase text-gray-700 mb-1" for="phone_number">
                         លេខទូរសព្ទទំនាក់ទំនង
                     </label>
-                    <input
-                        class="appearance-none block w-full bg-gray-50 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        name="phone_number" id="phone_number" type="tel" required
-                        value="{{ $member->phone_number ?? '' }}">
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="phone_number"
+                        id="phone_number" type="tel" required value="{{ $member->phone_number ?? '' }}">
                 </div>
                 <div class="w-full md:w-full md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="memberemail">
+                    <label class="block uppercase text-gray-700 mb-1" for="memberemail">
                         អ៊ីម៉ែល
                     </label>
-                    <input
-                        class="appearance-none block w-full bg-gray-50 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        name="memberemail" id="memberemail" type="text" value="{{ $member->email ?? '' }}">
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="memberemail"
+                        id="memberemail" type="text" value="{{ $member->email ?? '' }}">
                 </div>
                 <div class="w-full md:w-full md:mb-0">
-                    <label class="block uppercase tracking-wide  " for="facebook">
+                    <label class="block uppercase text-gray-700 mb-1" for="facebook">
                         ហ្វេសប៊ុក
                     </label>
-                    <input
-                        class="appearance-none block w-full bg-gray-50 text-gray-700 border border-red-300 rounded py-3 px-4 md:mb-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        name="facebook" id="facebook" type="text" value="{{ $member->facebook ?? '' }}">
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="facebook"
+                        id="facebook" type="text" value="{{ $member->facebook ?? '' }}">
                 </div>
                 <div>
                     <label for="education_level" class="block uppercase text-gray-700 mb-1">កម្រិតវរប្បធម៌ថ្នាក់
@@ -324,7 +334,7 @@
                         class="w-full bg-gray-50 text-gray-700 border border-red-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         name="education_level" id="education_level" required>
                         @if ($member->education_level == null)
-                                <option value="" >-----</option>
+                                <option value="">-----</option>
                                 <option value="ថ្នាក់ទី6">ថ្នាក់ទី៦</option>
                                 <option value="ថ្នាក់ទី7">ថ្នាក់ទី៧</option>
                                 <option value="ថ្នាក់ទី8">ថ្នាក់ទី៨</option>
@@ -338,8 +348,8 @@
                                 <option value="ឆ្នាំទី4">ឆ្នាំទី៤</option>
                             </select>
                         @elseif($member->education_level != null)
-                            <option value="{{$member->education_level}}" >{{$member->education_level}}</option>
-                            <option value="" >-----</option>
+                            <option value="{{$member->education_level}}">{{$member->education_level}}</option>
+                            <option value="">-----</option>
                             <option value="ថ្នាក់ទី6">ថ្នាក់ទី៦</option>
                             <option value="ថ្នាក់ទី7">ថ្នាក់ទី៧</option>
                             <option value="ថ្នាក់ទី8">ថ្នាក់ទី៨</option>
@@ -370,82 +380,72 @@
                 ព័ត៍មានគ្រួសារ
             </h2>
             <hr>
-            <div class="flex flex-wrap -mx-3   mt-3 ">
-                <div class="w-full md:w-1/3 px-3 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="father_name">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block uppercase text-gray-700 mb-1" for="father_name">
                         ឈ្មោះឪពុក
                     </label>
-                    <input
-                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-                        name="father_name" type="text" id="father_name" required
-                        value="{{ $member->father_name ?? '' }}">
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="father_name"
+                        type="text" id="father_name" required value="{{ $member->father_name ?? '' }}">
                 </div>
-                <div class="w-full md:w-1/3 px-3 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="father_dob">
+                <div>
+                    <label class="block uppercase text-gray-700 mb-1" for="father_dob">
                         ថ្ងៃ ខែ ឆ្នាំកំណើត
                     </label>
-                    <input
-                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-                        id="father_dob" name="father_dob" type="date" required value="{{ $member->father_dob ?? '' }}">
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" id="father_dob"
+                        name="father_dob" type="date" required value="{{ $member->father_dob ?? '' }}">
                 </div>
-                <div class="w-full md:w-1/3 px-3 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="father_occupation">
+                <div>
+                    <label class="block uppercase text-gray-700 mb-1" for="father_occupation">
                         មុខរបរ
                     </label>
-                    <input
-                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white"
                         name="father_occupation" id="father_occupation" type="text" required
                         value="{{ $member->father_occupation ?? '' }}">
                 </div>
                 <div class="w-full md:w-full px-3 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="father_current_address">
+                    <label class="block uppercase text-gray-700 mb-1" for="father_current_address">
                         អាសយដ្ធាន
                     </label>
-                    <input
-                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white"
                         name="father_current_address" id="father_current_address" type="text" required
                         value="{{ $member->father_current_address ?? '' }}">
                 </div>
-                <div class="w-full md:w-1/3 px-3 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="mother_name">
+                <div>
+                    <label class="block uppercase text-gray-700 mb-1" for="mother_name">
                         ឈ្មោះម្តាយ
                     </label>
-                    <input
-                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-                        name="mother_name" id="mother_name" type="text" required
-                        value="{{ $member->mother_name ?? '' }}">
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="mother_name"
+                        id="mother_name" type="text" required value="{{ $member->mother_name ?? '' }}">
                 </div>
-                <div class="w-full md:w-1/3 px-3 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="mother_dob">
+                <div>
+                    <label class="block uppercase text-gray-700 mb-1" for="mother_dob">
                         ថ្ងៃ ខែ ឆ្នាំកំណើត
                     </label>
-                    <input
-                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-                        name="mother_dob" type="date" id="mother_dob" required value="{{ $member->mother_dob ?? '' }}">
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white" name="mother_dob"
+                        type="date" id="mother_dob" required value="{{ $member->mother_dob ?? '' }}">
                 </div>
-                <div class="w-full md:w-1/3 px-3 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="mother_occupation">
+                <div>
+                    <label class="block uppercase text-gray-700 mb-1" for="mother_occupation">
                         មុខរបរ
                     </label>
-                    <input
-                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-                         name="mother_occupation" id="mother_occupation" type="text"  value="{{ $member->mother_occupation ?? '' }}">
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white"
+                        name="mother_occupation" id="mother_occupation" type="text"
+                        value="{{ $member->mother_occupation ?? '' }}">
                 </div>
-                <div class="w-full md:w-full px-3 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="mother_current_address">
+                <div>
+                    <label class="block uppercase text-gray-700 mb-1" for="mother_current_address">
                         អាសយដ្ធាន
                     </label>
-                    <input
-                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white"
                         name="mother_current_address" type="text" id="mother_current_address" required
                         value="{{ $member->mother_current_address ?? '' }}">
                 </div>
-                <div class="w-full md:w-full px-3 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700  " for="guardian_number">
+                <div>
+                    <label class="block uppercase text-gray-700 mb-1" for="guardian_number">
                         លេខទូរសព្ទអាណាព្យាបាល
                     </label>
-                    <input
-                        class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
+                    <input class="block w-full px-4 py-2 bg-gray-50 border rounded focus:bg-white"
                         name="guardian_number" id="guardian_number" type="tel" required
                         value="{{ $member->guardian_phone ?? '' }}">
                 </div>
