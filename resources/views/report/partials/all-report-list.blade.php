@@ -6,12 +6,14 @@
     @php
         $userBranchId = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_id');
         $branchName = \App\Models\branch::where('branch_id', $userBranchId)->value('branch_kh');
+        $institute_id = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_hei_id');
+        $institute_kh = App\Models\branch_hei::where('bhei_id',$institute_id)->value('institute_kh');
     @endphp
     <div class="p-4 shadow">
         <div class="bg-white rounded-md h-screen">
             <h1 class="text-2xl font-khmer font-semibold text-gray-800 text-center py-5">របាយការណ៍</h1>
             {{-- card list of all reports --}}
-            @if(auth()->user()->hasRole('user'))
+            @if(auth()->user()->hasRole('user') && $branchName != null )
                 <div class="py-1 px-5">
                     <a href="/branch/{{ $userBranchId }}/village"
                         class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
@@ -28,10 +30,10 @@
                 </div>
             @else
                 <div class="py-1 px-5">
-                    <a href="{{ route('branch-report') }}"
+                    <a href="{{ route('institute.show',['id' => $institute_id]) }}"
                         class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
                         <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                            បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំសាខានីមួយៗ</p>
+                            បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំសាខា {{$institute_kh}}</p>
                     </a>
                 </div>
             @endif

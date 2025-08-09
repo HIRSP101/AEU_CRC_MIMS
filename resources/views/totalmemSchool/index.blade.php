@@ -153,10 +153,8 @@ $school_name = $currentSchool?->school_name;
                         exportToExcel(
                             @json($current_branch),
                             @json($total_mem_detail),
-                                                    // @json($data),
-                                                    // @json($data),
-                                                            {{ $totalStu }},
-                                                            {{ $femaleStu }},
+                            {{ $totalStu }},
+                            {{ $femaleStu }},
                             schoolName
                         );
                     }

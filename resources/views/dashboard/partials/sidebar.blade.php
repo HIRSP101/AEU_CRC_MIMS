@@ -16,7 +16,7 @@
                             សាខា
                         </span>
                     </a>
-                    <a href="{{route('institute')}}"
+                    <a href="{{route('institute.index')}}"
                         class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                         <img width="23" height="23"
                             src="https://img.icons8.com/external-gradak-royyan-wijaya/24/external-building-gradak-medical-solidarity-gradak-royyan-wijaya.png"
@@ -156,13 +156,7 @@
                                                 alt="add--v1" />
                                             <span> បញ្ជូលតាម Form</span>
                                         </a>
-                                        <!-- <a href="{{ route('link-member') }}"
-                                            class="module-content flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                                            <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                                                alt="add--v1" />
-                                            <span> បញ្ជូលតាម Link</span>
-                                        </a>-->
-                                    </div> 
+                                    </div>
                                     <a href="#" id="subModule-create"
                                         class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                                         <img width="23" height="23"
@@ -200,8 +194,6 @@
                                         <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">
                                             ផុតកំណត់
                                         </span>
-                                        {{-- <span id="total-expired-notification"
-                                            class="bg-red-500 text-white rounded-full px-2 hidden">0</span> --}}
                                     </a>
 
                                     <div id="dropdown-expire" class="ml-5 dropdown_entry hidden">
@@ -212,8 +204,6 @@
                                                     alt="add--v1" />
                                                 <span> វិទ្យាល័យ</span>
                                             </div>
-                                            {{-- <span id="expired-member-highschool" class="text-red-500 rounded-full px-2 hidden">0</span>
-                                            --}}
                                         </a>
                                     </div>
                                 @else
@@ -252,8 +242,7 @@
                                             របាយការណ៍
                                         </span>
                                     </a>
-
-                                    <a href="" id="subModule-expire"
+                                    <a href="/member-expire" 
                                         class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                                         <img width="23" height="23"
                                             src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"
@@ -261,20 +250,7 @@
                                         <span class="module-content ml-2 flex-1 text-left rtl:text-right whitespace-nowrap">
                                             ផុតកំណត់
                                         </span>
-                                        {{-- <span id="total-expired-notification"
-                                            class="bg-red-500 text-white rounded-full px-2 hidden">0</span> --}}
                                     </a>
-                                    <div id="dropdown-expire" class="ml-5 dropdown_entry hidden">
-                                        <a href="{{ route('listschool') }}"
-                                            class=" module-content flex items-center justify-between font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
-                                            <div class="flex items-center gap-2">
-                                                <img width="22" height="22" src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-                                                    alt="add--v1" />
-                                                <span></span>
-                                            </div>
-
-                                        </a>
-                                    </div>
                                 @endif
 
                 @endif
