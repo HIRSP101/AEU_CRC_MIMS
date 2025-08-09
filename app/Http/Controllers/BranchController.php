@@ -31,11 +31,10 @@ class BranchController extends Controller
     {
         // dd(Route::currentRouteName());
         $total_mem_branches = $this->totalmem_branches()
-            ->where('b.branch_id', '<', '28')
+            ->where('b.branch_id', '<', value: '28')
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image')
             ->get();
         $title = 'សាខា​កាកបាទក្រហម ២៥ រាជធានី ខេត្ត';
-
         return view('branch.index', compact('total_mem_branches', 'title'));
     }
 
@@ -46,7 +45,7 @@ class BranchController extends Controller
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.image')
             ->get();
         //dd($total_mem_branchhei);
-        return view('branch_hei.index', compact('total_mem_branchhei',));
+        return view('branch_hei.index', compact('total_mem_branchhei', ));
     }
 
     public function totalmem_branches()
@@ -153,16 +152,33 @@ class BranchController extends Controller
     //new code 2025/03/27 get branch by user when user login
     public function getBranchByUser()
     {
-        if (auth()->user()->hasRole('admin')){
+        if (auth()->user()->branch_bindding_user[0]->branch == null) {
+            $branchDistrictInstituteModel = DB::table('branch_hei as bhei')
+                ->leftJoin('branch_bindding_user as bbu', 'bhei.bhei_id', '=', 'bbu.branch_hei_id')
+                ->leftJoin('branch as b', 'b.branch_id', '=', 'bhei.branch_id')
+                ->where('bbu.user_id', auth()->user()->id)
+                ->select(
+                    'b.branch_kh',
+                    'b.branch_id',
+                    'bhei.institute_kh',
+                    'bhei.bhei_id',
+                    'bhei.district_khan',
+                )->get();
+                $data = 'test';
+            return response()->json($branchDistrictInstituteModel);
+        } else {
+            if (auth()->user()->hasRole('admin')) {
+                $branch = DB::table('branch')
+                    ->get();
+                return response()->json($branch);
+            }
             $branch = DB::table('branch')
-            ->get();
-        return response()->json($branch);
+                ->leftJoin('branch_bindding_user', 'branch.branch_id', '=', 'branch_bindding_user.branch_id')
+                ->where('user_id', auth()->user()->id)
+                ->get();
+            return response()->json($branch);
         }
-        $branch = DB::table('branch')
-            ->leftJoin('branch_bindding_user', 'branch.branch_id', '=', 'branch_bindding_user.branch_id')
-            ->where('user_id', auth()->user()->id)
-            ->get();
-        return response()->json($branch);
+
     }
 
     public function store(BranchRequest $request): RedirectResponse

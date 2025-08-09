@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
+use Str;
 
 class RegisteredUserController extends Controller
 {
@@ -58,9 +59,20 @@ class RegisteredUserController extends Controller
             'image' => $imagePath
         ]);
 
+        $branchId = null;
+        $branchHeiId = null;
+        $inputBranchId = $request->branch_id;
+
+        if (Str::startsWith($inputBranchId, 'bra_')) {
+            $branchId = str_replace('bra_', '', $inputBranchId);
+        } elseif (Str::startsWith($inputBranchId, 'bhei_')) {
+            $branchHeiId = str_replace('bhei_', '', $inputBranchId);
+        }
+
         $bbu = branch_bindding_user::create([
-            "branch_id" => $request->branch_id,
-            "user_id" => $user->id
+            "branch_id" => $branchId,
+            "user_id" => $user->id,
+            "branch_hei_id" => $branchHeiId
         ]);
 
 

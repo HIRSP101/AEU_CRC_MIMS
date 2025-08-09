@@ -74,6 +74,13 @@ foreach ($user_branch as $user_b) {
         })
         $("button#saveprofile").click(function (e) {
             e.preventDefault();
+            const selectedVal = $("input#branch_id").val();
+            const selectedOption = $("#branchname_list option").filter(function () {
+                return $(this).val() === selectedVal;
+            });
+
+            const dataId = selectedOption.data('id') || '';
+            $("input#branch_id").val(dataId);
             $("#user_form_form_inner").submit();
         })
         $('.delude').on("click", function () {

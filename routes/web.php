@@ -206,6 +206,10 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/link-report/{linkId}/edit', "{$appC}\\LinkController@linkEdit");
     Route::post('/link-report/update', "{$appC}\\LinkController@linkUpdate")->name('link-member.update');
     Route::post('/memberapprove', "{$appC}\\LinkController@memberApprove")->name('memberapprove');
+    Route::get('/link-institute', "{$appC}\\LinkController@linkInstitute")->name('link-institute');
+    Route::get('/link-institute/{instituteId}', "{$appC}\\LinkController@linkInstituteById");
+    Route::get('/link-report-institute', "{$appC}\\LinkController@linkInstituteReport")->name('link-report-institute');
+    Route::get('/link-report-institute/{instituteId}', "{$appC}\\LinkController@linkInstituteReportById");
 });
 // new route code for member form submit with token without auth 2025/05/29
 Route::get('/member-registration/{token}', "{$appC}\\FormController@Index");

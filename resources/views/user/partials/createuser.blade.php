@@ -47,13 +47,14 @@
                 </div>
                 <div class="mt-4">
                     <x-input-label :value="__('Branch-Assignment')" />
-                    <select name="branch_id" id="branch_id" class="mt-2 h-auto rounded-lg w-full font-siemreap">
-                        <option value="">-----</option>
+                    <input name="branch_id" id="branch_id" list="branchname_list"
+                        class="mt-2 h-auto rounded-lg w-full font-siemreap">
+                    <datalist name="branchname_list" id="branchname_list">
                         @foreach($branches as $key => $val)
-                            <option value="{{$key}}"> {{$val}} </option>
+                           <option data-id={{ $key }} value="{{ $val }}">
                         @endforeach
-                    </select>
-                </div>
+                    </datalist>
+                </div>  
                 <div class="mt-4" id="profilepreview">
                     <x-input-label :value="__('Profile Picture')" />
                     <input class="appearance-none text-transparent" name="image" type="file" select="image/*" id="image"
@@ -62,7 +63,6 @@
 
                     </div>
                 </div>
-
         </ul>
         <div class="p-4 flex items-center justify-content-center border-t mx-8 mt-2">
             <button id="saveprofile"

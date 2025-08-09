@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\branch_hei;
 use App\Models\users;
 use App\Models\branch;
 use App\Models\branch_bindding_user;
@@ -19,12 +20,19 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $user_branch = users::with(['branch_bindding_user.branch', 'roles', 'permissions'])
+
+        $user_branch = users::with(['branch_bindding_user.branch','branch_bindding_user.branch_hei', 'roles', 'permissions'])
         ->withAggregate('roles', 'id')->orderBy('roles_id', 'asc')->get();
-        $branches = branch::all()->pluck('branch_kh', 'branch_id');
-        //  dd($user_branch[5]->branch[0]);
-        //dd($branches);
-        //dd($user_branch[0]->branch_bindding_user[0]->branch->branch_name);
+        $branchesModel = branch::all()->pluck('branch_kh', 'branch_id');
+        $branchheiModel = branch_hei::all()->pluck('institute_kh', 'bhei_id');
+         
+        $branchheiPrefixed = $branchheiModel->mapWithKeys(fn($value, $key) => ['bhei_' . $key => $value]);
+        $branchePrefixed = $branchesModel->mapWithKeys(fn($value, $key) => ['bra_' . $key => $value]);
+
+        $branches = $branchePrefixed->toArray() + $branchheiPrefixed->toArray();
+
+        // dd($user_branch);
+
         return view('user.index', compact('user_branch', 'branches'));
     }
     /**

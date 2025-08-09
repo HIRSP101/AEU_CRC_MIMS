@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>ប្រព័ន្ធគ្រប់គ្រងព័ត៍មានសមាជិក</title>
     <meta charset="utf-8">
@@ -34,6 +33,10 @@
                 <div class="flex items-center flex-1 mx-4">
                     @if (auth()->user()->hasRole('admin'))
                         <h1 class="text-white text-lg font-koulen">ទីស្នាក់ការកណ្តាល</h1>
+                    @elseif(auth()->user()->branch_bindding_user[0]->branch == null)
+                        <h1 class="text-white text-lg font-koulen">
+                            {{ auth()->user()->branch_bindding_user[0]->branch_hei->institute_kh }}
+                        </h1>
                     @else
                         <h1 class="text-white text-lg font-koulen">សាខាថ្នាក់កណ្តាល:
                             {{ auth()->user()->branch_bindding_user[0]->branch->branch_kh }}

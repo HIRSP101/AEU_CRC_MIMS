@@ -14,8 +14,7 @@ class branch_bindding_user extends Model
     protected $table = "branch_bindding_user";
     protected $primaryKey = "bbu_id";
     protected $timestamp = true;
-    protected $fillable = ["branch_id", "user_id", "created_at", "updated_at"];
-
+    protected $fillable = ["branch_id", "user_id", "created_at", "updated_at", "branch_hei_id"];
     public function users(): BelongsTo
     {
         return $this->belongsTo(users::class, 'id', 'user_id');
@@ -23,5 +22,9 @@ class branch_bindding_user extends Model
     public function branch(): BelongsTo
     {
         return $this->belongsTo(branch::class, 'branch_id', 'branch_id');
+    }
+    public function branch_hei(): BelongsTo
+    {
+        return $this->belongsTo(branch_hei::class, 'branch_hei_id', 'bhei_id');
     }
 }

@@ -26,7 +26,6 @@
                     ,
                     $total_mem[$i]->date_of_birth
                     ,
-
                     // $total_mem[$i]->branchhei_id,
                     $total_mem[$i]->institute_kh,
                     $total_mem[$i]->member_type,

@@ -127,7 +127,6 @@ class UpdateMemberService
     private function updateEducationBackground(member_personal_detail $member, array $data): void
     {
         $member->member_education_background()->update([
-            'institute_id' => $data[0]['institute_id'] ?? $member->member_education_background->institute_id,
             'acadmedic_year' => $data[0]['acadmedic_year'] ?? $member->member_education_background->acadmedic_year,
             'major' => $data[0]['major'] ?? $member->member_education_background->major,
             'batch' => $data[0]['batch'] ?? $member->member_education_background->batch,

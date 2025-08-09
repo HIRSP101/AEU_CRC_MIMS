@@ -139,7 +139,6 @@ class CreateMemberService
     private function createEducationBackground(member_personal_detail $member, array $data, $branch, $branchhei): void
     {
         $member->member_education_background()->create([
-            'institute_id' => $data['institute_id'] ?? null,
             'acadmedic_year' => DateTimeFormat::convertKhmerToEnglishNumbers($data['acadmedic_year']) ?? null,
             'major' => $data['major'] ?? null,
             'batch' => $data['batch'] ?? null,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\branch_hei;
 use App\Models\form_submits;
 use App\Models\member_registration_detail;
 use DB;
@@ -12,108 +13,287 @@ class LinkController extends Controller
 {
     public function linkMember()
     {
-        $title = "បញ្ចូលសមាជិកតាមរយះតំណរភ្ជាប់";
+        $title = "បញ្ចូលសមាជិកតាមរយះតំណរភ្ជាប់(បណ្តោះអាសន្ធ)";
+        $admin = false;
         if (auth()->user()->hasRole('admin')) {
-            $link = DB::table('form_submits as fs')
-                ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
-                ->join('branch as b', 'bbu.branch_id', '=', 'b.branch_id')
-                ->select(
-                    'fs.id',
-                    'fs.token',
-                    'fs.starts_at',
-                    'fs.expires_at',
-                    'fs.academic_year',
-                    'fs.created_at',
-                    'b.branch_kh'
-                )
-                ->orderBy('b.branch_kh')
-                ->orderBy('fs.created_at', 'desc')
-                ->get()
-                ->groupBy('branch_kh');
-            return view('links.link-member', compact('link', 'title'));
+            $membersPerHei = DB::table('branch_hei as bhei')
+                ->Join('branch_bindding_user as bu', 'bu.branch_hei_id', '=', 'bhei.bhei_id')
+                ->Join('form_submits as fs', 'fs.created_by', '=', 'bu.user_id')
+                ->Join('member_registration_detail as mrd', 'mrd.form_submits_id', '=', 'fs.id')
+                ->Join('member_education_background as meb', 'meb.member_id', '=', 'mrd.member_id')
+                ->where('mrd.approved', '=', 0)
+                ->selectRaw('
+                    COUNT(DISTINCT mrd.mrd_id) as total_members
+                ')
+                ->groupBy('bhei.bhei_id', 'bhei.institute_kh')
+                ->get();
+            return view('links.link-member', compact('membersPerHei', 'title', 'admin'));
         } elseif (auth()->user()->hasRole('user')) {
-            $link = DB::table('form_submits as fs')
-                ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
-                ->join('branch as b', 'bbu.branch_id', '=', 'b.branch_id')
-                ->select(
-                    'fs.id',
-                    'fs.token',
-                    'fs.starts_at',
-                    'fs.expires_at',
-                    'fs.academic_year',
-                    'fs.created_at',
-                    'b.branch_kh'
-                )
-                ->where('bbu.user_id', auth()->user()->id)
-                ->orderBy('b.branch_kh')
-                ->orderBy('fs.created_at', 'desc')
-                ->get()
-                ->groupBy('branch_kh');
-            return view('links.link-member', compact('link','title'));
+            if (auth()->user()->branch_bindding_user[0]->branch == null) {
+                $link = DB::table('form_submits as fs')
+                    ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
+                    ->join('branch_hei as bhei', 'bbu.branch_hei_id', '=', 'bhei.bhei_id')
+                    ->select(
+                        'fs.id',
+                        'fs.token',
+                        'fs.starts_at',
+                        'fs.expires_at',
+                        'fs.academic_year',
+                        'fs.created_at',
+                        'bhei.institute_kh as branch_kh'
+                    )
+                    ->where('bbu.user_id', auth()->user()->id)
+                    ->orderBy('bhei.institute_kh')
+                    ->orderBy('fs.created_at', 'desc')
+                    ->get()
+                    ->groupBy('branch_kh');
+                return view('links.link-member', compact('link', 'title', 'admin'));
+            } else {
+                $link = DB::table('form_submits as fs')
+                    ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
+                    ->join('branch as b', 'bbu.branch_id', '=', 'b.branch_id')
+                    ->select(
+                        'fs.id',
+                        'fs.token',
+                        'fs.starts_at',
+                        'fs.expires_at',
+                        'fs.academic_year',
+                        'fs.created_at',
+                        'b.branch_kh'
+                    )
+                    ->where('bbu.user_id', auth()->user()->id)
+                    ->orderBy('b.branch_kh')
+                    ->orderBy('fs.created_at', 'desc')
+                    ->get()
+                    ->groupBy('branch_kh');
+                return view('links.link-member', compact('link', 'title', 'admin'));
+            }
         }
     }
+
+    public function linkInstitute()
+    {
+        $option = 1;
+        $total_member_institute = $this->totalMemberInstitute($option);
+        $title = "គ្រឹះស្ថានឧត្តមសិក្សា កាកបាទក្រហមកម្ពុជា 25 រាជធានី-​ខេត្ត(បណ្តោះអាសន្ធ)";
+        return view("link_institute.index", compact("total_member_institute", 'option', 'title'));
+    }
+    public function linkInstituteReport()
+    {
+        $option = 2;
+        $total_member_institute = $this->totalMemberInstitute($option);
+        $title = "គ្រឹះស្ថានឧត្តមសិក្សា កាកបាទក្រហមកម្ពុជា 25 រាជធានី-​ខេត្ត";
+        return view("link_institute.index", compact("total_member_institute", "option", 'title'));
+    }
+
+    public function linkInstituteById($id)
+    {
+        $title = "បញ្ចូលសមាជិកតាមរយះតំណរភ្ជាប់ (បណ្តោះអាសន្ធ)";
+        $admin = true;
+        $option = 1;
+        $link = DB::table('form_submits as fs')
+            ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
+            ->join('branch_hei as bhei', 'bbu.branch_hei_id', '=', 'bhei.bhei_id')
+            ->select(
+                'fs.id',
+                'fs.token',
+                'fs.starts_at',
+                'fs.expires_at',
+                'fs.academic_year',
+                'fs.created_at',
+                'bhei.institute_kh as branch_kh'
+            )
+            ->where('bbu.branch_hei_id', $id)
+            ->orderBy('bhei.institute_kh')
+            ->orderBy('fs.created_at', 'desc')
+            ->get()
+            ->groupBy('branch_kh');
+        // dd($link);
+        return view('links.link-member', compact('link', 'title', 'admin', 'option'));
+    }
+    public function linkInstituteReportById($id)
+    {
+        $title = "បញ្ចូលសមាជិកតាមរយះតំណរភ្ជាប់";
+        $admin = true;
+        $option = 2;
+        $link = DB::table('form_submits as fs')
+            ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
+            ->join('branch_hei as bhei', 'bbu.branch_hei_id', '=', 'bhei.bhei_id')
+            ->select(
+                'fs.id',
+                'fs.token',
+                'fs.starts_at',
+                'fs.expires_at',
+                'fs.academic_year',
+                'fs.created_at',
+                'bhei.institute_kh as branch_kh'
+            )
+            ->where('bbu.branch_hei_id', $id)
+            ->orderBy('bhei.institute_kh')
+            ->orderBy('fs.created_at', 'desc')
+            ->get()
+            ->groupBy('branch_kh');
+        return view('links.link-member', compact('link', 'title', 'admin', 'option'));
+    }
+
+    public function totalMemberInstitute($option)
+    {
+        if ($option == 1) {
+            return DB::table('branch_hei as bhei')
+                ->leftJoin('branch_bindding_user as bu', 'bu.branch_hei_id', '=', 'bhei.bhei_id')
+                ->leftJoin('form_submits as fs', 'fs.created_by', '=', 'bu.user_id')
+                ->leftJoin('member_registration_detail as mrd', 'mrd.form_submits_id', '=', 'fs.id')
+                ->leftJoin('member_education_background as meb', function ($join) {
+                    $join->on('meb.member_id', '=', 'mrd.member_id')
+                        ->whereNotNull('meb.branchhei_id')
+                        ->whereNull('meb.school_id');
+                })
+                ->where('bhei.institute_type', '=', 'សាកលវិទ្យាល័យ')
+                ->select(
+                    'bhei.institute_kh',
+                    'bhei.image',
+                    'bhei.bhei_id',
+                    DB::raw('COUNT(CASE WHEN mrd.approved = 0 THEN mrd.member_id END) as total_members'),
+                    DB::raw('COUNT(DISTINCT fs.id)as total_links')
+                )
+                ->groupBy('bhei.institute_kh', 'bhei.image', 'bhei.bhei_id')
+                ->orderBy('bhei.bhei_id', 'asc')
+                ->get();
+        } elseif ($option == 2) {
+            return DB::table('branch_hei as bhei')
+                ->leftJoin('branch_bindding_user as bu', 'bu.branch_hei_id', '=', 'bhei.bhei_id')
+                ->leftJoin('form_submits as fs', 'fs.created_by', '=', 'bu.user_id')
+                ->leftJoin('member_registration_detail as mrd', 'mrd.form_submits_id', '=', 'fs.id')
+                ->leftJoin('member_education_background as meb', function ($join) {
+                    $join->on('meb.member_id', '=', 'mrd.member_id')
+                        ->whereNotNull('meb.branchhei_id')
+                        ->whereNull('meb.school_id');
+                })
+                ->where('bhei.institute_type', '=', 'សាកលវិទ្យាល័យ')
+                ->select(
+                    'bhei.institute_kh',
+                    'bhei.image',
+                    'bhei.bhei_id',
+                    DB::raw('COUNT(CASE WHEN mrd.approved = 1 THEN mrd.member_id END) as total_members'),
+                    DB::raw('COUNT(DISTINCT fs.id)as total_links')
+                )
+                ->groupBy('bhei.institute_kh', 'bhei.image', 'bhei.bhei_id')
+                ->orderBy('bhei.bhei_id', 'asc')
+                ->get();
+        }
+
+    }
+
     public function createLink()
     {
         $title = 'បង្កើត Link';
-        return view('links.create-link', compact('title'));
+        $admin = false;
+        if (auth()->user()->hasRole('admin')) {
+            $admin = true;
+            $institute = branch_hei::select('branch_hei.bhei_id', 'branch_hei.institute_kh')
+                ->join('branch_bindding_user as bu', 'bu.branch_hei_id', '=', 'branch_hei.bhei_id')
+                ->distinct() // make sure no duplicates from join
+                ->get();
+            // dd($institute);       
+            return view('links.create-link', compact('title', 'institute', 'admin'));
+        } else {
+            return view('links.create-link', compact('title', 'admin'));
+        }
+
     }
     public function linkStore(Request $request)
     {
-        $userId = auth()->user()->id;
+        if (auth()->user()->hasRole('admin')) {
 
-        $existing = form_submits::where('created_by', $userId)
-            ->where('academic_year', $request->academic_year)
-            ->first();
+            $userByInstitue = $request->institute;
 
-        if ($existing) {
+            if ($userByInstitue != null) {
+                $userId = DB::table('branch_bindding_user as  bu')
+                    ->join('branch_hei as bh', 'bh.bhei_id', '=', 'bu.branch_hei_id')
+                    ->select('bu.user_id')
+                    ->where('bh.bhei_id', $userByInstitue)
+                    ->first();
+
+                $existing = form_submits::where('created_by', $userId->user_id)
+                    ->where('academic_year', $request->academic_year)
+                    ->first();
+
+                if ($existing) {
+                    return response()->json([
+                        'message' => 'Link សម្រាប់ឆ្នាំសិក្សានេះ មានរួចហើយ។ សូមបង្កើត Link សម្រាប់ឆ្នាំសិក្សាថ្មី។',
+                        'status' => 409,
+                    ]);
+                }
+
+                auth()->user()->setRememberToken(Str::random(200));
+                form_submits::create([
+                    'created_by' => $userId->user_id,
+                    'token' => auth()->user()->getRememberToken(),
+                    'starts_at' => $request->starts_at,
+                    'expires_at' => $request->expires_at,
+                    'academic_year' => $request->academic_year,
+                ])->save();
+
+                return response()->json([
+                    'message' => 'Link ត្រូវបានបង្កើតដោយជោគជ័យ',
+                    'status' => 200,
+                    'token' => auth()->user()->getRememberToken(),
+                    'starts_at' => $request->starts_at,
+                    'expires_at' => $request->expires_at,
+                ]);
+            }
+        } else {
+            $userId = auth()->user()->id;
+
+            $existing = form_submits::where('created_by', $userId)
+                ->where('academic_year', $request->academic_year)
+                ->first();
+
+            if ($existing) {
+                return response()->json([
+                    'message' => 'Link សម្រាប់ឆ្នាំសិក្សានេះ មានរួចហើយ។ សូមបង្កើត Link សម្រាប់ឆ្នាំសិក្សាថ្មី។',
+                    'status' => 409,
+                ]);
+            }
+
+            auth()->user()->setRememberToken(Str::random(200));
+            form_submits::create([
+                'created_by' => auth()->user()->id,
+                'token' => auth()->user()->getRememberToken(),
+                'starts_at' => $request->starts_at,
+                'expires_at' => $request->expires_at,
+                'academic_year' => $request->academic_year,
+            ])->save();
+
             return response()->json([
-                'message' => 'Link សម្រាប់ឆ្នាំសិក្សានេះ មានរួចហើយ។ សូមបង្កើត Link សម្រាប់ឆ្នាំសិក្សាថ្មី។',
-                'status' => 409,
+                'message' => 'Link ត្រូវបានបង្កើតដោយជោគជ័យ',
+                'status' => 200,
+                'token' => auth()->user()->getRememberToken(),
+                'starts_at' => $request->starts_at,
+                'expires_at' => $request->expires_at,
             ]);
         }
-
-        auth()->user()->setRememberToken(Str::random(200));
-        form_submits::create([
-            'created_by' => auth()->user()->id,
-            'token' => auth()->user()->getRememberToken(),
-            'starts_at' => $request->starts_at,
-            'expires_at' => $request->expires_at,
-            'academic_year' => $request->academic_year,
-        ])->save();
-
-        return response()->json([
-            'message' => 'Link ត្រូវបានបង្កើតដោយជោគជ័យ',
-            'status' => 200,
-            'token' => auth()->user()->getRememberToken(),
-            'starts_at' => $request->starts_at,
-            'expires_at' => $request->expires_at,
-        ]);
     }
     public function linkReport()
     {
         $title = "ការគ្រប់គ្រងតំណរភ្ជាប់";
         if (auth()->user()->hasRole('admin')) {
-            $link = DB::table('form_submits as fs')
-                ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
-                ->join('branch as b', 'bbu.branch_id', '=', 'b.branch_id')
-                ->select(
-                    'fs.id',
-                    'fs.token',
-                    'fs.starts_at',
-                    'fs.expires_at',
-                    'fs.academic_year',
-                    'fs.created_at',
-                    'b.branch_kh'
-                )
-                ->orderBy('b.branch_kh')
-                ->orderBy('fs.created_at', 'desc')
-                ->get()
-                ->groupBy('branch_kh');
-            return view('links.link-report', compact('link','title'));
+            $membersPerHei = DB::table('branch_hei as bhei')
+                ->Join('branch_bindding_user as bu', 'bu.branch_hei_id', '=', 'bhei.bhei_id')
+                ->Join('form_submits as fs', 'fs.created_by', '=', 'bu.user_id')
+                ->Join('member_registration_detail as mrd', 'mrd.form_submits_id', '=', 'fs.id')
+                ->Join('member_education_background as meb', 'meb.member_id', '=', 'mrd.member_id')
+                ->where('mrd.approved', '=', 1)
+                ->selectRaw('
+                    COUNT(DISTINCT mrd.mrd_id) as total_members
+                ')
+                ->groupBy('bhei.bhei_id', 'bhei.institute_kh')
+                ->get();
+            return view('links.link-report', compact('membersPerHei', 'title'));
         } elseif (auth()->user()->hasRole('user')) {
             $link = DB::table('form_submits as fs')
                 ->join('branch_bindding_user as bbu', 'fs.created_by', '=', 'bbu.user_id')
-                ->join('branch as b', 'bbu.branch_id', '=', 'b.branch_id')
+                ->join('branch_hei as bhei', 'bbu.branch_hei_id', '=', 'bhei.bhei_id')
                 ->select(
                     'fs.id',
                     'fs.token',
@@ -121,14 +301,14 @@ class LinkController extends Controller
                     'fs.expires_at',
                     'fs.academic_year',
                     'fs.created_at',
-                    'b.branch_kh'
+                    'bhei.institute_kh as branch_kh'
                 )
                 ->where('bbu.user_id', auth()->user()->id)
-                ->orderBy('b.branch_kh')
+                ->orderBy('bhei.institute_kh')
                 ->orderBy('fs.created_at', 'desc')
                 ->get()
                 ->groupBy('branch_kh');
-            return view('links.link-report', compact('link','title'));
+            return view('links.link-report', compact('link', 'title'));
         }
     }
     public function linkDetail_watting_for_approve($linkId)
