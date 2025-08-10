@@ -68,6 +68,10 @@
                         class=" w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "
                         type="text" disabled id="school">
                 </div>
+                <button
+                    class="border-solid bg-green-500 mt-8 px-4 font-medium py-2 rounded-md hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300"
+                    id="downloadform">ទាញយកគំរូរ
+                </button>
             </div>
         </div>
 
@@ -165,6 +169,10 @@
                         <option value="">--------------------------------</option>
                     </select>
                 </div>
+                <button
+                    class="border-solid bg-green-500 mt-8 px-4 font-medium py-2 rounded-md hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300"
+                    id="downloadform">ទាញយកគំរូរ
+                </button>
             </div>
         </div>
 

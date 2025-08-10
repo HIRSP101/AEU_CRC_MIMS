@@ -280,7 +280,7 @@ $(document).ready(function () {
             ...member,
             branchhei_id: institute_id,
             branch_id: branch_id
-        }));    
+        }));
 
         console.log("memberData=>", memberData);
         insertMember(memberData.slice(1));
@@ -290,6 +290,21 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
+
+    $('#downloadform').on('click', function (e) {
+        e.preventDefault();
+
+        const fileUrl = 'member_template.xlsx';
+        const fileName = 'គំរូរ.xlsx';
+
+        const a = document.createElement('a');
+        a.href = fileUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    });
+
     function insertMember(member) {
         $("#loadingSpinner").show();
         $("#textload").show();
