@@ -9,7 +9,7 @@
                 <h1>បង្កើតសាលារៀន​</h1>
             </div>
 
-            <form action="{{ route('storeschool') }}" method="POST">
+            <form action="{{ route('storeschool') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4">
                     <div>
@@ -88,6 +88,11 @@
                                     </option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div>
+                            <label for="image" class="block font-siemreap mb-2">រូបភាព</label>
+                            <input type="file" name="image" id="image"
+                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300">
                         </div>
                         <div class="mt-8">
                             <button type="submit"

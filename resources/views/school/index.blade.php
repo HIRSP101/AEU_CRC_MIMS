@@ -7,7 +7,7 @@
         <h1 class="text-2xl font-medium text-center font-koulen text-blue-600">គ្រឹះស្ថានសិក្សា
             កាកបាទក្រហមកម្ពុជានៃស្រុក/ខណ្ឌ {{ $village->district_name }}</h1>
         <div class="filter_institute flex justify-end space-x-2 mt-5 mb-5">
-            <a href="{{ route('school.create', ['id' => $branchId, 'v_id' => $villageId]) }}"
+            <a href="{{ route('createschool', ['id' => $branchId, 'v_id' => $villageId]) }}"
                 class="bg-blue-500 text-white px-4 py-2 rounded-lg">
                 បង្កើតសាលារៀន​
             </a>
@@ -46,21 +46,21 @@
             ul.empty();
             data.forEach((item) => {
                 ul.append(`
-                        <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                            <a href="/branch/${item.branch_id}/village/${item.village_id}/school/${item.bhei_id}">
-                                <div class="flex justify-between items-center">
-                                    <div class="flex items-center">
-                                        <img
-                                        src="${item.image}"
-                                        alt="Logo 1"
-                                        class="ml-10 w-16 mr-8 rounded-full object-cover h-16"
-                                        />
-                                        <span class="text-lg font-battambang">${item.institute_kh}</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    `)
+                                <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
+                                    <a href="/branch/${item.branch_id}/village/${item.village_id}/school/${item.bhei_id}">
+                                        <div class="flex justify-between items-center">
+                                            <div class="flex items-center">
+                                                <img
+                                                src="${item.image}"
+                                                alt="Logo 1"
+                                                class="ml-10 w-16 mr-8 rounded-full object-cover h-16"
+                                                />
+                                                <span class="text-lg font-battambang">${item.institute_kh}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            `)
             })
         }
     </script>

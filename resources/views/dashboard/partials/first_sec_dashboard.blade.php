@@ -2,13 +2,19 @@
 $i = 1;
 $firstEle = $total_mem_branches[0] ?? "";
 $firstEle_total = $firstEle->total_mem;
+$userBranchId = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_id');
+$branchName = \App\Models\branch::where('branch_id', $userBranchId)->value('branch_kh');
+$branch_image = \App\Models\branch::where('branch_id', $userBranchId)->value('branch_image');
+$institute_id = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_hei_id');
+$institute_kh = App\Models\branch_hei::where('bhei_id', $institute_id)->value('institute_kh');
+$institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value('image');
 ?>
 
 
-<div class="p-5 bg-white">
+<div class="p-5">
     <div class="">
         <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 ">
-            <div class="p-4 rounded-xl shadow-md px-3 mb-3 border">
+            <div class="p-4 rounded-xl shadow-md px-3 mb-3 border bg-white">
                 <h1 class="text-blue-600 text-2xl font-koulen">សួស្តី
                     {{explode(' ', string: auth()->user()->name)[1] ?? auth()->user()->name}}
                 </h1>
@@ -18,16 +24,21 @@ $firstEle_total = $firstEle->total_mem;
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row md:flex-row lg:justify-between gap-5 mt-3 h-96">
-                <div class="sm:p-4 p-2 bg-white border rounded-xl shadow-lg sm:w-[50%] md:w-[50%]">
-                    <div class="flex justify-center mt-2">
-                        <img src="{{asset("images/branches/b-$firstEle->branch_id.jpg")}}" class="w-96 rounded-lg"
-                            alt="">
+            <div class="flex flex-col sm:flex-row md:flex-row lg:justify-between gap-5 mt-3">
+                <div class="sm:p-4 p-2 bg-white border rounded-xl shadow-lg lg:w-[50%] md:w-[50%]">
+                    <div class="flex mt-2 justify-center items-center">
+                        @if($branchName != null && $branch_image != null)
+                            <img src="{{asset($branch_image)}}" class="w-96 rounded-lg" alt="branch logo">
+                        @else
+                            <img src="{{asset($institute_image)}}" class="w-96 rounded-lg" alt="branch logo">
+                        @endif
                     </div>
                     <div class="flex flex-row items-center justify-center ">
-                        <h1 class="font-khmer text-xl text-blue-700 text-center mt-3">{{$firstEle->branch_kh}}</h1>
-                        {{-- <h1 class="font-koulen text-2xl text-red-700 text-center mt-1">ចំនួន
-                            {{translate($firstEle->total_mem)}} នាក់</h1> --}}
+                        @if($branchName != null && $branch_image != null)
+                            <h1 class="font-khmer text-xl text-blue-700 text-center mt-3">{{$branchName}}</h1>
+                        @else
+                            <h1 class="font-khmer text-xl text-blue-700 text-center mt-3">{{$institute_kh}}</h1>
+                        @endif
                     </div>
                 </div>
                 <div class="p-2 bg-white border rounded-xl shadow-lg sm:w-[50%] md:w-[50%] ">
@@ -37,7 +48,7 @@ $firstEle_total = $firstEle->total_mem;
                         <table class="table font-battambang leading-10 font-medium">
                             <tbody>
                                 @foreach($total_mem_branches as $key => $total_mem_branch)
-                                    <tr class="{{ $key >= 5 ? 'hidden extra-branch' : '' }}">
+                                    <tr class="{{ $key >= 7 ? 'hidden extra-branch' : '' }}">
 
                                         <td class="px-2 text-xl">{{ ($key + 1) . '.'}}</td>
                                         <td class="text-xl pr-20">{{str_replace("ខេត្ត", "", $total_mem_branch->branch_kh)}}
@@ -50,7 +61,7 @@ $firstEle_total = $firstEle->total_mem;
                         </table>
                     </div>
                     <span class="flex justify-end mt-3 p-3">
-                        <button id="toggleBranchBtn"
+                        <a href="/branch"
                             class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
                     </span>
                 </div>
@@ -58,22 +69,3 @@ $firstEle_total = $firstEle->total_mem;
         </div>
     </div>
 </div>
-@push('JS')
-    <script>
-        document.getElementById('toggleBranchBtn').addEventListener('click', function () {
-            const extraRows = document.querySelectorAll('.extra-branch');
-            const isHidden = extraRows[0]?.classList.contains('hidden');
-
-            console.log("hdfghjhgfdfg")
-            extraRows.forEach(row => {
-                if (isHidden) {
-                    row.classList.remove('hidden');
-                } else {
-                    row.classList.add('hidden');
-                }
-            });
-
-            this.textContent = isHidden ? 'ត្រឡប់' : 'មើលបន្ថែម';
-        });
-    </script>
-@endpush

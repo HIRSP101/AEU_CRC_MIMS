@@ -11,7 +11,7 @@ class school extends Model
     protected $table = "school";
     protected $primaryKey = "school_id";
     public $timestamps = false;
-    protected $fillable = ["school_name", "type", "village_name", "registration_date", "branch_id", "district_id", "khom"];
+    protected $fillable = ["school_name", "type", "village_name", "registration_date", "branch_id", "district_id", "khom", "image"];
 
     public function district()
     {

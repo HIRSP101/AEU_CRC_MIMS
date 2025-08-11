@@ -12,10 +12,10 @@
         ];
     }
 
-                                                                                                                        ?>
+                                                                                                                                                        ?>
     <div class="flex justify-center items-center h-screen bg-gray-100">
-        <div class="bg-white px-[10%] py-[5%] rounded-lg shadow-md w-[97%] h-[95%]">
-            <div class="text-center text-2xl font-bold mb-6 font-siemreap">
+        <div class="bg-white w-full m-5 rounded-lg shadow-md p-5">
+            <div class="text-center mb-6 font-koulen text-blue-600 text-2xl">
                 <h1>បង្កើតស្រុក/ខណ្ឌ</h1>
             </div>
             <form action="{{ route('storedistrict') }}" method="POST">
@@ -47,7 +47,7 @@
             </form>
 
             {{-- Table --}}
-            <div class="w-full overflow-scroll mx-3 my-3 max-h-[760px] mt-10">
+            <div class="w-full overflow-hidden max-h-[760px] mt-10">
                 <table class="min-w-max w-full table-auto font-siemreap">
                     <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
