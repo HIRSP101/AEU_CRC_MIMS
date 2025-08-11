@@ -279,6 +279,9 @@ class ExpireController extends Controller
             ])
             ->distinct()
             ->get();
-        return view('totalmemInstitute.index', compact('total_mem', 'institution', 'title'));
+        $data = $baseQuery->get();
+        $totalStu = $data->count();
+        $femaleStu = $data->where('gender', 'ស្រី')->count();
+        return view('totalmemInstitute.index', compact('total_mem', 'institution', 'title','totalStu','femaleStu'));
     }
 }
