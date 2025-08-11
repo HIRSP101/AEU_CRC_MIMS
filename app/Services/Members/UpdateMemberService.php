@@ -136,6 +136,8 @@ class UpdateMemberService
             'misc_skill' => $data[0]['misc_skill'] ?? $member->member_education_background->misc_skill,
             'education_level' => $data[0]["education_level"] ?? $member->member_education_background->education_level,
             'training_received' => $data[0]['training_received'] ?? $member->member_education_background->training_received,
+            'branch_id' => $data[0]["branch_id"] ?? $member->member_education_background->branch_id,
+            'branchhei_id' => $data[0]["branchhei_id"] ?? $member->member_education_background->branchhei_id,
         ]);
     }
 
