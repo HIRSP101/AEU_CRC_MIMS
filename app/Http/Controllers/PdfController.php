@@ -172,6 +172,7 @@ class PdfController extends Controller
                 'mpd.name_kh',
                 'mpd.name_en',
                 'mpd.gender',
+                'mpd.member_image',
                 'mpd.date_of_birth',
                 'b.branch_name',
                 'b.branch_kh',

@@ -126,6 +126,7 @@
                 @else
                                 @php
                                     $userBranchId = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_id');
+                                    $userBranhHeiId = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_hei_id');
                                 @endphp
                                 @if ($userBranchId)
                                     <a href="/branch/{{ $userBranchId }}/village"
@@ -242,7 +243,7 @@
                                             របាយការណ៍
                                         </span>
                                     </a>
-                                    <a href="/member-expire" 
+                                    <a href="{{route('list-institute.show',['id' => $userBranhHeiId])}}" 
                                         class="flex items-center font-siemreap px-4 py-2 mt-2 text-gray-800 font-semibold hover:bg-red-400 rounded">
                                         <img width="23" height="23"
                                             src="https://img.icons8.com/ios-filled/50/add-user-group-man-man--v2.png"

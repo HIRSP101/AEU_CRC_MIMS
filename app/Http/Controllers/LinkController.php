@@ -340,6 +340,7 @@ class LinkController extends Controller
                 'hei.institute_kh',
                 'hei.institute_type',
                 'branch.branch_name',
+                'branch.branch_kh',
                 's.school_name',
                 'mpd.member_type',
                 'meb.education_level',
@@ -366,7 +367,15 @@ class LinkController extends Controller
             ])
             ->distinct()
             ->get();
-        return view('links.dbl-click', compact('total_mem', 'approved'));
+        $data = $baseQuery->get();
+        $totalStu = $data->count();
+        $femaleStu = $data->where('gender', 'ស្រី')->count();
+        if (count($total_mem) == 0) {
+            return view('links.dbl-click', compact('total_mem', 'approved', 'totalStu', 'femaleStu'));
+        }
+        $current_branch = $data->first()->branch_kh;
+        $institute_kh = $data->first()->institute_kh;
+        return view('links.dbl-click', compact('total_mem', 'approved', 'totalStu', 'femaleStu', 'current_branch','institute_kh'));
     }
     public function linkDetail_approved($linkId)
     {
@@ -398,6 +407,7 @@ class LinkController extends Controller
                 'hei.institute_type',
                 's.school_name',
                 'branch.branch_name',
+                'branch.branch_kh',
                 'mpd.member_type',
                 'meb.education_level',
                 'meb.acadmedic_year',
@@ -423,7 +433,15 @@ class LinkController extends Controller
             ])
             ->distinct()
             ->get();
-        return view('links.dbl-click', compact('total_mem', 'approved'));
+        $data = $baseQuery->get();
+        $totalStu = $data->count();
+        $femaleStu = $data->where('gender', 'ស្រី')->count();
+        if (count($total_mem) == 0){
+             return view('links.dbl-click', compact('total_mem', 'approved', 'totalStu', 'femaleStu'));
+        }
+        $current_branch = $data->first()->branch_kh;
+        $institute_kh = $data->first()->institute_kh;
+        return view('links.dbl-click', compact('total_mem', 'approved', 'totalStu', 'femaleStu', 'current_branch','institute_kh'));
     }
     public function linkDelete()
     {

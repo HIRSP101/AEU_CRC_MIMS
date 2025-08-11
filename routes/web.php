@@ -176,7 +176,7 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::get('/listschool', "{$appC}\\ExpireController@getListSchool")->name('listschool');
     Route::get('/listschool/{id}', "{$appC}\\ExpireController@index");
     Route::get('/list-institute', "{$appC}\\ExpireController@getListInstitute")->name('list-institute');
-    Route::get('/list-institute/{id}', "{$appC}\\ExpireController@getListSchoolByInstituteId");
+    Route::get('/list-institute/{id}', "{$appC}\\ExpireController@getListSchoolByInstituteId")->name('list-institute.show');
     Route::get('/listschool/{did}', "{$appC}\\ExpireController@Lujs");
     //Route::get('/instituteexpire', "{$appC}\\ExpireController@index1")->name('institute_ex');
 
