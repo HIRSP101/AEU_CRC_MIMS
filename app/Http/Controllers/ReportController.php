@@ -102,6 +102,8 @@ class ReportController extends Controller
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
 
+        $year = now()->year;
+
         if ($startDate) {
             $year = date('Y', strtotime($startDate));
         } else {
@@ -133,6 +135,12 @@ class ReportController extends Controller
                 DB::raw("COUNT(CASE WHEN mpd.member_type = 'សមាជិកា យុវជន' AND mpd.gender = 'ស្រី' THEN meb.member_id END) AS total_mem_fem_advisor"),
             )
             ->where('b.branch_id', '<', '28')
+            // ->groupBy('b.branch_id', 'b.branch_kh')
+            // ->get();
+            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('mrd.registration_date', [$startDate, $endDate]);
+            })
+
             ->groupBy('b.branch_id', 'b.branch_kh')
             ->get();
 
@@ -159,24 +167,10 @@ class ReportController extends Controller
         $total_member_all_university = DB::table('branch_hei as hei')
             ->select(
                 'hei.institute_kh',
-                DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
-            AND mpd.member_type = 'សមាជិក យុវជន' 
-            THEN meb.member_id END) AS total_mem"),
-                DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
-            AND mpd.member_type = 'សមាជិក យុវជន' 
-            AND mpd.gender = 'ស្រី' 
-            THEN meb.member_id END) AS total_mem_fem"),
-                DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
-            AND mpd.member_type = 'សមាជិកា យុវជន' 
-            THEN meb.member_id END) AS total_mem_advisor"),
-                DB::raw("COUNT(CASE 
-            WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR 
-            AND mpd.member_type = 'សមាជិកា យុវជន' 
-            AND mpd.gender = 'ស្រី' 
-            THEN meb.member_id END) AS total_mem_fem_advisor")
+                DB::raw("COUNT(CASE WHEN mpd.member_type = 'សមាជិក យុវជន' THEN meb.member_id END) AS total_mem"),
+                DB::raw("COUNT(CASE WHEN mpd.member_type = 'សមាជិក យុវជន' AND mpd.gender = 'ស្រី' THEN meb.member_id END) AS total_mem_fem"),
+                DB::raw("COUNT(CASE WHEN mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) AS total_mem_advisor"),
+                DB::raw("COUNT(CASE WHEN mpd.member_type = 'សមាជិកា យុវជន' AND mpd.gender = 'ស្រី' THEN meb.member_id END) AS total_mem_fem_advisor")
             )
             ->leftJoin('member_education_background as meb', 'meb.branchhei_id', '=', 'hei.bhei_id')
             ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')

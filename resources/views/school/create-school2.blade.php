@@ -89,11 +89,19 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div>
-                            <label for="image" class="block font-siemreap mb-2">រូបភាព</label>
-                            <input type="file" name="image" id="image"
-                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300">
+                        <div class="mb-4">
+                            <label for="image" class="block font-siemreap mb-2">
+                                រូបភាព
+                            </label>
+
+                            <div
+                                class="relative flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded py-2 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer">
+                                <span class="text-sm text-gray-500">ចុចដើម្បីជ្រើសរើសឯកសាររូបភាព</span>
+                                <input type="file" name="image" id="image"
+                                    class="absolute inset-0 opacity-0 cursor-pointer">
+                            </div>
                         </div>
+
                         <div class="mt-8">
                             <button type="submit"
                                 class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 font-siemreap">បង្កើត</button>
@@ -102,7 +110,7 @@
                 </div>
             </form>
             {{-- Table --}}
-            <div class="w-full overflow-scroll mx-3 my-3 max-h-[760px] mt-10">
+            <div class="w-full overflow-hidden mx-3 my-3 max-h-[760px] mt-10">
                 <table class="min-w-max w-full table-auto font-siemreap">
                     <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">

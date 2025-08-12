@@ -2,7 +2,8 @@
 $i = 1;
 $firstEle = $total_mem_branches[0] ?? "";
 $firstEle_total = $firstEle->total_mem;
-$userBranchId = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_id');
+$user = auth()->user();
+$userBranchId = \App\Models\branch_bindding_user::where('user_id', $user->id)->value('branch_id');
 $branchName = \App\Models\branch::where('branch_id', $userBranchId)->value('branch_kh');
 $branch_image = \App\Models\branch::where('branch_id', $userBranchId)->value('branch_image');
 $institute_id = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_hei_id');
@@ -47,22 +48,52 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                     <div class="mt-4 flex justify-center">
                         <table class="table font-battambang leading-10 font-medium">
                             <tbody>
-                                @foreach($total_mem_branches as $key => $total_mem_branch)
-                                    <tr class="{{ $key >= 7 ? 'hidden extra-branch' : '' }}">
+                                @if($user->role === 'admin')
+                                    {{-- Admin see all branches --}}
+                                    @foreach($total_mem_branches as $key => $total_mem_branch)
+                                        <tr class="{{ $key >= 7 ? 'hidden extra-branch' : '' }}">
+                                            <td class="px-2 text-xl">{{ ($key + 1) . '.'}}</td>
+                                            <td class="text-xl pr-20">
+                                                {{ str_replace('ខេត្ត', '', $total_mem_branch->branch_kh) }}
+                                            </td>
+                                            <td class="text-base pl-[40px] text-end">{{ $total_mem_branch->total_mem }} នាក់
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    {{-- user see districts from their own branch --}}
+                                    @php
+                                        $districts = DB::table('district as d')
+                                            ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
+                                            ->leftJoin('member_education_background as meb', 'meb.school_id', '=', 's.school_id')
+                                            ->select(
+                                                'd.district_name',
+                                                DB::raw('COUNT(meb.member_id) as total_mem')
+                                            )
+                                            ->where('d.branch_id', $userBranchId)
+                                            ->groupBy('d.district_name')
+                                            ->get();
+                                    @endphp
 
-                                        <td class="px-2 text-xl">{{ ($key + 1) . '.'}}</td>
-                                        <td class="text-xl pr-20">{{str_replace("ខេត្ត", "", $total_mem_branch->branch_kh)}}
-                                        </td>
-                                        <td class="text-base pl-[40px] text-end">{{ $total_mem_branch->total_mem }} នាក់
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                    @foreach($districts as $key => $district)
+                                        <tr class="{{ $key >= 7 ? 'hidden extra-branch' : '' }}">
+                                            <td class="px-2 text-xl">{{ ($key + 1) . '.' }}</td>
+                                            <td class="text-xl pr-20">{{ $district->district_name }}</td>
+                                            <td class="text-base pl-[40px] text-end">{{ $district->total_mem }} នាក់</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
                     <span class="flex justify-end mt-3 p-3">
-                        <a href="/branch"
-                            class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
+                        @if($user->role === 'admin')
+                            <a href="/branch"
+                                class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
+                        @else
+                            <a href="{{ route('village', ['id' => $userBranchId]) }}"
+                                class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
+                        @endif
                     </span>
                 </div>
             </div>
