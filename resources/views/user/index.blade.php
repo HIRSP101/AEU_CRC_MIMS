@@ -13,6 +13,7 @@ foreach ($user_branch as $user_b) {
         'branch_id' => $user_b->branch_bindding_user[0]->branch->branch_id ?? '',
         'role' => $user_b->roles[0]->name ?? '',
         'permissions' => $user_b->permissions ?? '',
+        'branch_hei_id' => $user_b->branch_bindding_user[0]->branch_hei->bhei_id ?? '',
     ];
 }
     ?>
@@ -55,7 +56,6 @@ foreach ($user_branch as $user_b) {
 @push('JS')
     <script>
         var converseObj = @json($converseObj);
-        console.log(converseObj);
         $("#image").on('change', function (e) {
             e.preventDefault();
             var file = e.target.files;
@@ -67,7 +67,7 @@ foreach ($user_branch as $user_b) {
             $("div#profilepreview").removeClass('hidden');
             formcleanup();
             $("#user_form_inner").toggle('hidden');
-        })
+        });
         $("button.cancelform").on("click", function (e) {
             e.preventDefault();
             $("#user_form_inner").toggle('hidden');
@@ -78,11 +78,38 @@ foreach ($user_branch as $user_b) {
             const selectedOption = $("#branchname_list option").filter(function () {
                 return $(this).val() === selectedVal;
             });
-
             const dataId = selectedOption.data('id') || '';
             $("input#branch_id").val(dataId);
-            $("#user_form_form_inner").submit();
-        })
+            const form = $("#user_form_form_inner");
+            const url = form.attr('action');
+            const formData = new FormData(form[0]);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    alert('ជោគជ័យ');
+                    location.reload();
+                },
+                error: function (xhr) {
+                    // Handle validation errors or other errors
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        let messages = Object.values(errors).map(arr => arr.join(", ")).join("\n");
+                        alert("Validation errors:\n" + messages);
+                    } else {
+                        alert('An error occurred.');
+                    }
+                    console.error(xhr);
+                }
+            });
+        });
+
         $('.delude').on("click", function () {
             if (confirm("Are you sure you want to delete this user?")) {
                 ded('/deleteuser', $(this).attr('data-id'));
@@ -90,22 +117,32 @@ foreach ($user_branch as $user_b) {
         })
 
         $('.elude').on("click", function () {
-            var userObj = converseObj[parseInt($(this).attr('data-id'))];
-            var route = `{{ route('user.edit', ':id') }}`;
-            route = route.replace(':id', $(this).attr('data-id'));
+            var userId = $(this).attr('data-id');
+            var userObj = converseObj[parseInt(userId)];
+            var route = `{{ route('user.edit', ':id') }}`.replace(':id', userId);
+
             $("#user_form_form_inner").attr('action', route);
             $("h1#form_header_text").text("កែប្រែអ្នកប្រើប្រាស់");
             $("div#profilepreview").addClass('hidden');
             $("#user_form_inner").toggle('hidden');
             formcleanup();
+
             $("input#name_inner").val(userObj["name"]);
-            $("input#email_inner").val(`${userObj["email"]}`);
+            $("input#email_inner").val(userObj["email"]);
             $(`input#${userObj["role"]}`).prop("checked", true);
             for (let i = 0; i < userObj["permissions"].length; i++) {
                 $(`input#${userObj["permissions"][i]["name"].split(' ')[0]}`).prop("checked", true);
             }
-            $("select#branch_id").val($(this).attr('b-id')).change();
-        })
+            if (userObj["branch_id"]) {
+                var branch_id = "bra_" + userObj["branch_id"];
+                let branchName = $(`#branchname_list option[data-id="${branch_id}"]`).val();
+                $("input#branch_id").val(branchName);
+            } else {
+                var branch_hei = "bhei_" + userObj["branch_hei_id"];;
+                let branchName = $(`#branchname_list option[data-id="${branch_hei}"]`).val();
+                $("input#branch_id").val(branchName);
+            }
+        });
 
         function formcleanup() {
             $("input#name_inner").val("");
@@ -113,7 +150,7 @@ foreach ($user_branch as $user_b) {
             $("input#password_inner").val("");
             $("input[name='roles[]']").prop("checked", false);
             $("input[name='permissions[]']").prop("checked", false);
-            $("select#branch_id").val("").change();
+            $("input#branch_id").val("").change();
         }
 
         function ded(url, id) {

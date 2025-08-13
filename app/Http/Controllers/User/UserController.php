@@ -15,17 +15,18 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Str;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
 
-        $user_branch = users::with(['branch_bindding_user.branch','branch_bindding_user.branch_hei', 'roles', 'permissions'])
-        ->withAggregate('roles', 'id')->orderBy('roles_id', 'asc')->get();
+        $user_branch = users::with(['branch_bindding_user.branch', 'branch_bindding_user.branch_hei', 'roles', 'permissions'])
+            ->withAggregate('roles', 'id')->orderBy('roles_id', 'asc')->get();
         $branchesModel = branch::all()->pluck('branch_kh', 'branch_id');
         $branchheiModel = branch_hei::all()->pluck('institute_kh', 'bhei_id');
-         
+
         $branchheiPrefixed = $branchheiModel->mapWithKeys(fn($value, $key) => ['bhei_' . $key => $value]);
         $branchePrefixed = $branchesModel->mapWithKeys(fn($value, $key) => ['bra_' . $key => $value]);
 
@@ -47,7 +48,7 @@ class UserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . Users::class . ',email,' . $id],
             'password' => ['nullable', 'string'],
             'roles' => ['nullable', 'array'],
-            'branch_id' => ['nullable', 'exists:branch,branch_id'],
+            // 'branch_id' => ['nullable', 'exists:branch,branch_id'],
             'permissions' => ['nullable', 'array'],
         ]);
 
@@ -72,10 +73,26 @@ class UserController extends Controller
         }
 
         if ($request->filled('branch_id')) {
-         //   dd(branch_bindding_user::where('branch_id', $request->branch_id)->get());
-            branch_bindding_user::where('user_id', $user->id)->update(["user_id" => $user->id]);
-            branch_bindding_user::where('user_id', $user->id)->update(['branch_id' => $request->branch_id]);
+            $branchId = null;
+            $branchHeiId = null;
+            $inputBranchId = $request->branch_id;
 
+            if (Str::startsWith($inputBranchId, 'bra_')) {
+                $branchId = str_replace('bra_', '', $inputBranchId);
+                $branchHeiId = null;
+            } elseif (Str::startsWith($inputBranchId, 'bhei_')) {
+                $branchHeiId = str_replace('bhei_', '', $inputBranchId);
+                $branchId =null;
+            }
+
+            // Update or create binding
+            branch_bindding_user::updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'branch_id' => $branchId,
+                    'branch_hei_id' => $branchHeiId
+                ]
+            );
         }
 
         return redirect('/userroles');

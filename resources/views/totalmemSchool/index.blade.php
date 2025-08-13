@@ -30,7 +30,7 @@ $school_name = $currentSchool?->school_name;
             ];
         }
 
-                                                                                                                                                    ?>
+                                                                                                                                                                ?>
     <div class="bg-white m-5 p-5 shadow-lg rounded-lg">
         <h1 class="text-center font-koulen text-blue-600 my-5 text-2xl"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន
             និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
@@ -81,11 +81,13 @@ $school_name = $currentSchool?->school_name;
                             placeholder="Select a date">
                     </div>
                 </div>
-                <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
-                <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                @canany(['2', '3'])
+                    <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
+                    <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                @endcanany
             </div>
         </div>
-         <div class="w-full mt-5 max-h-[760px] table">
+        <div class="w-full mt-5 max-h-[760px] table">
             <table class="min-w-max w-full table-auto font-siemreap" id="dataTable">
                 <thead>
                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -116,10 +118,11 @@ $school_name = $currentSchool?->school_name;
                         <th class="py-3 text-center">
                             ថ្ងៃចុះឈ្មោះ
                         </th>
-
-                        <th class="py-3 text-center">
-                            action
-                        </th>
+                        @canany(['2', '3'])
+                            <th class="py-3 text-center">
+                                action
+                            </th>
+                        @endcanany
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
@@ -153,12 +156,13 @@ $school_name = $currentSchool?->school_name;
                         exportToExcel(
                             @json($current_branch),
                             @json($total_mem_detail),
-                            {{ $totalStu }},
-                            {{ $femaleStu }},
+                                                    {{ $totalStu }},
+                                                    {{ $femaleStu }},
                             schoolName
                         );
                     }
                 });
+                window.userCanEditOrDelete = @json(auth()->user()->canany(['2', '3']));
             </script>
             <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         @endif

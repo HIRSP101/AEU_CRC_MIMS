@@ -22,7 +22,21 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        
+        Gate::define('3', function ($user) {
+            return $user->hasPermissionTo('read data')
+                && $user->hasPermissionTo('edit data')
+                && $user->hasPermissionTo('access data');
+        });
+
+        Gate::define('1', function ($user) {
+            return $user->hasPermissionTo('read data');
+        });
+
+        Gate::define('2', function ($user) {
+            return $user->hasPermissionTo('read data')
+                && $user->hasPermissionTo('edit data');
+        });
+
     }
 }
 

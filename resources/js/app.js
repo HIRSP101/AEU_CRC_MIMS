@@ -46,7 +46,6 @@ window.Echo.connector.pusher.connection.bind('error', (error) => {
 
 window.exportToExcel = exportToExcel;
 window.exportToExcel_branch = exportToExcel_branch;
-
 window.Alpine = Alpine;
 
 Alpine.start();
