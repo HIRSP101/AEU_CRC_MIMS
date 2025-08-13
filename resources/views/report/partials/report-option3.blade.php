@@ -8,10 +8,10 @@
     $i = 0;
                 ?>
     <div class="bg-white mt-2 mx-2 px-3 shadow-lg h-max-full rounded-lg">
-        <h1 class="text-center font-khmer my-2 text-lg text-blue-800 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
+        <h1 class="text-center font-koulen my-2 text-2xl text-blue-600 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
             ទីប្រឹក្សាយុវជន នឹងយុវជន</h1>
-        <h1 class="text-center font-khmer my-2 text-lg text-blue-800">នៃកាកបាទក្រហមកម្ពុជា ២៥ រាជធានី/ខេត្ត និងគ្រឹះស្ថានឧត្តមសិក្សា</h1>
-        <h2 class="text-center font-khmer mb-2 text-lg text-blue-800">បច្ចុប្បន្នភាពឆ្នាំ {{ $selectedYear }}</h2>
+        <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">នៃកាកបាទក្រហមកម្ពុជា ២៥ រាជធានី/ខេត្ត និងគ្រឹះស្ថានឧត្តមសិក្សា</h1>
+        <h2 class="text-center font-koulen mb-2 text-2xl text-blue-600">បច្ចុប្បន្នភាពឆ្នាំ {{ $selectedYear }}</h2>
         <div class="flex justify-between items-center mt-5">
             <div>
                 <button id="export_excel" class="bg-[#31bf7d] text-white px-4 py-2 rounded">Export Excel</button>
@@ -136,7 +136,6 @@
                     if (selectedDates.length === 2) {
                         const startDate = selectedDates[0].toISOString().split('T')[0];
                         const endDate = selectedDates[1].toISOString().split('T')[0];
-
                         const url = new URL(window.location.href);
                         url.searchParams.set('start_date', startDate);
                         url.searchParams.set('end_date', endDate);

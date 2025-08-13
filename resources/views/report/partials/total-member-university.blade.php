@@ -11,15 +11,15 @@
     ?>
     <div class="bg-white mt-2 mx-2 px-3 shadow-lg h-max-full rounded-lg">
         @if(auth()->user()->hasRole('user'))
-            <h1 class="text-center font-khmer my-2 text-lg text-blue-800 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
+            <h1 class="text-center font-koulen my-2 text-2xl text-blue-600 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
                 ទីប្រឹក្សាយុវជន និងយុវជន</h1>
-            <h1 class="text-center font-khmer my-2 text-lg text-blue-800">នៃកាកបាទក្រហមកម្ពុជា​ ប្រចាំ​​ {{ $branchName }}</h1>
+            <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">នៃកាកបាទក្រហមកម្ពុជា​ ប្រចាំ​​ {{ $branchName }}</h1>
         @else
-            <h1 class="text-center font-khmer my-2 text-lg text-blue-800 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
+            <h1 class="text-center font-koulen my-2 text-2xl text-blue-600 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
                 ទីប្រឹក្សាយុវជន និងយុវជន</h1>
-            <h1 class="text-center font-khmer my-2 text-lg text-blue-800">នៃកាកបាទក្រហមកម្ពុជា​ ប្រចាំ​​សាខានីមួយៗ</h1>  
+            <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">នៃកាកបាទក្រហមកម្ពុជា​ ប្រចាំ​​សាខានីមួយៗ</h1>  
         @endif
-            <h2 class="text-center font-khmer mb-2 text-lg text-blue-800">បច្ចុប្បន្នភាពឆ្នាំ {{ $selectedYear }}</h2>
+            <h2 class="text-center font-koulen mb-2 text-2xl text-blue-600">បច្ចុប្បន្នភាពឆ្នាំ {{ $selectedYear }}</h2>
         <div class="flex justify-between items-center mt-5">
             <div>
                 <button id="export_excel" class="bg-[#31bf7d] text-white px-4 py-2 rounded">Export Excel</button>
@@ -35,7 +35,6 @@
 
             <div class="w-full mb-5">
                 <table class="table-auto border-collapse border border-gray-700 w-full text-center text-sm">
-                    <!-- Table Header -->
                     <thead>
                         <tr class="bg-gray-100">
                             <th rowspan="3" class="border border-gray-700 p-2 font-semibold font-battambang">ល.រ</th>
@@ -84,51 +83,25 @@
                             <th class="border border-gray-700 font-semibold font-battambang p-2">ប្រុស</th>
                         </tr>
                     </thead>
-
-                    <!-- Table Body -->
                     <tbody>
                         @php
-                            // $i = 1;
-                            // $serialNumber = 1;
-                            // $totalInstitude = 0;
                             $grouped = $district->groupBy('district_id');
                             $i = 1;
                         @endphp
-
-                        {{-- @foreach ($groupedReports as $branch_kh => $reports)
-                        @php
-                        $rowSpan = count($reports);
-                        @endphp --}}
 
                         @foreach ($grouped as $districtId => $schools)
                             @php 
                                 $rowSpan = $schools->count(); 
                             @endphp
-
-                        {{-- @foreach ($reports as $index => $brreport) --}}
                             @foreach ($schools as $index => $school)
                                 <tr>
                                     @if ($index === 0)
-                                    {{-- <td class="border border-gray-700 font-normal font-battambang p-2"
-                                        rowspan="{{ $rowSpan }}">{{ $i++ }}</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{
-                                        $branch_kh }}</td>
-                                    <td class="border border-gray-700 font-normal font-battambang p-2" rowspan="{{ $rowSpan }}">{{
-                                        $rowSpan }}</td> --}}
                                     <td rowspan="{{ $rowSpan }}" class="border border-gray-700 font-normal font-battambang p-2">{{ $i++ }}</td>
                                     <td rowspan="{{ $rowSpan }}" class="border border-gray-700 font-normal font-battambang p-2">{{ $school->district_name }}</td>
                                     <td rowspan="{{ $rowSpan }}" class="border border-gray-700 font-normal font-battambang p-2">{{ $rowSpan }}</td>
                                     @endif
-
-                                    {{-- Display institute_kh under "Phnom Penh" column if branch_id = 1 --}}
-                                    {{-- @if ($brreport->branch_id == 1) --}}
                                     <td class="border border-gray-700 font-normal font-battambang p-2">{{ $school->school_name ?? '-' }}
                                     </td>
-                                    {{-- @else --}}
-                                    {{-- <td class="border border-gray-700 font-normal font-battambang p-2">-</td> --}}
-                                    {{-- @endif --}}
-
-                                    {{-- Other columns --}}
                                     <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">-</td>
                                     <td class="border border-gray-700 font-normal font-battambang p-2">
@@ -182,7 +155,6 @@
 
         </div>
 @endsection
-    {{-- var data = @json($reports); --}}
     @push('JS')
         @vite(['resources/js/exportToExcelOptionTwo.js'])
         <script type="module">
@@ -200,8 +172,6 @@
                     if (selectedDates.length === 2) {
                         const startDate = selectedDates[0].toISOString().split('T')[0];
                         const endDate = selectedDates[1].toISOString().split('T')[0];
-
-                        // Redirect with query params so Laravel gets them
                         const url = new URL(window.location.href);
                         url.searchParams.set('start_date', startDate);
                         url.searchParams.set('end_date', endDate);

@@ -76,10 +76,11 @@ class ReportController extends Controller
             'total_mem' => $district->sum('total_mem'),
         ];
 
-        $totalSchools = DB::table('school')
-            ->where('branch_id', $branchId)
-            ->distinct()
-            ->count('school_id');
+        // $totalSchools = DB::table('school')
+        //     ->where('branch_id', $branchId)
+        //     ->distinct()
+        //     ->count('school_id');
+        $totalSchools = $district->pluck('school_id')->unique()->count();
 
         return view('report.partials.total-member-university', [
             'district' => $district,
@@ -88,7 +89,7 @@ class ReportController extends Controller
             'selectedYear' => $year,
             // 'branchWhole' => $branchTotals,
             'branchWhole' => (object)[
-                'total_schools' => $totalSchools,
+                'total_schools' => $district->pluck('school_id')->unique()->count(),
                 'total_mem' => $district->sum('total_mem'),
                 'total_mem_fem' => $district->sum('total_mem_fem'),
                 'total_mem_advisor' => $district->sum('total_mem_advisor'),
@@ -102,13 +103,7 @@ class ReportController extends Controller
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
 
-        $year = now()->year;
-
-        if ($startDate) {
-            $year = date('Y', strtotime($startDate));
-        } else {
-            $year = now()->year;
-        }
+        $year = $startDate ? date('Y', strtotime($startDate)) : now()->year;
 
         $branch_and_count_member = DB::table('branch as b')
             ->leftJoin('school as s', 's.branch_id', '=', 'b.branch_id')
@@ -145,26 +140,39 @@ class ReportController extends Controller
             ->get();
 
         $school_types_per_branch = DB::table('school as s')
+            ->leftJoin('member_education_background as meb', 'meb.school_id', '=', 's.school_id')
+            ->leftJoin('member_registration_detail as mrd', 'mrd.member_id', '=', 'meb.member_id')
             ->select(
                 's.branch_id',
                 DB::raw("SUM(CASE WHEN s.type = 'អនុវិទ្យាល័យ' THEN 1 ELSE 0 END) as total_secondary_school"),
                 DB::raw("SUM(CASE WHEN s.type = 'វិទ្យាល័យ' THEN 1 ELSE 0 END) as total_high_school")
             )
+            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('mrd.registration_date', [$startDate, $endDate]);
+            })
             ->groupBy('s.branch_id')
             ->get()
             ->keyBy('branch_id');
 
         $universities_per_branch = DB::table('branch_hei as hei')
+            ->leftJoin('member_education_background as meb', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftJoin('member_registration_detail as mrd', 'mrd.member_id', '=', 'meb.member_id')
             ->select(
                 'hei.branch_id',
-                DB::raw('COUNT(*) as total_university'),
+                DB::raw('COUNT(DISTINCT hei.bhei_id) as total_university')
             )
             ->where('hei.institute_type', 'សាកលវិទ្យាល័យ')
+            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('mrd.registration_date', [$startDate, $endDate]);
+            })
             ->groupBy('hei.branch_id')
             ->get()
             ->keyBy('branch_id');
 
         $total_member_all_university = DB::table('branch_hei as hei')
+            ->leftJoin('member_education_background as meb', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mrd.member_id', '=', 'mpd.member_id')
             ->select(
                 'hei.institute_kh',
                 DB::raw("COUNT(CASE WHEN mpd.member_type = 'សមាជិក យុវជន' THEN meb.member_id END) AS total_mem"),
@@ -172,9 +180,9 @@ class ReportController extends Controller
                 DB::raw("COUNT(CASE WHEN mpd.member_type = 'សមាជិកា យុវជន' THEN meb.member_id END) AS total_mem_advisor"),
                 DB::raw("COUNT(CASE WHEN mpd.member_type = 'សមាជិកា យុវជន' AND mpd.gender = 'ស្រី' THEN meb.member_id END) AS total_mem_fem_advisor")
             )
-            ->leftJoin('member_education_background as meb', 'meb.branchhei_id', '=', 'hei.bhei_id')
-            ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
-            ->leftJoin('member_registration_detail as mrd', 'mrd.member_id', '=', 'mpd.member_id')
+            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('mrd.registration_date', [$startDate, $endDate]);
+            })
             ->groupBy('hei.institute_kh')
             ->get();
 

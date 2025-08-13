@@ -9,7 +9,7 @@
     @endphp
     <div class="p-4 shadow">
         <div class="bg-white rounded-md h-screen">
-            <h1 class="text-2xl font-khmer font-semibold text-gray-800 text-center py-5">របាយការណ៍</h1>
+            <h1 class="text-2xl font-koulen text-blue-600 text-center py-5">របាយការណ៍</h1>
             {{-- card list of all reports --}}
             @if(auth()->user()->hasRole('user'))
                 <div class="py-1 px-5">
