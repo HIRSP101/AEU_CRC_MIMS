@@ -3,10 +3,6 @@
     "file": "assets/axios-BimPEqV4.js",
     "name": "axios"
   },
-  "_sheetTable-D4iwbWkV.js": {
-    "file": "assets/sheetTable-D4iwbWkV.js",
-    "name": "sheetTable"
-  },
   "resources/css/app.css": {
     "file": "assets/app-Cl__9x9g.css",
     "src": "resources/css/app.css",
@@ -86,23 +82,12 @@
     ]
   },
   "resources/js/import.js": {
-    "file": "assets/import-fHlAJpgO.js",
+    "file": "assets/import-BsMcbGhD.js",
     "name": "import",
     "src": "resources/js/import.js",
     "isEntry": true,
     "imports": [
-      "resources/js/exportToExcel.js",
-      "_sheetTable-D4iwbWkV.js"
-    ]
-  },
-  "resources/js/import_for_branchhei.js": {
-    "file": "assets/import_for_branchhei-BMxhHYAD.js",
-    "name": "import_for_branchhei",
-    "src": "resources/js/import_for_branchhei.js",
-    "isEntry": true,
-    "imports": [
-      "resources/js/exportToExcel.js",
-      "_sheetTable-D4iwbWkV.js"
+      "resources/js/exportToExcel.js"
     ]
   },
   "resources/js/loadingscreen.js": {
