@@ -3,9 +3,16 @@
         <td class="py-3 px-5 text-left whitespace-nowrap">
             <div class="flex items-center">
                 <div class="mr-5">
-                    <img class="w-10 h-10 rounded-lg"  src="{{ asset($branch_user->branch->branch_image ?? $branch_user->branch_hei->image) }}" />
+                    <img class="w-10 h-10 rounded-lg"
+                        src="{{ asset($branch_user->branch->branch_image ?? $branch_user->branch_hei->image) }}" />
                 </div>
-                <span class="font-medium">{{$branch_user->branch->branch_name ?? $branch_user->branch_hei->institute_kh }}</span>
+                @if ($userb->roles[0]->name == "admin")
+                    <span class="font-medium">{{$branch_user->branch->branch_name ?? $branch_user->branch_hei->institute_kh}}
+                        (ទីស្នាក់ការកណ្តាល)</span>
+                @else
+                    <span
+                        class="font-medium">{{$branch_user->branch->branch_name ?? $branch_user->branch_hei->institute_kh}}</span>
+                @endif
             </div>
         </td>
         <td class="py-3 px-5 text-left">
@@ -36,7 +43,8 @@
         <td class="py-5 px-5 text-center">
             <div class="flex item-center justify-center">
                 <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                    <a class="elude" data-id="{{$userb?->id}}" b-id="{{$branch_user->branch->branch_id ?? $branch_user->branch_hei->branch_id }}">
+                    <a class="elude" data-id="{{$userb?->id}}"
+                        b-id="{{$branch_user->branch->branch_id ?? $branch_user->branch_hei->branch_id }}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />

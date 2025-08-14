@@ -75,7 +75,6 @@ class RegisteredUserController extends Controller
             "branch_hei_id" => $branchHeiId
         ]);
 
-
         $user->assignRole($request->roles);
         $user->givePermissionTo($request->permissions);
         event(new Registered($user));

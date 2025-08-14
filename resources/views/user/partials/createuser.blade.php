@@ -6,6 +6,7 @@
                 enctype="multipart/form-data">
                 @csrf
                 <div>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <x-input-label for="name_inner" :value="__('Name')" />
                     <x-text-input id="name_inner" class="block mt-1 w-full" type="text" name="name" required
                         autofocus />
@@ -51,10 +52,10 @@
                         class="mt-2 h-auto rounded-lg w-full font-siemreap">
                     <datalist name="branchname_list" id="branchname_list">
                         @foreach($branches as $key => $val)
-                           <option data-id={{ $key }} value="{{ $val }}">
+                            <option data-id={{ $key }} value="{{ $val }}">
                         @endforeach
                     </datalist>
-                </div>  
+                </div>
                 <div class="mt-4" id="profilepreview">
                     <x-input-label :value="__('Profile Picture')" />
                     <input class="appearance-none text-transparent" name="image" type="file" select="image/*" id="image"

@@ -80,34 +80,7 @@ foreach ($user_branch as $user_b) {
             });
             const dataId = selectedOption.data('id') || '';
             $("input#branch_id").val(dataId);
-            const form = $("#user_form_form_inner");
-            const url = form.attr('action');
-            const formData = new FormData(form[0]);
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (response) {
-                    alert('ជោគជ័យ');
-                    location.reload();
-                },
-                error: function (xhr) {
-                    // Handle validation errors or other errors
-                    if (xhr.status === 422) {
-                        let errors = xhr.responseJSON.errors;
-                        let messages = Object.values(errors).map(arr => arr.join(", ")).join("\n");
-                        alert("Validation errors:\n" + messages);
-                    } else {
-                        alert('An error occurred.');
-                    }
-                    console.error(xhr);
-                }
-            });
+            $("#user_form_form_inner").submit();
         });
 
         $('.delude').on("click", function () {
@@ -123,7 +96,7 @@ foreach ($user_branch as $user_b) {
 
             $("#user_form_form_inner").attr('action', route);
             $("h1#form_header_text").text("កែប្រែអ្នកប្រើប្រាស់");
-            $("div#profilepreview").addClass('hidden');
+            // $("div#profilepreview").addClass('hidden');
             $("#user_form_inner").toggle('hidden');
             formcleanup();
 

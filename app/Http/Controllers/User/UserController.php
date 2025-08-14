@@ -45,26 +45,49 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . Users::class . ',email,' . $id],
+            'email' => [
+                'required',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                'unique:' . Users::class . ',email,' . $id
+            ],
             'password' => ['nullable', 'string'],
             'roles' => ['nullable', 'array'],
-            // 'branch_id' => ['nullable', 'exists:branch,branch_id'],
             'permissions' => ['nullable', 'array'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
         ]);
 
         $user = Users::findOrFail($id);
 
         $user->name = $request->name;
         $user->email = $request->email;
-        if (empty($request->password)) {
-            $request->request->remove('password');
-        } else {
-            $request->merge(['password' => bcrypt($request->password)]);
+
+        // Password handling
+        if (!empty($request->password)) {
+            $user->password = bcrypt($request->password);
         }
 
-        $user->fill($request->except(['roles', 'permissions']))->save();
+        // Image handling
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($user->image && file_exists(public_path($user->image))) {
+                unlink(public_path($user->image));
+            }
 
+            $fileName = 'u-' . $user->id . '.' . $request->file('image')->extension();
 
+            // ✅ Move file: directory and filename must be separate
+            $request->file('image')->move(public_path('images/users'), $fileName);
+
+            // ✅ Save relative path
+            $user->image = 'images/users/' . $fileName;
+        }
+
+        $user->save();
+
+        // Sync roles and permissions
         if ($request->has('roles')) {
             $user->syncRoles($request->roles);
         }
@@ -72,6 +95,7 @@ class UserController extends Controller
             $user->syncPermissions($request->permissions);
         }
 
+        // Branch binding
         if ($request->filled('branch_id')) {
             $branchId = null;
             $branchHeiId = null;
@@ -79,13 +103,10 @@ class UserController extends Controller
 
             if (Str::startsWith($inputBranchId, 'bra_')) {
                 $branchId = str_replace('bra_', '', $inputBranchId);
-                $branchHeiId = null;
             } elseif (Str::startsWith($inputBranchId, 'bhei_')) {
                 $branchHeiId = str_replace('bhei_', '', $inputBranchId);
-                $branchId =null;
             }
 
-            // Update or create binding
             branch_bindding_user::updateOrCreate(
                 ['user_id' => $user->id],
                 [
