@@ -2,7 +2,14 @@
 $i = 1;
 $firstEle = $total_mem_branches[0] ?? "";
 $firstEle_total = $firstEle->total_mem;
-?>
+$user = auth()->user();
+$userBranchId = \App\Models\branch_bindding_user::where('user_id', $user->id)->value('branch_id');
+$branchName = \App\Models\branch::where('branch_id', $userBranchId)->value('branch_kh');
+$branch_image = \App\Models\branch::where('branch_id', $userBranchId)->value('branch_image');
+$institute_id = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_hei_id');
+$institute_kh = App\Models\branch_hei::where('bhei_id', $institute_id)->value('institute_kh');
+$institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value('image');
+?>  
 
 
 <div class="p-5 bg-white">
@@ -17,17 +24,21 @@ $firstEle_total = $firstEle->total_mem;
                 <div class="grid justify-items-end my-3 opacity-5 hover:opacity-100">
                 </div>
             </div>
-
-            <div class="flex flex-col sm:flex-row md:flex-row lg:justify-between gap-5 mt-3 h-96">
-                <div class="sm:p-4 p-2 bg-white border rounded-xl shadow-lg sm:w-[50%] md:w-[50%]">
-                    <div class="flex justify-center mt-2">
-                        <img src="{{asset("images/branches/b-$firstEle->branch_id.jpg")}}" class="w-96 rounded-lg"
-                            alt="">
+            <div class="flex flex-col sm:flex-row md:flex-row lg:justify-between gap-5 mt-3">
+                <div class="sm:p-4 p-2 bg-white border rounded-xl shadow-lg lg:w-[50%] md:w-[50%]">
+                    <div class="flex mt-2 justify-center items-center">
+                        @if($branchName != null && $branch_image != null)
+                            <img src="{{asset($branch_image)}}" class="w-96 rounded-lg" alt="branch logo">
+                        @else
+                            <img src="{{asset($institute_image)}}" class="w-96 rounded-lg" alt="branch logo">
+                        @endif
                     </div>
                     <div class="flex flex-row items-center justify-center ">
-                        <h1 class="font-khmer text-xl text-blue-700 text-center mt-3">{{$firstEle->branch_kh}}</h1>
-                        {{-- <h1 class="font-koulen text-2xl text-red-700 text-center mt-1">ចំនួន
-                            {{translate($firstEle->total_mem)}} នាក់</h1> --}}
+                        @if($branchName != null && $branch_image != null)
+                            <h1 class="font-khmer text-xl text-blue-700 text-center mt-3">{{$branchName}}</h1>
+                        @else
+                            <h1 class="font-khmer text-xl text-blue-700 text-center mt-3">{{$institute_kh}}</h1>
+                        @endif
                     </div>
                 </div>
                 <div class="p-2 bg-white border rounded-xl shadow-lg sm:w-[50%] md:w-[50%] ">
@@ -36,22 +47,52 @@ $firstEle_total = $firstEle->total_mem;
                     <div class="mt-4 flex justify-center">
                         <table class="table font-battambang leading-10 font-medium">
                             <tbody>
-                                @foreach($total_mem_branches as $key => $total_mem_branch)
-                                    <tr class="{{ $key >= 5 ? 'hidden extra-branch' : '' }}">
 
-                                        <td class="px-2 text-xl">{{ ($key + 1) . '.'}}</td>
-                                        <td class="text-xl pr-20">{{str_replace("ខេត្ត", "", $total_mem_branch->branch_kh)}}
-                                        </td>
-                                        <td class="text-base pl-[40px] text-end">{{ $total_mem_branch->total_mem }} នាក់
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                @if($user->hasRole('admin'))
+                                    {{-- Admin see all branches --}}
+                                    @foreach($total_mem_branches as $key => $total_mem_branch)
+                                        <tr class="{{ $key >= 7 ? 'hidden extra-branch' : '' }}">
+                                            <td class="px-2 text-xl">{{ ($key + 1) . '.'}}</td>
+                                            <td class="text-xl pr-20">
+                                                {{ str_replace('ខេត្ត', '', $total_mem_branch->branch_kh) }}
+                                            </td>
+                                            <td class="text-base pl-[40px] text-end">{{ $total_mem_branch->total_mem }} នាក់
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                                                @php
+                                                                    $districts = DB::table('district as d')
+                                                                        ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
+                                                                        ->leftJoin('member_education_background as meb', 'meb.school_id', '=', 's.school_id')
+                                                                        ->select(
+                                                                            'd.district_name',
+                                                                            DB::raw('COUNT(meb.member_id) as total_mem')
+                                                                        )
+                                                                        ->where('d.branch_id', $userBranchId)
+                                                                        ->groupBy('d.district_name')
+                                                                        ->get();
+                                                                 @endphp
+                                                                @foreach($districts as $key => $district)
+                                                                    <tr class="{{ $key >= 7 ? 'hidden extra-branch' : '' }}">
+                                                                        <td class="px-2 text-xl">{{ ($key + 1) . '.' }}</td>
+                                                                        <td class="text-xl pr-20">{{ $district->district_name }}</td>
+                                                                        <td class="text-base pl-[40px] text-end">{{ $district->total_mem }} នាក់</td>
+                                                                    </tr>
+                                                                @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
                     <span class="flex justify-end mt-3 p-3">
-                        <button id="toggleBranchBtn"
-                            class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
+                        @if($user->role === 'admin')
+                            <a href="/branch"
+                                class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
+                        @else
+                            <a href="{{ route('village', ['id' => $userBranchId]) }}"
+                                class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
+
+                        @endif
                     </span>
                 </div>
             </div>
