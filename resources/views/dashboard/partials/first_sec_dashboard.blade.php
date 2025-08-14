@@ -48,7 +48,8 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                     <div class="mt-4 flex justify-center">
                         <table class="table font-battambang leading-10 font-medium">
                             <tbody>
-                                @if($user->role === 'admin')
+
+                                @if($user->hasRole('admin'))
                                     {{-- Admin see all branches --}}
                                     @foreach($total_mem_branches as $key => $total_mem_branch)
                                         <tr class="{{ $key >= 7 ? 'hidden extra-branch' : '' }}">
