@@ -5,11 +5,11 @@
 @section('Content')
     <div class="flex justify-center items-center bg-gray-100">
         <div class="bg-white px-[10%] py-[5%] rounded-lg shadow-md w-[97%] mt-5">
-            <div class="text-center text-2xl font-bold mb-6 font-siemreap">
+            <div class="text-center text-2xl font-koulen mb-6 text-blue-600">
                 <h1>បង្កើតសាលារៀន​</h1>
             </div>
 
-            <form action="{{ route('storeschool') }}" method="POST">
+            <form action="{{ route('storeschool') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4">
                     <div>
@@ -89,6 +89,19 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="mb-4">
+                            <label for="image" class="block font-siemreap mb-2">
+                                រូបភាព
+                            </label>
+
+                            <div
+                                class="relative flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded py-2 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer">
+                                <span class="text-sm text-gray-500">ចុចដើម្បីជ្រើសរើសឯកសាររូបភាព</span>
+                                <input type="file" name="image" id="image"
+                                    class="absolute inset-0 opacity-0 cursor-pointer">
+                            </div>
+                        </div>
+
                         <div class="mt-8">
                             <button type="submit"
                                 class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 font-siemreap">បង្កើត</button>
@@ -97,7 +110,7 @@
                 </div>
             </form>
             {{-- Table --}}
-            <div class="w-full overflow-scroll mx-3 my-3 max-h-[760px] mt-10">
+            <div class="w-full overflow-hidden mx-3 my-3 max-h-[760px] mt-10">
                 <table class="min-w-max w-full table-auto font-siemreap">
                     <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">

@@ -131,38 +131,72 @@ class SchoolController extends Controller
 
     public function create($branchId, $villageId)
     {
-        $village = DB::table('district')->where('district_id', $villageId)->first();
-        $branch = DB::table('branch')->where('branch_id', $branchId)->first();
-        $villages = DB::table('district')->where('branch_id', $branchId)->get();
-
         if (auth()->user()->hasRole('user')) {
-            $user = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
+            $branchId = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
+            $villages = DB::table('district')->where('branch_id', $branchId)->get();
             $branches = DB::table('branch')
                 ->where('branch_id', $branchId)
                 ->get();
-
             $schools = DB::table('school as s')
                 ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
                 ->where('s.branch_id', $branchId)
                 ->get();
         } else {
             $branches = DB::table('branch')->get();
+            $villages = DB::table('district')->get();
             $schools = DB::table('school as s')
                 ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
                 ->get();
         }
-        return view('school.create-school', compact('branch', 'village', 'branches', 'villages', 'schools'));
+        return view('school.create-school2', compact('branches', 'villages', 'schools'));
     }
     public function store(SchoolRequest $request, CreateSchoolService $service)
     {
-        $data = $request->validated();
-        $data['branch_id'] = $request->route('id');
-        $data['district_id'] = $request->route('v_id');
+        $request->validate([
+            'school_name' => 'required|string|max:255',
+            'type' => 'required|string',
+            'registration_date' => 'required|date',
+            'village_name' => 'required|string',
+            'district_id' => 'required|exists:district,district_id',
+            'branch_id' => 'required|exists:branch,branch_id',
+            'image' => 'nullable',
+            'khom' => 'required|string'
+        ]);
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('images/schools'), $imageName);
+        } else {
+            $imageName = 'images/schools/default-profile.png';
+        }
+        if ($request->type == 'សាកលវិទ្យាល័យ') {
+            $branch = branch::where('branch_id', '=', $request->input('branch_id'))->first();
+            $district = district::where('district_id', $request->input('district_id'))->first();
+            $school = DB::table('branch_hei')->insertGetId([
+                'institute_kh' => $request->input('school_name'),
+                'type' => $request->input('typeUniversity'),
+                'institute_type' => $request->input('type'),
+                'village' => $request->input('village_name'),
+                'commune_sangkat' => $request->input('khom'),
+                'registered_at' => $request->input('registration_date'),
+                'branch_id' => $request->input('branch_id'),
+                'image' => $imageName,
+                'district_khan' => $district->district_name,
+                'provience_city' => $branch->branch_kh,
+            ]);
+        } else {
+            $school = DB::table('school')->insertGetId([
+                'school_name' => $request->input('school_name'),
+                'type' => $request->input('type'),
+                'village_name' => $request->input('village_name'),
+                'registration_date' => $request->input('registration_date'),
+                'branch_id' => $request->input('branch_id'),
+                'district_id' => $request->input('district_id'),
+                'image' => $imageName,
+                'khom' => $request->input('khom')
+            ]);
+        }
 
-        $school = $service->createSchool($data);
-
-        return redirect()->route('school', ['id' => $school->branch_id, 'v_id' => $school->district_id])
-            ->with('success', 'School created successfully');
+        return redirect()->route('createschool')->with('success', 'School created successfully.');
     }
 
     // School 2
@@ -198,8 +232,15 @@ class SchoolController extends Controller
             'village_name' => 'required|string',
             'district_id' => 'required|exists:district,district_id',
             'branch_id' => 'required|exists:branch,branch_id',
+            'image' => 'nullable',
             'khom' => 'required|string'
         ]);
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('images/schools'), $imageName);
+        } else {
+            $imageName = 'images/schools/default-profile.png';
+        }
         if ($request->type == 'សាកលវិទ្យាល័យ') {
             $branch = branch::where('branch_id', '=', $request->input('branch_id'))->first();
             $district = district::where('district_id', $request->input('district_id'))->first();
@@ -211,6 +252,7 @@ class SchoolController extends Controller
                 'commune_sangkat' => $request->input('khom'),
                 'registered_at' => $request->input('registration_date'),
                 'branch_id' => $request->input('branch_id'),
+                'image' => $imageName,
                 'district_khan' => $district->district_name,
                 'provience_city' => $branch->branch_kh,
             ]);
@@ -222,6 +264,7 @@ class SchoolController extends Controller
                 'registration_date' => $request->input('registration_date'),
                 'branch_id' => $request->input('branch_id'),
                 'district_id' => $request->input('district_id'),
+                'image' => $imageName,
                 'khom' => $request->input('khom')
             ]);
         }
