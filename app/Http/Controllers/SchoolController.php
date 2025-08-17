@@ -292,6 +292,7 @@ class SchoolController extends Controller
             'village_name' => 'required|string',
             'khom' => 'required|string',
             'district_id' => 'required',
+            'image' => 'nullable',
             'branch_id' => 'required',
         ]);
 
@@ -306,6 +307,7 @@ class SchoolController extends Controller
             $university->branch_id = $request->input('branch_id');
             $university->district_khan = $request->input('district_id');
             $university->provience_city = $request->input('branch_id');
+            $university->image = $request->input('image');
 
             $university->save();
         } else {
@@ -317,6 +319,7 @@ class SchoolController extends Controller
             $school->khom = $request->input('khom');
             $school->district_id = $request->input('district_id');
             $school->branch_id = $request->input('branch_id');
+            $school->image = $request->input('image');
 
             $school->save();
         }
