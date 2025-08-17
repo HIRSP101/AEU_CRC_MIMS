@@ -9,7 +9,7 @@ $branch_image = \App\Models\branch::where('branch_id', $userBranchId)->value('br
 $institute_id = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_hei_id');
 $institute_kh = App\Models\branch_hei::where('bhei_id', $institute_id)->value('institute_kh');
 $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value('image');
-?>  
+?>
 
 
 <div class="p-5 bg-white">
@@ -61,25 +61,25 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                                         </tr>
                                     @endforeach
                                 @else
-                                                                @php
-                                                                    $districts = DB::table('district as d')
-                                                                        ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
-                                                                        ->leftJoin('member_education_background as meb', 'meb.school_id', '=', 's.school_id')
-                                                                        ->select(
-                                                                            'd.district_name',
-                                                                            DB::raw('COUNT(meb.member_id) as total_mem')
-                                                                        )
-                                                                        ->where('d.branch_id', $userBranchId)
-                                                                        ->groupBy('d.district_name')
-                                                                        ->get();
-                                                                 @endphp
-                                                                @foreach($districts as $key => $district)
-                                                                    <tr class="{{ $key >= 7 ? 'hidden extra-branch' : '' }}">
-                                                                        <td class="px-2 text-xl">{{ ($key + 1) . '.' }}</td>
-                                                                        <td class="text-xl pr-20">{{ $district->district_name }}</td>
-                                                                        <td class="text-base pl-[40px] text-end">{{ $district->total_mem }} នាក់</td>
-                                                                    </tr>
-                                                                @endforeach
+                                    @php
+                                        $districts = DB::table('district as d')
+                                            ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
+                                            ->leftJoin('member_education_background as meb', 'meb.school_id', '=', 's.school_id')
+                                            ->select(
+                                                'd.district_name',
+                                                DB::raw('COUNT(meb.member_id) as total_mem')
+                                            )
+                                            ->where('d.branch_id', $userBranchId)
+                                            ->groupBy('d.district_name')
+                                            ->get();
+                                     @endphp
+                                    @foreach($districts as $key => $district)
+                                        <tr class="{{ $key >= 7 ? 'hidden extra-branch' : '' }}">
+                                            <td class="px-2 text-xl">{{ ($key + 1) . '.' }}</td>
+                                            <td class="text-xl pr-20">{{ $district->district_name }}</td>
+                                            <td class="text-base pl-[40px] text-end">{{ $district->total_mem }} នាក់</td>
+                                        </tr>
+                                    @endforeach
                                 @endif
                             </tbody>
                         </table>
