@@ -45,8 +45,7 @@ class SchoolController extends Controller
                 's.school_name',
                 's.type',
                 's.village_name',
-                //DB::raw('COUNT(meb.member_id) as total_mem')
-                DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
+                DB::raw("COUNT(CASE WHEN mrd.expiration_date >= NOW() THEN meb.member_id END) as total_mem")
             )
             ->groupBy('s.school_id', 's.school_name', 's.type', 's.village_name')
             ->get();
@@ -66,7 +65,7 @@ class SchoolController extends Controller
             ->leftJoin('branch as b', 'meb.branch_id', '=', 'b.branch_id')
             ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
             ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
-            ->whereRaw('mrd.registration_date > NOW() - INTERVAL 6 YEAR')
+            ->whereRaw('mrd.expiration_date >= NOW()')
             ->where('mrd.approved', '=', 1)
             ->select([
                 'mpd.member_id',
@@ -340,7 +339,7 @@ class SchoolController extends Controller
                     's.school_id',
                     's.school_name',
                     's.branch_id',
-                    DB::raw("COUNT(DISTINCT CASE WHEN mrd.registration_date <= NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem") // Count expired members
+                    DB::raw("COUNT(DISTINCT CASE WHEN mrd.expiration_date >= NOW() THEN meb.member_id END) as total_mem") // Count expired members
                 )
                 ->groupBy('s.school_id', 's.school_name', 's.branch_id')
                 ->get();
@@ -354,7 +353,7 @@ class SchoolController extends Controller
                     's.school_id',
                     's.school_name',
                     's.branch_id',
-                    DB::raw("COUNT(DISTINCT CASE WHEN mrd.registration_date <= NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem") // Count expired members
+                    DB::raw("COUNT(DISTINCT CASE WHEN mrd.expiration_date >= NOW() THEN meb.member_id END) as total_mem") // Count expired members
                 )
                 ->groupBy('s.school_id', 's.school_name', 's.branch_id')
                 ->get();

@@ -45,7 +45,7 @@ class BranchController extends Controller
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.image')
             ->get();
         //dd($total_mem_branchhei);
-        return view('branch_hei.index', compact('total_mem_branchhei', ));
+        return view('branch_hei.index', compact('total_mem_branchhei',));
     }
 
     public function totalmem_branches()
@@ -67,7 +67,7 @@ class BranchController extends Controller
                 'b.branch_image',
                 //DB::raw("COUNT(DISTINCT meb.member_id) AS total_mem"),
                 DB::raw("COUNT(CASE 
-                    WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR
+                    WHEN mrd.mrd.expiration_date >= NOW()
                     THEN meb.member_id END) as total_mem"),
                 DB::raw("COUNT(DISTINCT d.district_id) AS total_villages")
             )
@@ -164,7 +164,7 @@ class BranchController extends Controller
                     'bhei.bhei_id',
                     'bhei.district_khan',
                 )->get();
-                $data = 'test';
+            $data = 'test';
             return response()->json($branchDistrictInstituteModel);
         } else {
             if (auth()->user()->hasRole('admin')) {
@@ -178,7 +178,6 @@ class BranchController extends Controller
                 ->get();
             return response()->json($branch);
         }
-
     }
 
     public function store(BranchRequest $request): RedirectResponse

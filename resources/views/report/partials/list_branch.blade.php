@@ -6,7 +6,7 @@
     @php
         $userBranchId = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_id');
     @endphp
-    <div class="bg-[#fff] p-8 rounded-lg max-w-1000px m-5 shadow-md font-battambang">
+    <div class="bg-[#fff] rounded-lg max-w-1000px m-5 p-5 shadow-md font-battambang">
         <h2 class="text-2xl text-blue-600 text-center font-koulen my-2 pb-3">
             {{ $title }}
         </h2>
@@ -63,30 +63,30 @@
                 ul.empty();
                 data.forEach((item) => {
                     ul.append(`
-                                                                                                <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                                                                                                    <a href="/total/member/university/${item.branch_id}">
-                                                                                                        <div class="flex justify-between items-center">
-                                                                                                            <div class="flex items-center">
-                                                                                                                <img src="${item.branch_image}" alt="Logo" class="ml-10 w-16 mr-8 rounded-full object-cover h-16" />
-                                                                                                                <span class="text-lg font-battambang">${item.branch_kh}</span>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </a>
-                                                                                                </li>
-                                                                                            `)
+                                                                                                                <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
+                                                                                                                    <a href="/total/member/university/${item.branch_id}">
+                                                                                                                        <div class="flex justify-between items-center">
+                                                                                                                            <div class="flex items-center">
+                                                                                                                                <img src="${item.branch_image}" alt="Logo" class="ml-10 w-16 mr-8 rounded-full object-cover h-16" />
+                                                                                                                                <span class="text-lg font-battambang">${item.branch_kh}</span>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </a>
+                                                                                                                </li>
+                                                                                                            `)
                 });
 
                 ul.append(`
-                                                                                            <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                                                                                                <a href="/total/university">
-                                                                                                    <div class="flex justify-between items-center">
-                                                                                                        <div class="flex items-center">
-                                                                                                            <span class="text-lg font-battambang ml-7 py-4">គ្រឹះស្ថានឧត្តមសិក្សា</span>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </a>
-                                                                                            </li>
-                                                                                        `);
+                                                                                                            <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
+                                                                                                                <a href="/total/university">
+                                                                                                                    <div class="flex justify-between items-center">
+                                                                                                                        <div class="flex items-center">
+                                                                                                                            <span class="text-lg font-battambang ml-7 py-4">គ្រឹះស្ថានឧត្តមសិក្សា</span>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </a>
+                                                                                                            </li>
+                                                                                                        `);
             }
 
             $("#filter_branch_btn").click(function () {
