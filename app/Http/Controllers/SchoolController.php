@@ -211,14 +211,44 @@ class SchoolController extends Controller
                 ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
                 ->where('s.branch_id', $branchId)
                 ->get();
+
+            $institutes = DB::table('member_personal_detail as mpd')
+                ->leftJoin('member_education_background as meb', 'meb.member_id', '=', 'mpd.member_id')
+                ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+                ->rightJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+                ->select(
+                    'hei.bhei_id',
+                    'hei.institute_kh',
+                    'hei.image',
+                    DB::raw("COUNT(CASE 
+                    WHEN mrd.expiration_date >= NOW()
+                    THEN meb.member_id END) as total_members")
+                )
+                ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image')
+                ->get();
         } else {
             $branches = DB::table('branch')->get();
             $villages = DB::table('district')->get();
             $schools = DB::table('school as s')
                 ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
                 ->get();
+
+            $institutes = DB::table('member_personal_detail as mpd')
+                ->leftJoin('member_education_background as meb', 'meb.member_id', '=', 'mpd.member_id')
+                ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+                ->rightJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+                ->select(
+                    'hei.bhei_id',
+                    'hei.institute_kh',
+                    'hei.image',
+                    DB::raw("COUNT(CASE 
+                    WHEN mrd.expiration_date >= NOW()
+                    THEN meb.member_id END) as total_members")
+                )
+                ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image')
+                ->get();
         }
-        return view('school.create-school2', compact('branches', 'villages', 'schools'));
+        return view('school.create-school2', compact('branches', 'villages', 'schools', 'institutes'));
     }
 
     public function store2(SchoolRequest $request, CreateSchoolService $service)
@@ -358,7 +388,6 @@ class SchoolController extends Controller
                 ->groupBy('s.school_id', 's.school_name', 's.branch_id')
                 ->get();
         }
-
         return response()->json($schools);
     }
 

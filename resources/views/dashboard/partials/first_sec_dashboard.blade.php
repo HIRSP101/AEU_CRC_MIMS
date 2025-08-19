@@ -1,7 +1,5 @@
 <?php
 $i = 1;
-$firstEle = $total_mem_branches[0] ?? "";
-$firstEle_total = $firstEle->total_mem;
 $user = auth()->user();
 $userBranchId = \App\Models\branch_bindding_user::where('user_id', $user->id)->value('branch_id');
 $branchName = \App\Models\branch::where('branch_id', $userBranchId)->value('branch_kh');

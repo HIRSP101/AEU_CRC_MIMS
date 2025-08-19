@@ -67,7 +67,7 @@ class BranchController extends Controller
                 'b.branch_image',
                 //DB::raw("COUNT(DISTINCT meb.member_id) AS total_mem"),
                 DB::raw("COUNT(CASE 
-                    WHEN mrd.mrd.expiration_date >= NOW()
+                    WHEN mrd.expiration_date >= NOW()
                     THEN meb.member_id END) as total_mem"),
                 DB::raw("COUNT(DISTINCT d.district_id) AS total_villages")
             )

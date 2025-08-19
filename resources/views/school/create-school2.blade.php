@@ -96,7 +96,7 @@
 
                             <div
                                 class="relative flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded py-2 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer">
-                                <span class="text-sm text-gray-500">ចុចដើម្បីជ្រើសរើសឯកសាររូបភាព</span>
+                                <span class="text-sm text-gray-500">ចុចដើម្បីជ្រើសរើសរូបភាព</span>
                                 <input type="file" name="image" id="image"
                                     class="absolute inset-0 opacity-0 cursor-pointer">
                             </div>
@@ -168,8 +168,23 @@
         import { handleListSchool } from "{{ asset('js/handleListSchool.js') }}";
 
         document.addEventListener('DOMContentLoaded', function () {
-            var array = @json($schools);
-            handleListSchool(array);
+            let schools = @json($schools);
+            let institutes = @json($institutes);
+
+            // Default load: schools
+            handleListSchool(schools, "school");
+
+            $('#type').on('change', function () {
+                let selectedType = $(this).val();
+
+                if (selectedType === "សាកលវិទ្យាល័យ") {
+                    handleListSchool(institutes, "institute");
+                    $('#typeU').attr('hidden', false);
+                } else {
+                    handleListSchool(schools, "school");
+                    $('#typeU').attr('hidden', true);
+                }
+            });
         });
     </script>
 @endpush
