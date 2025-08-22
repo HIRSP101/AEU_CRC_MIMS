@@ -13,7 +13,7 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
 <div class="p-5 bg-white">
     <div class="">
         <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 ">
-            <div class="p-4 rounded-xl shadow-md px-3 mb-3 border">
+            <div class="p-4 rounded-xl shadow-md px-3 border">
                 <h1 class="text-blue-600 text-2xl font-koulen">សួស្តី
                     {{explode(' ', string: auth()->user()->name)[1] ?? auth()->user()->name}}
                 </h1>
@@ -22,7 +22,7 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                 <div class="grid justify-items-end my-3 opacity-5 hover:opacity-100">
                 </div>
             </div>
-            <div class="flex flex-col sm:flex-row md:flex-row lg:justify-between gap-5 mt-3">
+            <div class="flex flex-col sm:flex-row md:flex-row lg:justify-between gap-5 mt-5">
                 <div class="sm:p-4 p-2 bg-white border rounded-xl shadow-lg lg:w-[50%] md:w-[50%]">
                     <div class="flex mt-2 justify-center items-center">
                         @if($branchName != null && $branch_image != null)
@@ -58,7 +58,8 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                                             </td>
                                         </tr>
                                     @endforeach
-                                @else
+                                @elseif($user->hasRole('user') && $branchName != null && $branch_image != null)
+                                    {{-- User see their branch --}}
                                     @php
                                         $districts = DB::table('district as d')
                                             ->leftJoin('school as s', 'd.district_id', '=', 's.district_id')
@@ -78,6 +79,8 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                                             <td class="text-base pl-[40px] text-end">{{ $district->total_mem }} នាក់</td>
                                         </tr>
                                     @endforeach
+                                @else
+                                    <div id="chart"></div>
                                 @endif
                             </tbody>
                         </table>
@@ -86,9 +89,10 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                         @if($user->role === 'admin')
                             <a href="/branch"
                                 class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
-                        @else
+                        @elseif($branchName != null && $branch_image != null)
                             <a href="{{ route('village', ['id' => $userBranchId]) }}"
                                 class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
+
 
                         @endif
                     </span>
@@ -98,21 +102,49 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
     </div>
 </div>
 @push('JS')
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
-        document.getElementById('toggleBranchBtn').addEventListener('click', function () {
-            const extraRows = document.querySelectorAll('.extra-branch');
-            const isHidden = extraRows[0]?.classList.contains('hidden');
+        var options = {
+            series: [
+            {{ $total_mem_institute->total_mem ?? 0 }},
+            {{ $total_mem_institute->total_wm ?? 0 }},
+                {{ $total_mem_institute->total_mem_expired ?? 0 }}
 
-            console.log("hdfghjhgfdfg")
-            extraRows.forEach(row => {
-                if (isHidden) {
-                    row.classList.remove('hidden');
-                } else {
-                    row.classList.add('hidden');
+
+            ],
+            chart: { type: 'pie', width: 380 },
+            labels: ['សរុប', 'ស្រី', 'ផុតកំណត់'],
+            colors: ['#03fc6f', '#007bff', '#dc3545'],
+            plotOptions: {
+                pie: {
+                    customScale: 0.9,   // shrink chart → creates padding around
+                    expandOnClick: false,
+                    dataLabels: {
+                        offset: -10    // adjust label position inward/outward
+                    }
                 }
-            });
-
-            this.textContent = isHidden ? 'ត្រឡប់' : 'មើលបន្ថែម';
-        });
+            },
+            dataLabels: {
+                enabled: true,
+                formatter: function (val, opts) {
+                    return opts.w.globals.series[opts.seriesIndex] + ' នាក់';
+                },
+                style: {
+                    fontSize: '18px',
+                    fontWeight: 'bold'
+                }
+            },
+            legend: {
+                position: 'bottom',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                markers: {
+                    width: 12,
+                    height: 12
+                }
+            }
+        };
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
     </script>
 @endpush

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>ប្រព័ន្ធគ្រប់គ្រងព័ត៍មានសមាជិក</title>
     <meta charset="utf-8">
@@ -19,7 +20,7 @@
     </div>
     <div class="flex h-screen">
         @include('dashboard.partials.sidebar')
-        <div id="body" class="transition-transform flex flex-col flex-1 overflow-y-auto bg-[#F1F5F9]">
+        <div id="body" class="transition-transform flex flex-col flex-1 overflow-y-auto bg-white">
             <div class="flex items-center justify-between h-16 bg-cover object-fill bg-no-repeat border-b border-gray-200 px-4 py-1"
                 style="background: #B30202" {{-- style="background-image: url('{{ asset('images/navbar.png') }}');"
                 --}}>
