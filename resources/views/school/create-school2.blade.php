@@ -6,7 +6,7 @@
     <div class="flex justify-center items-center bg-gray-100">
         <div class="bg-white px-[10%] py-[5%] rounded-lg shadow-md w-[97%] mt-5">
             <div class="text-center text-2xl font-koulen mb-6 text-blue-600">
-                <h1>បង្កើតសាលារៀន​</h1>
+                <h1>បង្កើតសាលារៀន</h1>
             </div>
 
             <form action="{{ route('storeschool') }}" method="POST" enctype="multipart/form-data">

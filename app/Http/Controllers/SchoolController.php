@@ -146,8 +146,25 @@ class SchoolController extends Controller
             $schools = DB::table('school as s')
                 ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
                 ->get();
+            $institutes = DB::table('member_personal_detail as mpd')
+                ->leftJoin('member_education_background as meb', 'meb.member_id', '=', 'mpd.member_id')
+                ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+                ->rightJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+                ->leftJoin('branch as b', 'b.branch_id', '=', 'hei.branch_id')
+                ->select(
+                    'hei.bhei_id',
+                    'hei.institute_kh',
+                    'hei.image',
+                    'registered_at',
+                    'branch_kh',
+                    DB::raw("COUNT(CASE 
+                    WHEN mrd.expiration_date >= NOW()
+                    THEN meb.member_id END) as total_members")
+                )
+                ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image', 'registered_at', 'branch_kh')
+                ->get();
         }
-        return view('school.create-school2', compact('branches', 'villages', 'schools'));
+        return view('school.create-school2', compact('branches', 'villages', 'schools', 'institutes'));
     }
     public function store(SchoolRequest $request, CreateSchoolService $service)
     {
@@ -216,15 +233,18 @@ class SchoolController extends Controller
                 ->leftJoin('member_education_background as meb', 'meb.member_id', '=', 'mpd.member_id')
                 ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
                 ->rightJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+                ->leftJoin('branch as b', 'b.branch_id', '=', 'hei.branch_id')
                 ->select(
                     'hei.bhei_id',
                     'hei.institute_kh',
                     'hei.image',
+                    'registered_at',
+                    'branch_kh',
                     DB::raw("COUNT(CASE 
                     WHEN mrd.expiration_date >= NOW()
                     THEN meb.member_id END) as total_members")
                 )
-                ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image')
+                ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image', 'registered_at', 'branch_kh')
                 ->get();
         } else {
             $branches = DB::table('branch')->get();
@@ -237,15 +257,18 @@ class SchoolController extends Controller
                 ->leftJoin('member_education_background as meb', 'meb.member_id', '=', 'mpd.member_id')
                 ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
                 ->rightJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+                ->leftJoin('branch as b', 'b.branch_id', '=', 'hei.branch_id')
                 ->select(
                     'hei.bhei_id',
                     'hei.institute_kh',
                     'hei.image',
+                    'registered_at',
+                    'branch_kh',
                     DB::raw("COUNT(CASE 
                     WHEN mrd.expiration_date >= NOW()
                     THEN meb.member_id END) as total_members")
                 )
-                ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image')
+                ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image', 'registered_at', 'branch_kh')
                 ->get();
         }
         return view('school.create-school2', compact('branches', 'villages', 'schools', 'institutes'));

@@ -18,7 +18,7 @@
     <div class="px-5">
         <hr class="h-px my-4 bg-red-600 p-[1px] border dark:bg-red-600">
     </div>
-    <div class="ml-5">
+    <div class="ml-5 mr-5">
         <div class="ml-5">
             <h1 class="font-koulen text-blue-600 text-2xl">សាខា & អនុសាខា</h1>
         </div>
