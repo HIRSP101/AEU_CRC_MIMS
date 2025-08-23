@@ -3,7 +3,7 @@
 @endpush
 
 @section('Content')
-    <div class="bg-[#fff] p-8 rounded-lg max-w-1000px m-5 shadow-md font-battambang">
+    <div class="bg-[#fff] p-5 rounded-lg max-w-1000px m-5 shadow-md font-battambang">
         <h2 class="text-2xl text-center font-koulen text-blue-600 my-2 pb-3">គ្រឹះស្ថានឧត្តមសិក្សា កាកបាទក្រហមកម្ពុជា 25
             រាជធានី-​ខេត្ត</h2>
         {{-- search bar --}}
@@ -46,21 +46,21 @@
             ul.empty();
             data.forEach((item) => {
                 ul.append(`
-                                                                                    <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                                                                                        <a href="/listschool/${item.school_id}">
-                                                                                            <div class="flex justify-between items-center">
-                                                                                                <div class="flex items-center">
-                                                                                                    <span class="text-lg font-battambang ml-4">${item.school_name}</span>
-                                                                                                </div>
-                                                                                                <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
-                                                                                                    <span class="text-xs font-battambang">
-                                                                                                        ស.ម <strong>${item.total_mem ?? 0} នាក់</strong>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                `)
+                                                                                            <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-5">
+                                                                                                <a href="/listschool/${item.school_id}">
+                                                                                                    <div class="flex justify-between items-center">
+                                                                                                        <div class="flex items-center">
+                                                                                                            <span class="text-lg font-battambang ml-4">${item.school_name}</span>
+                                                                                                        </div>
+                                                                                                        <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
+                                                                                                            <span class="text-xs font-battambang">
+                                                                                                                ស.ម <strong>${item.total_mem ?? 0} នាក់</strong>
+                                                                                                            </span>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                        `)
             })
         }
 
