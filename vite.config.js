@@ -17,6 +17,7 @@ export default defineConfig({
                 "resources/js/exportToExcelOptionTwo.js",
                 "resources/js/exportExcelPrivateUniversity.js",
                 "resources/js/exportToExcelPublic.js",
+                "resources/js/import_for_branchhei.js"
             ],
             refresh: true,
         }),

@@ -56,7 +56,7 @@ $institute_kh = $institution->institute_kh;
 
             );
         }
-                ?>
+                        ?>
     <div class="bg-white m-5 p-5 shadow-lg rounded-lg">
         <h1 class="text-center font-koulen mb-5 text-blue-600 text-2xl"> {{$title}} </h1>
         <h2 class="text-center font-koulen mb-5 text-blue-600 text-2xl"> សាខាកាកបាទក្រហមកម្ពុជា {{$institute_kh}} </h2>
@@ -98,9 +98,10 @@ $institute_kh = $institution->institute_kh;
                             placeholder="Select a date">
                     </div>
                 </div>
-                <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
-                <!-- <button id="export_pdf" class="bg-green-500 text-white px-4 py-2 rounded">Export PDF</button> -->
-                <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                @canany(['2', '3'])
+                    <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
+                    <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                @endcanany
             </div>
         </div>
         <div class="w-full mt-5 max-h-[760px] table">
@@ -134,10 +135,11 @@ $institute_kh = $institution->institute_kh;
                         <th class="py-3 text-center">
                             ថ្ងៃចុះឈ្មោះ
                         </th>
-
-                        <th class="py-3 text-center">
-                            action
-                        </th>
+                        @canany(['2', '3'])
+                            <th class="py-3 text-center">
+                                action
+                            </th>
+                        @endcanany
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
@@ -168,8 +170,8 @@ $institute_kh = $institution->institute_kh;
                     exportToExcel(
                         @json($current_branch),
                         @json($total_mem_detail),
-                                            {{ $totalStu }},
-                                            {{ $femaleStu }},
+                                                    {{ $totalStu }},
+                                                    {{ $femaleStu }},
                         institute_kh);
                 }
             });

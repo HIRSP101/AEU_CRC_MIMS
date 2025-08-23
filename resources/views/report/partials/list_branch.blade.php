@@ -24,7 +24,7 @@
                         <div class="flex justify-between items-center">
                             <div class="flex items-center">
                                 <img src="{{ $branch->branch_image }}" alt="Logo"
-                                    class="ml-10 w-16 mr-8 rounded-full object-cover h-16" />
+                                   class="ml-5 w-20 mr-5 rounded-lg object-cover h-16" />
                                 <span class="text-lg font-battambang">{{ $branch->branch_kh }}</span>
                             </div>
                         </div>

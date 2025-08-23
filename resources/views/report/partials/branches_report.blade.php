@@ -12,10 +12,12 @@
         <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">នៃសាខាកាកបាទក្រហមកម្ពុជា ២៥ រាជធានី ខេត្ត</h1>
         <h2 class="text-center font-koulen mb-2 text-2xl text-blue-600">បច្ចុប្បន្នភាពឆ្នាំ២០២៤</h2>
         <div class="flex justify-between items-center mt-5">
+            @canany(['2','3'])
             <div>
                 <button id="export_pdf" class="bg-gray-500 text-white mt-2 px-4 py-2 rounded">Export PDF</button>
                 <button id="export_excel" class="bg-[#1ba466] text-white px-4 py-2 rounded">Export Excel</button>
             </div>
+            @endcanany
             <div class="flex justify-end items-center">
                 <input id="datepicker" class="border-2 border-gray-400 rounded-md px-3 py-2 w-64" type="text"
                     placeholder="Filter by date">
