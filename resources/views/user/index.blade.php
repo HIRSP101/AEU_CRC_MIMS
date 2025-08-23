@@ -4,53 +4,54 @@
 @endpush
 
 @section('Content')
-<?php
-$converseObj = [];
-foreach ($user_branch as $user_b) {
-    $converseObj[$user_b->id] = [
-        'name' => $user_b->name,
-        'email' => $user_b->email,
-        'branch_id' => $user_b->branch_bindding_user[0]->branch->branch_id ?? '',
-        'role' => $user_b->roles[0]->name ?? '',
-        'permissions' => $user_b->permissions ?? '',
-        'branch_hei_id' => $user_b->branch_bindding_user[0]->branch_hei->bhei_id ?? '',
-    ];
-}
-    ?>
-<div class="bg-white rounded-lg m-5 p-5">
-    @include('user.partials.createuser')
-    <div class="flex justify-between items-center w-full">
-        <div class="w-full text-center">
-            <h1 class="text-2xl text-blue-600 font-koulen">គ្រប់គ្រងអ្នកប្រើប្រាស់</h1>
+    <?php
+    $converseObj = [];
+    foreach ($user_branch as $user_b) {
+        $converseObj[$user_b->id] = [
+            'name' => $user_b->name,
+            'email' => $user_b->email,
+            'branch_id' => $user_b->branch_bindding_user[0]->branch->branch_id ?? '',
+            'role' => $user_b->roles[0]->name ?? '',
+            'permissions' => $user_b->permissions ?? '',
+            'branch_hei_id' => $user_b->branch_bindding_user[0]->branch_hei->bhei_id ?? '',
+        ];
+    }
+        ?>
+    <div class="bg-white rounded-lg m-5 p-5 shadow">
+
+        @include('user.partials.createuser')
+        <div class="flex justify-between items-center w-full">
+            <div class="w-full text-center">
+                <h1 class="text-2xl text-blue-600 font-koulen">គ្រប់គ្រងអ្នកប្រើប្រាស់</h1>
+            </div>
+            <div class="absolute right-10">
+                <a id="user_form_btn"><img src="{{ asset('images/icons/add-user.png') }}"
+                        class="w-auto h-auto bg-gray-300 py-1 px-1 rounded-lg" /></a>
+            </div>
         </div>
-        <div class="absolute right-10">
-            <a id="user_form_btn"><img src="{{ asset('images/icons/add-user.png') }}"
-                    class="w-auto h-auto bg-gray-300 py-1 px-1 rounded-lg" /></a>
-        </div>
-    </div>
-    <div class="flex items-center justify-center mt-14 overflow-hidden">
-        <div class="w-full">
-            <div class="bg-white shadow-md rounded">
-                <table class="min-w-max w-full table-auto">
-                    <thead>
-                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal font-battambang text-xl ">
-                            <th class="py-3 px-5 text-left">សាខា</th>
-                            <th class="py-3 px-5 text-left">អ្នកប្រើប្រាស់</th>
-                            <th class="py-3 px-5 text-left">តួនាទី</th>
-                            <th class="py-3 px-5 text-center">សិទ្ធ</th>
-                            <th class="py-3 px-5 text-center">សកម្មភាព</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-gray-600 text-sm font-siemreap">
-                        @foreach ($user_branch as $userb)
-                            @include('user.partials.userbranch')
-                        @endforeach
-                    </tbody>
-                </table>
+        <div class="flex items-center justify-center mt-14 overflow-hidden">
+            <div class="w-full">
+                <div class="bg-white shadow-md rounded">
+                    <table class="min-w-max w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal font-battambang text-xl ">
+                                <th class="py-3 px-5 text-left">សាខា</th>
+                                <th class="py-3 px-5 text-left">អ្នកប្រើប្រាស់</th>
+                                <th class="py-3 px-5 text-left">តួនាទី</th>
+                                <th class="py-3 px-5 text-center">សិទ្ធ</th>
+                                <th class="py-3 px-5 text-center">សកម្មភាព</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 text-sm font-siemreap">
+                            @foreach ($user_branch as $userb)
+                                @include('user.partials.userbranch')
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 @push('JS')

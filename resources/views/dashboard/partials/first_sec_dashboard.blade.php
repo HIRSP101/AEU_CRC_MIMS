@@ -92,8 +92,6 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                         @elseif($branchName != null && $branch_image != null)
                             <a href="{{ route('village', ['id' => $userBranchId]) }}"
                                 class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
-
-
                         @endif
                     </span>
                 </div>
@@ -106,8 +104,8 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
     <script>
         var options = {
             series: [
-            {{ $total_mem_institute->total_mem ?? 0 }},
-            {{ $total_mem_institute->total_wm ?? 0 }},
+                    {{ $total_mem_institute->total_mem ?? 0 }},
+                    {{ $total_mem_institute->total_wm ?? 0 }},
                 {{ $total_mem_institute->total_mem_expired ?? 0 }}
 
 
@@ -117,10 +115,10 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
             colors: ['#03fc6f', '#007bff', '#dc3545'],
             plotOptions: {
                 pie: {
-                    customScale: 0.9,   // shrink chart → creates padding around
+                    customScale: 0.9,
                     expandOnClick: false,
                     dataLabels: {
-                        offset: -10    // adjust label position inward/outward
+                        offset: -10
                     }
                 }
             },
