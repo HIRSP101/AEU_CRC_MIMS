@@ -63,30 +63,30 @@
                 ul.empty();
                 data.forEach((item) => {
                     ul.append(`
-                                                                                                                <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                                                                                                                    <a href="/total/member/university/${item.branch_id}">
-                                                                                                                        <div class="flex justify-between items-center">
-                                                                                                                            <div class="flex items-center">
-                                                                                                                                <img src="${item.branch_image}" alt="Logo" class="ml-10 w-16 mr-8 rounded-full object-cover h-16" />
-                                                                                                                                <span class="text-lg font-battambang">${item.branch_kh}</span>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                    </a>
-                                                                                                                </li>
-                                                                                                            `)
+                                                                                                                                <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg mb-5">
+                                                                                                                                    <a href="/total/member/university/${item.branch_id}">
+                                                                                                                                        <div class="flex justify-between items-center">
+                                                                                                                                            <div class="flex items-center">
+                                                                                                                                                <img src="${item.branch_image}" alt="Logo" class="ml-5 w-20 mr-5 rounded-lg object-cover h-16" />
+                                                                                                                                                <span class="text-lg font-battambang">${item.branch_kh}</span>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                    </a>
+                                                                                                                                </li>
+                                                                                                                            `)
                 });
 
                 ul.append(`
-                                                                                                            <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
-                                                                                                                <a href="/total/university">
-                                                                                                                    <div class="flex justify-between items-center">
-                                                                                                                        <div class="flex items-center">
-                                                                                                                            <span class="text-lg font-battambang ml-7 py-4">គ្រឹះស្ថានឧត្តមសិក្សា</span>
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                                                                                </a>
-                                                                                                            </li>
-                                                                                                        `);
+                                                                                                                            <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg my-2">
+                                                                                                                                <a href="/total/university">
+                                                                                                                                    <div class="flex justify-between items-center">
+                                                                                                                                        <div class="flex items-center">
+                                                                                                                                            <span class="text-lg font-battambang ml-7 py-4">គ្រឹះស្ថានឧត្តមសិក្សា</span>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
+                                                                                                                                </a>
+                                                                                                                            </li>
+                                                                                                                        `);
             }
 
             $("#filter_branch_btn").click(function () {

@@ -9,13 +9,13 @@
         $userBranchId = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_id');
         $branchName = \App\Models\branch::where('branch_id', $userBranchId)->value('branch_kh');
     ?>
-    <div class="bg-white mt-2 mx-2 px-3 shadow-lg h-max-full rounded-lg">
+    <div class="bg-white m-5 p-5 shadow-lg h-max-full rounded-lg">
         @if(auth()->user()->hasRole('user'))
-            <h1 class="text-center font-koulen my-2 text-2xl text-blue-600 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
+            <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
                 ទីប្រឹក្សាយុវជន និងយុវជន</h1>
             <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">នៃកាកបាទក្រហមកម្ពុជា​ ប្រចាំ​​ {{ $branchName }}</h1>
         @else
-            <h1 class="text-center font-koulen my-2 text-2xl text-blue-600 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
+            <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
                 ទីប្រឹក្សាយុវជន និងយុវជន</h1>
             <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">នៃកាកបាទក្រហមកម្ពុជា​ ប្រចាំ​​សាខានីមួយៗ</h1>  
         @endif

@@ -6,10 +6,10 @@
 @section('Content')
     <?php
     $i = 0;
-                                                                                                        ?>
+                                                                                                                ?>
 
-    <div class="bg-white mt-2 mx-2 px-3 shadow-lg h-max-full rounded-lg">
-        <h1 class="text-center font-koulen my-2 text-2xl text-blue-600 mt-5">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
+    <div class="bg-white m-5 p-5 shadow-lg h-max-full rounded-lg">
+        <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
             ទីប្រឹក្សាយុវជន នឹងយុវជន</h1>
         <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">នៃកាកបាទក្រហមកម្ពុជា ប្រចាំគ្រឹះស្ថានឧត្តមសិក្សា​​
             (ឯកជន)</h1>
