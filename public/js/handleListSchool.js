@@ -17,7 +17,7 @@ export function handleListSchool(array, type = "school") {
     if (type === "school") {
         setuppagination(array, attr_arr, "update-school");
     } else if (type === "institute") {
-        setuppagination(array, attr_arr2, "update-institute");
+        setuppagination(array, attr_arr2, "update-school");
     }
 
     $("#schoolTableBody").on("click", ".btn-delete", function (e) {

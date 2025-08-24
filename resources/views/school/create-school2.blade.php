@@ -115,7 +115,7 @@
                     <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <th class="py-2 pl-5 text-left">លេខរៀង</th>
-                            <th class="py-2 text-center">សាលារៀន</th>
+                            <th class="py-2 text-center">គ្រឹះស្ថានសិក្សា</th>
                             <th class="py-2 text-center">ថ្ងៃចូលសមាជិក</th>
                             <th class="py-2 text-center">ខេត្ត/ក្រុង</th>
                             <th class="py-2 text-center">Action</th>
