@@ -64,30 +64,25 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
 
-        // Password handling
         if (!empty($request->password)) {
             $user->password = bcrypt($request->password);
         }
-
-        // Image handling
+     
         if ($request->hasFile('image')) {
-            // Delete old image if exists
+
             if ($user->image && file_exists(public_path($user->image))) {
                 unlink(public_path($user->image));
             }
 
             $fileName = 'u-' . $user->id . '.' . $request->file('image')->extension();
 
-            // ✅ Move file: directory and filename must be separate
             $request->file('image')->move(public_path('images/users'), $fileName);
 
-            // ✅ Save relative path
             $user->image = 'images/users/' . $fileName;
         }
 
         $user->save();
 
-        // Sync roles and permissions
         if ($request->has('roles')) {
             $user->syncRoles($request->roles);
         }
@@ -95,7 +90,6 @@ class UserController extends Controller
             $user->syncPermissions($request->permissions);
         }
 
-        // Branch binding
         if ($request->filled('branch_id')) {
             $branchId = null;
             $branchHeiId = null;
