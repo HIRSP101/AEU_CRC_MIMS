@@ -89,7 +89,7 @@ class UserController extends Controller
         if ($request->has('permissions')) {
             $user->syncPermissions($request->permissions);
         }
-
+        
         if ($request->filled('branch_id')) {
             $branchId = null;
             $branchHeiId = null;
