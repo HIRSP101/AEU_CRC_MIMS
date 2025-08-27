@@ -3,9 +3,9 @@
 @endpush
 
 @section('Content')
-    <div class="flex justify-center items-center h-screen bg-gray-100">
-        <div class="bg-white px-[10%] py-[5%] rounded-lg shadow-md w-[97%] h-[95%]">
-            <div class="text-center text-2xl mb-6 font-koulen text-blue-600">
+    <div class="flex justify-center items-center bg-white">
+        <div class="bg-white px-[10%] py-[5%] rounded-lg shadow-md w-[97%] mt-4">
+            <div class="text-center text-2xl font-koulen mb-6 text-blue-600">
                 <h1>កែប្រែសាលារៀន</h1>
             </div>
             <form action="{{ route('updateschool', $school->school_id) }}" method="POST">
@@ -31,7 +31,8 @@
                                     សាកលវិទ្យាល័យ</option>
                             </select>
                         </div>
-                        <div hidden id="typeU" style="display: {{ $school->type == 'សាកលវិទ្យាល័យ' ? 'block' : 'none' }}">
+                        <div hidden id="typeU" style="display: {{ $school->type == 'សាកលវិទ្យាល័យ' ? 'block' : 'none' }}"
+                            class="mt-3">
                             <label for="typeUniversity" class="block font-siemreap mb-2">ប្រភេទ</label>
                             <select name="typeUniversity" id="typeUniversity"
                                 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">

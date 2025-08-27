@@ -2,74 +2,74 @@
 @push('CSS')
 @endpush
 @section('Content')
-@php
-    $userBranchId = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_id');
-    $branchName = \App\Models\branch::where('branch_id', $userBranchId)->value('branch_kh');
-    $institute_id = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_hei_id');
-    $institute_kh = App\Models\branch_hei::where('bhei_id', $institute_id)->value('institute_kh');
-@endphp
-<div class="m-5">
-    <div class="bg-white rounded-md h-screen">
-        <div class="bg-white w-full rounded-lg shadow-md p-5">
-            <h1 class="text-2xl font-koulen text-blue-600 text-center">របាយការណ៍</h1>
-            {{-- card list of all reports --}}
-            @if(auth()->user()->hasRole('user') && $branchName != null)
-                <div class="py-2">
-                    <a href="/branch/{{ $userBranchId }}/village"
-                        class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                        <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                            បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំ {{ $branchName }}</p>
-                    </a>
-                </div>
-                <div class="py-2  ">
-                    <a href="{{ route('list_branches') }}"
-                        class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                        <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                            តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជនប្រចាំ {{ $branchName }}</p>
-                    </a>
-                </div>
-                <div class="py-2  ">
-                    <a href="{{ route('member.report.all.branch') }}"
-                        class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                        <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                            តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជន២៥រាជធានី/ខេត្ត​​
-                            និងគ្រឹះស្ថានឧត្តមសិក្សា
-                        </p>
-                    </a>
-                </div>
-            @elseif($institute_id != null)
-                <div class="py-5  ">
-                    <a href="{{ route('institute.show', ['id' => $institute_id]) }}"
-                        class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                        <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                            បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំសាខា {{$institute_kh}}</p>
-                    </a>
-                </div>
-            @endif
-            @if(auth()->user()->hasRole('admin'))
-                <div class="py-2  ">
-                    <a href="/branch"
-                        class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                        <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                            បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំ {{ $branchName }}</p>
-                    </a>
-                </div>
-                <div class="py-2  ">
-                    <a href="{{ route('list_branches') }}"
-                        class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                        <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                            តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជនប្រចាំ {{ $branchName }} </p>
-                    </a>
-                </div>
-                <div class="py-2  ">
-                    <a href="{{ route('member.report.all.branch') }}"
-                        class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                        <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                            តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជន២៥រាជធានី/ខេត្ត​​
-                            និងគ្រឹះស្ថានឧត្តមសិក្សា
-                        </p>
-                    </a>
-                </div>
+    @php
+        $userBranchId = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_id');
+        $branchName = \App\Models\branch::where('branch_id', $userBranchId)->value('branch_kh');
+        $institute_id = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_hei_id');
+        $institute_kh = App\Models\branch_hei::where('bhei_id', $institute_id)->value('institute_kh');
+    @endphp
+    <div class="m-5">
+        <div class="bg-white rounded-md h-screen">
+            <div class="bg-white w-full rounded-lg shadow-md">
+                <h1 class="text-2xl font-koulen text-blue-600 text-center mb-5 mt-5">របាយការណ៍</h1>
+                {{-- card list of all reports --}}
+                @if(auth()->user()->hasRole('user') && $branchName != null)
+                    <div class="py-2 px-5">
+                        <a href="/branch/{{ $userBranchId }}/village"
+                            class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
+                                បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំ {{ $branchName }}</p>
+                        </a>
+                    </div>
+                    <div class="py-2 px-5">
+                        <a href="{{ route('list_branches') }}"
+                            class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
+                                តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជនប្រចាំ {{ $branchName }}</p>
+                        </a>
+                    </div>
+                    <div class="py-2 px-5">
+                        <a href="{{ route('member.report.all.branch') }}"
+                            class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
+                                តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជន២៥រាជធានី/ខេត្ត​​
+                                និងគ្រឹះស្ថានឧត្តមសិក្សា
+                            </p>
+                        </a>
+                    </div>
+                @elseif($institute_id != null)
+                    <div class="py-2 px-5">
+                        <a href="{{ route('institute.show', ['id' => $institute_id]) }}"
+                            class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
+                                បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំសាខា {{$institute_kh}}</p>
+                        </a>
+                    </div>
+                @endif
+                @if(auth()->user()->hasRole('admin'))
+                    <div class="py-2 px-5">
+                        <a href="/branch"
+                            class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
+                                បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំ {{ $branchName }}</p>
+                        </a>
+                    </div>
+                    <div class="py-2 px-5">
+                        <a href="{{ route('list_branches') }}"
+                            class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
+                                តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជនប្រចាំ {{ $branchName }} </p>
+                        </a>
+                    </div>
+                    <div class="py-2 px-5">
+                        <a href="{{ route('member.report.all.branch') }}"
+                            class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
+                                តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជន២៥រាជធានី/ខេត្ត​​
+                                និងគ្រឹះស្ថានឧត្តមសិក្សា
+                            </p>
+                        </a>
+                    </div>
 
                 <div class="py-2  ">
                     <details class="mb-2 details-dropdown">
