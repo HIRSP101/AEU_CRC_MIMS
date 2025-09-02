@@ -91,6 +91,10 @@ class SchoolController extends Controller
 
         if ($branchId) {
             $query->where('meb.branch_id', $branchId);
+
+            $branchWhole = (clone $query)->get();
+        } else {
+            $branchWhole = collect();
         }
 
         if ($villageId) {
@@ -125,6 +129,7 @@ class SchoolController extends Controller
             'currentSchool' => $currentSchool,
             'totalStu' => $totalStu,
             'femaleStu' => $femaleStu,
+            'branchWhole' => $branchWhole
         ]);
     }
 
@@ -328,41 +333,55 @@ class SchoolController extends Controller
         $this->deleteService->deleteSchool($request->arr[0]);
         return response()->json(['message' => 'School deleted successfully']);
     }
-    public function editSchool($id)
+    public function edit($type, $id)
     {
-        $school = school::findOrFail($id);
         $districts = district::all();
         $branches = branch::all();
-        return view('school.edit-school', compact('school', 'districts', 'branches'));
+
+        if ($type === 'school') {
+            $school = school::findOrFail($id);
+            return view('school.edit-school', compact('school', 'districts', 'branches', 'type'));
+        }
+
+        if ($type === 'institute') {
+            $institute = branch_hei::findOrFail($id);
+            return view('school.edit-institute', compact('institute', 'districts', 'branches', 'type'));
+        }
+
+        abort(404, 'Invalid type');
     }
-    public function updateSchool(Request $request, $id)
+
+    public function update(Request $request, $type, $id)
     {
-        $validatedData = $request->validate([
-            'school_name' => 'required|string|max:255',
-            'type' => 'required',
-            'registration_date' => 'required|date',
-            'village_name' => 'required|string',
-            'khom' => 'required|string',
-            'district_id' => 'required',
-            'image' => 'nullable',
-            'branch_id' => 'required',
-        ]);
+        if ($type === 'institute') {
 
-        if ($request->input('type') == 'សាកលវិទ្យាល័យ') {
-            $university = branch_hei::findOrFail($id);
-            $university->institute_kh = $request->input('school_name');
-            $university->type = $request->input('typeUniversity');
-            $university->institute_type = $request->input('type');
-            $university->village = $request->input('village_name');
-            $university->commune_sangkat = $request->input('khom');
-            $university->registered_at = $request->input('registration_date');
-            $university->branch_id = $request->input('branch_id');
-            $university->district_khan = $request->input('district_id');
-            $university->provience_city = $request->input('branch_id');
-            $university->image = $request->input('image');
+            $institute = branch_hei::findOrFail($id);
+            $institute->institute_kh = $request->input('institute_kh');
+            $institute->institute_type = 'សាកលវិទ្យាល័យ';
+            $institute->type = $request->input('typeUniversity');
+            $institute->village = $request->input('village');
+            $institute->commune_sangkat = $request->input('commune_sangkat');
+            $institute->district_khan = $request->input('district_khan');
+            $institute->branch_id = $request->input('branch_id');
+            $institute->registered_at = $request->input('registered_at');
+            // Handle file upload
+            if ($request->hasFile('image')) {   // ✅ fixed
+                $path = $request->file('image')->store('uploads', 'public');
+                $institute->image = $path;
+            }
+            $institute->save();
+        } elseif ($type === 'school') {
+            $validatedData = $request->validate([
+                'school_name' => 'required|string|max:255',
+                'type' => 'required|string',
+                'registration_date' => 'required|date',
+                'village_name' => 'required|string',
+                'khom' => 'required|string',
+                'district_id' => 'required',
+                'branch_id' => 'required',
+                'image' => 'nullable',
+            ]);
 
-            $university->save();
-        } else {
             $school = school::findOrFail($id);
             $school->school_name = $request->input('school_name');
             $school->type = $request->input('type');
@@ -371,13 +390,14 @@ class SchoolController extends Controller
             $school->khom = $request->input('khom');
             $school->district_id = $request->input('district_id');
             $school->branch_id = $request->input('branch_id');
-            $school->image = $request->input('image');
-
             $school->save();
+        } else {
+            abort(404, 'Invalid type');
         }
 
-        return redirect()->route('createschool')->with('success', 'School updated successfully.');
+        return redirect()->route('createschool')->with('success', 'Updated successfully.');
     }
+
     public function getSchool()
     {
         $user = branch_bindding_user::where('user_id', operator: auth()->user()->id)->first()->branch_id;

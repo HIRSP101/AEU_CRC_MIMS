@@ -15,9 +15,9 @@ export function handleListSchool(array, type = "school") {
     const attr_arr2 = ["bhei_id", "institute_kh", "registered_at", "branch_kh"];
 
     if (type === "school") {
-        setuppagination(array, attr_arr, "update-school");
+        setuppagination(array, attr_arr, "update/school");
     } else if (type === "institute") {
-        setuppagination(array, attr_arr2, "update-school");
+        setuppagination(array, attr_arr2, "update/institute");
     }
 
     $("#schoolTableBody").on("click", ".btn-delete", function (e) {

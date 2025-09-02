@@ -138,7 +138,6 @@ $(document).ready(function () {
         colValues = {};
         sheetObj = {};
         activeSheet = "";
-
     });
     $("#dropzone-file").on("change", async function () {
         columnNames = [];
@@ -272,10 +271,14 @@ $(document).ready(function () {
                         activeSheet = $(this).text().trim();
 
                         // new code 2025/05/05 Enable import button if this sheet hasn't been imported yet
-                        $("#sheetImport").prop("disabled", importedSheets[activeSheet] || false);
+                        $("#sheetImport").prop(
+                            "disabled",
+                            importedSheets[activeSheet] || false
+                        );
 
                         constructSheetTable(sheetObj[activeSheet], columnNames);
                         console.log("sheetobj=>", sheetObj[activeSheet]);
+                        a;
                     });
                 } catch (error) {
                     console.error("Error reading Excel file:", error);
@@ -319,7 +322,7 @@ $(document).ready(function () {
             school_id: school_id,
             institute_id: institute_id,
             branchhei_id: institute_id,
-            branch_id: branch_id
+            branch_id: branch_id,
         }));
 
         console.log("memberData=>", memberData);
@@ -331,13 +334,13 @@ $(document).ready(function () {
         },
     });
 
-    $('#downloadform').on('click', function (e) {
+    $("#downloadform").on("click", function (e) {
         e.preventDefault();
 
-        const fileUrl = 'member_template.xlsx';
-        const fileName = 'គំរូរ.xlsx';
+        const fileUrl = "member_template.xlsx";
+        const fileName = "គំរូរ.xlsx";
 
-        const a = document.createElement('a');
+        const a = document.createElement("a");
         a.href = fileUrl;
         a.download = fileName;
         document.body.appendChild(a);
@@ -530,11 +533,14 @@ $(document).ready(function () {
                     );
                     $.each(data, function (index, item) {
                         //add prefix to the id for school and institute to check the condition
-                        let prefix = item.type === 'institute' ? 'institute_' : 'school_';
+                        let prefix =
+                            item.type === "institute"
+                                ? "institute_"
+                                : "school_";
                         $("#school-select").append(
                             $("<option>", {
                                 value: prefix + item.id,
-                                text: item.name
+                                text: item.name,
                             })
                         );
                     });
