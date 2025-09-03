@@ -8,7 +8,7 @@
             <div class="text-center text-2xl font-koulen mb-6 text-blue-600">
                 <h1>កែប្រែសាលារៀន</h1>
             </div>
-            <form action="{{ route('updateschool', $school->school_id) }}" method="POST">
+            <form action="{{ route('updatePost', ['type' => 'school', 'id' => $school->school_id]) }}" method="POST">
                 @csrf
                 <div class="grid grid-cols-2 gap-4">
                     <div>
