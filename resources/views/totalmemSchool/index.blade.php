@@ -141,13 +141,13 @@ $school_name = $currentSchool?->school_name;
 @endif
     @endsection
     @push('JS')
-        @if ($currentSchool)
+        @if (!$currentSchool)
             <script type="module">
                 import { handleTotalmem } from "{{ asset('js/handleTotalmem.js') }}";
 
                 document.addEventListener('DOMContentLoaded', function () {
                     var array = @json($data);
-                    const schoolName = @json($currentSchool->school_name);
+                   
                     handleTotalmem(array);
 
                     console.log("arrays", array);

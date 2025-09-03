@@ -107,8 +107,6 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                     {{ $total_mem_institute->total_mem ?? 0 }},
                     {{ $total_mem_institute->total_wm ?? 0 }},
                 {{ $total_mem_institute->total_mem_expired ?? 0 }}
-
-
             ],
             chart: { type: 'pie', width: 380 },
             labels: ['សរុប', 'ស្រី', 'ផុតកំណត់'],
