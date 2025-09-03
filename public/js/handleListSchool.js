@@ -27,8 +27,14 @@ export function handleListSchool(array, type = "school") {
         const confirmDelete = confirm(
             "Are you sure you want to delete this school?"
         );
-        if (confirmDelete) {
-            ajaxtoRoute("POST", "/deleteschool", [schoolId]);
+        if (type === "school") {
+            if (confirmDelete) {
+                ajaxtoRoute("DELETE", `/school/${schoolId}`);
+            }
+        } else {
+            if (confirmDelete) {
+                ajaxtoRoute("DELETE", `/institute/${schoolId}`);
+            }
         }
     });
 }
