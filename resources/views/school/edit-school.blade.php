@@ -61,7 +61,7 @@
                         <label for="registration_date" class="block font-siemreap mb-2">ថ្ងៃចូលសមាជិក</label>
                         <input type="date" name="registration_date" id="registration_date"
                             class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                            value="{{ $school->registration_date }}" required>
+                            value="{{ date('Y-m-d', strtotime($school->registration_date)) }}" required>
                     </div>
                 </div>
                 <div class="grid grid-cols-3 gap-4">
