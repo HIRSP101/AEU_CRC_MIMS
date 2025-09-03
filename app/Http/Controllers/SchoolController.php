@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SchoolRequest;
 use App\Models\branch_bindding_user;
+use App\Services\Branch_hei\DeleteInstituteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\branch;
@@ -16,9 +17,11 @@ use App\Services\Schools\DeleteSchoolService;
 class SchoolController extends Controller
 {
     protected DeleteSchoolService $deleteService;
-    public function __construct(DeleteSchoolService $deleteService)
+    protected DeleteInstituteService $deleteInstituteService;
+    public function __construct(DeleteSchoolService $deleteService, DeleteInstituteService $deleteInstituteService)
     {
         $this->deleteService = $deleteService;
+        $this->deleteInstituteService = $deleteInstituteService;
     }
     public function index1($branchId, $villageId)
     {
@@ -328,10 +331,13 @@ class SchoolController extends Controller
 
         return redirect()->route('createschool')->with('success', 'School created successfully.');
     }
-    public function deleteSchool(Request $request)
+    public function deleteSchool($id)
     {
-        $this->deleteService->deleteSchool($request->arr[0]);
-        return response()->json(['message' => 'School deleted successfully']);
+        return $this->deleteService->deleteSchool($id);
+    }
+    public function deleteInstitute($id)
+    {
+        return $this->deleteInstituteService->deleteInstitute($id);
     }
     public function edit($type, $id)
     {

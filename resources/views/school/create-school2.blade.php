@@ -3,11 +3,11 @@
 @endpush
 
 @section('Content')
-    <div class="flex justify-center items-center bg-white">
-        <div class="bg-white px-[10%] py-[5%] rounded-lg shadow-md w-[97%] mt-5">
-            <div class="text-center text-2xl font-koulen mb-6 text-blue-600">
-                <h1>បង្កើតសាលារៀន</h1>
-            </div>
+    <div class="flex justify-center items-center bg-white p-5">
+        <div class="bg-white px-[10%] py-5 rounded-lg shadow-md w-full">
+            <h1 class="text-center text-2xl font-koulen mb-5 text-blue-600">
+                បង្កើតសាលារៀន
+            </h1>
 
             <form action="{{ route('storeschool') }}" method="POST" enctype="multipart/form-data">
                 @csrf
