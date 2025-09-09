@@ -221,6 +221,13 @@ $(document).ready(function () {
                                         cellValue =
                                             translatekhdateToen(cellValue);
                                     }
+                                    if (
+                                        colName === "ថ្ងៃខែឆ្នាំចូលជាសមាជិក" &&
+                                        containsUnicodeNumber(cellValue)
+                                    ) {
+                                        cellValue =
+                                            translatekhdateToen(cellValue);
+                                    }
                                     if (colName === "អាសយដ្ឋានបច្ចុប្បន្ន") {
                                         const addressParts = (cellValue || "")
                                             .split(" ")
@@ -307,7 +314,7 @@ $(document).ready(function () {
                         );
 
                         constructSheetTable(sheetObj[activeSheet], columnNames);
-                        // console.log("sheetobj=>", sheetObj[activeSheet]);
+                        console.log("sheetobj=>", sheetObj[activeSheet]);
                     });
                 } catch (error) {
                     console.error("Error reading Excel file:", error);
@@ -354,7 +361,7 @@ $(document).ready(function () {
             branch_id: branch_id,
         }));
 
-        // console.log("memberData=>", memberData);
+        console.log("memberData=>", memberData);
         insertMember(memberData.slice(1));
     });
     $.ajaxSetup({

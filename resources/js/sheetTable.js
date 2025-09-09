@@ -1,6 +1,6 @@
 import { showLoading, hideLoading } from './loadingscreen';
 
-export default function constructSheetTable(sheetObj = {},header = []) {
+export default function constructSheetTable(sheetObj = {}, header = []) {
     if (Object.keys(sheetObj).length === 0) {
         console.warn("Sheet data is empty!");
         return;
@@ -17,10 +17,13 @@ export default function constructSheetTable(sheetObj = {},header = []) {
 
     const firstRowData = sheetEntries[0]?.[1] || {};
     let columnNames = Object.keys(firstRowData);
-    const excludeColumns = ["home_no", "street_no", "village", "commune_sangkat", "district_khan", "provience_city"];
+    const excludeColumns =
+        ["current_home_no", "current_street_no", "current_village", "current_commune_sangkat", "current_district_khan", "current_provience_city",
+            "pob_home_no", "pob_street_no", "pob_village", "pob_commune_sangkat", "pob_district_khan", "pob_provience_city"
+        ];
 
     columnNames = columnNames.filter(col => !excludeColumns.includes(col));
-   
+
     header.forEach((col) => {
         tableHeader += `<th class="px-6 py-3 text-left whitespace-nowrap">${col}</th>`;
     });
