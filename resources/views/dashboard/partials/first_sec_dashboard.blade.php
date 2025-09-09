@@ -33,9 +33,9 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                     </div>
                     <div class="flex flex-row items-center justify-center ">
                         @if($branchName != null && $branch_image != null)
-                            <h1 class="font-khmer text-xl text-blue-700 text-center mt-3">{{$branchName}}</h1>
+                            <h1 class="font-koulen text-xl text-blue-700 text-center mt-3">{{$branchName}}</h1>
                         @else
-                            <h1 class="font-khmer text-xl text-blue-700 text-center mt-3">{{$institute_kh}}</h1>
+                            <h1 class="font-koulen text-xl text-blue-700 text-center mt-3">{{$institute_kh}}</h1>
                         @endif
                     </div>
                 </div>

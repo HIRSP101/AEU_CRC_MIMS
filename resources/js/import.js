@@ -44,7 +44,7 @@ var khDict = {
     ឈ្មោះឡាតាំង: "name_en",
     ភេទ: "gender",
     ថ្ងៃខែឆ្នាំកំណើត: "date_of_birth",
-    ទីកន្លែងកំណើត: "pob_provience_city",
+    ទីកន្លែងកំណើត: "full_pob_provience_city",
     គ្រឹះស្ថានសិក្សា: "institute_id",
     តួនាទី: "member_type",
     កម្រិតសិក្សា: "education_level",
@@ -56,12 +56,18 @@ var khDict = {
     "ទូរស័ព្ទផ្ទាល់ខ្លួន/តេលេក្រាម": "phone_number",
     ទូរស័ព្ទអាណាព្យាបាល: "guardian_phone",
     ទំហំអាវ: "shirt_size",
-    ផ្ទះលេខ: "home_no",
-    ផ្លូវលេខ: "street_no",
-    ភូមិ: "village",
-    "ឃុំ/សង្កាត់": "commune_sangkat",
-    "ស្រុក/ខណ្ឌ": "district_khan",
-    ខេត្តរាជធានី: "provience_city",
+    ផ្ទះលេខ: "current_home_no",
+    ផ្លូវលេខ: "current_street_no",
+    ភូមិ: "current_village",
+    "ឃុំ/សង្កាត់": "current_commune_sangkat",
+    "ស្រុក/ខណ្ឌ": "current_district_khan",
+    ខេត្តរាជធានី: "current_provience_city",
+     ផ្ទះលេខ: "pob_home_no",
+    ផ្លូវលេខ: "pob_street_no",
+    ភូមិ: "pob_village",
+    "ឃុំ/សង្កាត់": "pob_commune_sangkat",
+    "ស្រុក/ខណ្ឌ": "pob_district_khan",
+    ខេត្តរាជធានី: "pob_provience_city",
 };
 
 $(document).ready(function () {
@@ -117,12 +123,12 @@ $(document).ready(function () {
             let schoolId = val.replace("school_", "");
             school_id = schoolId;
             institute_id = null;
-            console.log("Selected school ID:", schoolId);
+            // console.log("Selected school ID:", schoolId);
         } else if (val.startsWith("institute_")) {
             let instituteId = val.replace("institute_", "");
             institute_id = instituteId;
             school_id = null;
-            console.log("Selected institute ID:", instituteId);
+            // console.log("Selected institute ID:", instituteId);
         }
         // school_id = sId;
         // console.log(sId);
@@ -225,17 +231,41 @@ $(document).ready(function () {
                                             reverseCurrentArrayAddress(
                                                 addressParts
                                             );
-                                        rowObject["home_no"] =
+                                        rowObject["current_home_no"] =
                                             address[0] || null;
-                                        rowObject["street_no"] =
+                                        rowObject["current_street_no"] =
                                             address[1] || null;
-                                        rowObject["village"] =
+                                        rowObject["current_village"] =
                                             address[2] || null;
-                                        rowObject["commune_sangkat"] =
+                                        rowObject["current_commune_sangkat"] =
                                             address[3] || null;
-                                        rowObject["district_khan"] =
+                                        rowObject["current_district_khan"] =
                                             address[4] || null;
-                                        rowObject["provience_city"] =
+                                        rowObject["current_provience_city"] =
+                                            address[5] || null;
+                                    }
+                                    if(colName === "ទីកន្លែងកំណើត")
+                                    {
+                                         const addressParts = (cellValue || "")
+                                            .split(" ")
+                                            .filter(
+                                                (part) => part.trim() !== ""
+                                            );
+                                        const address =
+                                            reverseCurrentArrayAddress(
+                                                addressParts
+                                            );
+                                        rowObject["pob_home_no"] =
+                                            address[0] || null;
+                                        rowObject["pob_street_no"] =
+                                            address[1] || null;
+                                        rowObject["pob_village"] =
+                                            address[2] || null;
+                                        rowObject["pob_commune_sangkat"] =
+                                            address[3] || null;
+                                        rowObject["pob_district_khan"] =
+                                            address[4] || null;
+                                        rowObject["pob_provience_city"] =
                                             address[5] || null;
                                     }
                                     rowObject[khDict[colName]] = cellValue;
@@ -277,8 +307,7 @@ $(document).ready(function () {
                         );
 
                         constructSheetTable(sheetObj[activeSheet], columnNames);
-                        console.log("sheetobj=>", sheetObj[activeSheet]);
-                        a;
+                        // console.log("sheetobj=>", sheetObj[activeSheet]);
                     });
                 } catch (error) {
                     console.error("Error reading Excel file:", error);
@@ -325,7 +354,7 @@ $(document).ready(function () {
             branch_id: branch_id,
         }));
 
-        console.log("memberData=>", memberData);
+        // console.log("memberData=>", memberData);
         insertMember(memberData.slice(1));
     });
     $.ajaxSetup({
@@ -377,7 +406,7 @@ $(document).ready(function () {
                     $("#tick").hide();
                     $("#ok").hide();
                 });
-                console.log("Success:", response);
+                // console.log("Success:", response);
             },
             error: function (xhr) {
                 $("#loadingSpinner").hide();
