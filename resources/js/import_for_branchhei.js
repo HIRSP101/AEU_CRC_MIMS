@@ -44,7 +44,7 @@ var khDict = {
     ឈ្មោះឡាតាំង: "name_en",
     ភេទ: "gender",
     ថ្ងៃខែឆ្នាំកំណើត: "date_of_birth",
-    ទីកន្លែងកំណើត: "pob_provience_city",
+    ទីកន្លែងកំណើត: "full_pob_provience_city",
     គ្រឹះស្ថានសិក្សា: "institute_id",
     តួនាទី: "member_type",
     កម្រិតសិក្សា: "education_level",
@@ -56,12 +56,18 @@ var khDict = {
     "ទូរស័ព្ទផ្ទាល់ខ្លួន/តេលេក្រាម": "phone_number",
     ទូរស័ព្ទអាណាព្យាបាល: "guardian_phone",
     ទំហំអាវ: "shirt_size",
-    ផ្ទះលេខ: "home_no",
-    ផ្លូវលេខ: "street_no",
-    ភូមិ: "village",
-    "ឃុំ/សង្កាត់": "commune_sangkat",
-    "ស្រុក/ខណ្ឌ": "district_khan",
-    ខេត្តរាជធានី: "provience_city",
+    ផ្ទះលេខ: "current_home_no",
+    ផ្លូវលេខ: "current_street_no",
+    ភូមិ: "current_village",
+    "ឃុំ/សង្កាត់": "current_commune_sangkat",
+    "ស្រុក/ខណ្ឌ": "current_district_khan",
+    ខេត្តរាជធានី: "current_provience_city",
+     ផ្ទះលេខ: "pob_home_no",
+    ផ្លូវលេខ: "pob_street_no",
+    ភូមិ: "pob_village",
+    "ឃុំ/សង្កាត់": "pob_commune_sangkat",
+    "ស្រុក/ខណ្ឌ": "pob_district_khan",
+    ខេត្តរាជធានី: "pob_provience_city",
 };
 
 $(document).ready(function () {
@@ -178,6 +184,13 @@ $(document).ready(function () {
                                         cellValue =
                                             translatekhdateToen(cellValue);
                                     }
+                                    if (
+                                        colName === "ថ្ងៃខែឆ្នាំចូលជាសមាជិក" &&
+                                        containsUnicodeNumber(cellValue)
+                                    ) {
+                                        cellValue =
+                                            translatekhdateToen(cellValue);
+                                    }
                                     if (colName === "អាសយដ្ឋានបច្ចុប្បន្ន") {
                                         const addressParts = (cellValue || "")
                                             .split(" ")
@@ -188,17 +201,41 @@ $(document).ready(function () {
                                             reverseCurrentArrayAddress(
                                                 addressParts
                                             );
-                                        rowObject["home_no"] =
+                                        rowObject["current_home_no"] =
                                             address[0] || null;
-                                        rowObject["street_no"] =
+                                        rowObject["current_street_no"] =
                                             address[1] || null;
-                                        rowObject["village"] =
+                                        rowObject["current_village"] =
                                             address[2] || null;
-                                        rowObject["commune_sangkat"] =
+                                        rowObject["current_commune_sangkat"] =
                                             address[3] || null;
-                                        rowObject["district_khan"] =
+                                        rowObject["current_district_khan"] =
                                             address[4] || null;
-                                        rowObject["provience_city"] =
+                                        rowObject["current_provience_city"] =
+                                            address[5] || null;
+                                    }
+                                    if(colName === "ទីកន្លែងកំណើត")
+                                    {
+                                         const addressParts = (cellValue || "")
+                                            .split(" ")
+                                            .filter(
+                                                (part) => part.trim() !== ""
+                                            );
+                                        const address =
+                                            reverseCurrentArrayAddress(
+                                                addressParts
+                                            );
+                                        rowObject["pob_home_no"] =
+                                            address[0] || null;
+                                        rowObject["pob_street_no"] =
+                                            address[1] || null;
+                                        rowObject["pob_village"] =
+                                            address[2] || null;
+                                        rowObject["pob_commune_sangkat"] =
+                                            address[3] || null;
+                                        rowObject["pob_district_khan"] =
+                                            address[4] || null;
+                                        rowObject["pob_provience_city"] =
                                             address[5] || null;
                                     }
                                     rowObject[khDict[colName]] = cellValue;
