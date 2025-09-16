@@ -34,7 +34,7 @@ class VillageController extends Controller
                     'd.district_id',
                     'd.district_name',
                     DB::raw('COUNT(DISTINCT s.school_id) as total_schools'),
-                    DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
+                    DB::raw("COUNT(CASE WHEN mrd.expiration_date >= NOW() THEN meb.member_id END) as total_mem")
                     //DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
 
                 )
@@ -69,7 +69,7 @@ class VillageController extends Controller
                     'd.district_id',
                     'd.district_name',
                     DB::raw('COUNT(DISTINCT s.school_id) as total_schools'),
-                    DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
+                    DB::raw("COUNT(CASE WHEN mrd.expiration_date >= NOW() THEN meb.member_id END) as total_mem")
                     //DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
 
                 )

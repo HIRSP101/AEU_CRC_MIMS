@@ -31,8 +31,12 @@ const EXCEL_CONFIG = {
 
 // Helper functions
 export const createWorksheet = (workbook, branchName) => {
-    const worksheet = workbook.addWorksheet(branchName);
-    return worksheet;
+    const branch_name =
+        branchName && branchName.trim() !== "" ? branchName : "Sheet1";
+    return workbook.addWorksheet(branch_name);
+
+    // const worksheet = workbook.addWorksheet(branchName);
+    // return worksheet;
 };
 
 export const addTitle = (worksheet, branchName, school_name) => {

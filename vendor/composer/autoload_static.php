@@ -648,6 +648,7 @@ class ComposerStaticInitdd7aa88dca2de763c4da3319eed05adc
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Services\\Branch_hei\\DeleteInstituteService' => __DIR__ . '/../..' . '/app/Services/Branch_hei/DeleteInstituteService.php',
         'App\\Services\\Branches\\CreateBranchService' => __DIR__ . '/../..' . '/app/Services/Branches/CreateBranchService.php',
         'App\\Services\\Branches\\DeleteBranchService' => __DIR__ . '/../..' . '/app/Services/Branches/DeleteBranchService.php',
         'App\\Services\\Branches\\UpdateBranchService' => __DIR__ . '/../..' . '/app/Services/Branches/UpdateBranchService.php',
