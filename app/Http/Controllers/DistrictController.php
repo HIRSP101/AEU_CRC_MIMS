@@ -12,7 +12,7 @@ use App\Models\village;
 use App\Services\District\DeleteDistrictService;
 use Illuminate\Support\Facades\DB;
 
-class VillageController extends Controller
+class DistrictController extends Controller
 {
     protected DeleteDistrictService $deleteService;
 
@@ -52,7 +52,7 @@ class VillageController extends Controller
                 'total_schools' => $data->sum('total_schools'),
                 'total_mem' => $data->sum('total_mem'),
             ];
-            return view('village.index', [
+            return view('district.index', [
                 'villages' => $data,
                 'branchId' => $branchId,
                 'branch' => $branch,
@@ -87,7 +87,7 @@ class VillageController extends Controller
                 'total_schools' => $data->sum('total_schools'),
                 'total_mem' => $data->sum('total_mem'),
             ];
-            return view('village.index', [
+            return view('district.index', [
                 'villages' => $data,
                 'branchId' => $branchId,
                 'branch' => $branch,
@@ -120,7 +120,7 @@ class VillageController extends Controller
                 ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')->get();
         }
 
-        return view('village.create-village', compact('branch', 'branches', 'districts'));
+        return view('district.create-district', compact('branch', 'branches', 'districts'));
     }
 
     public function store(VillageRequest $request, CreateDistrictService $service)
@@ -157,7 +157,7 @@ class VillageController extends Controller
                 ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')
                 ->get();
         }
-        return view('village.create-village2', compact('branches', 'districts'));
+        return view('district.create-district2', compact('branches', 'districts'));
     }
     public function store2(VillageRequest $request, CreateDistrictService $service)
     {
@@ -214,7 +214,7 @@ class VillageController extends Controller
     {
         $district = district::findOrFail($id);
         $branches = branch::all();
-        return view('village.edit-district', compact('district', 'branches'));
+        return view('district.edit-district', compact('district', 'branches'));
     }
     public function updateDistrict(Request $request, $id)
     {

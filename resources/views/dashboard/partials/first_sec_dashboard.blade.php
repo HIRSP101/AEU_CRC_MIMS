@@ -40,7 +40,7 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                     </div>
                 </div>
                 <div class="p-2 bg-white border rounded-xl shadow-lg sm:w-[50%] md:w-[50%] ">
-                    <h2 class="text-blue-700 text-2xl font-koulen mt-4 text-center">ទីស្នាក់ការដែលមានសមាជិកចុះឈ្មោះថ្មី
+                    <h2 class="text-blue-700 text-2xl font-koulen mt-4 text-center">សាខាដែលមានសមាជិកចុះឈ្មោះថ្មី
                     </h2>
                     <div class="mt-4 flex justify-center">
                         <table class="table font-battambang leading-10 font-medium">
@@ -104,8 +104,8 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
     <script>
         var options = {
             series: [
-                    {{ $total_mem_institute->total_mem ?? 0 }},
-                    {{ $total_mem_institute->total_wm ?? 0 }},
+                        {{ $total_mem_institute->total_mem ?? 0 }},
+                        {{ $total_mem_institute->total_wm ?? 0 }},
                 {{ $total_mem_institute->total_mem_expired ?? 0 }}
             ],
             chart: { type: 'pie', width: 380 },

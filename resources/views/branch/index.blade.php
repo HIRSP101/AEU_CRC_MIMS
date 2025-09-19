@@ -8,7 +8,7 @@
             {{ $title }}
         </h1>
 
-        <div class="filter_branch flex justify-end space-x-2 mt-5 mb-5">
+        <div class="filter_branch flex justify-end space-x-2 mt-14 mb-5">
             <input type="text" id="filter_box" class="border border-gray-300 px-2 py-2 rounded-lg" placeholder="Search...">
             <button id="filter_branch_btn" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Search</button>
         </div>
@@ -38,21 +38,21 @@
             ul.empty();
             data.forEach((item) => {
                 ul.append(`
-                                                <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 hover:ring-indigo-200 hover:rounded-lg mb-5">
-                                                   <a href="/branch/${item.branch_id}/village">
-                                                       <div class="flex justify-between items-center">
-                                                           <div class="flex items-center">
-                                                               <img src="${item.branch_image}" alt="Logo" class="ml-5 w-20 mr-5 rounded-lg object-cover h-16" />
-                                                               <span class="text-lg font-battambang">${item.branch_kh}</span>
-                                                           </div>
-                                                           <div class="grid grid-rows-2 m-5 place-items-end content-between gap-8">
-                                                               <span class="text-xs font-battambang">ស.ម <strong>${item.total_mem} នាក់</strong></span>
-                                                               <span class="text-xs font-battambang">${item.total_villages} សាខា</span>
-                                                           </div>
-                                                       </div>
-                                                   </a>
-                                                </li>
-                                                `)
+                                                            <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 hover:ring-indigo-200 hover:rounded-lg mb-5">
+                                                               <a href="/branch/${item.branch_id}/village">
+                                                                   <div class="flex justify-between items-center">
+                                                                       <div class="flex items-center">
+                                                                           <img src="${item.branch_image}" alt="Logo" class="ml-5 w-20 mr-5 rounded-lg object-cover h-16" />
+                                                                           <span class="text-lg font-battambang">${item.branch_kh}</span>
+                                                                       </div>
+                                                                       <div class="grid grid-rows-2 m-5 place-items-end content-between gap-8">
+                                                                           <span class="text-xs font-battambang">ស.ម <strong>${item.total_mem} នាក់</strong></span>
+                                                                           <span class="text-xs font-battambang">${item.total_villages} អនុសាខា</span>
+                                                                       </div>
+                                                                   </div>
+                                                               </a>
+                                                            </li>
+                                                            `)
             })
         }
 
