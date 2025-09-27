@@ -4,8 +4,8 @@
     $current_address_all = trim(($address_parts[1] ?? "") . " " . ($address_parts[2] ?? "") . " " . ($address_parts[3] ?? ""));
 @endphp
 <div id="card" class="hidden">
-    <div class="text-center">
-        <h1 class="text-2xl font-siemreap font-bold">ប័ណ្ណសម្គាល់ខ្លួនយុវជន</h1>
+    <div class="text-center mt-5">
+        <h1 class="text-2xl font-koulen text-blue-600">ប័ណ្ណសម្គាល់ខ្លួនយុវជន</h1>
     </div>
     <div class="flex justify-evenly mt-12">
         <div class="relative w-[600px] h-[450px] bg-cover bg-center"
@@ -16,9 +16,9 @@
         </div>
         <div class="relative w-[600px] h-[450px] bg-cover bg-center"
             style="background-image: url('{{ asset('images/users/card2.jpg') }}');">
-            <p class="profile absolute top-[50px] left-[50px] text-black text-sm">
-                {{$member->member_image}}
-            </p>
+            <img src="{{ asset($member->member_image) }}" alt="Profile Image"
+                class="absolute top-[50px] left-[32px] w-[125px] h-[165px] object-cover">
+
             <p class="name-kh absolute top-[50px] left-[300px] text-black text-sm font-bold font-siemreap">
                 {{$member->name_kh}}
             </p>
