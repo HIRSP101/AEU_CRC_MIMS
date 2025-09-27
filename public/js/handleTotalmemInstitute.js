@@ -104,4 +104,34 @@ export function handleTotalmemInstitute(array, ExcelObj) {
             }
         },
     });
+    //submit member that waiting for approve
+     $("#btn_ok").on("click", function () {
+        const memberIds = window.getCurrentPageMemberIds();
+        $.ajax({
+            type: "POST",
+            url: "/memberapprove",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                arr: memberIds,
+            }),
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                console.log(response.status);
+                if (response.status === 200) {
+                    const confirmDelete = confirm(
+                        "សមាជិកត្រូវបានយល់ព្រមដោយជោគជ័យ។"
+                    );
+                    if (confirmDelete) {
+                        location.reload();
+                    }
+                }
+
+            },
+            error: function (error) {
+                console.error(error);
+            },
+        });
+    });
 }

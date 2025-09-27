@@ -86,7 +86,7 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                         </table>
                     </div>
                     <span class="flex justify-end mt-3 p-3">
-                        @if($user->role === 'admin')
+                        @if(auth()->user()->hasRole('admin'))
                             <a href="/branch"
                                 class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
                         @elseif($branchName != null && $branch_image != null)

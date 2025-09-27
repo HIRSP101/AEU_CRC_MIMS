@@ -71,7 +71,7 @@
                         </a>
                     </div>
 
-                <div class="py-2  ">
+                <div class="py-2 px-5 ">
                     <details class="mb-2 details-dropdown">
                         <summary
                             class="cursor-pointer block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">

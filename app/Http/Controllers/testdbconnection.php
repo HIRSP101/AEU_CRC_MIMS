@@ -44,7 +44,7 @@ class testdbconnection extends Controller
         $fieldNames = [];
         foreach ($columnNames as $columnName) {
             //dd($columnName->Field);
-            $fieldNames[$columnName->COLUMN_NAME] = $columnName->COLUMN_NAME;
+            $fieldNames[$columnName->column_name] = $columnName->column_name;
             //array_push($fieldNames,$columnName->Field);
         }
         return view('dataimport.index', compact('fieldNames','title'));

@@ -28,11 +28,11 @@
                 </div>
                 <div class="mt-4">
                     <x-input-label :value="__('Roles-Assignment')" />
-                    <div class="mt-2 flex items-center justify-around">
-                        <input name="roles[]" type="checkbox" id="admin" value="admin">
-                        <label>Admin</label>
+                    <div class="mt-2 flex items-center justify-center">
+                        <!-- <input name="roles[]" type="checkbox" id="admin" value="admin">
+                        <label>Admin</label> -->
                         <input name="roles[]" type="checkbox" id="user" value="user">
-                        <label>User</label>
+                        <label class="ml-7">User</label>
                     </div>
                 </div>
                 <div class="mt-4">
