@@ -45,11 +45,11 @@
                             value="{{ $institute->registered_at }}" required>
                     </div>
                     <div>
-                        <label for="district_khan" class="block font-siemreap mb-2">ស្រុក/ខណ្ឌ</label>
-                        <select name="district_khan" id="district_khan"
+                        <label for="district_id" class="block font-siemreap mb-2">ស្រុក/ខណ្ឌ</label>
+                        <select name="district_id" id="district_id"
                             class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
                             @foreach($districts as $d)
-                                <option value="{{ $d->district_khan }}">
+                                <option value="{{ $d->district_id }}">
                                     {{ $d->district_name }}
                                 </option>
                             @endforeach

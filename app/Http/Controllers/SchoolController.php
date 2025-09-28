@@ -23,10 +23,10 @@ class SchoolController extends Controller
         $this->deleteService = $deleteService;
         $this->deleteInstituteService = $deleteInstituteService;
     }
-    public function index1($branchId, $villageId)
+    public function index1($branchId, $districtId)
     {
-        $village = DB::table('district')
-            ->where('district_id', $villageId)
+        $district = DB::table('district')
+            ->where('district_id', $districtId)
             ->select('district_name')
             ->first();
 
@@ -42,7 +42,7 @@ class SchoolController extends Controller
             ->leftJoin('member_personal_detail as mpd', 'mpd.member_id', '=', 'meb.member_id')
             ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
             ->where('s.branch_id', $branchId)
-            ->where('s.district_id', $villageId)
+            ->where('s.district_id', $districtId)
             ->select(
                 's.school_id',
                 's.school_name',
@@ -53,10 +53,10 @@ class SchoolController extends Controller
             ->groupBy('s.school_id', 's.school_name', 's.type', 's.village_name')
             ->get();
 
-        return view('school.index', compact('schools', 'branchId', 'villageId', 'village'));
+        return view('school.index', compact('schools', 'branchId', 'districtId', 'district'));
     }
 
-    public function get(Request $request, $branchId = null, $villageId = null, $schoolId = null)
+    public function get(Request $request, $branchId = null, $districtId = null, $schoolId = null)
     {
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
@@ -100,8 +100,8 @@ class SchoolController extends Controller
             $branchWhole = collect();
         }
 
-        if ($villageId) {
-            $query->where('s.district_id', $villageId);
+        if ($districtId) {
+            $query->where('s.district_id', $districtId);
         }
 
         if ($schoolId) {
@@ -127,7 +127,7 @@ class SchoolController extends Controller
         return view('totalmemSchool.index', [
             'data' => $data,
             'branchId' => $branchId,
-            'villageId' => $villageId,
+            'districtId' => $districtId,
             'schoolId' => $schoolId,
             'currentSchool' => $currentSchool,
             'totalStu' => $totalStu,
@@ -136,11 +136,11 @@ class SchoolController extends Controller
         ]);
     }
 
-    public function create($branchId, $villageId)
+    public function create($branchId, $districtId)
     {
         if (auth()->user()->hasRole('user')) {
             $branchId = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
-            $villages = DB::table('district')->where('branch_id', $branchId)->get();
+            $districts = DB::table('district')->where('branch_id', $branchId)->get();
             $branches = DB::table('branch')
                 ->where('branch_id', $branchId)
                 ->get();
@@ -150,7 +150,7 @@ class SchoolController extends Controller
                 ->get();
         } else {
             $branches = DB::table('branch')->get();
-            $villages = DB::table('district')->get();
+            $districts = DB::table('district')->get();
             $schools = DB::table('school as s')
                 ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
                 ->get();
@@ -172,7 +172,7 @@ class SchoolController extends Controller
                 ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image', 'registered_at', 'branch_kh')
                 ->get();
         }
-        return view('school.create-school2', compact('branches', 'villages', 'schools', 'institutes'));
+        return view('school.create-school2', compact('branches', 'districts', 'schools', 'institutes'));
     }
     public function store(SchoolRequest $request, CreateSchoolService $service)
     {
@@ -206,6 +206,7 @@ class SchoolController extends Controller
                 'image' => $imageName,
                 'district_khan' => $district->district_name,
                 'provience_city' => $branch->branch_kh,
+                'district_id' => $request->input('district_id')
             ]);
         } else {
             $school = DB::table('school')->insertGetId([
@@ -228,7 +229,7 @@ class SchoolController extends Controller
     {
         if (auth()->user()->hasRole('user')) {
             $branchId = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
-            $villages = DB::table('district')->where('branch_id', $branchId)->get();
+            $districts = DB::table('district')->where('branch_id', $branchId)->get();
             $branches = DB::table('branch')
                 ->where('branch_id', $branchId)
                 ->get();
@@ -256,7 +257,7 @@ class SchoolController extends Controller
                 ->get();
         } else {
             $branches = DB::table('branch')->get();
-            $villages = DB::table('district')->get();
+            $districts = DB::table('district')->get();
             $schools = DB::table('school as s')
                 ->leftJoin('branch as b', 's.branch_id', '=', 'b.branch_id')
                 ->get();
@@ -279,7 +280,7 @@ class SchoolController extends Controller
                 ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image', 'registered_at', 'branch_kh')
                 ->get();
         }
-        return view('school.create-school2', compact('branches', 'villages', 'schools', 'institutes'));
+        return view('school.create-school2', compact('branches', 'districts', 'schools', 'institutes'));
     }
 
     public function store2(SchoolRequest $request, CreateSchoolService $service)
@@ -315,6 +316,7 @@ class SchoolController extends Controller
                 'image' => $imageName,
                 'district_khan' => $district->district_name,
                 'provience_city' => $branch->branch_kh,
+                'district_id' => $request->input('district_id')
             ]);
         } else {
             $school = DB::table('school')->insertGetId([
@@ -361,17 +363,19 @@ class SchoolController extends Controller
     {
         if ($type === 'institute') {
 
+            $district = district::where('district_id', $request->input('district_id'))->first();
             $institute = branch_hei::findOrFail($id);
             $institute->institute_kh = $request->input('institute_kh');
             $institute->institute_type = 'សាកលវិទ្យាល័យ';
             $institute->type = $request->input('typeUniversity');
             $institute->village = $request->input('village');
             $institute->commune_sangkat = $request->input('commune_sangkat');
-            $institute->district_khan = $request->input('district_khan');
+            $institute->district_khan = $district->district_name;
             $institute->branch_id = $request->input('branch_id');
             $institute->registered_at = $request->input('registered_at');
+            $institute->district_id = $request->input('district_id');
             // Handle file upload
-            if ($request->hasFile('image')) {   // ✅ fixed
+            if ($request->hasFile('image')) {
                 $path = $request->file('image')->store('uploads', 'public');
                 $institute->image = $path;
             }
@@ -445,20 +449,37 @@ class SchoolController extends Controller
     {
         $userBranchId = branch_bindding_user::where('user_id', auth()->user()->id)->first()->branch_id;
         // new code 2025/05/05 {
-        $institutes = DB::table('branch_hei as inst')
-            ->where('inst.branch_id', $userBranchId)
-            ->select(
-                'inst.bhei_id as id',
-                'inst.institute_kh as name'
-            )
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'id' => $item->id,
-                    'name' => $item->name,
-                    'type' => 'institute'
-                ];
-            });
+        if (auth()->user()->hasRole('admin')) {
+            $institutes = DB::table('branch_hei as inst')
+                ->where('inst.district_id', $id)
+                ->select(
+                    'inst.bhei_id as id',
+                    'inst.institute_kh as name'
+                )
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'id' => $item->id,
+                        'name' => $item->name,
+                        'type' => 'institute'
+                    ];
+                });
+        } else {
+            $institutes = DB::table('branch_hei as inst')
+                ->where('inst.branch_id', $userBranchId)
+                ->select(
+                    'inst.bhei_id as id',
+                    'inst.institute_kh as name'
+                )
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'id' => $item->id,
+                        'name' => $item->name,
+                        'type' => 'institute'
+                    ];
+                });
+        }
 
         $schools = DB::table('school as s')
             ->where('s.district_id', $id)

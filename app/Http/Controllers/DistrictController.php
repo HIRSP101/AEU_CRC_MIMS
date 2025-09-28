@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\VillageRequest;
+use App\Http\Requests\DistrictRequest;
 use App\Services\District\CreateDistrictService;
 use Illuminate\Http\Request;
 use App\Models\branch;
 use App\Models\branch_bindding_user;
 use App\Models\district;
-use App\Models\village;
 use App\Services\District\DeleteDistrictService;
 use Illuminate\Support\Facades\DB;
 
@@ -53,7 +52,7 @@ class DistrictController extends Controller
                 'total_mem' => $data->sum('total_mem'),
             ];
             return view('district.index', [
-                'villages' => $data,
+                'districts' => $data,
                 'branchId' => $branchId,
                 'branch' => $branch,
                 'branches' => $branches,
@@ -88,17 +87,17 @@ class DistrictController extends Controller
                 'total_mem' => $data->sum('total_mem'),
             ];
             return view('district.index', [
-                'villages' => $data,
+                'districts' => $data,
                 'branchId' => $branchId,
                 'branch' => $branch,
                 'branchWhole' => $branchTotals,
             ]);
         }
     }
-    public function get($branchId, $villageId)
+    public function get($branchId, $districtId)
     {
-        $schools = DB::table('branch_hei')->where('branch_id', $branchId)->where('village', $villageId)->select('bhei_id', 'institute_kh', 'image')->get();
-        return view('school.index', compact('schools', 'branchId', 'villageId'));
+        $schools = DB::table('branch_hei')->where('branch_id', $branchId)->where('village', $districtId)->select('bhei_id', 'institute_kh', 'image')->get();
+        return view('school.index', compact('schools', 'branchId', 'districtId'));
     }
 
     public function create($branchId)
@@ -123,16 +122,16 @@ class DistrictController extends Controller
         return view('district.create-district', compact('branch', 'branches', 'districts'));
     }
 
-    public function store(VillageRequest $request, CreateDistrictService $service)
+    public function store(DistrictRequest $request, CreateDistrictService $service)
     {
         $data = $request->validated();
         $data['branch_id'] = $request->route('id');
 
-        $village = $service->createDistrict($data);
+        $district = $service->createDistrict($data);
 
         return redirect()
-            ->route('village', ['id' => $village->branch_id])
-            ->with('success', 'Village created successfully');
+            ->route('district', ['id' => $district->branch_id])
+            ->with('success', 'District created successfully');
     }
     public function create2()
     {
@@ -159,7 +158,7 @@ class DistrictController extends Controller
         }
         return view('district.create-district2', compact('branches', 'districts'));
     }
-    public function store2(VillageRequest $request, CreateDistrictService $service)
+    public function store2(DistrictRequest $request, CreateDistrictService $service)
     {
         $request->validate([
             'district_name' => 'required|string|max:255',
@@ -174,10 +173,10 @@ class DistrictController extends Controller
         return redirect()->route('createdistrict')->with('success', 'District created successfully');
     }
 
-    public function getVillages($branchId)
+    public function getDistricts($branchId)
     {
-        $villages = DB::table('district')->where('branch_id', $branchId)->get();
-        return response()->json($villages);
+        $district = DB::table('district')->where('branch_id', $branchId)->get();
+        return response()->json($district);
     }
 
     public function getDistrict()

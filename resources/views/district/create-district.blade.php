@@ -11,13 +11,13 @@
             $d->branch_kh ?: '',
         ];
     }
-                                                ?>
+                                                    ?>
     <div class="flex justify-center h-screen bg-white">
         <div class="bg-white w-full m-5 rounded-lg shadow-md p-5">
             <div class="text-center mt-5 font-koulen text-blue-600 text-2xl">
                 <h1>បង្កើតស្រុក/ខណ្ឌ</h1>
             </div>
-            <form action="{{ route('village.store', ['id' => $branch->branch_id]) }}" method="POST">
+            <form action="{{ route('district.store', ['id' => $branch->branch_id]) }}" method="POST">
                 @csrf
                 <div class="flex gap-3 items-end mt-12">
                     <!-- District Name -->

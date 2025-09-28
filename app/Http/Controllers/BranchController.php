@@ -69,7 +69,7 @@ class BranchController extends Controller
                 DB::raw("COUNT(CASE 
                     WHEN mrd.expiration_date >= NOW()
                     THEN meb.member_id END) as total_mem"),
-                DB::raw("COUNT(DISTINCT d.district_id) AS total_villages")
+                DB::raw("COUNT(DISTINCT d.district_id) AS total_districts")
             )
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.branch_image');
 
@@ -145,8 +145,8 @@ class BranchController extends Controller
     public function get($id)
     {
         $branch = DB::table('branch')->where('branch_id', $id)->first();
-        $villages = DB::table('branch_hei')->where('branch_id', $id)->get();
-        return view('branch.show', compact('branch', 'villages'));
+        $districts = DB::table('branch_hei')->where('branch_id', $id)->get();
+        return view('branch.show', compact('branch', 'districts'));
     }
 
     //new code 2025/03/27 get branch by user when user login

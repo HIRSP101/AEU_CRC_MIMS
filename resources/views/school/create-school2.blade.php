@@ -71,7 +71,7 @@
                             <label for="district_id" class="block font-siemreap mb-2">ស្រុក/ខណ្ឌ</label>
                             <select name="district_id" id="district_id"
                                 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
-                                @foreach($villages as $v)
+                                @foreach($districts as $v)
                                     <option value="{{ $v->district_id }}">
                                         {{ $v->district_name }}
                                     </option>
@@ -141,13 +141,13 @@
             fetch('/get-district')
                 .then(response => response.json())
                 .then(data => {
-                    let villageSelect = document.getElementById("district_id");
-                    villageSelect.innerHTML = "";
-                    data.forEach(village => {
+                    let districtSelect = document.getElementById("district_id");
+                    districtSelect.innerHTML = "";
+                    data.forEach(district => {
                         let option = document.createElement("option");
-                        option.value = village.district_id;
-                        option.textContent = village.district_name;
-                        villageSelect.appendChild(option);
+                        option.value = district.district_id;
+                        option.textContent = district.district_name;
+                        districtSelect.appendChild(option);
                     });
                 });
         });
