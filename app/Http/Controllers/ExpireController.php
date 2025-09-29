@@ -213,7 +213,7 @@ class ExpireController extends Controller
         return DB::table('member_personal_detail as mpd')
             ->leftJoin('member_education_background as meb', 'meb.member_id', '=', 'mpd.member_id')
             ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
-            ->join('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
+            ->rightJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
             ->select(
                 'hei.bhei_id',
                 'hei.institute_kh',
@@ -282,6 +282,6 @@ class ExpireController extends Controller
         $data = $baseQuery->get();
         $totalStu = $data->count();
         $femaleStu = $data->where('gender', 'ស្រី')->count();
-        return view('totalmemInstitute.index', compact('total_mem', 'institution', 'title','totalStu','femaleStu'));
+        return view('totalmemInstitute.index', compact('total_mem', 'institution', 'title', 'totalStu', 'femaleStu'));
     }
 }
