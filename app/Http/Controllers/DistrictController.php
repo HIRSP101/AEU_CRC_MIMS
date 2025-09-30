@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\VillageRequest;
+use App\Http\Requests\DistrictRequest;
 use App\Services\District\CreateDistrictService;
 use Illuminate\Http\Request;
 use App\Models\branch;
 use App\Models\branch_bindding_user;
 use App\Models\district;
-use App\Models\village;
 use App\Services\District\DeleteDistrictService;
 use Illuminate\Support\Facades\DB;
 
-class VillageController extends Controller
+class DistrictController extends Controller
 {
     protected DeleteDistrictService $deleteService;
 
@@ -34,7 +33,7 @@ class VillageController extends Controller
                     'd.district_id',
                     'd.district_name',
                     DB::raw('COUNT(DISTINCT s.school_id) as total_schools'),
-                    DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
+                    DB::raw("COUNT(CASE WHEN mrd.expiration_date >= NOW() THEN meb.member_id END) as total_mem")
                     //DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
 
                 )
@@ -52,8 +51,8 @@ class VillageController extends Controller
                 'total_schools' => $data->sum('total_schools'),
                 'total_mem' => $data->sum('total_mem'),
             ];
-            return view('village.index', [
-                'villages' => $data,
+            return view('district.index', [
+                'districts' => $data,
                 'branchId' => $branchId,
                 'branch' => $branch,
                 'branches' => $branches,
@@ -69,7 +68,7 @@ class VillageController extends Controller
                     'd.district_id',
                     'd.district_name',
                     DB::raw('COUNT(DISTINCT s.school_id) as total_schools'),
-                    DB::raw("COUNT(CASE WHEN mrd.registration_date > NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem")
+                    DB::raw("COUNT(CASE WHEN mrd.expiration_date >= NOW() THEN meb.member_id END) as total_mem")
                     //DB::raw('COUNT(DISTINCT meb.member_id) as total_mem')
 
                 )
@@ -87,18 +86,18 @@ class VillageController extends Controller
                 'total_schools' => $data->sum('total_schools'),
                 'total_mem' => $data->sum('total_mem'),
             ];
-            return view('village.index', [
-                'villages' => $data,
+            return view('district.index', [
+                'districts' => $data,
                 'branchId' => $branchId,
                 'branch' => $branch,
                 'branchWhole' => $branchTotals,
             ]);
         }
     }
-    public function get($branchId, $villageId)
+    public function get($branchId, $districtId)
     {
-        $schools = DB::table('branch_hei')->where('branch_id', $branchId)->where('village', $villageId)->select('bhei_id', 'institute_kh', 'image')->get();
-        return view('school.index', compact('schools', 'branchId', 'villageId'));
+        $schools = DB::table('branch_hei')->where('branch_id', $branchId)->where('village', $districtId)->select('bhei_id', 'institute_kh', 'image')->get();
+        return view('school.index', compact('schools', 'branchId', 'districtId'));
     }
 
     public function create($branchId)
@@ -120,19 +119,19 @@ class VillageController extends Controller
                 ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')->get();
         }
 
-        return view('village.create-village', compact('branch', 'branches', 'districts'));
+        return view('district.create-district', compact('branch', 'branches', 'districts'));
     }
 
-    public function store(VillageRequest $request, CreateDistrictService $service)
+    public function store(DistrictRequest $request, CreateDistrictService $service)
     {
         $data = $request->validated();
         $data['branch_id'] = $request->route('id');
 
-        $village = $service->createDistrict($data);
+        $district = $service->createDistrict($data);
 
         return redirect()
-            ->route('village', ['id' => $village->branch_id])
-            ->with('success', 'Village created successfully');
+            ->route('district', ['id' => $district->branch_id])
+            ->with('success', 'District created successfully');
     }
     public function create2()
     {
@@ -157,9 +156,9 @@ class VillageController extends Controller
                 ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')
                 ->get();
         }
-        return view('village.create-village2', compact('branches', 'districts'));
+        return view('district.create-district2', compact('branches', 'districts'));
     }
-    public function store2(VillageRequest $request, CreateDistrictService $service)
+    public function store2(DistrictRequest $request, CreateDistrictService $service)
     {
         $request->validate([
             'district_name' => 'required|string|max:255',
@@ -174,10 +173,10 @@ class VillageController extends Controller
         return redirect()->route('createdistrict')->with('success', 'District created successfully');
     }
 
-    public function getVillages($branchId)
+    public function getDistricts($branchId)
     {
-        $villages = DB::table('district')->where('branch_id', $branchId)->get();
-        return response()->json($villages);
+        $district = DB::table('district')->where('branch_id', $branchId)->get();
+        return response()->json($district);
     }
 
     public function getDistrict()
@@ -214,7 +213,7 @@ class VillageController extends Controller
     {
         $district = district::findOrFail($id);
         $branches = branch::all();
-        return view('village.edit-district', compact('district', 'branches'));
+        return view('district.edit-district', compact('district', 'branches'));
     }
     public function updateDistrict(Request $request, $id)
     {

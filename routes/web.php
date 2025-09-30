@@ -133,27 +133,27 @@ Route::middleware('auth')->group(function () use ($appC) {
 
     Route::get('/institute', "{$appC}\\InstituteController@index1")->name('institute.index');
     Route::get('/institute/{id}', "{$appC}\\InstituteController@get")->name('institute.show');
-    // Create village
-    Route::get('/branch/{id}/village/create', "{$appC}\\VillageController@create")->name('village.create');
-    Route::post('/branch/{id}/village/store', "{$appC}\\VillageController@store")->name('village.store');
-    Route::get('/getVillages/{branchId}', "{$appC}\\VillageController@getVillages");
+    // Create district
+    Route::get('/branch/{id}/district/create', "{$appC}\\DistrictController@create")->name('district.create');
+    Route::post('/branch/{id}/district/store', "{$appC}\\DistrictController@store")->name('district.store');
+    Route::get('/getDistricts/{branchId}', "{$appC}\\DistrictController@getDistricts");
     // Create school
-    Route::get('/branch/{id}/village/{v_id}/school/create', "{$appC}\\SchoolController@create")->name('school.create');
-    Route::post('/branch/{id}/village/{v_id}/school/store', "{$appC}\\SchoolController@store")->name('school.store');
+    Route::get('/branch/{id}/district/{v_id}/school/create', "{$appC}\\SchoolController@create")->name('school.create');
+    Route::post('/branch/{id}/district/{v_id}/school/store', "{$appC}\\SchoolController@store")->name('school.store');
     Route::get('/getSchool', "{$appC}\\SchoolController@getSchool");
     // new Code 2025/03/27 get school by district 
     Route::get('/getSchoolByDistrictId/{id}', "{$appC}\\SchoolController@getSchoolByDistrictId");
 
     //Create district2
-    Route::get('/createdistrict', "{$appC}\\VillageController@create2")->name('createdistrict');
-    Route::post('/storedistrict', "{$appC}\\VillageController@store2")->name('storedistrict');
-    Route::get('/get-district', "{$appC}\\VillageController@getDistrict");
-    Route::get('/get-district/{id}', "{$appC}\\VillageController@getDistrictByBranchId");
+    Route::get('/createdistrict', "{$appC}\\DistrictController@create2")->name('createdistrict');
+    Route::post('/storedistrict', "{$appC}\\DistrictController@store2")->name('storedistrict');
+    Route::get('/get-district', "{$appC}\\DistrictController@getDistrict");
+    Route::get('/get-district/{id}', "{$appC}\\DistrictController@getDistrictByBranchId");
     // new code get district by user login
-    Route::get('/getDistrictByUserLogin/{id}', "{$appC}\\VillageController@getDistrictByUserLogin")->name('getDistrictByUserLogin');
-    Route::post('/deletedistrict', "{$appC}\\VillageController@deleteDistrict");
-    Route::get('/update-district/{id}', "{$appC}\\VillageController@editDistrict")->name('update-district');
-    Route::post('/update-district/{id}', "{$appC}\\VillageController@updateDistrict")->name('updatedistrict');
+    Route::get('/getDistrictByUserLogin/{id}', "{$appC}\\DistrictController@getDistrictByUserLogin")->name('getDistrictByUserLogin');
+    Route::post('/deletedistrict', "{$appC}\\DistrictController@deleteDistrict");
+    Route::get('/update-district/{id}', "{$appC}\\DistrictController@editDistrict")->name('update-district');
+    Route::post('/update-district/{id}', "{$appC}\\DistrictController@updateDistrict")->name('updatedistrict');
 
     // Create school 2
     Route::get('/createschool', "{$appC}\\SchoolController@create2")->name('createschool');
@@ -167,10 +167,10 @@ Route::middleware('auth')->group(function () use ($appC) {
     Route::post('/update/{type}/{id}', "{$appC}\\SchoolController@update")->name('updatePost');
 
 
-    Route::get('/branch/{id}/village', "{$appC}\\VillageController@index")->name('village');
-    Route::get('/branch/{id}/village/{v_id}', "{$appC}\\VillageController@get");
-    Route::get('/branch/{id}/village/{v_id}/school', "{$appC}\\SchoolController@index1")->name('school');
-    Route::get('/branch/{id}/village/{v_id}/school/{s_id}', "{$appC}\\SchoolController@get");
+    Route::get('/branch/{id}/district', "{$appC}\\DistrictController@index")->name('district');
+    Route::get('/branch/{id}/district/{v_id}', "{$appC}\\DistrictController@get");
+    Route::get('/branch/{id}/district/{v_id}/school', "{$appC}\\SchoolController@index1")->name('school');
+    Route::get('/branch/{id}/district/{v_id}/school/{s_id}', "{$appC}\\SchoolController@get");
     Route::get("/wholebranch/{id}", "{$appC}\\SchoolController@get")->name("wholebranch");
 
     Route::get('/document', "{$appC}\\DocumentController@index")->name('document');

@@ -15,26 +15,17 @@
                 {{-- card list of all reports --}}
                 @if(auth()->user()->hasRole('user') && $branchName != null)
                     <div class="py-2 px-5">
-                        <a href="/branch/{{ $userBranchId }}/village"
+                        <a href="/branch/{{ $userBranchId }}/district"
                             class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
                             <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
                                 បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំ {{ $branchName }}</p>
                         </a>
                     </div>
                     <div class="py-2 px-5">
-                        <a href="{{ route('list_branches') }}"
+                        <a href="{{ route('total.member.university', ['id' => $userBranchId]) }}"
                             class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
                             <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
                                 តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជនប្រចាំ {{ $branchName }}</p>
-                        </a>
-                    </div>
-                    <div class="py-2 px-5">
-                        <a href="{{ route('member.report.all.branch') }}"
-                            class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                                តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជន២៥រាជធានី/ខេត្ត​​
-                                និងគ្រឹះស្ថានឧត្តមសិក្សា
-                            </p>
                         </a>
                     </div>
                 @elseif($institute_id != null)
@@ -51,14 +42,14 @@
                         <a href="/branch"
                             class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
                             <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                                បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំ {{ $branchName }}</p>
+                                បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហម ប្រចាំសាខានីមួយៗ</p>
                         </a>
                     </div>
                     <div class="py-2 px-5">
                         <a href="{{ route('list_branches') }}"
                             class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
                             <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                                តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជនប្រចាំ {{ $branchName }} </p>
+                                តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជន ប្រចាំសាខានីមួយៗ </p>
                         </a>
                     </div>
                     <div class="py-2 px-5">
@@ -71,56 +62,56 @@
                         </a>
                     </div>
 
-                <div class="py-2 px-5 ">
-                    <details class="mb-2 details-dropdown">
-                        <summary
-                            class="cursor-pointer block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                            <span class="font-semibold font-battambang text-gray-700">តារាងទិន្នន័យបច្ចុប្បន្នភាពទីប្រឹក្សា​
-                                និងយុវជនប្រចាំសាខាគ្រឹះស្ថានឧត្តមសិក្សា</span>
-                            <span
-                                class="dropdown-icon transition-transform duration-300 transform rotate-0 inline-block ml-2 text-red-600">▼</span>
-                        </summary>
+                    <div class="py-2 px-5 ">
+                        <details class="mb-2 details-dropdown">
+                            <summary
+                                class="cursor-pointer block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                                <span class="font-semibold font-battambang text-gray-700">តារាងទិន្នន័យបច្ចុប្បន្នភាពទីប្រឹក្សា​
+                                    និងយុវជនប្រចាំសាខាគ្រឹះស្ថានឧត្តមសិក្សា</span>
+                                <span
+                                    class="dropdown-icon transition-transform duration-300 transform rotate-0 inline-block ml-2 text-red-600">▼</span>
+                            </summary>
 
-                        <ul class="ml-8 mt-4">
-                            <li class="mt-4">
-                                <a href="{{ route('total.university') }}">
-                                    <div
-                                        class="cursor-pointer block max-w-full p-5 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100 ">
-                                        <p class="text-gray-700 font-battambang text-[16px] font-semibold">
-                                            តារាងទិន្នន័យបច្ចុប្បន្នភាពទីប្រឹក្សា​ និងយុវជនប្រចាំគ្រឹះស្ថានឧត្តមសិក្សាសរុប
-                                        </p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="mt-4">
-                                <a href="{{ route('public.university') }}">
-                                    <div
-                                        class="cursor-pointer block max-w-full p-5 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                                        <p class="text-gray-700 font-battambang text-[16px] font-semibold">
-                                            តារាងទិន្នន័យបច្ចុប្បន្នភាពទីប្រឹក្សា​
-                                            និងយុវជនប្រចាំគ្រឹះស្ថានឧត្តមសិក្សាសាធារណៈ
-                                        </p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="mt-4">
-                                <a href="{{ route('private.university') }}">
-                                    <div
-                                        class="cursor-pointer block max-w-full p-5 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                                        <p class="text-gray-700 font-battambang text-[16px] font-semibold">
-                                            តារាងទិន្នន័យបច្ចុប្បន្នភាពទីប្រឹក្សា​ និងយុវជនប្រចាំគ្រឹះស្ថានឧត្តមសិក្សាឯកជន
-                                        </p>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </details>
-                </div>
-            @endif
+                            <ul class="ml-8 mt-4">
+                                <li class="mt-4">
+                                    <a href="{{ route('total.university') }}">
+                                        <div
+                                            class="cursor-pointer block max-w-full p-5 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100 ">
+                                            <p class="text-gray-700 font-battambang text-[16px] font-semibold">
+                                                តារាងទិន្នន័យបច្ចុប្បន្នភាពទីប្រឹក្សា​ និងយុវជនប្រចាំគ្រឹះស្ថានឧត្តមសិក្សាសរុប
+                                            </p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="mt-4">
+                                    <a href="{{ route('public.university') }}">
+                                        <div
+                                            class="cursor-pointer block max-w-full p-5 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                                            <p class="text-gray-700 font-battambang text-[16px] font-semibold">
+                                                តារាងទិន្នន័យបច្ចុប្បន្នភាពទីប្រឹក្សា​
+                                                និងយុវជនប្រចាំគ្រឹះស្ថានឧត្តមសិក្សាសាធារណៈ
+                                            </p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="mt-4">
+                                    <a href="{{ route('private.university') }}">
+                                        <div
+                                            class="cursor-pointer block max-w-full p-5 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
+                                            <p class="text-gray-700 font-battambang text-[16px] font-semibold">
+                                                តារាងទិន្នន័យបច្ចុប្បន្នភាពទីប្រឹក្សា​ និងយុវជនប្រចាំគ្រឹះស្ថានឧត្តមសិក្សាឯកជន
+                                            </p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </details>
+                    </div>
+                @endif
+            </div>
+            {{--end card list of all reports --}}
         </div>
-        {{--end card list of all reports --}}
     </div>
-</div>
 
 @endsection
 

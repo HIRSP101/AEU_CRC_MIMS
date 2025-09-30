@@ -47,7 +47,7 @@ class testdbconnection extends Controller
             $fieldNames[$columnName->COLUMN_NAME] = $columnName->COLUMN_NAME;
             //array_push($fieldNames,$columnName->Field);
         }
-        return view('dataimport.index', compact('fieldNames','title'));
+        return view('dataimport.index', compact('fieldNames', 'title'));
     }
 
     public function insertMember(Request $request)
@@ -55,7 +55,7 @@ class testdbconnection extends Controller
         $datas = $request->input('member') ?? dd("FUBAR!!!");
         $currentDate = date('Y-m-d');
         $branches = branch::all()->pluck('branch_id', 'branch_kh');
-       // dd($datas);
+        // dd($datas);
 
         $chunkedData = collect($datas)->chunk(5);
 

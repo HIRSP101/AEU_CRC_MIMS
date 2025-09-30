@@ -12,7 +12,7 @@
                 <h1>បង្កើតសាលារៀន​</h1>
             </div>
 
-            <form action="{{ route('school.store', ['id' => $branch->branch_id, 'v_id' => $village->district_id]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('school.store', ['id' => $branch->branch_id, 'v_id' => $district->district_id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4">
                     <div>
@@ -65,8 +65,8 @@
                         <div>
                             <label for="district_id" class="block font-siemreap mb-2">ស្រុក/ខណ្ឌ</label>
                             <select name="district_id" id="district_id" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
-                                @foreach($villages as $v)
-                                    <option value="{{ $v->district_id }}" {{ $v->district_id == $village->district_id ? 'selected' : '' }}>
+                                @foreach($districts as $v)
+                                    <option value="{{ $v->district_id }}" {{ $v->district_id == $district->district_id ? 'selected' : '' }}>
                                         {{ $v->district_name }}
                                     </option>
                                 @endforeach
@@ -122,16 +122,16 @@
     <script>
         document.getElementById("branch_id").addEventListener("change", function() {
             let branchId = this.value;
-            fetch(`/getVillages/${branchId}`)
+            fetch(`/getDistricts/${branchId}`)
             .then(response => response.json())
             .then(data => {
-                let villageSelect = document.getElementById("district_id");
-                villageSelect.innerHTML = "";
-                    data.forEach(village => {
+                let districtSelect = document.getElementById("district_id");
+                districtSelect.innerHTML = "";
+                    data.forEach(district => {
                         let option = document.createElement("option");
-                        option.value = village.district_id;
-                        option.textContent = village.district_name;
-                        villageSelect.appendChild(option);
+                        option.value = district.district_id;
+                        option.textContent = district.district_name;
+                        districtSelect.appendChild(option);
                     });
             });
         });

@@ -40,7 +40,7 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                     </div>
                 </div>
                 <div class="p-2 bg-white border rounded-xl shadow-lg sm:w-[50%] md:w-[50%] ">
-                    <h2 class="text-blue-700 text-2xl font-koulen mt-4 text-center">ទីស្នាក់ការដែលមានសមាជិកចុះឈ្មោះថ្មី
+                    <h2 class="text-blue-700 text-2xl font-koulen mt-4 text-center">សាខាដែលមានសមាជិកចុះឈ្មោះថ្មី
                     </h2>
                     <div class="mt-4 flex justify-center">
                         <table class="table font-battambang leading-10 font-medium">
@@ -90,7 +90,7 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
                             <a href="/branch"
                                 class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
                         @elseif($branchName != null && $branch_image != null)
-                            <a href="{{ route('village', ['id' => $userBranchId]) }}"
+                            <a href="{{ route('district', ['id' => $userBranchId]) }}"
                                 class="bg-blue-600 px-4 py-2 rounded-lg text-white font-battambang hover:bg-blue-500 text-[17px]">មើលបន្ថែម</a>
                         @endif
                     </span>
@@ -104,8 +104,8 @@ $institute_image = App\Models\branch_hei::where('bhei_id', $institute_id)->value
     <script>
         var options = {
             series: [
-                    {{ $total_mem_institute->total_mem ?? 0 }},
-                    {{ $total_mem_institute->total_wm ?? 0 }},
+                            {{ $total_mem_institute->total_mem ?? 0 }},
+                            {{ $total_mem_institute->total_wm ?? 0 }},
                 {{ $total_mem_institute->total_mem_expired ?? 0 }}
             ],
             chart: { type: 'pie', width: 380 },

@@ -21,53 +21,48 @@
 
 @push('JS')
     <script>
-        $("input#ogbranchswitch").change(function (e) {
-            window.location = "{{ url('/') }}/totalmemInstitute_ex"
-        })
         const array = @json($total_member_institute);
-        let originalArray = [...array];
+        console.log("sdfghjkl: ", array); // should show institutes
 
         function updateInstituteList(data) {
             const ul = $("ul");
             ul.empty();
-            data.forEach((item) => {
+            data.forEach(item => {
                 ul.append(`
-                                                                        <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 hover:ring-indigo-200 hover:rounded-lg mt-5">
-                                                                            <a href="/list-institute/${item.bhei_id}">
-                                                                                <div class="flex justify-between items-center">
-                                                                                    <div class="flex items-center">
-                                                                                        <img
-                                                                                            src="${item.image}"
-                                                                                            alt="Logo 1"
-                                                                                            class="ml-10 w-16 mr-8 rounded-full object-cover h-16"
-                                                                                        />
-                                                                                        <span class="text-lg font-battambang">${item.institute_kh}</span>
-                                                                                    </div>
-                                                                                    <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
-                                                                                        <span class="text-xs font-battambang">
-                                                                                            ស.ម <strong>${item.total_members ?? 0} នាក់</strong>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                    `)
-            })
+                        <li class="border-b bg-slate-50 rounded-lg hover:bg-indigo-50 p-2 mt-5">
+                            <a href="/list-institute/${item.bhei_id}">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <img src="${item.image || '/default-image.png'}"
+                                            class="ml-10 w-16 mr-8 rounded-full object-cover h-16" />
+                                        <span class="text-lg font-battambang">${item.institute_kh}</span>
+                                    </div>
+                                    <div class="grid grid-rows-2 m-2 place-items-end content-between gap-8">
+                                        <span class="text-xs font-battambang">
+                                            ស.ម <strong>${item.total_members ?? 0} នាក់</strong>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    `);
+            });
         }
 
-        $("#filter_institute_btn").click(function () {
-            const filterText = $("#filter_box").val().toLowerCase();
+        $(document).ready(function () {
+            updateInstituteList(array);
 
-            const filteredArray = array.filter((item) => item.institute_kh?.toLowerCase().includes(filterText));
+            $("#filter_institute_btn").click(function () {
+                const filterText = $("#filter_box").val().toLowerCase();
+                const filteredArray = array.filter(item => item.institute_kh?.toLowerCase().includes(filterText));
+                updateInstituteList(filteredArray);
+            });
 
-            updateInstituteList(filteredArray);
+            $("#filter_box").on("input", function () {
+                if ($(this).val() === "") {
+                    updateInstituteList(array);
+                }
+            });
         });
-
-        $("#filter_box").on("input", function () {
-            if ($(this).val() === "") {
-                updateInstituteList(originalArray);
-            }
-        });
-        updateInstituteList(originalArray);
     </script>
 @endpush

@@ -48,7 +48,8 @@ export default function setuppagination(array, attr_arr, updateroute) {
 
         for (let i = startPage; i <= endPage; i++) {
             $indexButtons.append(
-                `<button class="ml-2 bg-gray-300 px-3 rounded ${i === current_index ? "active" : ""
+                `<button class="ml-2 bg-gray-300 px-3 rounded ${
+                    i === current_index ? "active" : ""
                 }" 
                 onclick="indexPagination(${i})" data-index="${i}">${i}</button>`
             );
@@ -90,18 +91,27 @@ export default function setuppagination(array, attr_arr, updateroute) {
 
         for (let i = tab_start; i < tab_end; i++) {
             const item = array[i];
-            const tr = generateTableRow(item, attr_arr);
+            const serialNumber = i + 1; // this keeps numbering continuous across pages
+            const tr = generateTableRow(item, attr_arr, serialNumber - 1);
             $tbody.append(tr);
         }
     }
 
-    function generateTableRow(item, attr_arr) {
+    function generateTableRow(item, attr_arr, index) {
         var { origin } = window.location;
-        let rowHTML = `<tr class='border-b border-slate-300 hover:bg-slate-300 hoverablebranch' data-id="${item[attr_arr[0]]}">`;
+
+        let rowHTML = `<tr class='border-b border-slate-300 hover:bg-slate-300 hoverablebranch' data-id="${item["member_id"]}">`;
+
+        rowHTML += `<td class='px-2 py-4 text-sm text-center whitespace-nowrap'>${
+            index + 1
+        }</td>`;
 
         attr_arr.forEach((attr) => {
+            if (attr === "member_id") return;
             if (attr == "image") {
-                rowHTML += `<td class='px-2 py-4 text-sm text-center whitespace-nowrap'><img src="${origin}/${item[attr]}" class="object-contain w-auto h-[64px] mx-0 my-0 px-0 py-0"></td>`;
+                rowHTML += `<td class='px-2 py-4 text-sm text-center whitespace-nowrap'>
+                          <img src="${origin}/${item[attr]}" class="object-contain w-auto h-[64px]">
+                        </td>`;
             } else {
                 rowHTML += `<td class='px-2 py-4 text-sm text-center whitespace-nowrap'>${item[attr]}</td>`;
             }
@@ -111,13 +121,12 @@ export default function setuppagination(array, attr_arr, updateroute) {
 
         if (window.userCanEditOrDelete) {
             rowHTML += `
-            <a class=" px-2 py-2 text-blue-600 edit" data-id="${item[attr_arr[0]]}" href='/${updateroute}/${item[attr_arr[0]]}'>edit</a>
-            <button class=" px-2 py-2 text-red-500 del-one" data-id="${item[attr_arr[0]]}">delete</button>
+            <a class="px-2 py-2 text-blue-600 edit" data-id="${item["member_id"]}" href='/update-member/${item["member_id"]}'>edit</a>
+            <button class="px-2 py-2 text-red-500 del-one" data-id="${item["member_id"]}">delete</button>
         `;
         }
 
         rowHTML += `</td></tr>`;
-
         return rowHTML;
     }
 
@@ -152,13 +161,13 @@ export default function setuppagination(array, attr_arr, updateroute) {
         }
     });
 
-    // new code get only members that contains in the current table 
+    // new code get only members that contains in the current table
     function getCurrentPageMemberIds() {
         const tab_start = start_index - 1;
         const tab_end = end_index;
 
         const currentMembers = array.slice(tab_start, tab_end);
-        const memberIds = currentMembers.map(item => item[attr_arr[0]]);
+        const memberIds = currentMembers.map((item) => item[attr_arr[0]]);
 
         return memberIds;
     }

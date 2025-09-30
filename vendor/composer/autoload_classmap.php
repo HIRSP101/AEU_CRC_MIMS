@@ -94,6 +94,7 @@ return array(
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
+    'App\\Services\\Branch_hei\\DeleteInstituteService' => $baseDir . '/app/Services/Branch_hei/DeleteInstituteService.php',
     'App\\Services\\Branches\\CreateBranchService' => $baseDir . '/app/Services/Branches/CreateBranchService.php',
     'App\\Services\\Branches\\DeleteBranchService' => $baseDir . '/app/Services/Branches/DeleteBranchService.php',
     'App\\Services\\Branches\\UpdateBranchService' => $baseDir . '/app/Services/Branches/UpdateBranchService.php',
