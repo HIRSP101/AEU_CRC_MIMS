@@ -18,7 +18,7 @@ export function handleTotalmemInstitute(array, ExcelObj) {
         if ($(e.target).closest("td").hasClass("action")) {
             return;
         }
-        $(this).toggleClass("bg-slate-300 marked");
+        $(this).toggleClass("bg-red-300 marked");
     });
 
     // $(".table table tbody").on("dblclick", ".hoverablebranch", function (e) {
@@ -33,7 +33,7 @@ export function handleTotalmemInstitute(array, ExcelObj) {
         console.log(userId);
         window.location.href = `/member/${userId}`;
     });
-    
+
 
     $("#delete").on("click", function (e) {
         e.preventDefault();
@@ -71,7 +71,7 @@ export function handleTotalmemInstitute(array, ExcelObj) {
     $(".table table tbody").on("click", ".del-one", function (e) {
         e.preventDefault();
         console.log($(this).val);
-        
+
         // e.preventDefault();
         // const userId = $(this).attr("data-id");
         // console.log(userId);
@@ -105,7 +105,7 @@ export function handleTotalmemInstitute(array, ExcelObj) {
         },
     });
     //submit member that waiting for approve
-     $("#btn_ok").on("click", function () {
+    $("#btn_ok").on("click", function () {
         const memberIds = window.getCurrentPageMemberIds();
         $.ajax({
             type: "POST",
