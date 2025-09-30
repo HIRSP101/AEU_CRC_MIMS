@@ -39,12 +39,12 @@ class testdbconnection extends Controller
     {
         $title = "បញ្ចូលសមាជិកតាមរយះឯកសារ";
         $columnNames = DB::connection('mysql')
-            ->select("select column_name from information_schema.columns where table_schema = DATABASE() and table_name in ('member_personal_detail', 'member_guardian_detail', 'member_registration_detail', 'member_engagement_detail', 'member_education_background') and column_name not like '%id' and column_name != 'registration_date_kh' and column_name != 'registration_date_en' and column_name != 'image'");
+            ->select("select COLUMN_NAME from information_schema.columns where table_schema = DATABASE() and table_name in ('member_personal_detail', 'member_guardian_detail', 'member_registration_detail', 'member_engagement_detail', 'member_education_background') and column_name not like '%id' and column_name != 'registration_date_kh' and column_name != 'registration_date_en' and column_name != 'image'");
         // dd($columnNames);
         $fieldNames = [];
         foreach ($columnNames as $columnName) {
             //dd($columnName->Field);
-            $fieldNames[$columnName->column_name] = $columnName->column_name;
+            $fieldNames[$columnName->COLUMN_NAME] = $columnName->COLUMN_NAME;
             //array_push($fieldNames,$columnName->Field);
         }
         return view('dataimport.index', compact('fieldNames','title'));
