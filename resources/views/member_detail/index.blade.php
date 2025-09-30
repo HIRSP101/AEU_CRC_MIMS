@@ -216,7 +216,18 @@
                 src="{{ url('images/Logo_of_Cambodian_Red_Cross.svg') }}" width="100" height="100" />
                 </div>
                 <div class="mem-img">
-                <img class="mems-img" src="{{ url($member->member_image) }}" width="100" height="120"/>
+                 @if ($member->member_image != null)
+                                <div class="w-28 h-36 border border-black text-center">
+                                    <img class="h-36 w-28" src="{{ url($member->member_image) }}" alt="member-image">
+                                </div>
+                            @else
+                                <div class="w-28 h-36 border border-black text-center p-2">
+                                    <p class="text-[12px] font-battambang">ភ្ជាប់មកនូវ</p>
+                                    <p class="text-[12px] font-battambang">រូបថត</p>
+                                    <p class="text-[12px] mt-2">4x6</p>
+                                    <p class="text-[12px]">3x4</p>
+                                </div>
+                            @endif
                 </div>
                 <h1 class="head1">សលាកបត្រព័ត៌មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
                 <p class="title">Cambodian Red Cross Youth Individual Information</p>

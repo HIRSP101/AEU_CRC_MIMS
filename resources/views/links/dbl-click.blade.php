@@ -96,9 +96,12 @@
                             placeholder="Select a date">
                     </div>
                 </div>
-                <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
-                <!-- <button id="export_pdf" class="bg-green-500 text-white px-4 py-2 rounded">Export PDF</button> -->
-                <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                @canany(['2'])
+                @can('3')
+                    <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>   
+                @endcan
+                    <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                @endcanany
             </div>
         </div>
         <div class="w-full overflow-scroll my-3 max-h-[760px] table">
@@ -132,10 +135,11 @@
                         <th class="py-3 text-center">
                             ថ្ងៃចុះឈ្មោះ
                         </th>
-
-                        <th class="py-3 text-center">
-                            action
-                        </th>
+                        @canany(['2', '3'])
+                            <th class="py-3 text-center">
+                                action
+                            </th>
+                        @endcanany
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
@@ -169,6 +173,8 @@
                         @json($institute_kh));
                 }
             });
+                        window.userCanEditOrDelete = @json(auth()->user()->canany(['2', '3']));
+
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endpush

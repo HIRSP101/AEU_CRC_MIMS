@@ -172,7 +172,8 @@ class SchoolController extends Controller
                 ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image', 'registered_at', 'branch_kh')
                 ->get();
         }
-        return view('school.create-school2', compact('branches', 'districts', 'schools', 'institutes'));
+        $title="បង្កើតសាលារៀន";
+        return view('school.create-school2', compact('branches', 'districts', 'schools', 'institutes','title'));
     }
     public function store(SchoolRequest $request, CreateSchoolService $service)
     {
@@ -280,7 +281,8 @@ class SchoolController extends Controller
                 ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image', 'registered_at', 'branch_kh')
                 ->get();
         }
-        return view('school.create-school2', compact('branches', 'districts', 'schools', 'institutes'));
+        $title="បង្កើតសាលារៀន";
+        return view('school.create-school2', compact('branches', 'districts', 'schools', 'institutes','title'));
     }
 
     public function store2(SchoolRequest $request, CreateSchoolService $service)

@@ -1,41 +1,41 @@
 {
-  "_index-ngrFHoWO.js": {
-    "file": "assets/index-ngrFHoWO.js",
-    "name": "index"
+  "_axios-BimPEqV4.js": {
+    "file": "assets/axios-BimPEqV4.js",
+    "name": "axios"
   },
   "_sheetTable-BQhtKuyM.js": {
     "file": "assets/sheetTable-BQhtKuyM.js",
     "name": "sheetTable"
   },
   "resources/css/app.css": {
-    "file": "assets/app-B6KPHDeX.css",
+    "file": "assets/app-orX3Rq7A.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-DwrzCyxp.js",
+    "file": "assets/app-BiUm1EhQ.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_index-ngrFHoWO.js",
+      "_axios-BimPEqV4.js",
       "resources/js/exportToExcel.js"
     ],
     "css": [
-      "assets/app-hncQLfAo.css"
+      "assets/app-SyS2gPs1.css"
     ]
   },
   "resources/js/bootstrap.js": {
-    "file": "assets/bootstrap-9aYweeFC.js",
+    "file": "assets/bootstrap-zFMa9SER.js",
     "name": "bootstrap",
     "src": "resources/js/bootstrap.js",
     "isEntry": true,
     "imports": [
-      "_index-ngrFHoWO.js"
+      "_axios-BimPEqV4.js"
     ]
   },
   "resources/js/exportExcelPrivateUniversity.js": {
-    "file": "assets/exportExcelPrivateUniversity-mNXdHLJm.js",
+    "file": "assets/exportExcelPrivateUniversity-CP7p1niy.js",
     "name": "exportExcelPrivateUniversity",
     "src": "resources/js/exportExcelPrivateUniversity.js",
     "isEntry": true,
@@ -44,13 +44,13 @@
     ]
   },
   "resources/js/exportToExcel.js": {
-    "file": "assets/exportToExcel-CJLzRMgA.js",
+    "file": "assets/exportToExcel-DeJInSqA.js",
     "name": "exportToExcel",
     "src": "resources/js/exportToExcel.js",
     "isEntry": true
   },
   "resources/js/exportToExcelOptionThree.js": {
-    "file": "assets/exportToExcelOptionThree-Do4HGlKJ.js",
+    "file": "assets/exportToExcelOptionThree-_Iy05mMG.js",
     "name": "exportToExcelOptionThree",
     "src": "resources/js/exportToExcelOptionThree.js",
     "isEntry": true,
@@ -59,7 +59,7 @@
     ]
   },
   "resources/js/exportToExcelOptionTwo.js": {
-    "file": "assets/exportToExcelOptionTwo-_JCf7JpH.js",
+    "file": "assets/exportToExcelOptionTwo-DFrC8RE2.js",
     "name": "exportToExcelOptionTwo",
     "src": "resources/js/exportToExcelOptionTwo.js",
     "isEntry": true,
@@ -68,7 +68,7 @@
     ]
   },
   "resources/js/exportToExcelPublic.js": {
-    "file": "assets/exportToExcelPublic-DSDyd59h.js",
+    "file": "assets/exportToExcelPublic-ChasZuV_.js",
     "name": "exportToExcelPublic",
     "src": "resources/js/exportToExcelPublic.js",
     "isEntry": true,
@@ -77,7 +77,7 @@
     ]
   },
   "resources/js/exportToExcel_branch.js": {
-    "file": "assets/exportToExcel_branch-BiRd9KMU.js",
+    "file": "assets/exportToExcel_branch-BODyAAbk.js",
     "name": "exportToExcel_branch",
     "src": "resources/js/exportToExcel_branch.js",
     "isEntry": true,
@@ -86,7 +86,7 @@
     ]
   },
   "resources/js/import.js": {
-    "file": "assets/import-ClsoJjOS.js",
+    "file": "assets/import-j6odH4TA.js",
     "name": "import",
     "src": "resources/js/import.js",
     "isEntry": true,
@@ -96,7 +96,7 @@
     ]
   },
   "resources/js/import_for_branchhei.js": {
-    "file": "assets/import_for_branchhei-CVdb51a6.js",
+    "file": "assets/import_for_branchhei-C8ZCRHbP.js",
     "name": "import_for_branchhei",
     "src": "resources/js/import_for_branchhei.js",
     "isEntry": true,

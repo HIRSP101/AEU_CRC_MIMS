@@ -14,7 +14,7 @@ $i = 0;
         (សាធារណៈ)</h1>
     <h2 class="text-center font-koulen mb-2 text-2xl text-blue-600">បច្ចុប្បន្នភាពឆ្នាំ {{ $selectedYear }}</h2>
     <div class="flex justify-between items-center mt-5">
-        @canany(['2', '3'])
+        @canany(['3'])
             <div>
                 <button id="export_excel" class="bg-[#31bf7d] text-white px-4 py-2 rounded">Export Excel</button>
             </div>

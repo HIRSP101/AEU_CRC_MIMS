@@ -98,8 +98,10 @@ $institute_kh = $institution->institute_kh;
                             placeholder="Select a date">
                     </div>
                 </div>
-                @canany(['2', '3'])
-                    <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
+                @canany(['2'])
+                @can('3')
+                    <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>   
+                @endcan
                     <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
                 @endcanany
             </div>

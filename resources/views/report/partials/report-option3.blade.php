@@ -13,7 +13,7 @@
         <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">នៃកាកបាទក្រហមកម្ពុជា ២៥ រាជធានី/ខេត្ត និងគ្រឹះស្ថានឧត្តមសិក្សា</h1>
         <h2 class="text-center font-koulen mb-2 text-2xl text-blue-600">បច្ចុប្បន្នភាពឆ្នាំ {{ $selectedYear }}</h2>
         <div class="flex justify-between items-center mt-5">
-            @canany(['3', '2'])
+            @canany(['3'])
             <div>
                 <button id="export_excel" class="bg-[#31bf7d] text-white px-4 py-2 rounded">Export Excel</button>
             </div>
