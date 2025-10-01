@@ -8,6 +8,7 @@
 $i = 0;
 $userBranchId = \App\Models\branch_bindding_user::where('user_id', auth()->id())->value('branch_id');
 $branchName = \App\Models\branch::where('branch_id', $userBranchId)->value('branch_kh');
+$branch = \App\Models\branch::where('branch_id', $branchId)->value('branch_kh');
     ?>
 <div class="bg-white m-5 p-5 shadow-lg h-max-full rounded-lg">
     @if(auth()->user()->hasRole('user'))
@@ -18,7 +19,7 @@ $branchName = \App\Models\branch::where('branch_id', $userBranchId)->value('bran
     @else
         <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">តារាងទិន្នន័យគ្រឹះស្ថានសិក្សា
             ទីប្រឹក្សាយុវជន និងយុវជន</h1>
-        <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">នៃកាកបាទក្រហមកម្ពុជា​ ប្រចាំ​​សាខានីមួយៗ</h1>
+        <h1 class="text-center font-koulen my-2 text-2xl text-blue-600">នៃកាកបាទក្រហមកម្ពុជា​ ប្រចាំ​​ {{ $branch }}</h1>
     @endif
     <h2 class="text-center font-koulen mb-2 text-2xl text-blue-600">បច្ចុប្បន្នភាពឆ្នាំ {{ $selectedYear }}</h2>
     <div class="flex justify-between items-center mt-5">

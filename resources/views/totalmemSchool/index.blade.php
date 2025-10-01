@@ -8,7 +8,7 @@
     $current_branch = "";
     $total_mem_detail = [];
     $school_name = $currentSchool?->school_name;
-                                                                                                                                                                    ?>
+                                                                                                                                                                                ?>
     @if(isset($data) && count($data) > 0)
         <?php
             $current_branch = explode(' ', $data[0]->full_current_address)[3] ?? "";
@@ -30,12 +30,11 @@
                 ];
             }
 
-                                                                                                                                                                                                                                                                                                                                ?>
+                        ?>
         <div class="bg-white m-5 p-5 shadow-lg rounded-lg">
-            <h1 class="text-center font-koulen text-blue-600 my-5 text-2xl"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន
-                និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
-
-            <h2 class="text-center font-koulen te mb-2 text-2xl text-blue-600"> សាខាកាកបាទក្រហមកម្ពុជា
+            <h1 class="text-center font-koulen text-blue-600 my-5 text-2xl"> បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមកម្ពុជា
+            </h1>
+            <h2 class="text-center font-koulen te mb-2 text-2xl text-blue-600">ប្រចាំ
                 @if ($school_name)
                     {{ $school_name }}
                 @else
@@ -156,8 +155,8 @@
                     exportToExcel(
                         @json($current_branch),
                         @json($total_mem_detail),
-                                        {{ $totalStu }},
-                                        {{ $femaleStu }},
+                                                    {{ $totalStu }},
+                                                    {{ $femaleStu }},
                         schoolName
                     );
                 }
