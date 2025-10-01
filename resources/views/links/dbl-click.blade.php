@@ -100,7 +100,9 @@
                 @can('3')
                     <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>   
                 @endcan
+                    @if (auth()->user()->hasRole('user'))
                     <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                    @endif
                 @endcanany
             </div>
         </div>
@@ -136,9 +138,11 @@
                             ថ្ងៃចុះឈ្មោះ
                         </th>
                         @canany(['2', '3'])
+                        @if (auth()->user()->hasRole('user'))
                             <th class="py-3 text-center">
                                 action
                             </th>
+                            @endif
                         @endcanany
                     </tr>
                 </thead>
@@ -150,10 +154,12 @@
                 <span class="font-siemreap text-sm">Showing 1 to 10 of 60 entries</span>
                 <div class="px-7 py-15 bg-transparent cursor-pointer index_buttons"></div>
             </div>
+            @if (auth()->user()->hasRole('user'))
             @if (!$approved)
                 <div class="text-end mt-7">
                     <button id="btn_ok" class="bg-blue-500 text-white px-4 py-2 rounded font-battambang">យល់ព្រម</button>
                 </div>
+            @endif
             @endif
         </div>
     </div>
@@ -174,6 +180,8 @@
                 }
             });
                         window.userCanEditOrDelete = @json(auth()->user()->canany(['2', '3']));
+                        window.Admin =  @json(auth()->user()->hasRole('user'));
+                        window.controllView = true;
 
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

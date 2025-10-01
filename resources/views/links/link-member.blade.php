@@ -12,12 +12,13 @@
                 <a href="{{ route('link-report') }}"
                     class="bg-blue-500 text-white px-4 py-2 rounded font-battambang">របាយការណ៍</a>
             </div>
-
+             @if (auth()->user()->hasRole('user'))
             <div class="flex items-center space-x-3">
                 <a href="{{ route('create-link') }}" id="delete"
                     class="bg-green-500 text-white px-4 py-2 rounded font-battambang">បង្កើត
                     Link</a>
             </div>
+            @endif
         </div>
         @if (auth()->user()->branch_bindding_user[0]->branch == null)
             @if (count($link) == 0)
@@ -122,7 +123,9 @@
                                     <th class="py-3">ល.រ</th>
                                     <th class="py-3">ឆ្នាំសិក្សា</th>
                                     <th class="py-3">តំណរភ្ជាប់</th>
+                                    @if (auth()->user()->hasRole('user'))
                                     <th class="py-3">សកម្មភាព</th>
+                                    @endif
                                 </tr>
                             </thead>
                             @foreach ($links as $link)
@@ -133,12 +136,14 @@
                                         <button class="bg-red-500 text-white px-4 py-2 rounded copy-link"
                                             data-id="{{$link->token}}">Link</button>
                                     </td>
+                                    @if (auth()->user()->hasRole('user'))
                                     <td class="py-3 w-1/3 ">
                                         <button class="bg-blue-500 text-white px-4 py-2 rounded update_btn"
                                             data-id="{{$link->id}}">កែប្រែ</button>
                                         <button class="bg-red-500 text-white px-4 py-2 rounded delete_btn"
                                             data-id="{{$link->id}}">លុប</button>
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </table>
@@ -209,7 +214,9 @@
                                     <th class="py-3">ល.រ</th>
                                     <th class="py-3">ឆ្នាំសិក្សា</th>
                                     <th class="py-3">តំណរភ្ជាប់</th>
+                                     @if (auth()->user()->hasRole('user'))
                                     <th class="py-3">សកម្មភាព</th>
+                                    @endif
                                 </tr>
                             </thead>
                             @foreach ($links as $link)
@@ -220,12 +227,14 @@
                                         <button class="bg-red-500 text-white px-4 py-2 rounded copy-link"
                                             data-id="{{$link->token}}">Link</button>
                                     </td>
+                                    @if (auth()->user()->hasRole('user'))
                                     <td class="py-3 w-1/3 ">
                                         <button class="bg-blue-500 text-white px-4 py-2 rounded update_btn"
                                             data-id="{{$link->id}}">កែប្រែ</button>
                                         <button class="bg-red-500 text-white px-4 py-2 rounded delete_btn"
                                             data-id="{{$link->id}}">លុប</button>
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </table>

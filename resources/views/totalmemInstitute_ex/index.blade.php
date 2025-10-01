@@ -173,6 +173,9 @@ $member_pob = "";
                     exportToExcel(@json($current_branch), @json($total_mem_detail));
                 }
             });
+            window.userCanEditOrDelete = @json(auth()->user()->canany(['2', '3']));
+            window.Admin = false;
+            window.controllView = false;
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endpush

@@ -166,6 +166,8 @@ $school_name = $school->school_name;
                         , @json($total_mem))
                 }
             });
+            window.userCanEditOrDelete = @json(auth()->user()->canany(['2', '3']));
+            window.Admin = false;
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endpush
