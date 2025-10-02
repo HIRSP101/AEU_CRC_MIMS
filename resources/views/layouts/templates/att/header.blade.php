@@ -55,4 +55,3 @@
             </div>
 
             @include('dashboard.partials.user')
-            @include('dashboard.partials.user.profile.profile_modal')
