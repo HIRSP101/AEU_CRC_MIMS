@@ -47,7 +47,7 @@ class InstituteController extends Controller
 
     public function get(Request $request)
     {
-        $title = "បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា";
+        $title = "បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន";
         $instituteId = $request->id;
         $institution = branch_hei::find($instituteId)->select('institute_kh')->findOrFail($instituteId);
 
