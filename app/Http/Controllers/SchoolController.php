@@ -48,7 +48,7 @@ class SchoolController extends Controller
                 's.school_name',
                 's.type',
                 's.village_name',
-                DB::raw("COUNT(CASE WHEN mrd.expiration_date >= NOW() THEN meb.member_id END) as total_mem")
+                DB::raw("COUNT(CASE WHEN mrd.expiration_date >= NOW() AND mrd.approved = 1 THEN meb.member_id END) as total_mem")
             )
             ->groupBy('s.school_id', 's.school_name', 's.type', 's.village_name')
             ->get();
@@ -68,7 +68,7 @@ class SchoolController extends Controller
             ->leftJoin('branch as b', 'meb.branch_id', '=', 'b.branch_id')
             ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
             ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
-            ->whereRaw('mrd.expiration_date >= NOW()')
+            ->whereRaw('mrd.expiration_date >= NOW() AND mrd.approved = 1')
             ->where('mrd.approved', '=', 1)
             ->select([
                 'mpd.member_id',
@@ -166,13 +166,14 @@ class SchoolController extends Controller
                     'registered_at',
                     'branch_kh',
                     DB::raw("COUNT(CASE 
-                    WHEN mrd.expiration_date >= NOW()
+                    WHEN mrd.expiration_date >= NOW() AND mrd.approved = 1
                     THEN meb.member_id END) as total_members")
                 )
                 ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image', 'registered_at', 'branch_kh')
                 ->get();
         }
-        return view('school.create-school2', compact('branches', 'districts', 'schools', 'institutes'));
+        $title = "បង្កើតសាលារៀន";
+        return view('school.create-school2', compact('branches', 'districts', 'schools', 'institutes', 'title'));
     }
     public function store(SchoolRequest $request, CreateSchoolService $service)
     {
@@ -250,7 +251,7 @@ class SchoolController extends Controller
                     'registered_at',
                     'branch_kh',
                     DB::raw("COUNT(CASE 
-                    WHEN mrd.expiration_date >= NOW()
+                    WHEN mrd.expiration_date >= NOW() AND mrd.approved = 1
                     THEN meb.member_id END) as total_members")
                 )
                 ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image', 'registered_at', 'branch_kh')
@@ -274,13 +275,14 @@ class SchoolController extends Controller
                     'registered_at',
                     'branch_kh',
                     DB::raw("COUNT(CASE 
-                    WHEN mrd.expiration_date >= NOW()
+                    WHEN mrd.expiration_date >= NOW() AND mrd.approved = 1
                     THEN meb.member_id END) as total_members")
                 )
                 ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image', 'registered_at', 'branch_kh')
                 ->get();
         }
-        return view('school.create-school2', compact('branches', 'districts', 'schools', 'institutes'));
+        $title = "បង្កើតសាលារៀន";
+        return view('school.create-school2', compact('branches', 'districts', 'schools', 'institutes', 'title'));
     }
 
     public function store2(SchoolRequest $request, CreateSchoolService $service)
@@ -422,7 +424,7 @@ class SchoolController extends Controller
                     's.school_id',
                     's.school_name',
                     's.branch_id',
-                    DB::raw("COUNT(DISTINCT CASE WHEN mrd.expiration_date >= NOW() THEN meb.member_id END) as total_mem") // Count expired members
+                    DB::raw("COUNT(DISTINCT CASE WHEN mrd.expiration_date >= NOW() AND mrd.approved = 1 THEN meb.member_id END) as total_mem") // Count expired members
                 )
                 ->groupBy('s.school_id', 's.school_name', 's.branch_id')
                 ->get();
@@ -436,7 +438,7 @@ class SchoolController extends Controller
                     's.school_id',
                     's.school_name',
                     's.branch_id',
-                    DB::raw("COUNT(DISTINCT CASE WHEN mrd.expiration_date >= NOW() THEN meb.member_id END) as total_mem") // Count expired members
+                    DB::raw("COUNT(DISTINCT CASE WHEN mrd.expiration_date >= NOW() AND mrd.approved = 1 THEN meb.member_id END) as total_mem") // Count expired members
                 )
                 ->groupBy('s.school_id', 's.school_name', 's.branch_id')
                 ->get();

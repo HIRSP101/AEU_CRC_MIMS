@@ -85,8 +85,10 @@ $school_name = $school->school_name;
                             placeholder="Select a date">
                     </div>
                 </div>
-                @canany(['2', '3'])
-                    <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
+                @canany(['2'])
+                @can('3')
+                    <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>   
+                @endcan
                     <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
                 @endcanany
             </div>
@@ -164,6 +166,9 @@ $school_name = $school->school_name;
                         , @json($total_mem))
                 }
             });
+            window.userCanEditOrDelete = @json(auth()->user()->canany(['2', '3']));
+            window.Admin = false;
+            window.controllView = false;
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endpush

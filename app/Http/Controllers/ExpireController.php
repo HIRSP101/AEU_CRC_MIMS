@@ -37,7 +37,7 @@ class ExpireController extends Controller
             ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
             ->whereIn('s.type', ['អនុវិទ្យាល័យ', 'វិទ្យាល័យ'])
             ->where('meb.school_id', $schoolId)
-            ->whereRaw('mrd.expiration_date < NOW()')
+            ->whereRaw('mrd.expiration_date <= NOW() AND mrd.approved = 1')
             ->where('mrd.approved', '=', 1)
             //->where('meb.branch_id', '=', $user)
             ->select([
@@ -90,7 +90,7 @@ class ExpireController extends Controller
             ->leftJoin('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
             ->where('hei.institute_type', '=', 'សាកលវិទ្យាល័យ')
             ->where('meb.branchhei_id', '=', $instituteId)
-            ->whereRaw('mrd.registration_date <= NOW() - INTERVAL 4 YEAR')
+            ->whereRaw('mrd.expiration_date >= NOW() AND mrd.approved = 1')
             ->where('mrd.approved', '=', 1);
         $total_mem = (clone $baseQuery)
             ->select([
@@ -181,7 +181,7 @@ class ExpireController extends Controller
                     's.school_id',
                     's.school_name',
                     's.branch_id',
-                    DB::raw("COUNT(DISTINCT CASE WHEN mrd.registration_date <= NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem") // Count expired members
+                    DB::raw("COUNT(CASE WHEN mrd.expiration_date <= NOW() AND mrd.approved = 1 THEN meb.member_id END) as total_mem")
                 )
                 ->groupBy('s.school_id', 's.school_name', 's.branch_id')
                 ->get();
@@ -195,7 +195,7 @@ class ExpireController extends Controller
                     's.school_id',
                     's.school_name',
                     's.branch_id',
-                    DB::raw("COUNT(DISTINCT CASE WHEN mrd.registration_date <= NOW() - INTERVAL 6 YEAR THEN meb.member_id END) as total_mem") // Count expired members
+                    DB::raw("COUNT(DISTINCT CASE WHEN mrd.expiration_date <= NOW() AND mrd.approved = 1 THEN meb.member_id END) as total_mem") // Count expired members
                 )
                 ->groupBy('s.school_id', 's.school_name', 's.branch_id')
                 ->get();
@@ -218,9 +218,7 @@ class ExpireController extends Controller
                 'hei.bhei_id',
                 'hei.institute_kh',
                 'hei.image',
-                DB::raw("COUNT(CASE 
-                    WHEN mrd.expiration_date < NOW()
-                    THEN meb.member_id END) as total_members")
+                DB::raw("COUNT(CASE WHEN mrd.expiration_date >= NOW() AND mrd.approved = 1 THEN meb.member_id END) as total_members")
             )
             ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image')
             ->get();
@@ -240,7 +238,7 @@ class ExpireController extends Controller
             ->leftJoin('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
             ->where('meb.branchhei_id', '=', $id)
             ->where('hei.institute_type', '=', 'សាកលវិទ្យាល័យ')
-            ->whereRaw('mrd.expiration_date < NOW()');
+            ->whereRaw('mrd.expiration_date >= NOW() AND mrd.approved = 1');
         $total_mem = (clone $baseQuery)
             ->select([
                 'mpd.member_id',

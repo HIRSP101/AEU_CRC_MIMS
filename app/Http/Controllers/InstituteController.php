@@ -38,7 +38,7 @@ class InstituteController extends Controller
                 'hei.institute_kh',
                 'hei.image',
                 DB::raw("COUNT(CASE 
-                    WHEN mrd.expiration_date >= NOW()
+                    WHEN mrd.expiration_date >= NOW() AND mrd.approved = 1
                     THEN meb.member_id END) as total_members")
             )
             ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image')
@@ -61,7 +61,7 @@ class InstituteController extends Controller
             ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
             ->where('meb.branchhei_id', '=', $instituteId)
             ->where('hei.institute_type', '=', 'សាកលវិទ្យាល័យ')
-            ->whereRaw('mrd.expiration_date >= NOW()')
+            ->whereRaw('mrd.expiration_date >= NOW() AND mrd.approved = 1')
             ->where('mrd.approved', '=', 1);
         $total_mem = (clone $baseQuery)
             ->select([

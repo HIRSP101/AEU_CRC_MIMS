@@ -156,7 +156,8 @@ class DistrictController extends Controller
                 ->leftJoin('branch as b', 'b.branch_id', '=', 'd.branch_id')
                 ->get();
         }
-        return view('district.create-district2', compact('branches', 'districts'));
+        $title = "បង្កើតស្រុក/ក្រុង";
+        return view('district.create-district2', compact('branches', 'districts','title'));
     }
     public function store2(DistrictRequest $request, CreateDistrictService $service)
     {

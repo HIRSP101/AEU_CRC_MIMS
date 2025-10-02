@@ -33,8 +33,8 @@ class UserController extends Controller
         $branches = $branchePrefixed->toArray() + $branchheiPrefixed->toArray();
 
         // dd($user_branch);
-
-        return view('user.index', compact('user_branch', 'branches'));
+        $title= "គ្រប់គ្រងអ្នកប្រើប្រាស់";
+        return view('user.index', compact('user_branch', 'branches','title'));
     }
     /**
      * Handle an incoming registration request.

@@ -13,7 +13,7 @@ class LinkController extends Controller
 {
     public function linkMember()
     {
-        $title = "បញ្ចូលសមាជិកតាមរយះតំណរភ្ជាប់(បណ្តោះអាសន្ធ)";
+        $title = "បញ្ចូលសមាជិកតាមរយៈតំណរភ្ជាប់(បណ្តោះអាសន្ធ)";
         $admin = false;
         if (auth()->user()->hasRole('admin')) {
             $membersPerHei = DB::table('branch_hei as bhei')
@@ -88,7 +88,7 @@ class LinkController extends Controller
 
     public function linkInstituteById($id)
     {
-        $title = "បញ្ចូលសមាជិកតាមរយះតំណរភ្ជាប់ (បណ្តោះអាសន្ធ)";
+        $title = "បញ្ចូលសមាជិកតាមរយៈតំណរភ្ជាប់ (បណ្តោះអាសន្ធ)";
         $admin = true;
         $option = 1;
         $link = DB::table('form_submits as fs')
@@ -113,7 +113,7 @@ class LinkController extends Controller
     }
     public function linkInstituteReportById($id)
     {
-        $title = "បញ្ចូលសមាជិកតាមរយះតំណរភ្ជាប់";
+        $title = "បញ្ចូលសមាជិកតាមរយៈតំណរភ្ជាប់";
         $admin = true;
         $option = 2;
         $link = DB::table('form_submits as fs')
@@ -181,7 +181,6 @@ class LinkController extends Controller
                 ->orderBy('bhei.bhei_id', 'asc')
                 ->get();
         }
-
     }
 
     public function createLink()
@@ -199,7 +198,6 @@ class LinkController extends Controller
         } else {
             return view('links.create-link', compact('title', 'admin'));
         }
-
     }
     public function linkStore(Request $request)
     {
@@ -375,7 +373,7 @@ class LinkController extends Controller
         }
         $current_branch = $data->first()->branch_kh;
         $institute_kh = $data->first()->institute_kh;
-        return view('links.dbl-click', compact('total_mem', 'approved', 'totalStu', 'femaleStu', 'current_branch','institute_kh'));
+        return view('links.dbl-click', compact('total_mem', 'approved', 'totalStu', 'femaleStu', 'current_branch', 'institute_kh'));
     }
     public function linkDetail_approved($linkId)
     {
@@ -436,12 +434,12 @@ class LinkController extends Controller
         $data = $baseQuery->get();
         $totalStu = $data->count();
         $femaleStu = $data->where('gender', 'ស្រី')->count();
-        if (count($total_mem) == 0){
-             return view('links.dbl-click', compact('total_mem', 'approved', 'totalStu', 'femaleStu'));
+        if (count($total_mem) == 0) {
+            return view('links.dbl-click', compact('total_mem', 'approved', 'totalStu', 'femaleStu'));
         }
         $current_branch = $data->first()->branch_kh;
         $institute_kh = $data->first()->institute_kh;
-        return view('links.dbl-click', compact('total_mem', 'approved', 'totalStu', 'femaleStu', 'current_branch','institute_kh'));
+        return view('links.dbl-click', compact('total_mem', 'approved', 'totalStu', 'femaleStu', 'current_branch', 'institute_kh'));
     }
     public function linkDelete()
     {

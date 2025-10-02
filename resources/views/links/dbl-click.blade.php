@@ -96,9 +96,14 @@
                             placeholder="Select a date">
                     </div>
                 </div>
-                <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
-                <!-- <button id="export_pdf" class="bg-green-500 text-white px-4 py-2 rounded">Export PDF</button> -->
-                <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                @canany(['2'])
+                @can('3')
+                    <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>   
+                @endcan
+                    @if (auth()->user()->hasRole('user'))
+                    <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                    @endif
+                @endcanany
             </div>
         </div>
         <div class="w-full overflow-scroll my-3 max-h-[760px] table">
@@ -132,10 +137,13 @@
                         <th class="py-3 text-center">
                             ថ្ងៃចុះឈ្មោះ
                         </th>
-
-                        <th class="py-3 text-center">
-                            action
-                        </th>
+                        @canany(['2', '3'])
+                        @if (auth()->user()->hasRole('user'))
+                            <th class="py-3 text-center">
+                                action
+                            </th>
+                            @endif
+                        @endcanany
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
@@ -146,10 +154,12 @@
                 <span class="font-siemreap text-sm">Showing 1 to 10 of 60 entries</span>
                 <div class="px-7 py-15 bg-transparent cursor-pointer index_buttons"></div>
             </div>
+            @if (auth()->user()->hasRole('user'))
             @if (!$approved)
                 <div class="text-end mt-7">
                     <button id="btn_ok" class="bg-blue-500 text-white px-4 py-2 rounded font-battambang">យល់ព្រម</button>
                 </div>
+            @endif
             @endif
         </div>
     </div>
@@ -169,6 +179,10 @@
                         @json($institute_kh));
                 }
             });
+                        window.userCanEditOrDelete = @json(auth()->user()->canany(['2', '3']));
+                        window.Admin =  @json(auth()->user()->hasRole('user'));
+                        window.controllView = true;
+
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endpush

@@ -174,5 +174,8 @@
                 }
             });
                 /*@json($total_total)[0]["total_mem"], @json($total_fem)[0]["total_mem_fem"] */
+            window.userCanEditOrDelete = @json(auth()->user()->canany(['2', '3']));
+            window.Admin = false;
+            window.controllView = false;
         </script>
     @endpush

@@ -2,7 +2,7 @@
 @push('CSS')
     </style>
 @endpush
-
+@canany(['2', '3'])
 @section('Content')
     <?php
     $converseObj = [];
@@ -169,3 +169,5 @@
         }
     </script>
 @endpush
+@endcanany
+   @include('not_allow')

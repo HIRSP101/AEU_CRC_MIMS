@@ -18,15 +18,9 @@ export function handleTotalmem(array, ExcelObj) {
         if ($(e.target).closest("td").hasClass("action")) {
             return;
         }
-        $(this).toggleClass("bg-slate-300 marked");
+        $(this).toggleClass("bg-red-300 marked");
     });
 
-    // $(".table table tbody").on("dblclick", ".hoverablebranch", function (e) {
-    //     e.preventDefault();
-    //     const userId = $(this).attr("data-id");
-    //     console.log(userId);
-    //     window.location.href = `/member/${userId}`;
-    // });
     $(".table table tbody").on("dblclick", ".hoverablebranch", function (e) {
         e.preventDefault();
         const userId = $(this).attr("data-id");

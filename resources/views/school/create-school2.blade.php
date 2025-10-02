@@ -1,7 +1,7 @@
 @extends('layouts.templates.att.master')
 @push('CSS')
 @endpush
-
+@canany(['2', '3'])
 @section('Content')
     <div class="flex justify-center items-center bg-white p-5">
         <div class="bg-white px-[10%] py-5 rounded-lg shadow-md w-full">
@@ -188,3 +188,5 @@
         });
     </script>
 @endpush
+@endcanany
+@include("not_allow")

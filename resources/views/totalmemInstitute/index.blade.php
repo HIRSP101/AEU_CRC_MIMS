@@ -9,7 +9,7 @@
     $total_mem_detail = "";
     $member_pob = "";
     $institute_kh = $institution->institute_kh;
-                                                                                                                                                                                                                                            ?>
+                                                                                                                                                                                                                                                    ?>
     @if(count($total_mem) > 0)
         <?php
             $current_branch = explode(' ', $total_mem[0]->full_current_address)[3] ?? "";
@@ -56,7 +56,7 @@
 
                 );
             }
-                                ?>
+                                                ?>
         <div class="bg-white m-5 p-5 shadow-lg rounded-lg">
             <h1 class="text-center font-koulen mb-5 text-blue-600 text-2xl"> {{$title}} </h1>
             <h2 class="text-center font-koulen mb-5 text-blue-600 text-2xl"> កាកបាទក្រហមកម្ពុជា {{$institute_kh}} </h2>
@@ -98,8 +98,10 @@
                                 placeholder="Select a date">
                         </div>
                     </div>
-                    @canany(['2', '3'])
-                        <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
+                    @canany(['2'])
+                        @can('3')
+                            <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
+                        @endcan
                         <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
                     @endcanany
                 </div>
@@ -170,12 +172,14 @@
                     exportToExcel(
                         @json($current_branch),
                         @json($total_mem_detail),
-                                                        {{ $totalStu }},
-                                                        {{ $femaleStu }},
+                                                                {{ $totalStu }},
+                                                                {{ $femaleStu }},
                         institute_kh);
                 }
             });
             window.userCanEditOrDelete = @json(auth()->user()->canany(['2', '3']));
+            window.Admin = false;
+            window.controllView = false;
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endpush

@@ -1,7 +1,7 @@
 @extends('layouts.templates.att.master')
 @push('CSS')
 @endpush
-
+@canany(['2', '3'])
 @section('Content')
     <?php
     foreach ($districts as $d) {
@@ -85,3 +85,5 @@
     </script>
 
 @endpush
+@endcanany
+@include("not_allow")
