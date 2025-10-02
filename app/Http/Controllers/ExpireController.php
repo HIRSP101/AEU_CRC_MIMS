@@ -37,7 +37,7 @@ class ExpireController extends Controller
             ->leftJoin('district as v', 'v.district_id', '=', 's.district_id')
             ->whereIn('s.type', ['អនុវិទ្យាល័យ', 'វិទ្យាល័យ'])
             ->where('meb.school_id', $schoolId)
-            ->whereRaw('mrd.registration_date <= NOW() - INTERVAL 6 YEAR')
+            ->whereRaw('mrd.expiration_date < NOW()')
             ->where('mrd.approved', '=', 1)
             //->where('meb.branch_id', '=', $user)
             ->select([
@@ -228,7 +228,7 @@ class ExpireController extends Controller
 
     public function getListSchoolByInstituteId($id)
     {
-        $title = "បញ្ជីតារាងទិន្នន័យផុតកំណត់យុវជន និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា";
+        $title = "បញ្ជីតារាងទិន្នន័យផុតកំណត់យុវជន";
         $institution = branch_hei::find($id)->select('institute_kh')->findOrFail($id);
         $baseQuery = DB::table('member_personal_detail as mpd')
             ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
