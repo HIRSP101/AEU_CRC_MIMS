@@ -25,22 +25,34 @@ export default function setuppagination(array, attr_arr, updateroute) {
     }
 
     function generateTableRow(item, attr_arr, updateroute, index) {
+        let name, date, branch;
+
+        if (updateroute.includes("institute")) {
+            name = item[attr_arr[1]]; // institute_kh
+            date = item[attr_arr[2]]; // registered_at
+            branch = item[attr_arr[3]]; // branch_kh
+        } else {
+            name = item[attr_arr[1]]; // school_name
+            date = item[attr_arr[4]]; // registration_date
+            branch = item[attr_arr[5]]; // branch_kh
+        }
+
         return `
-            <tr class="border-b border-gray-200 hover:bg-gray-100">
-                <td class="py-2 pl-5 text-left">${index + 1}</td>
-                <td class="py-2 text-center">${item[attr_arr[1]]}</td>
-                <td class="py-2 text-center">${item[attr_arr[4]]}</td>
-                <td class="py-2 text-center">${item[attr_arr[5]]}</td>
-                <td class="py-2 text-center">
-                    <a href="/${updateroute}/${
+        <tr class="border-b border-gray-200 hover:bg-gray-100">
+            <td class="py-2 pl-5 text-left">${index + 1}</td>
+            <td class="py-2 text-center">${name ?? ""}</td>
+            <td class="py-2 text-center">${date ?? ""}</td>
+            <td class="py-2 text-center">${branch ?? ""}</td>
+            <td class="py-2 text-center">
+                <a href="/${updateroute}/${
             item[attr_arr[0]]
         }" class="text-blue-500">កែប្រែ</a>
-                    <button class="btn-delete text-red-500" data-id="${
-                        item[attr_arr[0]]
-                    }">លុប</button>
-                </td>
-            </tr>
-        `;
+                <button class="btn-delete text-red-500" data-id="${
+                    item[attr_arr[0]]
+                }">លុប</button>
+            </td>
+        </tr>
+    `;
     }
 
     function updatePaginationButtons() {

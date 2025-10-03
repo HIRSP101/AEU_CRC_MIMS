@@ -2,7 +2,7 @@
 @push('CSS')
     </style>
 @endpush
-
+@canany(['2', '3'])
 @section('Content')
     <?php
     $converseObj = [];
@@ -13,29 +13,36 @@
             'branch_id' => $user_b->branch_bindding_user[0]->branch->branch_id ?? '',
             'role' => $user_b->roles[0]->name ?? '',
             'permissions' => $user_b->permissions ?? '',
+            'branch_hei_id' => $user_b->branch_bindding_user[0]->branch_hei->bhei_id ?? '',
         ];
     }
-    ?>
-    <div class="bg-gray-100">
+        ?>
+    <div class="bg-white rounded-lg m-5 p-5 shadow">
+
         @include('user.partials.createuser')
-        <div class="absolute origin-top-right mt-1 right-5">
-            <a id="user_form_btn"><img src="{{ asset('images/icons/add-user.png') }}"
-                    class="w-auto h-auto bg-gray-300 py-1 px-1 rounded-full" /></a>
+        <div class="flex justify-between items-center w-full">
+            <div class="w-full text-center">
+                <h1 class="text-2xl text-blue-600 font-koulen">គ្រប់គ្រងអ្នកប្រើប្រាស់</h1>
+            </div>
+            <div class="absolute right-10">
+                <a id="user_form_btn"><img src="{{ asset('images/icons/add-user.png') }}"
+                        class="w-auto h-auto bg-gray-300 py-1 px-1 rounded-lg" /></a>
+            </div>
         </div>
-        <div class="flex items-center justify-center bg-gray-100 font-sans mt-5 overflow-hidden">
+        <div class="flex items-center justify-center mt-14 overflow-hidden">
             <div class="w-full">
-                <div class="bg-white shadow-md rounded my-6">
+                <div class="bg-white shadow-md rounded">
                     <table class="min-w-max w-full table-auto">
                         <thead>
-                            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                <th class="py-3 px-6 text-left">Branches</th>
-                                <th class="py-3 px-6 text-left">Users</th>
-                                <th class="py-3 px-6 text-left">Roles</th>
-                                <th class="py-3 px-6 text-center">Permission</th>
-                                <th class="py-3 px-6 text-center">Actions</th>
+                            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal font-battambang text-xl ">
+                                <th class="py-3 px-5 text-left">សាខា</th>
+                                <th class="py-3 px-5 text-left">អ្នកប្រើប្រាស់</th>
+                                <th class="py-3 px-5 text-left">តួនាទី</th>
+                                <th class="py-3 px-5 text-center">សិទ្ធ</th>
+                                <th class="py-3 px-5 text-center">សកម្មភាព</th>
                             </tr>
                         </thead>
-                        <tbody class="text-gray-600 text-sm font-light">
+                        <tbody class="text-gray-600 text-sm font-siemreap">
                             @foreach ($user_branch as $userb)
                                 @include('user.partials.userbranch')
                             @endforeach
@@ -50,50 +57,66 @@
 @push('JS')
     <script>
         var converseObj = @json($converseObj);
-        console.log(converseObj);
-        $("#image").on('change', function(e) {
+        $("#image").on('change', function (e) {
             e.preventDefault();
             var file = e.target.files;
             previewImage(file);
         });
-        $("#user_form_btn").on("click", function() {
+        $("#user_form_btn").on("click", function () {
             $("#user_form_form_inner").attr('action', "{{ route('register.store') }}");
-            $("h1#form_header_text").text("User Create Form");
+            $("h1#form_header_text").text("បង្កើតអ្នកប្រើប្រាស់");
             $("div#profilepreview").removeClass('hidden');
             formcleanup();
             $("#user_form_inner").toggle('hidden');
-        })
-        $("button.cancelform").on("click", function(e) {
+        });
+        $("button.cancelform").on("click", function (e) {
             e.preventDefault();
             $("#user_form_inner").toggle('hidden');
         })
-        $("button#saveprofile").click(function(e) {
+        $("button#saveprofile").click(function (e) {
             e.preventDefault();
+            const selectedVal = $("input#branch_id").val();
+            const selectedOption = $("#branchname_list option").filter(function () {
+                return $(this).val() === selectedVal;
+            });
+            const dataId = selectedOption.data('id') || '';
+            $("input#branch_id").val(dataId);
             $("#user_form_form_inner").submit();
-        })
-        $('.delude').on("click", function() {
+        });
+
+        $('.delude').on("click", function () {
             if (confirm("Are you sure you want to delete this user?")) {
                 ded('/deleteuser', $(this).attr('data-id'));
             }
         })
 
-        $('.elude').on("click", function() {
-            var userObj = converseObj[parseInt($(this).attr('data-id'))];
-            var route = `{{ route('user.edit', ':id') }}`;
-            route = route.replace(':id', $(this).attr('data-id'));
+        $('.elude').on("click", function () {
+            var userId = $(this).attr('data-id');
+            var userObj = converseObj[parseInt(userId)];
+            var route = `{{ route('user.edit', ':id') }}`.replace(':id', userId);
+
             $("#user_form_form_inner").attr('action', route);
-            $("h1#form_header_text").text("User Edit Form");
-            $("div#profilepreview").addClass('hidden');
+            $("h1#form_header_text").text("កែប្រែអ្នកប្រើប្រាស់");
+            // $("div#profilepreview").addClass('hidden');
             $("#user_form_inner").toggle('hidden');
             formcleanup();
+
             $("input#name_inner").val(userObj["name"]);
-            $("input#email_inner").val(`${userObj["email"]}`);
+            $("input#email_inner").val(userObj["email"]);
             $(`input#${userObj["role"]}`).prop("checked", true);
             for (let i = 0; i < userObj["permissions"].length; i++) {
                 $(`input#${userObj["permissions"][i]["name"].split(' ')[0]}`).prop("checked", true);
             }
-            $("select#branch_id").val($(this).attr('b-id')).change();
-        })
+            if (userObj["branch_id"]) {
+                var branch_id = "bra_" + userObj["branch_id"];
+                let branchName = $(`#branchname_list option[data-id="${branch_id}"]`).val();
+                $("input#branch_id").val(branchName);
+            } else {
+                var branch_hei = "bhei_" + userObj["branch_hei_id"];;
+                let branchName = $(`#branchname_list option[data-id="${branch_hei}"]`).val();
+                $("input#branch_id").val(branchName);
+            }
+        });
 
         function formcleanup() {
             $("input#name_inner").val("");
@@ -101,7 +124,7 @@
             $("input#password_inner").val("");
             $("input[name='roles[]']").prop("checked", false);
             $("input[name='permissions[]']").prop("checked", false);
-            $("select#branch_id").val("").change();
+            $("input#branch_id").val("").change();
         }
 
         function ded(url, id) {
@@ -114,11 +137,11 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
+                success: function (response) {
                     location.reload();
                     console.log(response.message);
                 },
-                error: function(error) {
+                error: function (error) {
                     console.error(error);
                 }
             })
@@ -126,10 +149,10 @@
 
         function previewImage(files) {
             $("#imagepreview").html('');
-            $.each(files, function(i, file) {
+            $.each(files, function (i, file) {
                 if (file.type.startsWith('image/')) {
                     var reader = new FileReader();
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         var imgElement = $('<img />', {
                             src: e.target.result,
                             css: {
@@ -146,3 +169,5 @@
         }
     </script>
 @endpush
+@endcanany
+   @include('not_allow')

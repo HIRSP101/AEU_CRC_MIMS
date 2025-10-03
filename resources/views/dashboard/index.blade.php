@@ -13,23 +13,24 @@
 @endpush
 
 @section('Content')
+
     @include('dashboard.partials.first_sec_dashboard')
-    <div class="">
+    <div class="px-5">
         <hr class="h-px my-4 bg-red-600 p-[1px] border dark:bg-red-600">
     </div>
-    <div class="ml-5">
+    <div class="ml-5 mr-5">
         <div class="ml-5">
             <h1 class="font-koulen text-blue-600 text-2xl">សាខា & អនុសាខា</h1>
         </div>
 
         {{-- Card session --}}
-        <div class="mt-2 bg-gray-200 rounded-md shadow-lg p-2">
+        <div class="mt-2 rounded-md shadow-lg p-2">
             <div class="mt-0">
                 <div class="leading-relaxed">
                     <!-- Initial Cards (First 5 Cards) -->
                     <div>
                         <div id="initial-cards"
-                            class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-battambang p-2">
+                            class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 font-battambang p-2 bg-white">
                             @foreach ($branches as $val)
 
                                 @if ($loop->index < 10)
@@ -41,7 +42,7 @@
                                                     src="{{ asset($val->branch_image) }}" alt="Branch Image">
                                             </div>
                                         </div>
-                                        <div class="p-2 bg-[#f1f5f9] font-battambang text-center">
+                                        <div class="p-2 bg-white font-battambang text-center">
                                             @if (auth()->user()->hasRole('admin'))
                                                 <a href="/branch/{{ $val->branch_id }}/village"
                                                     class="block opacity-100 mb-1">{{ $val->branch_kh }}</a>
@@ -97,8 +98,8 @@
             </div>
         </div>
 
-        <div class="w-full p-2 mt-4">
-            <h1 class="text-center text-gray-800 font-khmer text-xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
+        <div class="w-full mt-4">
+            <h1 class="text-center text-blue-600 font-koulen text-2xl">តារាងទិន្នន័យនៃសាខា ក.ក្រ.ក្រ ២៥ រាជធានី ខេត្ត</h1>
             <div class="bg-white shadow-md rounded my-6">
                 <table class="min-w-max w-full table-auto font-battambang">
                     <thead>

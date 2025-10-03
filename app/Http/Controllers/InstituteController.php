@@ -37,9 +37,8 @@ class InstituteController extends Controller
                 'hei.bhei_id',
                 'hei.institute_kh',
                 'hei.image',
-                //DB::raw('COUNT(DISTINCT meb.member_id) as total_members')
                 DB::raw("COUNT(CASE 
-                    WHEN mrd.registration_date > NOW() - INTERVAL 4 YEAR
+                    WHEN mrd.expiration_date >= NOW() AND mrd.approved = 1
                     THEN meb.member_id END) as total_members")
             )
             ->groupBy('hei.bhei_id', 'hei.institute_kh', 'hei.image')
@@ -48,7 +47,7 @@ class InstituteController extends Controller
 
     public function get(Request $request)
     {
-
+        $title = "បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន";
         $instituteId = $request->id;
         $institution = branch_hei::find($instituteId)->select('institute_kh')->findOrFail($instituteId);
 
@@ -59,10 +58,11 @@ class InstituteController extends Controller
             ->leftJoin('branch as branch', 'meb.branch_id', '=', 'branch.branch_id')
             ->leftJoin('member_pob_address as mpob', 'mpob.member_id', '=', 'mpd.member_id')
             ->leftJoin('member_current_address as mcad', 'mcad.member_id', '=', 'mpd.member_id')
-            ->leftJoin('branch_hei as hei', 'branch.branch_id', '=', 'hei.bhei_id')
+            ->leftJoin('branch_hei as hei', 'meb.branchhei_id', '=', 'hei.bhei_id')
             ->where('meb.branchhei_id', '=', $instituteId)
             ->where('hei.institute_type', '=', 'សាកលវិទ្យាល័យ')
-            ->whereRaw('mrd.registration_date > NOW() - INTERVAL 4 YEAR');
+            ->whereRaw('mrd.expiration_date >= NOW() AND mrd.approved = 1')
+            ->where('mrd.approved', '=', 1);
         $total_mem = (clone $baseQuery)
             ->select([
                 'mpd.member_id',
@@ -101,7 +101,13 @@ class InstituteController extends Controller
             ])
             ->distinct()
             ->get();
-        return view('totalmemInstitute.index', compact('total_mem', 'institution'));
+        $data = $baseQuery->get();
+        $totalStu = $data->count();
+        $femaleStu = $data->where('gender', 'ស្រី')->count();
+        return view('totalmemInstitute.index', compact('total_mem', 'institution', "title"), [
+            'totalStu' => $totalStu,
+            'femaleStu' => $femaleStu,
+        ]);
     }
     public function generateReport($id)
     {

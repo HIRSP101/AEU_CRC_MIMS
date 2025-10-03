@@ -21,7 +21,7 @@ export function handleTotalmem(array, ExcelObj) {
             return;
         }
 
-        $(this).toggleClass("bg-slate-300 marked");
+        $(this).toggleClass("bg-red-300 marked");
     });
 
     $("#delete").on("click", function (e) {

@@ -1,4 +1,4 @@
-import ExcelJS from 'exceljs';
+import ExcelJS from "exceljs";
 
 // Configuration objects
 const EXCEL_CONFIG = {
@@ -8,53 +8,53 @@ const EXCEL_CONFIG = {
         { name: "ឈ្មោះ(ឡាតាំង)", width: 30 },
         { name: "ភេទ", width: 5 },
         { name: "ថៃ្ង​ ខែ ឆ្នាំកំណើត", width: 25 },
-        { name: "តួនាទី", width: 18 },
         { name: "គ្រឹះស្ថានសិក្សា", width: 25 },
+        { name: "តួនាទី", width: 18 },
         { name: "កម្រិតសិក្សា", width: 15 },
         { name: "ថ្ងៃចូលសមាជិក", width: 25 },
         { name: "អាស័យដ្ឋានបច្ចប្បន្ន", width: 45 },
-        { name: "លេខទូរសព្ទ័រផ្ទាលខ្លួន", width: 30 },
-        { name: "លេខទូរសព្ទ័រអាណាព្យាបាល", width: 35 },
+        { name: "លេខទូរសព្ទ័ផ្ទាលខ្លួន", width: 30 },
+        { name: "លេខទូរសព្ទ័អាណាព្យាបាល", width: 35 },
         { name: "ទំហំអាវ", width: 10 },
     ],
     fonts: {
         header: {
             name: "Khmer OS Muol Light",
-            size: 10
+            size: 10,
         },
         body: {
             name: "Khmer OS Battambang",
-            size: 10
-        }
-    }
+            size: 10,
+        },
+    },
 };
-
 
 // Helper functions
 export const createWorksheet = (workbook, branchName) => {
-    const worksheet = workbook.addWorksheet(branchName);
-    return worksheet;
+    const branch_name =
+        branchName && branchName.trim() !== "" ? branchName : "Sheet1";
+    return workbook.addWorksheet(branch_name);
+
+    // const worksheet = workbook.addWorksheet(branchName);
+    // return worksheet;
 };
 
-export const addTitle = (worksheet, branchName) => {
+export const addTitle = (worksheet, branchName, school_name) => {
     // Add main title
     worksheet.mergeCells("A1:M1");
     const mainTitle = worksheet.getCell("A1");
-    mainTitle.value = "ឯកសារយោងសំរាប់ការបញ្ជាក់ព័ត៌មាននៃការសិក្សា និងការងារ";
+    mainTitle.value = `បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមប្រចាំ ${school_name}`;
     mainTitle.font = EXCEL_CONFIG.fonts.header;
     mainTitle.alignment = { horizontal: "center" };
 
     // Add branch name
     worksheet.mergeCells("A2:M2");
     const branchTitle = worksheet.getCell("A2");
-    branchTitle.value = `សាខាកាកបាទក្រហមកម្ពុជា ${branchName}`;
     branchTitle.font = EXCEL_CONFIG.fonts.header;
     branchTitle.alignment = { horizontal: "center" };
 };
 
 export const createTable = (worksheet, data) => {
-
-    
     worksheet.addTable({
         name: "MyTable",
         ref: "A3",
@@ -63,16 +63,18 @@ export const createTable = (worksheet, data) => {
             theme: "",
             showRowStripes: false,
         },
-        columns: EXCEL_CONFIG.columnDefinitions.map(col => ({ name: col.name })),
-        rows: data
+        columns: EXCEL_CONFIG.columnDefinitions.map((col) => ({
+            name: col.name,
+        })),
+        rows: data,
     });
 };
 
 export const applyStyles = (worksheet, dataLength) => {
     // Set column widths and alignment
-    worksheet.columns = EXCEL_CONFIG.columnDefinitions.map(col => ({
+    worksheet.columns = EXCEL_CONFIG.columnDefinitions.map((col) => ({
         width: col.width,
-        alignment: { vertical: "middle", horizontal: "center" }
+        alignment: { vertical: "middle", horizontal: "center" },
     }));
 
     // Style header row
@@ -91,7 +93,7 @@ export const applyStyles = (worksheet, dataLength) => {
                 top: { style: "thin" },
                 left: { style: "thin" },
                 bottom: { style: "thin" },
-                right: { style: "thin" }
+                right: { style: "thin" },
             };
             if (i > 3) {
                 cell.font = EXCEL_CONFIG.fonts.body;
@@ -104,21 +106,19 @@ export const addFooter = (worksheet, totalStudents, femaleStu, rowNumber) => {
     // Add total count
     worksheet.mergeCells(`A${rowNumber}:I${rowNumber}`);
     const totalCell = worksheet.getCell(`A${rowNumber}`);
-    totalCell.value = `បញ្ចប់បញ្ជីត្រឹមចំនួន ${totalStudents} នាក់ (ស្រី ${femaleStu} នាក់)`;
+    totalCell.value = `សរុបចំនួន ${totalStudents} នាក់ (ស្រី ${femaleStu} នាក់)`;
     totalCell.font = EXCEL_CONFIG.fonts.body;
     totalCell.alignment = { vertical: "middle", horizontal: "left" };
 
     // Add date
     worksheet.mergeCells(`J${rowNumber}:M${rowNumber}`);
     const dateCell = worksheet.getCell(`J${rowNumber}`);
-    dateCell.value = "រាជធានីភ្នំពេញ ថ្ងៃទី x  ខែ xx  ឆ្នាំ xxxx";
     dateCell.font = EXCEL_CONFIG.fonts.body;
     dateCell.alignment = { vertical: "middle", horizontal: "center" };
 
     // Add signature line
     worksheet.mergeCells(`J${rowNumber + 1}:M${rowNumber + 1}`);
     const signatureCell = worksheet.getCell(`J${rowNumber + 1}`);
-    signatureCell.value = "អ្នកធ្វើតារាង";
     signatureCell.font = EXCEL_CONFIG.fonts.body;
     signatureCell.alignment = { vertical: "middle", horizontal: "center" };
 };
@@ -136,15 +136,13 @@ export const addDateSignature = (worksheet, rowNumber) => {
     signatureCell.value = "អ្នកធ្វើតារាង";
     signatureCell.font = EXCEL_CONFIG.fonts.body;
     signatureCell.alignment = { vertical: "middle", horizontal: "center" };
-
-}
-
+};
 
 export const downloadExcel = async (workbook) => {
     try {
         const buffer = await workbook.xlsx.writeBuffer();
         const blob = new Blob([buffer], {
-            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
@@ -156,20 +154,32 @@ export const downloadExcel = async (workbook) => {
     }
 };
 
-
-export default function exportToExcel(current_branch, total_member, total_stu, total_stu_fem) {
+export default function exportToExcel(
+    current_branch,
+    total_member,
+    total_stu,
+    total_stu_fem,
+    school_name
+) {
     $("#export_excel").on("click", async () => {
         try {
             console.log("Hello World!!!");
-            const total_memberFormat = total_member.map(arr => arr.slice(0, 13));
-            console.log(total_member.map(arr => arr.slice(0, 13)));
+            const total_memberFormat = total_member.map((arr) =>
+                arr.slice(0, 13)
+            );
+            console.log(total_member.map((arr) => arr.slice(0, 13)));
             const workbook = new ExcelJS.Workbook();
             const worksheet = createWorksheet(workbook, current_branch);
 
-            addTitle(worksheet, current_branch);
+            addTitle(worksheet, current_branch, school_name);
             createTable(worksheet, total_memberFormat);
             applyStyles(worksheet, total_member.length);
-            addFooter(worksheet, total_stu, total_stu_fem, total_member.length + 4);
+            addFooter(
+                worksheet,
+                total_stu,
+                total_stu_fem,
+                total_member.length + 4
+            );
 
             await downloadExcel(workbook);
         } catch (error) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\branch_hei;
 use App\Models\users;
 use App\Models\branch;
 use App\Models\branch_bindding_user;
@@ -14,18 +15,26 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Str;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $user_branch = users::with(['branch_bindding_user.branch', 'roles', 'permissions'])
-        ->withAggregate('roles', 'id')->orderBy('roles_id', 'asc')->get();
-        $branches = branch::all()->pluck('branch_kh', 'branch_id');
-        //  dd($user_branch[5]->branch[0]);
-        //dd($branches);
-        //dd($user_branch[0]->branch_bindding_user[0]->branch->branch_name);
-        return view('user.index', compact('user_branch', 'branches'));
+
+        $user_branch = users::with(['branch_bindding_user.branch', 'branch_bindding_user.branch_hei', 'roles', 'permissions'])
+            ->withAggregate('roles', 'id')->orderBy('roles_id', 'asc')->get();
+        $branchesModel = branch::all()->pluck('branch_kh', 'branch_id');
+        $branchheiModel = branch_hei::all()->pluck('institute_kh', 'bhei_id');
+
+        $branchheiPrefixed = $branchheiModel->mapWithKeys(fn($value, $key) => ['bhei_' . $key => $value]);
+        $branchePrefixed = $branchesModel->mapWithKeys(fn($value, $key) => ['bra_' . $key => $value]);
+
+        $branches = $branchePrefixed->toArray() + $branchheiPrefixed->toArray();
+
+        // dd($user_branch);
+        $title= "គ្រប់គ្រងអ្នកប្រើប្រាស់";
+        return view('user.index', compact('user_branch', 'branches','title'));
     }
     /**
      * Handle an incoming registration request.
@@ -36,25 +45,43 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . Users::class . ',email,' . $id],
+            'email' => [
+                'required',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                'unique:' . Users::class . ',email,' . $id
+            ],
             'password' => ['nullable', 'string'],
             'roles' => ['nullable', 'array'],
-            'branch_id' => ['nullable', 'exists:branch,branch_id'],
             'permissions' => ['nullable', 'array'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
         ]);
 
         $user = Users::findOrFail($id);
 
         $user->name = $request->name;
         $user->email = $request->email;
-        if (empty($request->password)) {
-            $request->request->remove('password');
-        } else {
-            $request->merge(['password' => bcrypt($request->password)]);
+
+        if (!empty($request->password)) {
+            $user->password = bcrypt($request->password);
+        }
+     
+        if ($request->hasFile('image')) {
+
+            if ($user->image && file_exists(public_path($user->image))) {
+                unlink(public_path($user->image));
+            }
+
+            $fileName = 'u-' . $user->id . '.' . $request->file('image')->extension();
+
+            $request->file('image')->move(public_path('images/users'), $fileName);
+
+            $user->image = 'images/users/' . $fileName;
         }
 
-        $user->fill($request->except(['roles', 'permissions']))->save();
-
+        $user->save();
 
         if ($request->has('roles')) {
             $user->syncRoles($request->roles);
@@ -62,12 +89,25 @@ class UserController extends Controller
         if ($request->has('permissions')) {
             $user->syncPermissions($request->permissions);
         }
-
+        
         if ($request->filled('branch_id')) {
-         //   dd(branch_bindding_user::where('branch_id', $request->branch_id)->get());
-            branch_bindding_user::where('user_id', $user->id)->update(["user_id" => $user->id]);
-            branch_bindding_user::where('user_id', $user->id)->update(['branch_id' => $request->branch_id]);
+            $branchId = null;
+            $branchHeiId = null;
+            $inputBranchId = $request->branch_id;
 
+            if (Str::startsWith($inputBranchId, 'bra_')) {
+                $branchId = str_replace('bra_', '', $inputBranchId);
+            } elseif (Str::startsWith($inputBranchId, 'bhei_')) {
+                $branchHeiId = str_replace('bhei_', '', $inputBranchId);
+            }
+
+            branch_bindding_user::updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'branch_id' => $branchId,
+                    'branch_hei_id' => $branchHeiId
+                ]
+            );
         }
 
         return redirect('/userroles');

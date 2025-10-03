@@ -13,6 +13,11 @@ export default defineConfig({
                 "resources/js/exportToExcel.js",
                 "resources/js/exportToExcel_branch.js",
                 "resources/js/bootstrap.js",
+                "resources/js/exportToExcelOptionThree.js",
+                "resources/js/exportToExcelOptionTwo.js",
+                "resources/js/exportExcelPrivateUniversity.js",
+                "resources/js/exportToExcelPublic.js",
+                "resources/js/import_for_branchhei.js"
             ],
             refresh: true,
         }),

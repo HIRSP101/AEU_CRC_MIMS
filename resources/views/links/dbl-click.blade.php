@@ -1,0 +1,195 @@
+@extends('layouts.templates.att.master')
+@push('CSS')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endpush
+@section('Content')
+@if(count($total_mem) > 0)
+    @php
+        $total_mem_detail = array();
+        for ($i = 0; $i < count($total_mem); $i++) {
+            $total_mem_detail[$i] = array(
+                $total_mem[$i]->member_id
+                ,
+                $total_mem[$i]->name_kh
+                ,
+                $total_mem[$i]->name_en
+                ,
+                $total_mem[$i]->gender
+                ,
+                $total_mem[$i]->date_of_birth
+                ,
+                // $total_mem[$i]->branchhei_id,
+                $total_mem[$i]->institute_kh,
+                $total_mem[$i]->member_type,
+                $total_mem[$i]->education_level,
+
+                $total_mem[$i]->registration_date
+                ,
+                $total_mem[$i]->full_current_address
+                ,
+                $total_mem[$i]->phone_number
+                ,
+                $total_mem[$i]->guardian_phone
+                ,
+                $total_mem[$i]->shirt_size
+                ,
+                $total_mem[$i]->village,
+                $total_mem[$i]->provience_city,
+                $total_mem[$i]->district_khan,
+                $total_mem[$i]->commune_sangkat,
+                $total_mem[$i]->home_no,
+                $total_mem[$i]->street_no,
+                $total_mem[$i]->village_current,
+                $total_mem[$i]->provience_city_current,
+                $total_mem[$i]->district_khan_current,
+                $total_mem[$i]->commune_sangkat_current,
+                $total_mem[$i]->home_no_current,
+                $total_mem[$i]->street_no_current,
+
+            );
+        }
+    @endphp
+    <div class="bg-white m-5 p-5 shadow-lg rounded-lg">
+        <h1 class="text-center font-koulen font-medium text-blue-600 text-2xl"> បញ្ជីរាយនាមសមាជិកចុះឈ្មោះថ្មី
+            ក្នុងឆ្នាំសិក្សា
+            {{$total_mem[0]->academic_year}}
+            @if (!$approved)
+                (បណ្តោះអាសន្ន)
+            @endif
+        </h1>
+
+        <div class="flex justify-between items-center mt-14">
+            <!-- Search Bar -->
+            <div class="tab_filter_container flex items-center space-x-2">
+                <input type="text" id="tab_filter_text" class="border border-gray-300 px-2 py-2 rounded-lg"
+                    placeholder="Search...">
+                <button id="tab_filter_btn" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Search</button>
+            </div>
+
+            <!-- Buttons Group -->
+            <div class="flex items-center space-x-3">
+                <div class="tab_head_container flex items-center space-x-4">
+                    <div class="page_limit flex items-center space-x-2">
+                        <span class="font-siemreap text-sm">បង្ហាញ</span>
+                        <select id="table_size"
+                            class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-20 font-siemreap text-sm">
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="300">300</option>
+                        </select>
+                    </div>
+
+                    <div class="gender_sort flex items-center space-x-2">
+                        <span class="font-siemreap text-sm">ភេទ</span>
+                        <select id="gender_filter"
+                            class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-28 font-siemreap text-sm">
+                            <option value="all">ទាំងអស់</option>
+                            <option value="ស្រី">ស្រី</option>
+                            <option value="ប្រុស">ប្រុស</option>
+                        </select>
+                    </div>
+
+                    <div class="filter_date flex items-center space-x-2">
+                        <span class="font-siemreap text-sm">ឆ្នាំ</span>
+                        <input id="dateRange" class="border-2 border-gray-400 rounded-md px-3 py-2 w-54" type="text"
+                            placeholder="Select a date">
+                    </div>
+                </div>
+                @canany(['2'])
+                @can('3')
+                    <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>   
+                @endcan
+                    @if (auth()->user()->hasRole('user'))
+                    <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                    @endif
+                @endcanany
+            </div>
+        </div>
+        <div class="w-full overflow-scroll my-3 max-h-[760px] table">
+            <table class="min-w-max w-full table-auto font-siemreap" id="dataTable">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                        <th class="py-3 pl-5 text-left">
+                            ល.រ
+                        </th>
+                        <th class="py-3 text-center">
+                            គោត្តមនាម-នាម
+                        </th>
+                        <th class="py-3 text-center">
+                            ភេទ
+                        </th>
+                        <th class="py-3 text-center">
+                            ថ្ងៃខែឆ្នាំកំណើត
+                        </th>
+                        <th class="py-3 text-center">
+                            គ្រឹះស្ថានសិក្សា
+                        </th>
+
+                        <th class="py-3 text-center">
+                            តួនាទី
+                        </th>
+
+                        <th class="py-3 text-center">
+                            កម្រិតសិក្សា
+                        </th>
+
+                        <th class="py-3 text-center">
+                            ថ្ងៃចុះឈ្មោះ
+                        </th>
+                        @canany(['2', '3'])
+                        @if (auth()->user()->hasRole('user'))
+                            <th class="py-3 text-center">
+                                action
+                            </th>
+                            @endif
+                        @endcanany
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm font-light">
+
+                </tbody>
+            </table>
+            <div class="flex justify-end mt-8 footer">
+                <span class="font-siemreap text-sm">Showing 1 to 10 of 60 entries</span>
+                <div class="px-7 py-15 bg-transparent cursor-pointer index_buttons"></div>
+            </div>
+            @if (auth()->user()->hasRole('user'))
+            @if (!$approved)
+                <div class="text-end mt-7">
+                    <button id="btn_ok" class="bg-blue-500 text-white px-4 py-2 rounded font-battambang">យល់ព្រម</button>
+                </div>
+            @endif
+            @endif
+        </div>
+    </div>
+    @endsection
+    @push('JS')
+        <script type="module">
+            import { handleTotalmemInstitute } from "{{ asset('js/handleTotalmemInstitute.js') }}";
+            document.addEventListener('DOMContentLoaded', function () {
+                var array = @json($total_mem);
+                handleTotalmemInstitute(array);
+                if (array.length > 0) {
+                    exportToExcel(
+                        @json($current_branch),
+                        @json($total_mem_detail),
+                                                                    {{ $totalStu }},
+                                                                    {{ $femaleStu }},
+                        @json($institute_kh));
+                }
+            });
+                        window.userCanEditOrDelete = @json(auth()->user()->canany(['2', '3']));
+                        window.Admin =  @json(auth()->user()->hasRole('user'));
+                        window.controllView = true;
+
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    @endpush
+@else
+    <div class="flex flex-col items-center justify-center h-screen space-y-4">
+        <img src={{asset('images/not.png')}} alt="No Data" width="150" height="150">
+        <p class="font-siemreap">មិនមានទិន្នន័យគ្រប់គ្រង</p>
+    </div>
+     @endsection
+@endif

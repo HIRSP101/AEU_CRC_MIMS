@@ -8,7 +8,7 @@
     $current_branch = "";
     $total_mem_detail = [];
     $school_name = $currentSchool?->school_name;
-                                        ?>
+                                                                                                                                                                                ?>
     @if(isset($data) && count($data) > 0)
         <?php
             $current_branch = explode(' ', $data[0]->full_current_address)[3] ?? "";
@@ -25,18 +25,16 @@
                     $item->registration_date ?: '',
                     $item->full_current_address ?: '',
                     $item->phone_number ?: '',
-                    //$item->guardian_phone,
+                    $item->guardian_phone,
                     $item->shirt_size ?: '',
-                    $item->school_name ?: ''
                 ];
             }
 
-                                                ?>
-        <div class="bg-white mt-2 mx-3 shadow-lg">
-            <h1 class="text-center font-siemreap my-2 font-bold text-2xl"> បញ្ជីតារាងទិន្នន័យបច្ចុប្បន្នភាពយុវជន
-                និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
-
-            <h2 class="text-center font-siemreap mb-2 text-2xl font-bold"> សាខាកាកបាទក្រហមកម្ពុជា
+                        ?>
+        <div class="bg-white m-5 p-5 shadow-lg rounded-lg">
+            <h1 class="text-center font-koulen text-blue-600 my-5 text-2xl"> បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមកម្ពុជា
+            </h1>
+            <h2 class="text-center font-koulen te mb-2 text-2xl text-blue-600">ប្រចាំ
                 @if ($school_name)
                     {{ $school_name }}
                 @else
@@ -44,7 +42,7 @@
                 @endif
             </h2>
 
-            <div class="flex justify-between items-center mb-4 mt-14 px-4">
+            <div class="flex justify-between items-center mt-14">
                 <!-- Search Bar -->
                 <div class="tab_filter_container flex items-center space-x-2">
                     <input type="text" id="tab_filter_text" class="border border-gray-300 px-2 py-2 rounded"
@@ -82,82 +80,93 @@
                                 placeholder="Select a date">
                         </div>
                     </div>
-                    <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
-                    <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                    @canany(['2'])
+                        @can('3')
+                        <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
+                        @endcan
+                        <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                    @endcanany
                 </div>
             </div>
+            <div class="w-full mt-5 max-h-[760px] table">
+                <table class="min-w-max w-full table-auto font-siemreap" id="dataTable">
+                    <thead>
+                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                            <th class="py-3 pl-5 text-left">
+                                ល.រ
+                            </th>
+                            <th class="py-3 text-center">
+                                គោត្តមនាម-នាម
+                            </th>
+                            <th class="py-3 text-center">
+                                ភេទ
+                            </th>
+                            <th class="py-3 text-center">
+                                ថ្ងៃខែឆ្នាំកំណើត
+                            </th>
+                            <th class="py-3 text-center">
+                                គ្រឹះស្ថានសិក្សា
+                            </th>
 
-            <div class="w-full overflow-scroll mx-3 my-3 max-h-[760px]">
-                <div class="w-full overflow-scroll my-3 max-h-[760px] table">
-                    <table class="min-w-max w-full table-auto font-siemreap" id="dataTable">
-                        <thead>
-                            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                <th class="py-3 pl-5 text-left">
-                                    ល.រ
-                                </th>
-                                <th class="py-3 text-center">
-                                    គោត្តមនាម-នាម
-                                </th>
-                                <th class="py-3 text-center">
-                                    ភេទ
-                                </th>
-                                <th class="py-3 text-center">
-                                    ថ្ងៃខែឆ្នាំកំណើត
-                                </th>
-                                <th class="py-3 text-center">
-                                    គ្រឹះស្ថានសិក្សា
-                                </th>
+                            <th class="py-3 text-center">
+                                តួនាទី
+                            </th>
 
-                                <th class="py-3 text-center">
-                                    តួនាទី
-                                </th>
+                            <th class="py-3 text-center">
+                                កម្រិតសិក្សា
+                            </th>
 
-                                <th class="py-3 text-center">
-                                    កម្រិតសិក្សា
-                                </th>
-
-                                <th class="py-3 text-center">
-                                    ថ្ងៃចុះឈ្មោះ
-                                </th>
-
+                            <th class="py-3 text-center">
+                                ថ្ងៃចុះឈ្មោះ
+                            </th>
+                            @canany(['2', '3'])
                                 <th class="py-3 text-center">
                                     action
                                 </th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-gray-600 text-sm font-light">
-                        </tbody>
-                    </table>
-                    <div class="flex justify-end mt-8 footer">
-                        <span class="font-siemreap text-sm">Showing 1 to 10 of 60 entries</span>
-                        <div class="px-7 py-15 bg-transparent cursor-pointer index_buttons"></div>
-                    </div>
+                            @endcanany
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-600 text-sm font-light">
+                    </tbody>
+                </table>
+                <div class="flex justify-end mt-8 footer">
+                    <span class="font-siemreap text-sm">Showing 1 to 10 of 60 entries</span>
+                    <div class="px-7 py-15 bg-transparent cursor-pointer index_buttons"></div>
                 </div>
             </div>
-
-
     @else
-        <div class="flex flex-col items-center justify-center h-screen space-y-4">
-            <img src="../images/not.png" alt="No Data" width="150" height="150">
-            <p class="font-siemreap">មិនមានទិន្នន័យគ្រប់គ្រង</p>
-        </div>
-    @endif
+            <div class="flex flex-col items-center justify-center h-screen space-y-4">
+                <img src="{{asset('images/not.png')}}" alt="No Data" width="150" height="150">
+                <p class="font-battambang text-xl">មិនមានទិន្នន័យគ្រប់គ្រង</p>
+            </div>
+        @endif
 @endsection
-
     @push('JS')
         <script type="module">
             import { handleTotalmem } from "{{ asset('js/handleTotalmem.js') }}";
 
             document.addEventListener('DOMContentLoaded', function () {
-                var array = @json($data);
-                console.log(@json($data));
+                var array = @json($currentSchool == null ? $branchWhole : $data);
+
+                const schoolName = @json($currentSchool->school_name ?? ($data[0]->branch_kh ?? ''));
                 handleTotalmem(array);
+
+                console.log("arrays", array);
+
                 if (array.length > 0) {
-                    exportToExcel(@json($current_branch), @json($total_mem_detail)
-                        , @json($data)
-                        , @json($data));
+                    exportToExcel(
+                        @json($current_branch),
+                        @json($total_mem_detail),
+                                                    {{ $totalStu }},
+                                                    {{ $femaleStu }},
+                        schoolName
+                    );
                 }
             });
+
+            window.userCanEditOrDelete = @json(auth()->user()->canany(['2', '3']));
+            window.Admin = false;
+            window.controllView = false;
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endpush

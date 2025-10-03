@@ -1,6 +1,7 @@
 import ajaxtoRoute from "./genericCalltoRoute.js";
 import setuppagination from "./pagination.js";
 export function handleTotalmemInstitute(array, ExcelObj) {
+    console.log("handleTotalmemInstitute called");
     const attr_arr = [
         "member_id",
         "name_kh",
@@ -17,7 +18,7 @@ export function handleTotalmemInstitute(array, ExcelObj) {
         if ($(e.target).closest("td").hasClass("action")) {
             return;
         }
-        $(this).toggleClass("bg-slate-300 marked");
+        $(this).toggleClass("bg-red-300 marked");
     });
 
     // $(".table table tbody").on("dblclick", ".hoverablebranch", function (e) {
@@ -32,7 +33,7 @@ export function handleTotalmemInstitute(array, ExcelObj) {
         console.log(userId);
         window.location.href = `/member/${userId}`;
     });
-    
+
 
     $("#delete").on("click", function (e) {
         e.preventDefault();
@@ -70,7 +71,7 @@ export function handleTotalmemInstitute(array, ExcelObj) {
     $(".table table tbody").on("click", ".del-one", function (e) {
         e.preventDefault();
         console.log($(this).val);
-        
+
         // e.preventDefault();
         // const userId = $(this).attr("data-id");
         // console.log(userId);
@@ -102,5 +103,35 @@ export function handleTotalmemInstitute(array, ExcelObj) {
                 setuppagination(filteredArray, attr_arr, "update-member");
             }
         },
+    });
+    //submit member that waiting for approve
+    $("#btn_ok").on("click", function () {
+        const memberIds = window.getCurrentPageMemberIds();
+        $.ajax({
+            type: "POST",
+            url: "/memberapprove",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                arr: memberIds,
+            }),
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                console.log(response.status);
+                if (response.status === 200) {
+                    const confirmDelete = confirm(
+                        "សមាជិកត្រូវបានយល់ព្រមដោយជោគជ័យ។"
+                    );
+                    if (confirmDelete) {
+                        location.reload();
+                    }
+                }
+
+            },
+            error: function (error) {
+                console.error(error);
+            },
+        });
     });
 }

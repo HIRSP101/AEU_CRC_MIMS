@@ -7,7 +7,7 @@
     <?php
     $current_branch = "";
     $total_mem_detail = [];
-                                            ?>
+                                                                                    ?>
     @if(isset($data) && count($data) > 0)
         <?php
             $current_branch = explode(' ', $data[0]->full_current_address)[3] ?? "";
@@ -24,16 +24,17 @@
                     $item->registration_date ?: '',
                     $item->full_current_address ?: '',
                     $item->phone_number ?: '',
-                    //$item->guardian_phone,
+                    $item->guardian_phone,
                     $item->shirt_size ?: '',
-                    $item->school_name ?: ''
                 ];
             }
 
-                                                        ?>
+                                                                                                                                        ?>
         <div class="bg-white mt-2 mx-3 shadow-lg">
-            <h1 class="text-center font-siemreap my-2 font-bold text-2xl"> បញ្ជីតារាងទិន្នន័យផុតកំណត់យុវជន
-                និងអ្នកស្ម័គ្រចិត្តកាកបាទក្រហមកម្ពុជា </h1>
+            <h1 class="text-center font-koulen my-5 text-blue-600 text-2xl"> បញ្ជីតារាងទិន្នន័យផុតកំណត់យុវជនកាកបាទក្រហមកម្ពុជា
+            </h1>
+
+            <h2 class="text-center font-koulen mb-2 text-2xl text-blue-600">ប្រ​ចាំ {{ $data[0]->school_name }}</h2>
 
             <div class="flex justify-between items-center mb-4 mt-14 px-4">
                 <!-- Search Bar -->
@@ -73,8 +74,12 @@
                                 placeholder="Select a date">
                         </div>
                     </div>
-                    <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
-                    <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                    @canany(['2'])
+                        @can('3')
+                            <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>   
+                        @endcan
+                            <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
+                    @endcanany
                 </div>
             </div>
 
@@ -110,10 +115,11 @@
                                 <th class="py-3 text-center">
                                     ថ្ងៃចុះឈ្មោះ
                                 </th>
-
+                            @canany(['2', '3'])
                                 <th class="py-3 text-center">
                                     action
                                 </th>
+                            @endcanany
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
@@ -128,11 +134,11 @@
 
 
     @else
-        <div class="flex flex-col items-center justify-center h-screen space-y-4">
-            <img src="../images/not.png" alt="No Data" width="150" height="150">
-            <p class="font-siemreap">មិនមានទិន្នន័យគ្រប់គ្រង</p>
-        </div>
-    @endif
+            <div class="flex flex-col items-center justify-center h-screen space-y-4">
+                <img src="../images/not.png" alt="No Data" width="150" height="150">
+                <p class="font-siemreap">មិនមានទិន្នន័យគ្រប់គ្រង</p>
+            </div>
+        @endif
 @endsection
 
     @push('JS')
@@ -149,6 +155,9 @@
                         , @json($data));
                 }
             });
+            window.userCanEditOrDelete = @json(auth()->user()->canany(['2', '3']));
+            window.Admin = false;
+            window.controllView = false;
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endpush

@@ -1,131 +1,215 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&family=Nunito:wght@700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&family=Khmer&family=Moul&family=Siemreap&display=swap"
         rel="stylesheet">
-    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        .title1 {
-            font-family: 'font-khmer';
-        }
-
-        .title2 {
-            font-family: 'font-khmer';
-        }
-
-        .lek {
-            font-family: 'font-battambang';
-        }
-
-        .title-date {
-            font-family: 'font-battambang';
-            font: italic;
-            text-align: end;
-        }
-
-        .big-title1 {
-            font-family: 'font-khmer';
-            font-size: 18px;
-            text-align: center;
-        }
-
-        .big-title2 {
-            font-family: 'font-khmer';
-            font-size: 18px;
-            text-align: center;
-        }
-
-        .sub-title {
-            font-family: 'font-khmer';
-            font-size: 16px;
-            text-decoration: underline;
-            text-align: center;
-        }
-
-        span {
-            font-family: 'font-battambang';
-            font-weight: bold;
-        }
-
-        .container {
-            margin-left: 40px;
-            margin-right: 40px;
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-
-        .small-text {
-            font-family: 'font-battambang';
-            margin-top: 100px;
-            font-size: 10px;
+        .page-break {
+            page-break-after: always;
         }
     </style>
 </head>
+@php
+    use App\Helpers\DateTimeFormat;
+@endphp
 
 <body>
     @foreach ($members as $member)
-        <div class="container mx-[25%] bg-white px-8 py-8 mt-5 mb-5 hidden" id="request-form">
-            <div class="head mt-2">
-                <h3 class="title1">សាខាកាកបាទក្រហមកម្ពុជា</h3>
-                <h3 class="title2">រាជធានី ខេត្ត</h3>
-                <h3 class="lek">លេខ........................កក្រក...........</h3>
+        @php
+            $parts = explode('-', DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->date_of_birth));
+            $registerDate = explode('-', DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->registration_date));
+            $expireDate = explode('-', DateTimeFormat::convertEnglishToKhmerNumbersAndMonth($member->expiration_date));
+            $dayOfBirth = $parts[0];
+            $monthOfBirth = $parts[1];
+            $yearOfBirth = $parts[2];
+            $dayOfRegis = $registerDate[0];
+            $monthOfRegis = $registerDate[1];
+            $yearOfRegis = $registerDate[2];
+            $dayOfExpire = $expireDate[0];
+            $monthOfExpire = $expireDate[1];
+            $yearOfExpire = $expireDate[2];
+        @endphp
+        <div class="head">
+            <h3 class="font-khmer text-[16px] text-gray-900" style="font-family: 'Moul'">សាខាកាកបាទក្រហមកម្ពុជា</h3>
+            <h3 class="font-khmer mx-12 text-[16px] text-gray-900" style="font-family: 'Moul'">រាជធានី ខេត្ត</h3>
+            <h3 style="font-family: 'Battambang'">លេខ........................កក្រក...........</h3>
 
-                <div class="title-date text-end font-battambang italic text-gray-800">
-                    <h3>ថ្ងៃ................ខែ..........ឆ្នាំថោះ បញ្ចស័ក ព.ស.២៥.....</h3>
-                    <h3>រាជធានីភ្នំពេញ/ខេត្ត ថ្ងៃទី ខែ....... ឆ្នាំ២០........</h3>
-                </div>
-
-                <h3 class="big-title1 text-center text-[18px] font-khmer mt-5 text-gray-900">
-                    វិញ្ញាបនបត្ររដ្ឋបាល
-                </h3>
-                <h3 class="big-title2 text-center text-[18px] font-khmer mt-2 text-gray-900">
-                    សាខាកាកបាទក្រហមកម្ពុជា រាជធានី ខេត្ត<span
-                        class="font-battambang font-medium">.................................</span>
-                </h3>
-                <h3 class="sub-title text-center text-[16px] font-khmer mt-2 underline text-gray-900">
-                    សូមបញ្ជាក់ថា
-                </h3>
+            <div class="text-end italic text-gray-800" style="font-family: 'Battambang'">
+                <h3>ថ្ងៃ................ខែ..........ឆ្នាំថោះ បញ្ចស័ក ព.ស.២៥.....</h3>
+                <h3>រាជធានីភ្នំពេញ/ខេត្ត ថ្ងៃទី ខែ....... ឆ្នាំ២០........</h3>
             </div>
-            <div class="content1 mt-5 font-battambang text-gray-900 text-[16px]">
-                <p class="ml-9">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;លោក/កញ្ញា <span
-                        class="font-bold">{{$member->name_kh ?? '........'}}</span> ភេទ <span
-                        class="font-bold">{{$member->gender ?? '......'}}</span> ជនជាតិខ្មែរ សញ្ជាតិខ្មែរ ថ្ងៃខែឆ្នាំកំណើត
-                    {{$member->date_of_birth ?? '............'}} ។
 
-                    មានអាសយដ្ឋាននៅផ្ទះលេខ <span class="font-bold">{{$member->home_no ?? '......'}}</span> ផ្លូវ <span
-                        class="font-bold">{{$member->street_no ?? '......'}}</span>
-                    {{$member->full_current_address}} ។
-
-                    បានចូលស្ម័គ្រចិត្តជាយុវជនកាកបាទក្រហមកម្ពុជា វិទ្យាល័យ <span
-                        class="font-bold">{{$member->school_name ?? '.........................'}}</span> រាជធានី/ខេត្ត <span
-                        class="font-bold">{{$member->branch_kh ?? '..............' }}</span>
-
-                    ចាប់តាំងពីថ្ងៃទី {{$member->registration_date ?? '........ខែ.............ឆ្នាំ.....................'}}
-                    ដល់ថ្ងៃទី........ខែ.............ឆ្នាំ..................... ពិតប្រាកដមែន។
-
-                    នៅក្នុងរយៈពេលស្ម័គ្រចិត្តបម្រើការងារនេះ សាមីខ្លួនបានលះបង់ពេលវេលាចំពោះកម្លាំងកាយ ប្រាជ្ញា ស្មារតី
-                    ថវិកាផ្ទាល់ខ្លួន និងយកចិត្តទុកដាក់សកម្មចូលរួមជាមួយកាកបាទក្រហមកម្ពុជា
-                    ក្នុងតួនាទីជាយុវជនស្ម័គ្រចិត្តដើម្បីបុព្វហេតុមនុស្សធម៌។
-                </p>
-                <p>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;វិញ្ញាបនបត្ររដ្ឋបាលនេះ
-                    ចេញជូនសាមីខ្លួនសម្រាប់ប្រើប្រាស់តាមច្បាប់ដែលអាចប្រើទៅបាន
-                    និងក្នុងគោលបំណងផ្ទេរជីវភាពពីគ្រឹះស្ថានសិក្សា បន្ដចូលគ្រឹះស្ថានសិក្សា រាជធានី ខេត្ត
-                    ដែលមានបណ្ដាញក្លឹបយុវជនកាកបាទក្រហមកម្ពុជា។
-                </p>
-
-                <p class="small-text">កន្លែងទទួល៖<br>
-                    - គ្រឹះស្ថានសិក្សា ទូទាំង ២៥ រាជធានី ខេត្ត<br>
-                    - សាមីខ្លួន<br>
-                    - ឯកសារ កាលប្បវត្តិ</p>
-
-            </div>
+            <h3 class="text-center text-[19px] mt-5" style="font-family: 'Moul'">
+                វិញ្ញាបនបត្ររដ្ឋបាល
+            </h3>
+            <h3 class="text-center text-[19px]  mt-2 text-gray-900" style="font-family: 'Moul'">
+                សាខាកាកបាទក្រហមកម្ពុជា រាជធានី ខេត្ត<span class="font-battambang font-medium"
+                    style="font-family: 'Battambang'">.................................</span>
+            </h3>
+            <h3 class="text-center text-[16px]  mt-2 underline text-gray-900" style="font-family: 'Moul'">
+                សូមបញ្ជាក់ថា
+            </h3>
         </div>
+        <div class="content1 mt-5 font-battambang text-gray-900 text-[18px]" style="font-family: 'Battambang'">
+            <div class="flex ml-9 md:mb-0 relative">
+                <div>
+                    <h3 class="">
+                        លោក/កញ្ញា<span>..............................</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[80px] font-bold">{{$member->name_kh ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        ភេទ<span>............</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[240px] font-bold">{{$member->gender ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        ជនជាតិខ្មែរ សញ្ជាតិខ្មែរ កើតថ្ងៃទី<span>..............</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[500px] font-bold">{{$dayOfBirth ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        ខែ<span>................</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[575px] font-bold">{{$monthOfBirth ?? ""}}</span>
+                </div>
+            </div>
+            <div class="flex md:mb-0 relative">
+                <div>
+                    <h3 class="">
+                        ឆ្នាំ<span>..............</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[20px] font-bold">{{$yearOfBirth ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        មានអាសយដ្ឋាននៅផ្ទះលេខ<span>.............</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[260px] font-bold">{{$member->home_no ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        ផ្លូវ<span>............</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[320px] font-bold">{{$member->street_no ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        ភូមិ<span>......................</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[410px] font-bold">{{$member->current_village ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        ឃុំ/សង្កាត់<span>..........................</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[570px] font-bold">{{$member->current_commune ?? ""}}</span>
+                </div>
+            </div>
+            <div class="flex md:mb-0 relative">
+                <div>
+                    <h3 class="">
+                        ស្រុក/ខណ្ឌ<span>.......................</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[75px] font-bold">{{$member->current_district ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        រាជធានី/ខេត្ត<span>...........................</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[255px] font-bold">{{$member->current_province ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        បានចូលស្ម័គ្រចិត្តជាយុវជនកាកបាទក្រហមកម្ពុជា
+                    </h3>
+                    <span class="absolute top-[-3px] left-[320px] font-bold">{{$member->street_no ?? ""}}</span>
+                </div>
+            </div>
+            <div class="flex md:mb-0 relative">
+                <div>
+                    <h3 class="">
+                        <span>..............................................</span>
+                    </h3>
+                    <span
+                        class="absolute top-[-3px] left-[0px] font-bold">{{$member->institute_kh ?? $member->school_name}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        រាជធានី/ខេត្ត<span>...........................</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[285px] font-bold">{{$member->branch_kh ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        ចាប់តាំងពីថ្ងៃទី<span>.........</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[495px] font-bold">{{$dayOfRegis ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        ខែ<span>............</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[550px] font-bold">{{$monthOfRegis ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        ឆ្នាំ<span>.............</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[615px] font-bold">{{$yearOfRegis ?? ""}}</span>
+                </div>
+            </div>
+            <div class="flex md:mb-0 relative">
+                <div>
+                    <h3 class="">
+                        ដល់ថ្ងៃទី<span>..............</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[70px] font-bold">{{$dayOfExpire ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        ខែ<span>...............</span>
+                    </h3>
+                    <span class="absolute top-[-3px] left-[140px] font-bold">{{$monthOfExpire ?? ""}}</span>
+                </div>
+                <div>
+                    <h3 class="">
+                        ឆ្នាំ<span>......................</span>ពិតប្រាកដមែន។ នៅក្នុងរយៈពេលស្ម័គ្រចិត្តបម្រើការងារនេះ
+                    </h3>
+                    <span class="absolute top-[-3px] left-[230px] font-bold">{{$yearOfExpire ?? ""}}</span>
+                </div>
+            </div>
+            <p class="mt-2">
+                សាមីខ្លួនបានលះបង់ពេលវេលាចំពោះកម្លាំងកាយ ប្រាជ្ញា ស្មារតី ថវិកាផ្ទាល់ខ្លួន និងយកចិត្តទុកដាក់សកម្មចូល
+            </p>
+            <p class="mt-2">
+                រួមជាមួយកាកបាទក្រហមកម្ពុជា ក្នុងតួនាទីជាយុវជនស្ម័គ្រចិត្ត ដើម្បីបុព្វហេតុមនុស្សធម៌។
+            </p>
+
+            <p class="mt-5 ml-9">
+                វិញ្ញាបនបត្ររដ្ឋបាលនេះចេញជូនសាមីខ្លួនសម្រាប់ប្រើប្រាស់តាមច្បាប់ដែលអាចប្រើទៅបាន និងក្នុងគោល
+
+            </p>
+            <p class="mt-2">
+                បំណងផ្ទេរជីវភាពពីគ្រឹះស្ថានសិក្សា បន្ដចូលគ្រឹះស្ថានសិក្សា រាជធានី ខេត្ត ដែលមានបណ្ដាញ
+                ក្លឹបយុវជនកាកបាទក្រហមកម្ពុជា។
+            </p>
+        </div>
+        <div class="text-xs font-battambang mt-24 text-gray-900 text-[11px]" style="font-family: 'Battambang'">
+            <p>កន្លែងទទួល៖</p>
+            <p>- គ្រឹះស្ថានសិក្សា ទូទាំង ២៥ រាជធានី ខេត្ត</p>
+            <p>- សាមីខ្លួន</p>
+            <p>- ឯកសារ កាលប្បវត្តិ</p>
+        </div>
+        <div class="page-break"></div>
     @endforeach
 </body>
 

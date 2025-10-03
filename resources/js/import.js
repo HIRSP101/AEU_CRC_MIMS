@@ -44,9 +44,9 @@ var khDict = {
     ឈ្មោះឡាតាំង: "name_en",
     ភេទ: "gender",
     ថ្ងៃខែឆ្នាំកំណើត: "date_of_birth",
-    ទីកន្លែងកំណើត: "pob_provience_city",
+    ទីកន្លែងកំណើត: "full_pob_provience_city",
     គ្រឹះស្ថានសិក្សា: "institute_id",
-    តួនាទី: "type",
+    តួនាទី: "member_type",
     កម្រិតសិក្សា: "education_level",
     ទទួលបានវគ្គបណ្ដុះបណ្ដាល: "training_received",
     ពិការភាព: "member_status",
@@ -56,17 +56,24 @@ var khDict = {
     "ទូរស័ព្ទផ្ទាល់ខ្លួន/តេលេក្រាម": "phone_number",
     ទូរស័ព្ទអាណាព្យាបាល: "guardian_phone",
     ទំហំអាវ: "shirt_size",
-    ផ្ទះលេខ: "home_no",
-    ផ្លូវលេខ: "street_no",
-    ភូមិ: "village",
-    "ឃុំ/សង្កាត់": "commune_sangkat",
-    "ស្រុក/ខណ្ឌ": "district_khan",
-    ខេត្តរាជធានី: "provience_city",
+    ផ្ទះលេខ: "current_home_no",
+    ផ្លូវលេខ: "current_street_no",
+    ភូមិ: "current_village",
+    "ឃុំ/សង្កាត់": "current_commune_sangkat",
+    "ស្រុក/ខណ្ឌ": "current_district_khan",
+    ខេត្តរាជធានី: "current_provience_city",
+     ផ្ទះលេខ: "pob_home_no",
+    ផ្លូវលេខ: "pob_street_no",
+    ភូមិ: "pob_village",
+    "ឃុំ/សង្កាត់": "pob_commune_sangkat",
+    "ស្រុក/ខណ្ឌ": "pob_district_khan",
+    ខេត្តរាជធានី: "pob_provience_city",
 };
 
 $(document).ready(function () {
     var school_id = null;
     var institute_id = null;
+    var branch_id = null;
     //start up code goes here
     getDistrctKhan();
     $.ajax({
@@ -74,8 +81,22 @@ $(document).ready(function () {
         url: "/getBranchByUser",
         data: {},
         success: function (data) {
+            console.log(data);
+            var selectList = $("#branch_name");
+            selectList.empty();
+            selectList.append(
+                `<option value="">--------------------------------</option>`
+            );
+            $.each(data, function (index, item) {
+                selectList.append(
+                    $("<option>", {
+                        value: item.branch_id,
+                        text: item.branch_kh,
+                    })
+                );
+            });
             $("#branch_name").val(data[0].branch_kh);
-
+            branch_id = data[0].branch_id;
         },
         failure: function (response) {
             alert(response.responseText);
@@ -83,6 +104,11 @@ $(document).ready(function () {
         error: function (response) {
             alert(response.responseText);
         },
+    });
+
+    $("#branch_name").on("change", function () {
+        branch_id = $("#branch_name").val();
+        getDistrctKhan(branch_id);
     });
 
     //select Change event on district and school
@@ -96,11 +122,13 @@ $(document).ready(function () {
         if (val.startsWith("school_")) {
             let schoolId = val.replace("school_", "");
             school_id = schoolId;
-            console.log("Selected school ID:", schoolId);
+            institute_id = null;
+            // console.log("Selected school ID:", schoolId);
         } else if (val.startsWith("institute_")) {
             let instituteId = val.replace("institute_", "");
             institute_id = instituteId;
-            console.log("Selected institute ID:", instituteId);
+            school_id = null;
+            // console.log("Selected institute ID:", instituteId);
         }
         // school_id = sId;
         // console.log(sId);
@@ -116,7 +144,6 @@ $(document).ready(function () {
         colValues = {};
         sheetObj = {};
         activeSheet = "";
-        
     });
     $("#dropzone-file").on("change", async function () {
         columnNames = [];
@@ -126,7 +153,7 @@ $(document).ready(function () {
         sheetObj = {};
         activeSheet = "";
         importedSheets = {};
-        $("#sheetImport").prop("disabled", false); 
+        $("#sheetImport").prop("disabled", false);
         const fileInput = $("#dropzone-file")[0];
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
@@ -194,6 +221,13 @@ $(document).ready(function () {
                                         cellValue =
                                             translatekhdateToen(cellValue);
                                     }
+                                    if (
+                                        colName === "ថ្ងៃខែឆ្នាំចូលជាសមាជិក" &&
+                                        containsUnicodeNumber(cellValue)
+                                    ) {
+                                        cellValue =
+                                            translatekhdateToen(cellValue);
+                                    }
                                     if (colName === "អាសយដ្ឋានបច្ចុប្បន្ន") {
                                         const addressParts = (cellValue || "")
                                             .split(" ")
@@ -204,17 +238,41 @@ $(document).ready(function () {
                                             reverseCurrentArrayAddress(
                                                 addressParts
                                             );
-                                        rowObject["home_no"] =
+                                        rowObject["current_home_no"] =
                                             address[0] || null;
-                                        rowObject["street_no"] =
+                                        rowObject["current_street_no"] =
                                             address[1] || null;
-                                        rowObject["village"] =
+                                        rowObject["current_village"] =
                                             address[2] || null;
-                                        rowObject["commune_sangkat"] =
+                                        rowObject["current_commune_sangkat"] =
                                             address[3] || null;
-                                        rowObject["district_khan"] =
+                                        rowObject["current_district_khan"] =
                                             address[4] || null;
-                                        rowObject["provience_city"] =
+                                        rowObject["current_provience_city"] =
+                                            address[5] || null;
+                                    }
+                                    if(colName === "ទីកន្លែងកំណើត")
+                                    {
+                                         const addressParts = (cellValue || "")
+                                            .split(" ")
+                                            .filter(
+                                                (part) => part.trim() !== ""
+                                            );
+                                        const address =
+                                            reverseCurrentArrayAddress(
+                                                addressParts
+                                            );
+                                        rowObject["pob_home_no"] =
+                                            address[0] || null;
+                                        rowObject["pob_street_no"] =
+                                            address[1] || null;
+                                        rowObject["pob_village"] =
+                                            address[2] || null;
+                                        rowObject["pob_commune_sangkat"] =
+                                            address[3] || null;
+                                        rowObject["pob_district_khan"] =
+                                            address[4] || null;
+                                        rowObject["pob_provience_city"] =
                                             address[5] || null;
                                     }
                                     rowObject[khDict[colName]] = cellValue;
@@ -250,7 +308,10 @@ $(document).ready(function () {
                         activeSheet = $(this).text().trim();
 
                         // new code 2025/05/05 Enable import button if this sheet hasn't been imported yet
-                        $("#sheetImport").prop("disabled", importedSheets[activeSheet] || false);
+                        $("#sheetImport").prop(
+                            "disabled",
+                            importedSheets[activeSheet] || false
+                        );
 
                         constructSheetTable(sheetObj[activeSheet], columnNames);
                         console.log("sheetobj=>", sheetObj[activeSheet]);
@@ -265,12 +326,30 @@ $(document).ready(function () {
 
     $("#sheetImport").on("click", function () {
         if (!activeSheet || !sheetObj[activeSheet]) {
-            alert("No active sheet selected!");
+            $("#SheetSelectAlert").show();
+            $("#textsuccAlert").show();
+            $("#tickAlert").show();
+            $("#okAlert").show();
+            $("#okAlert").on("click", function () {
+                $("#SheetSelectAlert").hide();
+                $("#textsuccAlert").hide();
+                $("#tickAlert").hide();
+                $("#okAlert").hide();
+            });
             return;
         }
         // new code 2025/05/05 insert control avoid reinsert
         if (importedSheets[activeSheet]) {
-            alert("This sheet has already been imported. Please select a different sheet.");
+            $("#SheetSelectAlertIfAlready").show();
+            $("#textsuccAlertIfAlready").show();
+            $("#tickAlertIfAlready").show();
+            $("#okAlertIfAlready").show();
+            $("#okAlertIfAlready").on("click", function () {
+                $("#SheetSelectAlertIfAlready").hide();
+                $("#textsuccAlertIfAlready").hide();
+                $("#tickAlertIfAlready").hide();
+                $("#okAlertIfAlready").hide();
+            });
             return;
         }
         let memberData = Object.values(sheetObj[activeSheet]);
@@ -278,7 +357,8 @@ $(document).ready(function () {
             ...member,
             school_id: school_id,
             institute_id: institute_id,
-            branchhei_id: institute_id
+            branchhei_id: institute_id,
+            branch_id: branch_id,
         }));
 
         console.log("memberData=>", memberData);
@@ -289,7 +369,28 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
+
+    $("#downloadform").on("click", function (e) {
+        e.preventDefault();
+
+        const fileUrl = "member_template.xlsx";
+        const fileName = "គំរូរ.xlsx";
+
+        const a = document.createElement("a");
+        a.href = fileUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    });
+
     function insertMember(member) {
+        $("#loadingSpinner").show();
+        $("#textload").show();
+        $("#spinner").show();
+        $("#textsucc").hide();
+        $("#tick").hide();
+        $("#ok").hide();
         $.ajax({
             url: "/importmember",
             method: "POST",
@@ -298,10 +399,24 @@ $(document).ready(function () {
             success: function (response) {
                 // Mark this sheet as imported
                 importedSheets[activeSheet] = true;
-                alert("ជោគជ័យ");
-                console.log("Success:", response);
+                $("#loadingSpinner").show();
+                $("#textload").hide();
+                $("#spinner").hide();
+                $("#textsucc").show();
+                $("#tick").show();
+                $("#ok").show();
+                $("#ok").on("click", function () {
+                    $("#loadingSpinner").hide();
+                    $("#textload").hide();
+                    $("#spinner").hide();
+                    $("#textsucc").hide();
+                    $("#tick").hide();
+                    $("#ok").hide();
+                });
+                // console.log("Success:", response);
             },
             error: function (xhr) {
+                $("#loadingSpinner").hide();
                 console.error("Error:", xhr.responseText);
             },
         });
@@ -406,11 +521,11 @@ $(document).ready(function () {
     }
 
     // get district and khan automatically when user login by Id join to userbind
-    function getDistrctKhan() {
+    function getDistrctKhan(id) {
         return new Promise((resolve, reject) => {
             $.ajax({
                 type: "GET",
-                url: "/getDistrictByUserLogin",
+                url: `/getDistrictByUserLogin/${id}`,
                 data: {},
                 success: function (data) {
                     console.log(data);
@@ -454,11 +569,14 @@ $(document).ready(function () {
                     );
                     $.each(data, function (index, item) {
                         //add prefix to the id for school and institute to check the condition
-                        let prefix = item.type === 'institute' ? 'institute_' : 'school_';
+                        let prefix =
+                            item.type === "institute"
+                                ? "institute_"
+                                : "school_";
                         $("#school-select").append(
                             $("<option>", {
                                 value: prefix + item.id,
-                                text: item.name
+                                text: item.name,
                             })
                         );
                     });

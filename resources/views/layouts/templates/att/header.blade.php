@@ -9,13 +9,7 @@
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('js/handlemodal.js') }}"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="{{ asset('build/assets/app.css') }}" rel="stylesheet">
-    <script src="{{ asset('build/assets/app.js') }}"></script>
-    <script src="{{ asset('js/exportToPdf.js') }}"></script>
-    <script src="{{asset("js/vfs_fonts.min.js")}}"></script>
-    <script src="{{asset("js/pdfmake.min.js")}}"></script>
-    <script src="{{ asset('js/jszip.min.js') }}"></script>
-    <script src="{{ asset('js/FileSaver.min.js') }}"></script>
+    <script src="{{asset('js/html2pdf.js')}}"></script>
     <link rel="icon" type="image/x-icon" href="{{URL::asset('images/Logo_of_Cambodian_Red_Cross.svg')}}">
     @stack('CSS')
 </head>
@@ -26,7 +20,7 @@
     </div>
     <div class="flex h-screen">
         @include('dashboard.partials.sidebar')
-        <div id="body" class="transition-transform flex flex-col flex-1 overflow-y-auto bg-[#F1F5F9]">
+        <div id="body" class="transition-transform flex flex-col flex-1 overflow-y-auto bg-white">
             <div class="flex items-center justify-between h-16 bg-cover object-fill bg-no-repeat border-b border-gray-200 px-4 py-1"
                 style="background: #B30202" {{-- style="background-image: url('{{ asset('images/navbar.png') }}');"
                 --}}>
@@ -40,6 +34,10 @@
                 <div class="flex items-center flex-1 mx-4">
                     @if (auth()->user()->hasRole('admin'))
                         <h1 class="text-white text-lg font-koulen">ទីស្នាក់ការកណ្តាល</h1>
+                    @elseif(auth()->user()->branch_bindding_user[0]->branch == null)
+                        <h1 class="text-white text-lg font-koulen">
+                            {{ auth()->user()->branch_bindding_user[0]->branch_hei->institute_kh }}
+                        </h1>
                     @else
                         <h1 class="text-white text-lg font-koulen">សាខាថ្នាក់កណ្តាល:
                             {{ auth()->user()->branch_bindding_user[0]->branch->branch_kh }}
@@ -50,11 +48,10 @@
                 <div class="flex items-center pr-4">
                     <button id="dropdownToggle"
                         class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
-                        <img class="inline-block size-[38px] rounded-full" src="{{ auth()->user()->image ?? '' }}"
+                        <img class="inline-block size-[38px] rounded-full" src="{{asset(auth()->user()->image) ?? '' }}"
                             alt="Avatar">
                     </button>
                 </div>
             </div>
 
             @include('dashboard.partials.user')
-            @include('dashboard.partials.user.profile.profile_modal')

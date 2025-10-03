@@ -1,15 +1,15 @@
 @extends('layouts.templates.att.master')
 @push('CSS')
 @endpush
-
+@canany(['2', '3'])
 @section('Content')
-    <div class="flex justify-center items-center bg-gray-100">
-        <div class="bg-white px-[10%] py-[5%] rounded-lg shadow-md w-[97%] mt-5">
-            <div class="text-center text-2xl font-bold mb-6 font-siemreap">
-                <h1>បង្កើតសាលារៀន​</h1>
-            </div>
+    <div class="flex justify-center items-center bg-white p-5">
+        <div class="bg-white px-[10%] py-5 rounded-lg shadow-md w-full">
+            <h1 class="text-center text-2xl font-koulen mb-5 text-blue-600">
+                បង្កើតសាលារៀន
+            </h1>
 
-            <form action="{{ route('storeschool') }}" method="POST">
+            <form action="{{ route('storeschool') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4">
                     <div>
@@ -71,7 +71,7 @@
                             <label for="district_id" class="block font-siemreap mb-2">ស្រុក/ខណ្ឌ</label>
                             <select name="district_id" id="district_id"
                                 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
-                                @foreach($villages as $v)
+                                @foreach($districts as $v)
                                     <option value="{{ $v->district_id }}">
                                         {{ $v->district_name }}
                                     </option>
@@ -89,6 +89,19 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="mb-4">
+                            <label for="image" class="block font-siemreap mb-2">
+                                រូបភាព
+                            </label>
+
+                            <div
+                                class="relative flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded py-2 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer">
+                                <span class="text-sm text-gray-500">ចុចដើម្បីជ្រើសរើសរូបភាព</span>
+                                <input type="file" name="image" id="image"
+                                    class="absolute inset-0 opacity-0 cursor-pointer">
+                            </div>
+                        </div>
+
                         <div class="mt-8">
                             <button type="submit"
                                 class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 font-siemreap">បង្កើត</button>
@@ -97,12 +110,12 @@
                 </div>
             </form>
             {{-- Table --}}
-            <div class="w-full overflow-scroll mx-3 my-3 max-h-[760px] mt-10">
+            <div class="w-full overflow-hidden mx-3 my-3 max-h-[760px] mt-10">
                 <table class="min-w-max w-full table-auto font-siemreap">
                     <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <th class="py-2 pl-5 text-left">លេខរៀង</th>
-                            <th class="py-2 text-center">សាលារៀន</th>
+                            <th class="py-2 text-center">គ្រឹះស្ថានសិក្សា</th>
                             <th class="py-2 text-center">ថ្ងៃចូលសមាជិក</th>
                             <th class="py-2 text-center">ខេត្ត/ក្រុង</th>
                             <th class="py-2 text-center">Action</th>
@@ -128,13 +141,13 @@
             fetch('/get-district')
                 .then(response => response.json())
                 .then(data => {
-                    let villageSelect = document.getElementById("district_id");
-                    villageSelect.innerHTML = "";
-                    data.forEach(village => {
+                    let districtSelect = document.getElementById("district_id");
+                    districtSelect.innerHTML = "";
+                    data.forEach(district => {
                         let option = document.createElement("option");
-                        option.value = village.district_id;
-                        option.textContent = village.district_name;
-                        villageSelect.appendChild(option);
+                        option.value = district.district_id;
+                        option.textContent = district.district_name;
+                        districtSelect.appendChild(option);
                     });
                 });
         });
@@ -155,8 +168,25 @@
         import { handleListSchool } from "{{ asset('js/handleListSchool.js') }}";
 
         document.addEventListener('DOMContentLoaded', function () {
-            var array = @json($schools);
-            handleListSchool(array);
+            let schools = @json($schools);
+            let institutes = @json($institutes);
+
+            // Default load: schools
+            handleListSchool(schools, "school");
+
+            $('#type').on('change', function () {
+                let selectedType = $(this).val();
+
+                if (selectedType === "សាកលវិទ្យាល័យ") {
+                    handleListSchool(institutes, "institute");
+                    $('#typeU').attr('hidden', false);
+                } else {
+                    handleListSchool(schools, "school");
+                    $('#typeU').attr('hidden', true);
+                }
+            });
         });
     </script>
 @endpush
+@endcanany
+@include("not_allow")

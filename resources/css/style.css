@@ -13,6 +13,9 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 9999;
 }
+.collapsed-sidebar {
+    width: 5rem; 
+}
 
 .loading-spinner {
     position: absolute;

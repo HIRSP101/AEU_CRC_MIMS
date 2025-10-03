@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Events\ImportProgress;
-use App\Models\Branch;
+use App\Models\branch;
 use App\Models\branch_hei;
 use App\Models\member_personal_detail;
 use App\Http\Requests\MemberRequest;
+use App\Models\school;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -40,19 +41,49 @@ class MemberController extends Controller
     }
     public function index(): View
     {
+        $title = "បញ្ចូលសមាជិកតាមរយះទម្រង់";
         $branches = Branch::all()->pluck('branch_kh', 'branch_id');
         $branchhei = branch_hei::all()->pluck('institute_kh', 'bhei_id');
-        return view('member.index', compact('branches', 'branchhei'));
+        $school = school::all()->pluck('school_name', 'school_id');
+        $branchheiPrefixed = $branchhei->mapWithKeys(fn($value, $key) => ['bhei_' . $key => $value]);
+        $schoolPrefixed = $school->mapWithKeys(fn($value, $key) => ['school_' . $key => $value]);
+
+        $institutions = $branchheiPrefixed->toArray() + $schoolPrefixed->toArray();
+        return view('member.index', compact('branches', 'institutions','title'));
     }
     public function getMemberDetail($id): View
     {
-        $member = member_personal_detail::with([
-            'member_guardian_detail',
-            'member_registration_detail',
-            'member_education_background',
-            'member_current_address',
-            'member_pob_address'
-        ])->findOrFail($id);
+        $member = DB::table('member_personal_detail as mpd')
+            ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+            ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->leftJoin('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
+            ->leftJoin('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
+            ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->leftJoin('branch_hei as bh', 'meb.branchhei_id', '=', 'bh.bhei_id')
+            ->leftJoin('branch as b', 'meb.branch_id', '=', 'b.branch_id')
+            ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
+            ->where('mpd.member_id', $id)
+            ->select(
+                'mpd.*',
+                'mgd.*',
+                'mrd.*',
+                'mca.village as current_village',
+                'mca.district_khan as current_district',
+                'mca.provience_city as current_province',
+                'mca.commune_sangkat as current_commune',
+                'mca.street_no as current_street',
+                'mca.home_no as current_house_number',
+                'mpa.village as pob_village',
+                'mpa.district_khan as pob_district',
+                'mpa.provience_city as pob_province',
+                'mpa.commune_sangkat as pob_commune',
+                'meb.*',
+                'b.branch_kh',
+                's.school_name',
+                'bh.institute_kh'
+            )
+            ->first();
+
         // dd($member);
 
         return view('member_detail.index', compact('member'));
@@ -131,7 +162,8 @@ class MemberController extends Controller
     }
     //new code 2025/03/27 import excel data into create member service
     public function importMember(Request $request): JsonResponse
-    {    
+    {
+         ini_set('max_execution_time', 120);
         try {
             DB::beginTransaction();
 
@@ -148,9 +180,9 @@ class MemberController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'Failed to create member record(s): ' . $e->getMessage()], 500);
-        }   
+        }
     }
-    
+
 
     private function getLastMemberId(): int
     {
@@ -174,19 +206,49 @@ class MemberController extends Controller
 
     public function getupdateMember(int $memberId)
     {
-
+        $title = "កែប្រែទិន្នន័យសមាជិក";
         $branches = Branch::all()->pluck('branch_kh', 'branch_id');
         $branchhei = branch_hei::all()->pluck('institute_kh', 'bhei_id');
+        $school = school::all()->pluck('school_name', 'school_id');
+
+        $branchheiPrefixed = $branchhei->mapWithKeys(fn($value, $key) => ['bhei_' . $key => $value]);
+        $schoolPrefixed = $school->mapWithKeys(fn($value, $key) => ['school_' . $key => $value]);
+
+        $institutions = $branchheiPrefixed->toArray() + $schoolPrefixed->toArray();
+
         if ($memberId) {
-            $member = member_personal_detail::with([
-                'member_guardian_detail',
-                'member_registration_detail',
-                'member_education_background',
-                'member_current_address',
-                'member_pob_address'
-            ])->findOrFail(intval($memberId));
+            $member = DB::table('member_personal_detail as mpd')
+                ->leftJoin('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+                ->leftJoin('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+                ->leftJoin('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
+                ->leftJoin('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
+                ->leftJoin('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+                ->leftJoin('branch_hei as bh', 'meb.branchhei_id', '=', 'bh.bhei_id')
+                ->leftJoin('branch as b', 'meb.branch_id', '=', 'b.branch_id')
+                ->leftJoin('school as s', 'meb.school_id', '=', 's.school_id')
+                ->where('mpd.member_id', $memberId)
+                ->select(
+                    'mpd.*',
+                    'mgd.*',
+                    'mrd.*',
+                    'mca.village as current_village',
+                    'mca.district_khan as current_district',
+                    'mca.provience_city as current_province',
+                    'mca.commune_sangkat as current_commune',
+                    'mca.street_no as current_street',
+                    'mca.home_no as current_house_number',
+                    'mpa.village as pob_village',
+                    'mpa.district_khan as pob_district',
+                    'mpa.provience_city as pob_province',
+                    'mpa.commune_sangkat as pob_commune',
+                    'meb.*',
+                    'b.branch_kh',
+                    's.school_name',
+                    'bh.institute_kh'
+                )
+                ->first();
             // dd($member);
-            return view('member.update.update', compact('member', 'branches', 'branchhei'));
+            return view('member.update.update', compact('member', 'branches', 'institutions','title'));
         }
     }
     public function updateMember(int $memberId, MemberRequest $request): JsonResponse

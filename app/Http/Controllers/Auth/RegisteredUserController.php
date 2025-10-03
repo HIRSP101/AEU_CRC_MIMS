@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
+use Str;
 
 class RegisteredUserController extends Controller
 {
@@ -43,20 +44,36 @@ class RegisteredUserController extends Controller
             'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
         ]);
 
-        $imageName = $request->hasFile('image') ? '\u-' . users::latest()->first()->id + 1 . '.' . $request->image->extension() : "";
-        $request->image->move(public_path('images\users'), $imageName);
+        if ($request->hasFile('image')) {
+            $imageName = 'u-' . (users::latest()->first()->id + 1) . '.' . $request->image->extension();
+            $request->image->move(public_path('images/users'), $imageName);
+            $imagePath = 'images/users/' . $imageName;
+        } else {
+            $imagePath = 'images/users/default-profile.png';
+        }
+
         $user = users::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'image' => "images\users" . $imageName
+            'image' => $imagePath
         ]);
+
+        $branchId = null;
+        $branchHeiId = null;
+        $inputBranchId = $request->branch_id;
+
+        if (Str::startsWith($inputBranchId, 'bra_')) {
+            $branchId = str_replace('bra_', '', $inputBranchId);
+        } elseif (Str::startsWith($inputBranchId, 'bhei_')) {
+            $branchHeiId = str_replace('bhei_', '', $inputBranchId);
+        }
 
         $bbu = branch_bindding_user::create([
-            "branch_id" => $request->branch_id,
-            "user_id" => $user->id
+            "branch_id" => $branchId,
+            "user_id" => $user->id,
+            "branch_hei_id" => $branchHeiId
         ]);
-
 
         $user->assignRole($request->roles);
         $user->givePermissionTo($request->permissions);
