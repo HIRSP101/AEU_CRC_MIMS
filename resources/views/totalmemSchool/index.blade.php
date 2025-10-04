@@ -8,7 +8,7 @@
     $current_branch = "";
     $total_mem_detail = [];
     $school_name = $currentSchool?->school_name;
-                                                                                                                                                                                ?>
+                                                                                                                                                                                    ?>
     @if(isset($data) && count($data) > 0)
         <?php
             $current_branch = explode(' ', $data[0]->full_current_address)[3] ?? "";
@@ -30,7 +30,7 @@
                 ];
             }
 
-                        ?>
+                                ?>
         <div class="bg-white m-5 p-5 shadow-lg rounded-lg">
             <h1 class="text-center font-koulen text-blue-600 my-5 text-2xl"> បញ្ជីរាយនាមសមាជិកយុវជនកាកបាទក្រហមកម្ពុជា
             </h1>
@@ -57,10 +57,10 @@
                             <span class="font-siemreap text-sm">បង្ហាញ</span>
                             <select id="table_size"
                                 class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-20 font-siemreap text-sm">
+                                <option value="25">25</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
                                 <option value="200">200</option>
-                                <option value="300">300</option>
                             </select>
                         </div>
 
@@ -82,7 +82,7 @@
                     </div>
                     @canany(['2'])
                         @can('3')
-                        <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
+                            <button id="export_excel" class="bg-green-500 text-white px-4 py-2 rounded">Export Excel</button>
                         @endcan
                         <button id="delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete Multi</button>
                     @endcanany
@@ -157,8 +157,8 @@
                     exportToExcel(
                         @json($current_branch),
                         @json($total_mem_detail),
-                                                    {{ $totalStu }},
-                                                    {{ $femaleStu }},
+                                                        {{ $totalStu }},
+                                                        {{ $femaleStu }},
                         schoolName
                     );
                 }

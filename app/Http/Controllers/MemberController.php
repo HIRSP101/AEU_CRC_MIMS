@@ -49,7 +49,7 @@ class MemberController extends Controller
         $schoolPrefixed = $school->mapWithKeys(fn($value, $key) => ['school_' . $key => $value]);
 
         $institutions = $branchheiPrefixed->toArray() + $schoolPrefixed->toArray();
-        return view('member.index', compact('branches', 'institutions','title'));
+        return view('member.index', compact('branches', 'institutions', 'title'));
     }
     public function getMemberDetail($id): View
     {
@@ -150,7 +150,11 @@ class MemberController extends Controller
             $currentMemberId = member_personal_detail::latest()->first()?->member_id ?? 0;
 
             foreach ($members as $memberData) {
-                $this->createService->createMember($memberData, $request->file('image'), $currentMemberId);
+                $member = $this->createService->createMember($memberData, $request->file('image'), $currentMemberId);
+                if (!$member) {
+                    DB::rollBack();
+                    return response()->json(['error' => 'Member already exists: ' . ($memberData['name_kh'] ?? 'Unknown')], 404);
+                }
                 $currentMemberId++;
             }
             DB::commit();
@@ -163,7 +167,7 @@ class MemberController extends Controller
     //new code 2025/03/27 import excel data into create member service
     public function importMember(Request $request): JsonResponse
     {
-         ini_set('max_execution_time', 120);
+        ini_set('max_execution_time', 120);
         try {
             DB::beginTransaction();
 
@@ -248,7 +252,7 @@ class MemberController extends Controller
                 )
                 ->first();
             // dd($member);
-            return view('member.update.update', compact('member', 'branches', 'institutions','title'));
+            return view('member.update.update', compact('member', 'branches', 'institutions', 'title'));
         }
     }
     public function updateMember(int $memberId, MemberRequest $request): JsonResponse

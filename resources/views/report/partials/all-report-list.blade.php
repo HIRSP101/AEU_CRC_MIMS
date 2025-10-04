@@ -28,14 +28,6 @@
                                 តារាងទិន្នន័យបច្ចុប្បន្នភាពគ្រឹះស្ថានសិក្សា ទីប្រឹក្សា និងយុវជនប្រចាំ {{ $branchName }}</p>
                         </a>
                     </div>
-                    <div class="py-2 px-5">
-                        <a href="{{ route('link-report') }}"
-                            class="block max-w-full p-6 bg-gray-50 border-gray-200 rounded-lg border hover:bg-gray-100">
-                            <p class="font-semibold text-gray-700 dark:text-gray-600 font-battambang text-[16px]">
-                                បញ្ជីតំណភ្ជាប់ (Link) ប្រចាំ {{ $branchName }}
-                            </p>
-                        </a>
-                    </div>
                 @elseif($institute_id != null)
                     <div class="py-2 px-5">
                         <a href="{{ route('institute.show', ['id' => $institute_id]) }}"

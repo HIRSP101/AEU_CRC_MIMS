@@ -2,191 +2,191 @@
 @push('CSS')
 @endpush
 @canany(['2', '3'])
-@section('Content')
-    <div class="flex justify-center items-center bg-white p-5">
-        <div class="bg-white px-[10%] py-5 rounded-lg shadow-md w-full">
-            <h1 class="text-center text-2xl font-koulen mb-5 text-blue-600">
-                បង្កើតសាលារៀន
-            </h1>
+    @section('Content')
+        <div class="flex justify-center items-center bg-white p-5">
+            <div class="bg-white px-[10%] py-5 rounded-lg shadow-md w-full">
+                <h1 class="text-center text-2xl font-koulen mb-5 text-blue-600">
+                    បង្កើតគ្រឹះស្ថានសិក្សា
+                </h1>
 
-            <form action="{{ route('storeschool') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="grid gap-4">
-                    <div>
-                        <label for="school_name" class="block font-siemreap mb-2">ឈ្មោះសាលារៀន</label>
-                        <input type="text" name="school_name" id="school_name"
-                            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                            required>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
+                <form action="{{ route('storeschool') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="grid gap-4">
                         <div>
-                            <label for="type" class="block font-siemreap mb-2">ប្រភេទ</label>
-                            @if (auth()->user()->hasRole('user'))
-                                <select name="type" id="type"
+                            <label for="school_name" class="block font-siemreap mb-2">ឈ្មោះសាលារៀន</label>
+                            <input type="text" name="school_name" id="school_name"
+                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                                required>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="type" class="block font-siemreap mb-2">ប្រភេទ</label>
+                                @if (auth()->user()->hasRole('user'))
+                                    <select name="type" id="type"
+                                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
+                                        <option value="អនុវិទ្យាល័យ">អនុវិទ្យាល័យ</option>
+                                        <option value="វិទ្យាល័យ">វិទ្យាល័យ</option>
+                                    </select>
+                                @else
+                                    <select name="type" id="type"
+                                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
+                                        <option value="អនុវិទ្យាល័យ">អនុវិទ្យាល័យ</option>
+                                        <option value="វិទ្យាល័យ">វិទ្យាល័យ</option>
+                                        <option value="សាកលវិទ្យាល័យ">សាកលវិទ្យាល័យ</option>
+                                    </select>
+                                @endif
+                            </div>
+                            <div hidden id="typeU">
+                                <label for="typeUniversity" class="block font-siemreap mb-2">ប្រភេទ</label>
+                                <select name="typeUniversity" id="typeUniversity"
                                     class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
-                                    <option value="អនុវិទ្យាល័យ">អនុវិទ្យាល័យ</option>
-                                    <option value="វិទ្យាល័យ">វិទ្យាល័យ</option>
+                                    <option value="">---</option>
+                                    <option value="រដ្ធ">សាធារណៈ</option>
+                                    <option value="ឯកជន">ឯកជន</option>
                                 </select>
-                            @else
-                                <select name="type" id="type"
-                                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
-                                    <option value="អនុវិទ្យាល័យ">អនុវិទ្យាល័យ</option>
-                                    <option value="វិទ្យាល័យ">វិទ្យាល័យ</option>
-                                    <option value="សាកលវិទ្យាល័យ">សាកលវិទ្យាល័យ</option>
-                                </select>
-                            @endif
-                        </div>
-                        <div hidden id="typeU">
-                            <label for="typeUniversity" class="block font-siemreap mb-2">ប្រភេទ</label>
-                            <select name="typeUniversity" id="typeUniversity"
-                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
-                                <option value="">---</option>
-                                <option value="រដ្ធ">សាធារណៈ</option>
-                                <option value="ឯកជន">ឯកជន</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="registration_date" class="block font-siemreap mb-2">ថ្ងៃចូលសមាជិក</label>
-                            <input type="date" name="registration_date" id="registration_date"
-                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                                required>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-4">
-                        <div>
-                            <label for="village_name" class="block font-siemreap mb-2">ភូមិ</label>
-                            <input type="text" name="village_name" id="village_name"
-                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                                required>
-                        </div>
-                        <div>
-                            <label for="khom" class="block font-siemreap mb-2">ឃុំ</label>
-                            <input type="text" name="khom" id="khom"
-                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                                required>
-                        </div>
-                        <div>
-                            <label for="district_id" class="block font-siemreap mb-2">ស្រុក/ខណ្ឌ</label>
-                            <select name="district_id" id="district_id"
-                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
-                                @foreach($districts as $v)
-                                    <option value="{{ $v->district_id }}">
-                                        {{ $v->district_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div>
-                            <label for="branch_id" class="block font-siemreap mb-2">ខេត្ត/ក្រុង</label>
-                            <select name="branch_id" id="branch_id"
-                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
-                                @foreach($branches as $b)
-                                    <option value="{{ $b->branch_id }}">
-                                        {{ $b->branch_kh }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label for="image" class="block font-siemreap mb-2">
-                                រូបភាព
-                            </label>
-
-                            <div
-                                class="relative flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded py-2 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer">
-                                <span class="text-sm text-gray-500">ចុចដើម្បីជ្រើសរើសរូបភាព</span>
-                                <input type="file" name="image" id="image"
-                                    class="absolute inset-0 opacity-0 cursor-pointer">
+                            </div>
+                            <div>
+                                <label for="registration_date" class="block font-siemreap mb-2">ថ្ងៃចូលសមាជិក</label>
+                                <input type="date" name="registration_date" id="registration_date"
+                                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                                    required>
                             </div>
                         </div>
 
-                        <div class="mt-8">
-                            <button type="submit"
-                                class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 font-siemreap">បង្កើត</button>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="village_name" class="block font-siemreap mb-2">ភូមិ</label>
+                                <input type="text" name="village_name" id="village_name"
+                                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                                    required>
+                            </div>
+                            <div>
+                                <label for="khom" class="block font-siemreap mb-2">ឃុំ</label>
+                                <input type="text" name="khom" id="khom"
+                                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                                    required>
+                            </div>
+                            <div>
+                                <label for="district_id" class="block font-siemreap mb-2">ស្រុក/ខណ្ឌ</label>
+                                <select name="district_id" id="district_id"
+                                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
+                                    @foreach($districts as $v)
+                                        <option value="{{ $v->district_id }}">
+                                            {{ $v->district_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label for="branch_id" class="block font-siemreap mb-2">ខេត្ត/ក្រុង</label>
+                                <select name="branch_id" id="branch_id"
+                                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300 font-siemreap">
+                                    @foreach($branches as $b)
+                                        <option value="{{ $b->branch_id }}">
+                                            {{ $b->branch_kh }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            {{-- <div class="mb-4">
+                                <label for="image" class="block font-siemreap mb-2">
+                                    រូបភាព
+                                </label>
+
+                                <div
+                                    class="relative flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded py-2 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer">
+                                    <span class="text-sm text-gray-500">ចុចដើម្បីជ្រើសរើសរូបភាព</span>
+                                    <input type="file" name="image" id="image"
+                                        class="absolute inset-0 opacity-0 cursor-pointer">
+                                </div>
+                            </div> --}}
+
+                            <div class="mt-8">
+                                <button type="submit"
+                                    class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 font-siemreap">បង្កើត</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-            {{-- Table --}}
-            <div class="w-full overflow-hidden mx-3 my-3 max-h-[760px] mt-10">
-                <table class="min-w-max w-full table-auto font-siemreap">
-                    <thead>
-                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                            <th class="py-2 pl-5 text-left">លេខរៀង</th>
-                            <th class="py-2 text-center">គ្រឹះស្ថានសិក្សា</th>
-                            <th class="py-2 text-center">ថ្ងៃចូលសមាជិក</th>
-                            <th class="py-2 text-center">ខេត្ត/ក្រុង</th>
-                            <th class="py-2 text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-gray-600 text-sm font-light" id="schoolTableBody"></tbody>
-                </table>
+                </form>
+                {{-- Table --}}
+                <div class="w-full overflow-hidden mx-3 my-3 max-h-[760px] mt-10">
+                    <table class="min-w-max w-full table-auto font-siemreap">
+                        <thead>
+                            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                <th class="py-2 pl-5 text-left">លេខរៀង</th>
+                                <th class="py-2 text-center">គ្រឹះស្ថានសិក្សា</th>
+                                <th class="py-2 text-center">ថ្ងៃចូលសមាជិក</th>
+                                <th class="py-2 text-center">ខេត្ត/ក្រុង</th>
+                                <th class="py-2 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 text-sm font-light" id="schoolTableBody"></tbody>
+                    </table>
 
-                {{-- Pagination --}}
-                <div class="flex justify-end mt-8">
-                    <span id="paginationText" class="font-siemreap text-sm"></span>
-                    <div class="flex gap-2 index_buttons"></div>
+                    {{-- Pagination --}}
+                    <div class="flex justify-end mt-8">
+                        <span id="paginationText" class="font-siemreap text-sm"></span>
+                        <div class="flex gap-2 index_buttons"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection
 
-@push('JS')
-    <script>
-        document.getElementById("branch_id").addEventListener("change", function () {
-            let branchId = this.value;
-            fetch('/get-district')
-                .then(response => response.json())
-                .then(data => {
-                    let districtSelect = document.getElementById("district_id");
-                    districtSelect.innerHTML = "";
-                    data.forEach(district => {
-                        let option = document.createElement("option");
-                        option.value = district.district_id;
-                        option.textContent = district.district_name;
-                        districtSelect.appendChild(option);
+    @push('JS')
+        <script>
+            document.getElementById("branch_id").addEventListener("change", function () {
+                let branchId = this.value;
+                fetch('/get-district')
+                    .then(response => response.json())
+                    .then(data => {
+                        let districtSelect = document.getElementById("district_id");
+                        districtSelect.innerHTML = "";
+                        data.forEach(district => {
+                            let option = document.createElement("option");
+                            option.value = district.district_id;
+                            option.textContent = district.district_name;
+                            districtSelect.appendChild(option);
+                        });
                     });
-                });
-        });
-
-        $('#type').on('change', function () {
-            console.log($(this).val());
-            if ($(this).val() == "សាកលវិទ្យាល័យ") {
-                $('#typeU').attr('hidden', false);
-            }
-            else {
-                $('#typeU').attr('hidden', true);
-            }
-
-        })
-
-    </script>
-    <script type="module">
-        import { handleListSchool } from "{{ asset('js/handleListSchool.js') }}";
-
-        document.addEventListener('DOMContentLoaded', function () {
-            let schools = @json($schools);
-            let institutes = @json($institutes);
-
-            // Default load: schools
-            handleListSchool(schools, "school");
+            });
 
             $('#type').on('change', function () {
-                let selectedType = $(this).val();
-
-                if (selectedType === "សាកលវិទ្យាល័យ") {
-                    handleListSchool(institutes, "institute");
+                console.log($(this).val());
+                if ($(this).val() == "សាកលវិទ្យាល័យ") {
                     $('#typeU').attr('hidden', false);
-                } else {
-                    handleListSchool(schools, "school");
+                }
+                else {
                     $('#typeU').attr('hidden', true);
                 }
+
+            })
+
+        </script>
+        <script type="module">
+            import { handleListSchool } from "{{ asset('js/handleListSchool.js') }}";
+
+            document.addEventListener('DOMContentLoaded', function () {
+                let schools = @json($schools);
+                let institutes = @json($institutes);
+
+                // Default load: schools
+                handleListSchool(schools, "school");
+
+                $('#type').on('change', function () {
+                    let selectedType = $(this).val();
+
+                    if (selectedType === "សាកលវិទ្យាល័យ") {
+                        handleListSchool(institutes, "institute");
+                        $('#typeU').attr('hidden', false);
+                    } else {
+                        handleListSchool(schools, "school");
+                        $('#typeU').attr('hidden', true);
+                    }
+                });
             });
-        });
-    </script>
-@endpush
+        </script>
+    @endpush
 @endcanany
 @include("not_allow")

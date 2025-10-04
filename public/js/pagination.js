@@ -1,7 +1,7 @@
 export default function setuppagination(array, attr_arr, updateroute) {
     let array_length = array.length;
     // let table_size = 50;
-    let table_size = parseInt($("#table_size").val()) || 50;
+    let table_size = parseInt($("#table_size").val()) || 25;
     let start_index = 1;
     let end_index = 0;
     let current_index = 1;
@@ -48,7 +48,8 @@ export default function setuppagination(array, attr_arr, updateroute) {
 
         for (let i = startPage; i <= endPage; i++) {
             $indexButtons.append(
-                `<button class="ml-2 bg-gray-300 px-3 rounded ${i === current_index ? "active" : ""
+                `<button class="ml-2 bg-gray-300 px-3 rounded ${
+                    i === current_index ? "active" : ""
                 }" 
                 onclick="indexPagination(${i})" data-index="${i}">${i}</button>`
             );
@@ -101,8 +102,9 @@ export default function setuppagination(array, attr_arr, updateroute) {
 
         let rowHTML = `<tr class='border-b border-slate-300 hover:bg-slate-300 hoverablebranch' data-id="${item["member_id"]}">`;
 
-        rowHTML += `<td class='px-2 py-4 text-sm text-center whitespace-nowrap'>${index + 1
-            }</td>`;
+        rowHTML += `<td class='px-2 py-4 text-sm text-center whitespace-nowrap'>${
+            index + 1
+        }</td>`;
 
         attr_arr.forEach((attr) => {
             if (attr === "member_id") return;
@@ -123,8 +125,11 @@ export default function setuppagination(array, attr_arr, updateroute) {
             <a class="px-2 py-2 text-blue-600 edit" data-id="${item["member_id"]}" href='/update-member/${item["member_id"]}'>edit</a>
             <button class="px-2 py-2 text-red-500 del-one" data-id="${item["member_id"]}">delete</button>
         `;
-        }
-        else if (window.userCanEditOrDelete && !window.Admin && !window.controllView) {
+        } else if (
+            window.userCanEditOrDelete &&
+            !window.Admin &&
+            !window.controllView
+        ) {
             // if (!window.Admin && ) {
             rowHTML += `
             <a class="px-2 py-2 text-blue-600 edit" data-id="${item["member_id"]}" href='/update-member/${item["member_id"]}'>edit</a>
@@ -133,7 +138,7 @@ export default function setuppagination(array, attr_arr, updateroute) {
         }
 
         rowHTML += `</td>`;
-        return rowHTML += '</tr>';
+        return (rowHTML += "</tr>");
     }
 
     displayIndexButtons();
