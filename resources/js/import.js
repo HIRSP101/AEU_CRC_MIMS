@@ -313,7 +313,7 @@ $(document).ready(function () {
                             "disabled",
                             importedSheets[activeSheet] || false
                         );
-                        console.log("sheetObj:----------", sheetObj[activeSheet]);
+                        //console.log("sheetObj:----------", sheetObj[activeSheet]);
                         constructSheetTable(sheetObj[activeSheet], columnNames);
                         // console.log("sheetobj=>", sheetObj[activeSheet]);
                     });
@@ -429,8 +429,11 @@ $(document).ready(function () {
                         $("#tickWarn").hide();
                         $("#ok").hide();
                     });
+                    const failed = response.faileds;
 
-                    constructSheetTable(response.faileds, columnNames, 'error');
+                    const cleanedFailed = failed.map(({ id, ...rest }) => rest);
+
+                    constructSheetTable(cleanedFailed, columnNames, 'error');
                 } else {
                     $("#loadingSpinner").show();
                     $("#textload").hide();

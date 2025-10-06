@@ -56,8 +56,37 @@ class CreateMemberService
     public function importMember(array $data, int $currentMemberId)
     {
         $dob = isset($data['date_of_birth']) ? $this->convertDate($data['date_of_birth']) : null;
-        $existingMember = member_personal_detail::where('name_kh', 'like', '%' . $data['name_kh'] . '%')->first();
+        // $existingMember = member_personal_detail::where('name_kh', 'like', '%' . $data['name_kh'] . '%')->first();
+        $existingMember = DB::table('member_personal_detail as mpd')
+            ->join('member_guardian_detail as mgd', 'mpd.member_id', '=', 'mgd.member_id')
+            ->join('member_registration_detail as mrd', 'mpd.member_id', '=', 'mrd.member_id')
+            ->join('member_education_background as meb', 'mpd.member_id', '=', 'meb.member_id')
+            ->join('member_current_address as mca', 'mpd.member_id', '=', 'mca.member_id')
+            ->join('member_pob_address as mpa', 'mpd.member_id', '=', 'mpa.member_id')
+            ->join('school as s', 'meb.school_id', '=', 's.school_id')
+            ->where('mpd.name_kh', 'like', '%' . $data['name_kh'] . '%')
+            ->select([
+                'mpd.name_kh as name_kh',
+                'mpd.name_en as name_en',
+                'mpd.gender as gender',
+                'mpd.date_of_birth as date_of_birth',
+                DB::raw("CONCAT(mpa.commune_sangkat, ', ', mpa.district_khan, ', ', mpa.provience_city) as full_pob_provience_city"),
+                'mpa.commune_sangkat as pob_commune_sangkat',
+                'mpa.district_khan as pob_district_khan',
+                'mpa.provience_city as pob_provience_city',
+                's.school_name as institute_id',
+                'mpd.member_type as member_type',
+                'meb.education_level as education_level',
+                'meb.training_received as training_received',
+                'mpd.member_status as member_status',
+                'meb.acadmedic_year as acadmedic_year',
+                'mrd.registration_date as registration_date',
+                'mpd.full_current_address as full_current_address',
+                'mpd.phone_number as phone_number',
+                'mgd.guardian_phone as guardian_phone',
 
+            ])
+            ->first();
         // dd($existingMember);
 
         if (!$existingMember) {
