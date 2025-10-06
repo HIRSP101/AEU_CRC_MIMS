@@ -49,7 +49,7 @@ class MemberController extends Controller
         $schoolPrefixed = $school->mapWithKeys(fn($value, $key) => ['school_' . $key => $value]);
 
         $institutions = $branchheiPrefixed->toArray() + $schoolPrefixed->toArray();
-        return view('member.index', compact('branches', 'institutions','title'));
+        return view('member.index', compact('branches', 'institutions', 'title'));
     }
     public function getMemberDetail($id): View
     {
@@ -163,20 +163,28 @@ class MemberController extends Controller
     //new code 2025/03/27 import excel data into create member service
     public function importMember(Request $request): JsonResponse
     {
-         ini_set('max_execution_time', 120);
+        ini_set('max_execution_time', 120);
         try {
             DB::beginTransaction();
 
             $members = $request->input('members');
-            //dd($members);
+            // dd($members);
             $currentMemberId = member_personal_detail::latest()->first()?->member_id ?? 0;
-
+            $faileds = [];
+            $failed_counter = 0;
+            $iterator = 0;
             foreach ($members as $memberData) {
-                $this->createService->importMember($memberData, $currentMemberId);
+                [$constraint, $member] = $this->createService->importMember($memberData, $currentMemberId);
+                if (!$constraint) {
+                    $faileds[] = $member;
+                    $failed_counter++;
+                }
                 $currentMemberId++;
+                $iterator++;
             }
+
             DB::commit();
-            return response()->json(['message' => 'Member record(s) created successfully!']);
+            return response()->json(['message' => 'Member record(s) created successfully!', 'failed_counter' => $failed_counter, 'faileds' => $faileds], 200);
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'Failed to create member record(s): ' . $e->getMessage()], 500);
@@ -248,7 +256,7 @@ class MemberController extends Controller
                 )
                 ->first();
             // dd($member);
-            return view('member.update.update', compact('member', 'branches', 'institutions','title'));
+            return view('member.update.update', compact('member', 'branches', 'institutions', 'title'));
         }
     }
     public function updateMember(int $memberId, MemberRequest $request): JsonResponse

@@ -10,56 +10,76 @@ use DB;
 use Illuminate\Http\UploadedFile;
 use Carbon\Carbon;
 use App\Helpers\DateTimeFormat;
+use Nette\MemberAccessException;
 
 class CreateMemberService
 {
 
-    public function createMember(array $data, ?UploadedFile $image, int $currentMemberId): member_personal_detail
+    public function createMember(array $data, ?UploadedFile $image, int $currentMemberId)
     {
         //  dd($data);
 
         $imagePath = $this->handleImageUpload($data, $image, $currentMemberId);
         // dd($imagePath);
-        $member = member_personal_detail::create([
-            "name_kh" => $data['name_kh'] ?? null,
-            "name_en" => $data['name_en'] ?? null,
-            "gender" => $data['gender'] ?? null,
-            "member_image" => $imagePath ?? null,
-            "nationality" => $data['nationality'] ?? "ខ្មែរ",
-            "date_of_birth" => isset($data['date_of_birth']) ? $this->convertDate($data['date_of_birth']) : null,
-            "full_current_address" => $data['full_current_address'] ?? null,
-            "phone_number" => $data['phone_number'] ?? null,
-            "email" => $data['email'],
-            "facebook" => $data['facebook'] ?? null,
-            "shirt_size" => $data['shirt_size'] ?? null,
-            "branch_id" => $data['branch_id'] ?? null,
-            "member_type" => $data["member_type"] ?? null,
-            "member_status" => $data["member_status"] ?? null,
-        ]);
-        $this->createRelatedData($member, $data);
+        $dob = isset($data['date_of_birth']) ? $this->convertDate($data['date_of_birth']) : null;
+        $existingMember = member_personal_detail::where('name_kh', $data['name_kh'])
+            ->where('phone_number', $data['phone_number'])
+            ->where('date_of_birth', $dob)
+            ->first();
 
-        return $member;
+        //dd($existingMember);
+        if (!$existingMember) {
+            $member = member_personal_detail::create([
+                "name_kh" => $data['name_kh'] ?? null,
+                "name_en" => $data['name_en'] ?? null,
+                "gender" => $data['gender'] ?? null,
+                "member_image" => $imagePath ?? null,
+                "nationality" => $data['nationality'] ?? "ខ្មែរ",
+                "date_of_birth" => isset($data['date_of_birth']) ? $this->convertDate($data['date_of_birth']) : null,
+                "full_current_address" => $data['full_current_address'] ?? null,
+                "phone_number" => $data['phone_number'] ?? null,
+                "email" => $data['email'],
+                "facebook" => $data['facebook'] ?? null,
+                "shirt_size" => $data['shirt_size'] ?? null,
+                "branch_id" => $data['branch_id'] ?? null,
+                "member_type" => $data["member_type"] ?? null,
+                "member_status" => $data["member_status"] ?? null,
+            ]);
+            $this->createRelatedData($member, $data);
+            return $member;
+        } else {
+            return false;
+        }
+
     }
 
-    public function importMember(array $data, int $currentMemberId): member_personal_detail
+    public function importMember(array $data, int $currentMemberId)
     {
-        $member = member_personal_detail::create([
-            "name_kh" => $data['name_kh'] ?? null,
-            "name_en" => $data['name_en'] ?? null,
-            "gender" => $data['gender'] ?? null,
-            "member_image" => null,
-            "nationality" => $data['nationality'] ?? "ខ្មែរ",
-            "date_of_birth" => $data['date_of_birth'] ?? null,
-            "full_current_address" => $data['full_current_address'] ?? null,
-            "phone_number" => DateTimeFormat::convertKhmerToEnglishNumbers($data['phone_number']) ?? null,
-            "shirt_size" => $data['shirt_size'] ?? null,
-            "branch_id" => $data['branch_id'] ?? null,
-            "member_type" => $data["member_type"] ?? null,
-            "member_status" => $data["member_status"] ?? null,
-        ]);
-        $this->createRelatedData($member, $data);
+        $dob = isset($data['date_of_birth']) ? $this->convertDate($data['date_of_birth']) : null;
+        $existingMember = member_personal_detail::where('name_kh', 'like', '%' . $data['name_kh'] . '%')->first();
 
-        return $member;
+        // dd($existingMember);
+
+        if (!$existingMember) {
+            $member = member_personal_detail::create([
+                "name_kh" => $data['name_kh'] ?? null,
+                "name_en" => $data['name_en'] ?? null,
+                "gender" => $data['gender'] ?? null,
+                "member_image" => null,
+                "nationality" => $data['nationality'] ?? "ខ្មែរ",
+                "date_of_birth" => $data['date_of_birth'] ?? null,
+                "full_current_address" => $data['full_current_address'] ?? null,
+                "phone_number" => DateTimeFormat::convertKhmerToEnglishNumbers($data['phone_number']) ?? null,
+                "shirt_size" => $data['shirt_size'] ?? null,
+                "branch_id" => $data['branch_id'] ?? null,
+                "member_type" => $data["member_type"] ?? null,
+                "member_status" => $data["member_status"] ?? null,
+            ]);
+            $this->createRelatedData($member, $data);
+            return [true, $member];
+        } else {
+            return [false, $existingMember];
+        }
     }
 
     private function createRelatedData(member_personal_detail $member, array $data): void

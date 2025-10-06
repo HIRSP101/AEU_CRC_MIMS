@@ -11,6 +11,7 @@ var startRow = 0;
 var lastRow = 0;
 var colValues = {};
 var importedSheets = {};
+var err_arrays = [];
 const branch_dict = {
     រាជធានីភ្នំពេញ: 1,
     ខេត្តសៀមរាប: 2,
@@ -62,7 +63,7 @@ var khDict = {
     "ឃុំ/សង្កាត់": "current_commune_sangkat",
     "ស្រុក/ខណ្ឌ": "current_district_khan",
     ខេត្តរាជធានី: "current_provience_city",
-     ផ្ទះលេខ: "pob_home_no",
+    ផ្ទះលេខ: "pob_home_no",
     ផ្លូវលេខ: "pob_street_no",
     ភូមិ: "pob_village",
     "ឃុំ/សង្កាត់": "pob_commune_sangkat",
@@ -71,6 +72,7 @@ var khDict = {
 };
 
 $(document).ready(function () {
+    // alert('loaded@@@!!!');
     var school_id = null;
     var institute_id = null;
     var branch_id = null;
@@ -251,9 +253,8 @@ $(document).ready(function () {
                                         rowObject["current_provience_city"] =
                                             address[5] || null;
                                     }
-                                    if(colName === "ទីកន្លែងកំណើត")
-                                    {
-                                         const addressParts = (cellValue || "")
+                                    if (colName === "ទីកន្លែងកំណើត") {
+                                        const addressParts = (cellValue || "")
                                             .split(" ")
                                             .filter(
                                                 (part) => part.trim() !== ""
@@ -312,9 +313,9 @@ $(document).ready(function () {
                             "disabled",
                             importedSheets[activeSheet] || false
                         );
-
+                        console.log("sheetObj:----------", sheetObj[activeSheet]);
                         constructSheetTable(sheetObj[activeSheet], columnNames);
-                        console.log("sheetobj=>", sheetObj[activeSheet]);
+                        // console.log("sheetobj=>", sheetObj[activeSheet]);
                     });
                 } catch (error) {
                     console.error("Error reading Excel file:", error);
@@ -361,7 +362,7 @@ $(document).ready(function () {
             branch_id: branch_id,
         }));
 
-        console.log("memberData=>", memberData);
+        //console.log("memberData=>", memberData);
         insertMember(memberData.slice(1));
     });
     $.ajaxSetup({
@@ -369,6 +370,8 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
+
+    console.log("DSFDS::   ", err_arrays);
 
     $("#downloadform").on("click", function (e) {
         e.preventDefault();
@@ -391,6 +394,7 @@ $(document).ready(function () {
         $("#textsucc").hide();
         $("#tick").hide();
         $("#ok").hide();
+        console.log('member: ', member);
         $.ajax({
             url: "/importmember",
             method: "POST",
@@ -398,26 +402,56 @@ $(document).ready(function () {
             data: JSON.stringify({ members: member }),
             success: function (response) {
                 // Mark this sheet as imported
+                console.log('response: ', response);
+
                 importedSheets[activeSheet] = true;
-                $("#loadingSpinner").show();
-                $("#textload").hide();
-                $("#spinner").hide();
-                $("#textsucc").show();
-                $("#tick").show();
-                $("#ok").show();
-                $("#ok").on("click", function () {
-                    $("#loadingSpinner").hide();
+
+                if (response.failed_counter > 0 && response.faileds.length > 0) {
+
+                    $("#loadingSpinner").show();
                     $("#textload").hide();
                     $("#spinner").hide();
-                    $("#textsucc").hide();
-                    $("#tick").hide();
-                    $("#ok").hide();
-                });
-                // console.log("Success:", response);
+                    if (response.failed_counter === member.length) {
+                        $("#textError").show();
+                    } else if (response.failed_counter < member.length) {
+                        $("textduplicate").show();
+                    }
+                    $("textduplicate").show();
+                    $("#tickWarn").show();
+                    $("#ok").show();
+                    $("#ok").on("click", function () {
+                        $("#loadingSpinner").hide();
+                        $("#textload").hide();
+                        $("#spinner").hide();
+                        $("#textError").hide();
+                        $("#textduplicate").hide();
+                        $("#tickWarn").hide();
+                        $("#ok").hide();
+                    });
+
+                    constructSheetTable(response.faileds, columnNames, 'error');
+                } else {
+                    $("#loadingSpinner").show();
+                    $("#textload").hide();
+                    $("#spinner").hide();
+                    $("#textsucc").show();
+                    $("#tick").show();
+                    $("#ok").show();
+                    $("#ok").on("click", function () {
+                        $("#loadingSpinner").hide();
+                        $("#textload").hide();
+                        $("#spinner").hide();
+                        $("#textsucc").hide();
+                        $("#tick").hide();
+                        $("#ok").hide();
+                    });
+                }
+                //  console.log(response);
+                //  console.log("Success:", response);
             },
             error: function (xhr) {
                 $("#loadingSpinner").hide();
-                console.error("Error:", xhr.responseText);
+                console.log("Error:", xhr.responseText.data);
             },
         });
     }
@@ -561,7 +595,7 @@ $(document).ready(function () {
                 url: `/getSchoolByDistrictId/${district_id}`,
                 data: {},
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     var selectList = $("#school-select");
                     selectList.empty();
                     selectList.append(

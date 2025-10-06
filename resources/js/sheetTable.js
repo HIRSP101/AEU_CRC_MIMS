@@ -1,11 +1,11 @@
 import { showLoading, hideLoading } from './loadingscreen';
 
-export default function constructSheetTable(sheetObj = {}, header = []) {
+export default function constructSheetTable(sheetObj = {}, header = [], misc_indicator= "") {
     if (Object.keys(sheetObj).length === 0) {
         console.warn("Sheet data is empty!");
         return;
     }
-
+     
     let tableHeader = `<tr>`;
     let tableRows = ``;
     let tableStructure = `<div class="w-full overflow-scroll max-h-[450px] my-4 rounded-md border border-black">
@@ -36,6 +36,8 @@ export default function constructSheetTable(sheetObj = {}, header = []) {
         if (isNaN(date.getTime())) return dateString; // Return as is if invalid date
         return date.toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" }); // Format as DD-MM-YYYY
     }
+    var constraint = misc_indicator === 'error' ? 'bg-red-700' : "";
+    var constraint_text = misc_indicator === 'error' ? 'text-white': "text-gray-500";
 
     sheetEntries.slice(1).forEach(([rowIndex, rowData]) => {
         tableRows += `<tr>`;
@@ -44,7 +46,7 @@ export default function constructSheetTable(sheetObj = {}, header = []) {
             if (colName === "registration_date") {
                 cellValue = formatDate(cellValue);
             }
-            tableRows += `<td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">${cellValue}</td>`;
+            tableRows += `<td class="px-6 py-4 text-sm ${constraint_text} ${constraint} whitespace-nowrap">${cellValue}</td>`;
         });
 
         tableRows += `</tr>`;
