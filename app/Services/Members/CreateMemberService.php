@@ -21,14 +21,14 @@ class CreateMemberService
 
         $imagePath = $this->handleImageUpload($data, $image, $currentMemberId);
         // dd($imagePath);
+        $name_kh = $data['name_kh'] ?? null;
+        $phone = $data['phone_number'] ?? null;
         $dob = isset($data['date_of_birth']) ? $this->convertDate($data['date_of_birth']) : null;
-        $existingMember = member_personal_detail::where('name_kh', $data['name_kh'])
-            ->where('phone_number', $data['phone_number'])
+        $existingMember = member_personal_detail::where('name_kh', $name_kh)
+            ->where('phone_number', $phone)
             ->where('date_of_birth', $dob)
             ->first();
-
-        //dd($existingMember);
-        if (!$existingMember) {
+        if ($existingMember) {
             $member = member_personal_detail::create([
                 "name_kh" => $data['name_kh'] ?? null,
                 "name_en" => $data['name_en'] ?? null,
@@ -46,11 +46,11 @@ class CreateMemberService
                 "member_status" => $data["member_status"] ?? null,
             ]);
             $this->createRelatedData($member, $data);
+
             return $member;
         } else {
             return false;
         }
-
     }
 
     public function importMember(array $data, int $currentMemberId)

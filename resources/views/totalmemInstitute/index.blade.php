@@ -9,7 +9,7 @@
     $total_mem_detail = "";
     $member_pob = "";
     $institute_kh = $institution->institute_kh;
-                                                                                                                                                                                                                                                    ?>
+                                                                                                                                                                                                                                                        ?>
     @if(count($total_mem) > 0)
         <?php
             $current_branch = explode(' ', $total_mem[0]->full_current_address)[3] ?? "";
@@ -56,7 +56,7 @@
 
                 );
             }
-                                                ?>
+                                                        ?>
         <div class="bg-white m-5 p-5 shadow-lg rounded-lg">
             <h1 class="text-center font-koulen mb-5 text-blue-600 text-2xl"> {{$title}} </h1>
             <h2 class="text-center font-koulen mb-5 text-blue-600 text-2xl"> កាកបាទក្រហមកម្ពុជា {{$institute_kh}} </h2>
@@ -75,10 +75,10 @@
                             <span class="font-siemreap text-sm">បង្ហាញ</span>
                             <select id="table_size"
                                 class="text-gray-700 bg-gray-300 py-2 px-2 rounded w-20 font-siemreap text-sm">
+                                <option value="25">25</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
                                 <option value="200">200</option>
-                                <option value="300">300</option>
                             </select>
                         </div>
 
@@ -171,8 +171,8 @@
                     exportToExcel(
                         @json($current_branch),
                         @json($total_mem_detail),
-                                                                {{ $totalStu }},
-                                                                {{ $femaleStu }},
+                                                                    {{ $totalStu }},
+                                                                    {{ $femaleStu }},
                         institute_kh);
                 }
             });

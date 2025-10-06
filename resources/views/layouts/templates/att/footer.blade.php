@@ -5,12 +5,11 @@
         </div>
     </footer>
 </div> --}}
-</div>
+
 </div>
 
 
 @stack("JS")
-
 
 <script>
     $("#openSidebar").click(() => {
@@ -20,7 +19,6 @@
     });
 </script>
 
-@include('dashboard.partials.user.profile.profile_modal')
 </body>
 
 </html>

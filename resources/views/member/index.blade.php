@@ -3,46 +3,46 @@
 @endpush
 @canany(['2', '3'])
     @section('Content')
-    <div class="bg-gray-100 font-battambang m-5">
-        @include('loading_view')
-        <div class="p-5 bg-white shadow-md rounded-lg">
-            <h1 class="text-2xl font-medium text-center font-koulen text-blue-600">
-                {{ $title }}
-            </h1>
-            <div class="mt-14">
-                <div class="relative flex justify-center items-start mb-3">
-                    <img class="w-28 h-28" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}" alt="Red Cross Logo">
-                    <div class="absolute right-0 top-0">
-                        <img class="w-28 h-32 bg-red-300 border rounded-sm"
-                            src="{{ asset('images/members/default-profile.jpg') }}" alt="Profile Image">
+        <div class="bg-gray-100 font-battambang m-5">
+            @include('loading_view')
+            <div class="p-5 bg-white shadow-md rounded-lg">
+                <h1 class="text-2xl font-medium text-center font-koulen text-blue-600">
+                    {{ $title }}
+                </h1>
+                <div class="mt-14">
+                    <div class="relative flex justify-center items-start mb-3">
+                        <img class="w-28 h-28" src="{{ asset('images/Logo_of_Cambodian_Red_Cross.svg') }}" alt="Red Cross Logo">
+                        <div class="absolute right-0 top-0">
+                            <img class="w-28 h-32 bg-red-300 border rounded-sm"
+                                src="{{ asset('images/members/default-profile.jpg') }}" alt="Profile Image">
+                        </div>
+                    </div>
+                    <div class="text-center mb-10 font-battambang">
+                        <h1 class="mb-1 text-[18px]">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
+                        <h1 class="text-[18px]">Cambodian Red Cross Youth Individual Information</h1>
+                    </div>
+                    @csrf
+                    @include('member.components.partials.personal_detail')
+                    <hr>
+                    @include('member.components.partials.pob')
+                    <hr>
+                    @include('member.components.partials.current_address')
+                    <hr>
+                    @include('member.components.partials.personal_training')
+                    <hr>
+                    @include('member.components.partials.guardian')
+                    <div class="flex justify-end gap-3 font-battambang text-white">
+                        <a class="border-solid bg-red-500 py-2 font-medium px-4 rounded-md hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300"
+                            id="clear_btn">លុប</a>
+                        <button
+                            class="border-solid bg-green-500 px-4 font-medium py-2 rounded-md hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300"
+                            type="submit" id="submit_btn">យល់ព្រម
+                        </button>
                     </div>
                 </div>
-                <div class="text-center mb-10 font-battambang">
-                    <h1 class="mb-1 text-[18px]">សលាកបត្រព័ត៍មានផ្ទាល់ខ្លួន យុវជនកាកបាទក្រហមកម្ពុជា</h1>
-                    <h1 class="text-[18px]">Cambodian Red Cross Youth Individual Information</h1>
-                </div>
-                @csrf
-                @include('member.components.partials.personal_detail')
-                <hr>
-                @include('member.components.partials.pob')
-                <hr>
-                @include('member.components.partials.current_address')
-                <hr>
-                @include('member.components.partials.personal_training')
-                <hr>
-                @include('member.components.partials.guardian')
-                <div class="flex justify-end gap-3 font-battambang text-white">
-                    <a class="border-solid bg-red-500 py-2 font-medium px-4 rounded-md hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300"
-                        id="clear_btn">លុប</a>
-                    <button
-                        class="border-solid bg-green-500 px-4 font-medium py-2 rounded-md hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300"
-                        type="submit" id="submit_btn">យល់ព្រម
-                    </button>
-                </div>
             </div>
-        </div>
 
-    </div>
+        </div>
     @endsection
 
     @push('JS')
@@ -180,7 +180,29 @@
                     },
                     error: function (error) {
                         $("#loadingSpinner").hide();
-                        console.error(error);
+                        $("#textload").hide();
+                        $("#spinner").hide();
+                        $("#textsucc").hide();
+                        $("#tick").hide();
+                        $("#ok").hide();
+
+                        $("#loadingSpinnerFail").show();
+                        $("#textloadfail").hide();
+                        $("#spinnerfail").hide();
+                        $("#textfail").show();
+                        $("#tickfail").show();
+                        $("#spinner").hide();
+                        $("#okfail").show();
+                        $("#okfail").on("click", function () {
+                            $("#loadingSpinnerFail").hide();
+                            $("#textloadfail").hide();
+                            $("#spinnerfail").hide();
+                            $("#textfail").hide();
+                            $("#tickfail").hide();
+                            $("#okfail").hide();
+                            $("input").val("");
+                            $("img.image").attr('src', '{{ asset('images/members/default-profile.jpg') }}');
+                        });
                     }
                 })
             }
