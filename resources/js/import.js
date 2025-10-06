@@ -413,10 +413,11 @@ $(document).ready(function () {
                     $("#spinner").hide();
                     if (response.failed_counter === member.length) {
                         $("#textError").show();
-                    } else if (response.failed_counter < member.length) {
-                        $("textduplicate").show();
+                    } else {
+                        $("#textduplicate").show();
+                        $("#duplicateCounter").text(response.failed_counter).show();
                     }
-                    $("textduplicate").show();
+                    // $("#textduplicate").show();
                     $("#tickWarn").show();
                     $("#ok").show();
                     $("#ok").on("click", function () {
