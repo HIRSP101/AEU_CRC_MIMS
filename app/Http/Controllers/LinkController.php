@@ -363,9 +363,11 @@ class LinkController extends Controller
                 'mcad.district_khan as district_khan_current',
                 'mcad.provience_city as provience_city_current',
             ])
-            ->distinct()
-            ->get();
-        $data = $baseQuery->get();
+
+            ->get()
+            ->unique('member_id')->values();
+        $data = $baseQuery->get()->unique('member_id');
+        //  dd($total_mem[0]->name_en);
         $totalStu = $data->count();
         $femaleStu = $data->where('gender', 'ស្រី')->count();
         if (count($total_mem) == 0) {
