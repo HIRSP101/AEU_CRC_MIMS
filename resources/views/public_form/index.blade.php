@@ -3,9 +3,9 @@
 @endpush
 
 @section('Content')
-@include('public_form.partials.member_form')
+    @include('public_form.partials.member_form')
 
-</div>
+    </div>
 
 @endsection
 
@@ -77,11 +77,11 @@
             }
 
             formData.append('image', $("#image")[0].files[0]);
-            console.log(memberObj);
+            //  console.log(memberObj);
             formData.append('members', JSON.stringify(memberObj));
 
             console.log(formData);
-             $("#loading-overlay").show();
+            $("#loading-overlay").show();
             insertMember(formData);
         })
 

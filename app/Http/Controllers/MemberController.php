@@ -150,10 +150,10 @@ class MemberController extends Controller
             $currentMemberId = member_personal_detail::latest()->first()?->member_id ?? 0;
 
             foreach ($members as $memberData) {
-                $member = $this->createService->createMember($memberData, $request->file('image'), $currentMemberId);
-                if (!$member) {
-                    DB::rollBack();
-                    return response()->json(['error' => 'Member already exists: ' . ($memberData['name_kh'] ?? 'Unknown')], 404);
+                [$constraint, $member] = $this->createService->createMember($memberData, $request->file('image'), $currentMemberId);
+                if (!$constraint) {
+                    //  DB::rollBack();
+                    return response()->json(['error' => 'Member already exists: '], 404);
                 }
                 $currentMemberId++;
             }

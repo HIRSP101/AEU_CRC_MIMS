@@ -158,6 +158,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
+                        //  alert("on success");
                         $("#loadingSpinner").show();
                         $("#textload").hide();
                         $("#spinner").hide();
@@ -179,6 +180,7 @@
                         // alert(response.message);
                     },
                     error: function (error) {
+                        //  alert("on error/failure");
                         $("#loadingSpinner").hide();
                         $("#textload").hide();
                         $("#spinner").hide();
