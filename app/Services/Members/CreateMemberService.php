@@ -50,7 +50,6 @@ class CreateMemberService
             $this->createRelatedData($member, $data);
             return [true, $member];
         }
-
     }
 
     public function importMember(array $data, int $currentMemberId)

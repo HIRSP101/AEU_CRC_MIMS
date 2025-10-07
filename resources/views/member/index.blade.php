@@ -191,7 +191,7 @@
                         $("#loadingSpinnerFail").show();
                         $("#textloadfail").hide();
                         $("#spinnerfail").hide();
-                        $("#textfail").show();
+                        // $("#textfail").show();
                         $("#tickfail").show();
                         $("#spinner").hide();
                         $("#okfail").show();

@@ -373,7 +373,7 @@
                             success: function (response) {
                                 if (response.status === 200) {
                                     alert(response.message);
-                                    const link = `${window.location.origin}/member-rigistration/${response.data}`;
+                                    const link = `${window.location.origin}/member-registration/${response.data}`;
                                     $("#link-generate").removeClass("hidden");
                                     $("#link-generated").val(link);
                                 }
