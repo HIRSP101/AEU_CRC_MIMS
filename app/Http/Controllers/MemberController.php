@@ -41,7 +41,7 @@ class MemberController extends Controller
     }
     public function index(): View
     {
-        $title = "បញ្ចូលសមាជិកតាមរយះទម្រង់";
+        $title = "បញ្ចូលសមាជិកតាមរយៈទម្រង់";
         $branches = Branch::all()->pluck('branch_kh', 'branch_id');
         $branchhei = branch_hei::all()->pluck('institute_kh', 'bhei_id');
         $school = school::all()->pluck('school_name', 'school_id');
