@@ -3,9 +3,10 @@
 @endpush
 
 @section('Content')
-@include('member_input_form.partials.member_form')
-@include('loading_view')
-@include('succed_view')
+    @include('member_input_form.partials.member_form')
+    @include('loading_view')
+    @include('succed_view')
+    @include('duplicate_view')
 @endsection
 
 @push('JS')
@@ -236,7 +237,22 @@
                 },
                 error: function (error) {
                     $("#loadingSpinner").hide();
-                    // alert(error);
+                    $("#loadingSpinnerFail").show();
+                    $("#textload").hide();
+                    $("#spinner").hide();
+                    $("#textformduplicate").show();
+                    $("#tickfail").show();
+                    $("#okfail").show();
+                    $("#okfail").on("click", function () {
+                        $("#loadingSpinnerFail").hide();
+                        $("#textload").hide();
+                        $("#spinner").hide();
+                        $("#textformduplicate").hide();
+                        $("#tickfail").hide();
+                        $("#okfail").hide();
+                        $("#duplicateView").show();
+                        $("#memberForm").hide();
+                    });
                     console.error(error);
                 }
             })
@@ -257,7 +273,12 @@
 
         $("#previewMember").click(function (e) {
             e.preventDefault();
-            window.open(`${window.location.origin}/member-reg-detail/${memberId}`,"_self");  
+            window.open(`${window.location.origin}/member-reg-detail/${memberId}`, "_self");
         });
+
+        $("#reloadPreview").click(function (e) {
+            e.preventDefault();
+            window.reload();
+        })
     </script>
 @endpush

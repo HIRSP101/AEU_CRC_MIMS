@@ -31,8 +31,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            list="proviencelist" id="provience" type="text" required
-            value="{{$member->pob_province}}">
+            list="proviencelist" id="provience" type="text" required value="{{$member->pob_province}}">
         <datalist id="proviencelist" name="proviencelist">
             @foreach($branches as $key => $val)
                 <option data-id="{{$key}}" value="{{$val}}">

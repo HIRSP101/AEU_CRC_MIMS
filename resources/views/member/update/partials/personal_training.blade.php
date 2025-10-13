@@ -114,21 +114,21 @@
                     <option value="ឆ្នាំទី4">ឆ្នាំទី៤</option>
                 </select>
             @elseif($member->education_level != null)
-                <option value="{{$member->education_level}}">{{$member->education_level}}</option>
-                <option value="">-----</option>
-                <option value="ថ្នាក់ទី6">ថ្នាក់ទី៦</option>
-                <option value="ថ្នាក់ទី7">ថ្នាក់ទី៧</option>
-                <option value="ថ្នាក់ទី8">ថ្នាក់ទី៨</option>
-                <option value="ថ្នាក់ទី9">ថ្នាក់ទី៩</option>
-                <option value="ថ្នាក់ទី10">ថ្នាក់ទី១០</option>
-                <option value="ថ្នាក់ទី11">ថ្នាក់ទី១១</option>
-                <option value="ថ្នាក់ទី12">ថ្នាក់ទី១២</option>
-                <option value="ឆ្នាំទី1">ឆ្នាំទី១</option>
-                <option value="ឆ្នាំទី2">ឆ្នាំទី២</option>
-                <option value="ឆ្នាំទី3">ឆ្នាំទី៣</option>
-                <option value="ឆ្នាំទី4">ឆ្នាំទី៤</option>
-                </select>
-            @endif
+            <option value="{{$member->education_level}}">{{$member->education_level}}</option>
+            <option value="">-----</option>
+            <option value="ថ្នាក់ទី6">ថ្នាក់ទី៦</option>
+            <option value="ថ្នាក់ទី7">ថ្នាក់ទី៧</option>
+            <option value="ថ្នាក់ទី8">ថ្នាក់ទី៨</option>
+            <option value="ថ្នាក់ទី9">ថ្នាក់ទី៩</option>
+            <option value="ថ្នាក់ទី10">ថ្នាក់ទី១០</option>
+            <option value="ថ្នាក់ទី11">ថ្នាក់ទី១១</option>
+            <option value="ថ្នាក់ទី12">ថ្នាក់ទី១២</option>
+            <option value="ឆ្នាំទី1">ឆ្នាំទី១</option>
+            <option value="ឆ្នាំទី2">ឆ្នាំទី២</option>
+            <option value="ឆ្នាំទី3">ឆ្នាំទី៣</option>
+            <option value="ឆ្នាំទី4">ឆ្នាំទី៤</option>
+            </select>
+        @endif
     </div>
 </div>
 <div class=" flex flex-wrap -mx-3 mb-2">

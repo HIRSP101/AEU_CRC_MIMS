@@ -502,4 +502,5 @@ class SchoolController extends Controller
         // new code 2025/05/05 }
         return response()->json($combined);
     }
+
 }

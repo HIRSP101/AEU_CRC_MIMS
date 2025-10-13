@@ -7,8 +7,7 @@
                 alt='Mountain'>
         </div>
         <div class="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full overflow-hidden">
-            <img class="object-cover object-center h-32"
-                src='https://avatars.githubusercontent.com/u/120011788?s=400&v=4' alt='ava'>
+            <img class="" src='{{asset(auth()->user()->image) ?? '' }}' alt='ava'>
         </div>
         <div class="text-center mt-2">
             <h2 class="font-semibold">{{ auth()->user()->name }} {{auth()->user()->hasRole('admin') ? '(admin)' : ""}}

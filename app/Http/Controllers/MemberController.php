@@ -150,10 +150,10 @@ class MemberController extends Controller
             $currentMemberId = member_personal_detail::latest()->first()?->member_id ?? 0;
 
             foreach ($members as $memberData) {
-                $member = $this->createService->createMember($memberData, $request->file('image'), $currentMemberId);
-                if (!$member) {
-                    DB::rollBack();
-                    return response()->json(['error' => 'Member already exists: ' . ($memberData['name_kh'] ?? 'Unknown')], 404);
+                [$constraint, $member] = $this->createService->createMember($memberData, $request->file('image'), $currentMemberId);
+                if (!$constraint) {
+                    //  DB::rollBack();
+                    return response()->json(['error' => 'Member already exists: '], 404);
                 }
                 $currentMemberId++;
             }
@@ -172,15 +172,23 @@ class MemberController extends Controller
             DB::beginTransaction();
 
             $members = $request->input('members');
-            //dd($members);
+            // dd($members);
             $currentMemberId = member_personal_detail::latest()->first()?->member_id ?? 0;
-
+            $faileds = [];
+            $failed_counter = 0;
+            $iterator = 0;
             foreach ($members as $memberData) {
-                $this->createService->importMember($memberData, $currentMemberId);
+                [$constraint, $member] = $this->createService->importMember($memberData, $currentMemberId);
+                if (!$constraint) {
+                    $faileds[] = $member;
+                    $failed_counter++;
+                }
                 $currentMemberId++;
+                $iterator++;
             }
+
             DB::commit();
-            return response()->json(['message' => 'Member record(s) created successfully!']);
+            return response()->json(['message' => 'Member record(s) created successfully!', 'failed_counter' => $failed_counter, 'faileds' => $faileds], 200);
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'Failed to create member record(s): ' . $e->getMessage()], 500);

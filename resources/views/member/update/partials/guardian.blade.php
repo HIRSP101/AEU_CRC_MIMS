@@ -9,8 +9,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="father_name" type="text" id="father_name" required
-            value="{{$member->father_name}}">
+            name="father_name" type="text" id="father_name" required value="{{$member->father_name}}">
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="father_dob">
@@ -18,8 +17,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            id="father_dob" name="father_dob" type="date" required
-            value="{{$member->father_dob}}">
+            id="father_dob" name="father_dob" type="date" required value="{{$member->father_dob}}">
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="father_occupation">
@@ -27,8 +25,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="father_occupation" id="father_occupation" type="text" required
-            value="{{$member->father_occupation}}">
+            name="father_occupation" id="father_occupation" type="text" required value="{{$member->father_occupation}}">
     </div>
     <div class="w-full md:w-full px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="father_current_address">
@@ -45,8 +42,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="mother_name" id="mother_name" type="text" required
-            value="{{$member->mother_name}}">
+            name="mother_name" id="mother_name" type="text" required value="{{$member->mother_name}}">
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="mother_dob">
@@ -54,8 +50,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="mother_dob" type="date" id="mother_dob" required
-            value="{{$member->mother_dob}}">
+            name="mother_dob" type="date" id="mother_dob" required value="{{$member->mother_dob}}">
     </div>
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="mother_occupation">
@@ -63,8 +58,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="mother_occupation" type="text" id="mother_occupation" required
-            value="{{$member->mother_occupation}}">
+            name="mother_occupation" type="text" id="mother_occupation" required value="{{$member->mother_occupation}}">
     </div>
     <div class="w-full md:w-full px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 mb-2" for="mother_current_address">
@@ -81,7 +75,6 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="guardian_number" id="guardian_number" type="tel" required
-            value="{{$member->guardian_phone}}">
+            name="guardian_number" id="guardian_number" type="tel" required value="{{$member->guardian_phone}}">
     </div>
 </div>

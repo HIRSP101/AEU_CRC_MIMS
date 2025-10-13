@@ -45,7 +45,7 @@ class BranchController extends Controller
             ->groupBy('b.branch_id', 'b.branch_kh', 'b.image')
             ->get();
         //dd($total_mem_branchhei);
-        return view('branch_hei.index', compact('total_mem_branchhei',));
+        return view('branch_hei.index', compact('total_mem_branchhei', ));
     }
 
     public function totalmem_branches()

@@ -157,7 +157,7 @@ class DistrictController extends Controller
                 ->get();
         }
         $title = "បង្កើតស្រុក/ក្រុង";
-        return view('district.create-district2', compact('branches', 'districts','title'));
+        return view('district.create-district2', compact('branches', 'districts', 'title'));
     }
     public function store2(DistrictRequest $request, CreateDistrictService $service)
     {
@@ -204,11 +204,9 @@ class DistrictController extends Controller
     }
 
 
-    public function deleteDistrict(Request $request)
+    public function deleteDistrict($id)
     {
-        // dd($request->id);
-        $this->deleteService->deleteDistrict($request->id);
-        return response()->json(['message' => 'District deleted successfully']);
+        return $this->deleteService->deleteDistrict($id);
     }
     public function editDistrict($id)
     {

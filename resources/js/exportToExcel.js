@@ -154,6 +154,40 @@ export const downloadExcel = async (workbook) => {
     }
 };
 
+// export default function exportToExcel(
+//     current_branch,
+//     total_member,
+//     total_stu,
+//     total_stu_fem,
+//     school_name
+// ) {
+//     $("#export_excel").on("click", async () => {
+//         try {
+//             console.log("Hello World!!!");
+//             const total_memberFormat = total_member.map((arr) =>
+//                 arr.slice(0, 13)
+//             );
+//             console.log(total_member.map((arr) => arr.slice(0, 13)));
+//             const workbook = new ExcelJS.Workbook();
+//             const worksheet = createWorksheet(workbook, current_branch);
+
+//             addTitle(worksheet, current_branch, school_name);
+//             createTable(worksheet, total_memberFormat);
+//             applyStyles(worksheet, total_member.length);
+//             addFooter(
+//                 worksheet,
+//                 total_stu,
+//                 total_stu_fem,
+//                 total_member.length + 4
+//             );
+
+//             await downloadExcel(workbook);
+//         } catch (error) {
+//             console.error("Error in export process:", error);
+//         }
+//     });
+// }
+
 export default function exportToExcel(
     current_branch,
     total_member,
@@ -163,22 +197,43 @@ export default function exportToExcel(
 ) {
     $("#export_excel").on("click", async () => {
         try {
-            console.log("Hello World!!!");
-            const total_memberFormat = total_member.map((arr) =>
+            const dateRange = $("#dateRange").val();
+            let filteredMembers = total_member;
+
+            if (dateRange) {
+                const [startDate, endDate] = dateRange.split(" to ");
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+
+                filteredMembers = total_member.filter((arr) => {
+                    const dateStr = arr[8];
+                    if (!dateStr) return false;
+                    const date = new Date(dateStr);
+                    return date >= start && date <= end;
+                });
+            }
+
+            const filteredTotal = filteredMembers.length;
+            const filteredFemale = filteredMembers.filter(
+                (arr) => arr[3] === "ស្រី"
+            ).length;
+
+            const total_memberFormat = filteredMembers.map((arr) =>
                 arr.slice(0, 13)
             );
-            console.log(total_member.map((arr) => arr.slice(0, 13)));
+
             const workbook = new ExcelJS.Workbook();
             const worksheet = createWorksheet(workbook, current_branch);
 
             addTitle(worksheet, current_branch, school_name);
             createTable(worksheet, total_memberFormat);
-            applyStyles(worksheet, total_member.length);
+            applyStyles(worksheet, total_memberFormat.length);
+
             addFooter(
                 worksheet,
-                total_stu,
-                total_stu_fem,
-                total_member.length + 4
+                filteredTotal,
+                filteredFemale,
+                total_memberFormat.length + 4
             );
 
             await downloadExcel(workbook);

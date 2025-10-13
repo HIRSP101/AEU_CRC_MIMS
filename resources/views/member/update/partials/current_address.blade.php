@@ -23,8 +23,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="current_village" id="current_village" type="text"
-            value="{{$member->current_village}}">
+            name="current_village" id="current_village" type="text" value="{{$member->current_village}}">
     </div>
     <div class="flex-1 w-1/4 md:w-1/4 px-3">
         <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_commune">
@@ -32,8 +31,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="current_commune" id="current_commune" type="text" required
-            value="{{$member->current_commune}}">
+            name="current_commune" id="current_commune" type="text" required value="{{$member->current_commune}}">
     </div>
 </div>
 <div class="flex flex-wrap -mx-3 mb-2 mt-5">
@@ -43,8 +41,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            name="current_district" id="current_district" type="text" required
-            value="{{$member->current_district}}">
+            name="current_district" id="current_district" type="text" required value="{{$member->current_district}}">
     </div>
     <div class="w-full md:w-1/4 px-3">
         <label class="block uppercase tracking-wide text-gray-700  mb-2" for="current_provience">
@@ -52,8 +49,7 @@
         </label>
         <input
             class="appearance-none block w-full text-sm bg-gray-50 text-gray-700 border border-gray-400 rounded mb-3 py-3 px-4leading-tight focus:outline-none focus:bg-white"
-            list="proviencelist" id="current_provience" type="text" required
-            value="{{$member->current_province}}">
+            list="proviencelist" id="current_provience" type="text" required value="{{$member->current_province}}">
         <datalist id="proviencelist" name="proviencelist">
             @foreach($branches as $key => $val)
                 <option data-id="{{$key}}" value="{{$val}}">

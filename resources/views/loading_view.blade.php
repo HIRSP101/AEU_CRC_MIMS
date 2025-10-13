@@ -9,7 +9,8 @@
 </div>
 <div id="loadingSpinnerFail" class="fixed top-0 left-0 z-50 w-screen h-screen bg-gray-300 bg-opacity-50 h-full hidden">
     <p id="textloadfail" class="hidden textload text-center font-siemreap">សូមរង់ចាំ...</p>
-    <p id="textfail" class=" textload text-center font-siemreap">សមាជិកមានរួចហើយ</p>
+    <p id="textfail" hidden class=" textload text-center font-siemreap">សមាជិកមានរួចហើយ</p>
+    <p id="textformduplicate" class=" textload text-center font-siemreap">ឈ្មោះរបស់លោកអ្នកមាននៅក្នុងប្រព័ន្ធរួចហើយ</p>
     <div id="spinnerfail" class="spinner hidden"></div>
     <div id="tickfail" class="hidden text-center text-red-500 text-6xl">!</div>
     <div class="flex justify-center items-center mt-2">

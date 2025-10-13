@@ -80,7 +80,7 @@ class ReportController extends Controller
             'branchId' => $branchId,
             'branch' => $branch,
             'selectedYear' => $year,
-            'branchWhole' => (object)[
+            'branchWhole' => (object) [
                 'total_schools' => $district->pluck('school_id')->unique()->count(),
                 'total_mem' => $district->sum('total_mem'),
                 'total_mem_fem' => $district->sum('total_mem_fem'),
@@ -181,16 +181,16 @@ class ReportController extends Controller
         $combined_data = $branch_and_count_member->map(function ($branch) use ($school_types_per_branch, $universities_per_branch) {
             $branch_id = $branch->branch_id;
 
-            $school = $school_types_per_branch[$branch_id] ?? (object)[
+            $school = $school_types_per_branch[$branch_id] ?? (object) [
                 'total_secondary_school' => 0,
                 'total_high_school' => 0,
             ];
 
-            $university = $universities_per_branch[$branch_id] ?? (object)[
+            $university = $universities_per_branch[$branch_id] ?? (object) [
                 'total_university' => 0,
             ];
 
-            return (object)[
+            return (object) [
                 ...get_object_vars($branch),
                 'secondary_school' => $school->total_secondary_school,
                 'high_school' => $school->total_high_school,
@@ -204,13 +204,13 @@ class ReportController extends Controller
             'universities_per_branch' => $universities_per_branch,
             'total_member_all_university' => $total_member_all_university,
             'selectedYear' => $year,
-            'branchWhole' => (object)[
+            'branchWhole' => (object) [
                 'total_mem' => $combined_data->sum('total_mem'),
                 'total_mem_fem' => $combined_data->sum('total_mem_fem'),
                 'total_mem_advisor' => $combined_data->sum('total_mem_advisor'),
                 'total_mem_fem_advisor' => $combined_data->sum('total_mem_fem_advisor'),
             ],
-            'member_all_university' => (object)[
+            'member_all_university' => (object) [
                 'total_mem' => $total_member_all_university->sum('total_mem'),
                 'total_mem_fem' => $total_member_all_university->sum('total_mem_fem'),
                 'total_mem_advisor' => $total_member_all_university->sum('total_mem_advisor'),
@@ -315,7 +315,7 @@ class ReportController extends Controller
         return view('report.partials.private-university', [
             'branchhei_private' => $branchhei_private,
             'selectedYear' => $year,
-            'branchWhole' => (object)[
+            'branchWhole' => (object) [
                 'total_mem' => $branchhei_private->sum('total_mem'),
                 'total_mem_fem' => $branchhei_private->sum('total_mem_fem'),
                 'total_mem_advisor' => $branchhei_private->sum('total_mem_advisor'),
@@ -358,7 +358,7 @@ class ReportController extends Controller
         return view('report.partials.public-university', [
             'branchhei_public' => $branchhei_public,
             'selectedYear' => $year,
-            'branchWhole' => (object)[
+            'branchWhole' => (object) [
                 'total_mem' => $branchhei_public->sum('total_mem'),
                 'total_mem_fem' => $branchhei_public->sum('total_mem_fem'),
                 'total_mem_advisor' => $branchhei_public->sum('total_mem_advisor'),
@@ -401,7 +401,7 @@ class ReportController extends Controller
         return view('report.partials.total-university', [
             'branchhei' => $branchhei,
             'selectedYear' => $year,
-            'branchWhole' => (object)[
+            'branchWhole' => (object) [
                 'total_mem' => $branchhei->sum('total_mem'),
                 'total_mem_fem' => $branchhei->sum('total_mem_fem'),
                 'total_mem_advisor' => $branchhei->sum('total_mem_advisor'),

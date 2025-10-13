@@ -51,16 +51,20 @@ class FormController extends Controller
             if ($tokenEntry) {
                 $formSubmitId = $tokenEntry->id;
                 $academic_year = $tokenEntry->academic_year;
-                //dd($members); 
                 $currentMemberId = member_personal_detail::latest()->first()?->member_id ?? 0;
                 foreach ($members as $memberData) {
                     $memberData['form_submits_id'] = $formSubmitId;
                     $memberData['acadmedic_year'] = $academic_year;
-                    $memberId =$this->createService->createMember($memberData, $request->file('image'), $currentMemberId);
+                    [$constraint, $memberId] = $this->createService->createMember($memberData, $request->file('image'), $currentMemberId);
+                    if (!$constraint) {
+                        return response()->json(['error' => 'Member Duplicate!'], 404);
+                    }
                     $currentMemberId++;
+
                 }
+                //dd($i);
                 DB::commit();
-                return response()->json(['message' => 'Member record(s) created successfully!','data'=> $memberId->member_id]);
+                return response()->json(['message' => 'Member record(s) created successfully!', 'data' => $memberId->member_id]);
             }
 
         } catch (Exception $e) {
@@ -112,6 +116,7 @@ class FormController extends Controller
                 'form.token',
             )
             ->first();
+
         return view('member_input_form.update', compact('member', 'branches', 'institutions'));
     }
 }

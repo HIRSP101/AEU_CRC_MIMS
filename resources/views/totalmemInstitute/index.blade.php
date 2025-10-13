@@ -159,7 +159,6 @@
             </div>
         @endif
 @endsection
-
     @push('JS')
         <script type="module">
             import { handleTotalmemInstitute } from "{{ asset('js/handleTotalmemInstitute.js') }}";
