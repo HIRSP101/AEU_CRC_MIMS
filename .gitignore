@@ -54,6 +54,7 @@ package-lock.json
 /node_modules
 /public/build
 /public/hot
+/public/build/*.js
 /vendor
 .env
 .env.backup
